@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Contactos>
+  <Elemento>
+    <Nombre>Frank</Nombre>
+    <Direccion>Conocida</Direccion>
+    <Telefono>12345</Telefono>
+    <Correo>nada@nada.com</Correo>
+  </Elemento>
+  <Elemento>
+    <Nombre>Omar</Nombre>
+    <Direccion>lalala</Direccion>
+    <Telefono>131134</Telefono>
+    <Correo>a@a.com</Correo>
+  </Elemento>
+  <Elemento>
+    <Nombre>HOla</Nombre>
+    <Direccion>Nose</Direccion>
+    <Telefono>1365432</Telefono>
+    <Correo>b@b.com</Correo>
+  </Elemento>
+  <Elemento>
+    <Nombre>o.o V..</Nombre>
+    <Direccion>Colinas</Direccion>
+    <Telefono>1234567</Telefono>
+    <Correo>c@c.com</Correo>
+  </Elemento>
+</Contactos>

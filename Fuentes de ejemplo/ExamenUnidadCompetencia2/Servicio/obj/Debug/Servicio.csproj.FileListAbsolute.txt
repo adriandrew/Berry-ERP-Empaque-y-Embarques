@@ -1,0 +1,5 @@
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ExamenUnidadCompetencia2\Servicio\bin\Servicio.dll
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ExamenUnidadCompetencia2\Servicio\bin\Servicio.pdb
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ExamenUnidadCompetencia2\Servicio\obj\Debug\ResolveAssemblyReference.cache
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ExamenUnidadCompetencia2\Servicio\obj\Debug\Servicio.dll
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ExamenUnidadCompetencia2\Servicio\obj\Debug\Servicio.pdb

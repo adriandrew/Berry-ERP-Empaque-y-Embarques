@@ -1,0 +1,5 @@
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\SDPractica2\Entidades\bin\Debug\Entidades.dll
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\SDPractica2\Entidades\bin\Debug\Entidades.pdb
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\SDPractica2\Entidades\obj\Debug\ResolveAssemblyReference.cache
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\SDPractica2\Entidades\obj\Debug\Entidades.dll
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\SDPractica2\Entidades\obj\Debug\Entidades.pdb

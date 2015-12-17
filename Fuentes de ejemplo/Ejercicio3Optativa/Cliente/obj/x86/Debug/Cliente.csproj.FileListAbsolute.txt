@@ -1,0 +1,8 @@
+C:\Users\Omar Félix Vázquez\documents\visual studio 2010\Projects\Ejercicio3Optativa\Cliente\bin\Debug\Cliente.exe.config
+C:\Users\Omar Félix Vázquez\documents\visual studio 2010\Projects\Ejercicio3Optativa\Cliente\bin\Debug\Cliente.exe
+C:\Users\Omar Félix Vázquez\documents\visual studio 2010\Projects\Ejercicio3Optativa\Cliente\bin\Debug\Cliente.pdb
+C:\Users\Omar Félix Vázquez\documents\visual studio 2010\Projects\Ejercicio3Optativa\Cliente\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Omar Félix Vázquez\documents\visual studio 2010\Projects\Ejercicio3Optativa\Cliente\obj\x86\Debug\Cliente.exe
+C:\Users\Omar Félix Vázquez\documents\visual studio 2010\Projects\Ejercicio3Optativa\Cliente\obj\x86\Debug\Cliente.pdb
+C:\Users\Omar Félix Vázquez\documents\visual studio 2010\Projects\Ejercicio3Optativa\Cliente\bin\Debug\Entidades.dll
+C:\Users\Omar Félix Vázquez\documents\visual studio 2010\Projects\Ejercicio3Optativa\Cliente\bin\Debug\Entidades.pdb

@@ -1,0 +1,8 @@
+C:\Users\Administrator\Desktop\Berry EYE\InicioSesion\Entidades\bin\Release\Entidades.dll
+C:\Users\Administrator\Desktop\Berry EYE\InicioSesion\Entidades\bin\Release\Entidades.pdb
+C:\Users\Administrator\Desktop\Berry EYE\InicioSesion\Entidades\obj\Release\Entidades.dll
+C:\Users\Administrator\Desktop\Berry EYE\InicioSesion\Entidades\obj\Release\Entidades.pdb
+C:\Users\Administrator\Desktop\Berry EYE\Principal\Entidades\bin\Release\Entidades.dll
+C:\Users\Administrator\Desktop\Berry EYE\Principal\Entidades\bin\Release\Entidades.pdb
+C:\Users\Administrator\Desktop\Berry EYE\Principal\Entidades\obj\Release\Entidades.dll
+C:\Users\Administrator\Desktop\Berry EYE\Principal\Entidades\obj\Release\Entidades.pdb

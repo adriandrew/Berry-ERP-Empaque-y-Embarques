@@ -1,0 +1,22 @@
+﻿<Window x:Class="WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
+    <Grid>
+        <Label Content="Nombre" Height="28" HorizontalAlignment="Left" Margin="20,14,0,0" Name="label1" VerticalAlignment="Top" />
+        <TextBox Height="28" HorizontalAlignment="Left" Margin="12,34,0,0" Name="txtNombre" VerticalAlignment="Top" Width="192" />
+        <Label Content="Descripcion" Height="28" HorizontalAlignment="Left" Margin="20,68,0,0" Name="txtDescripcion" VerticalAlignment="Top" />
+        <TextBox Height="28" HorizontalAlignment="Left" Margin="12,88,0,0" Name="txtdescripcion" VerticalAlignment="Top" Width="192" />
+        <Label Content="Cantidad" Height="28" HorizontalAlignment="Left" Margin="20,122,0,0" Name="label3" VerticalAlignment="Top" />
+        <TextBox Height="28" HorizontalAlignment="Left" Margin="12,142,0,0" Name="txtCantidad" VerticalAlignment="Top" Width="192" />
+        <DataGrid AutoGenerateColumns="False" Height="116" HorizontalAlignment="Left" Margin="20,183,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="471">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="Id" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding Nombre}" Header="Nombre" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding Descripcion}" Header="Descripcion" IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding Cantidad}" Header="Cantidad" IsReadOnly="True" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Guardar" Height="23" HorizontalAlignment="Left" Margin="352,142,0,0" Name="btnGuardad" VerticalAlignment="Top" Width="75" Click="btnGuardad_Click" />
+    </Grid>
+</Window>

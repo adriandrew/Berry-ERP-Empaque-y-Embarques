@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ba6f3d70-2158-41ed-a3d6-f2503b16cb40" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://serviciooptativa.azurewebsites.net/Servicio.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Servicio.xsd" MetadataType="Schema" ID="ec23059e-bef0-4497-9eca-1f4580375ef7" SourceId="1" SourceUrl="http://serviciooptativa.azurewebsites.net/Servicio.svc?xsd=xsd1" />
+    <MetadataFile FileName="Servicio1.xsd" MetadataType="Schema" ID="fde45c61-d330-4192-9ec2-540eacc51b58" SourceId="1" SourceUrl="http://serviciooptativa.azurewebsites.net/Servicio.svc?xsd=xsd2" />
+    <MetadataFile FileName="Servicio.wsdl" MetadataType="Wsdl" ID="0ae7b473-eb95-4f0b-8179-dbc0d22fc237" SourceId="1" SourceUrl="http://serviciooptativa.azurewebsites.net/Servicio.svc?wsdl" />
+    <MetadataFile FileName="Servicio.disco" MetadataType="Disco" ID="90bfbd7e-bf0f-4901-abba-1bcc27395ec8" SourceId="1" SourceUrl="http://serviciooptativa.azurewebsites.net/Servicio.svc?disco" />
+    <MetadataFile FileName="Servicio2.xsd" MetadataType="Schema" ID="c53dce98-159d-4e74-9ed0-1bfedecc3d62" SourceId="1" SourceUrl="http://serviciooptativa.azurewebsites.net/Servicio.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

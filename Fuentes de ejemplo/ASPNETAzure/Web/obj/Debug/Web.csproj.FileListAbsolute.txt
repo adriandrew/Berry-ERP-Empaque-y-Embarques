@@ -1,0 +1,5 @@
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\Web\bin\Web.dll
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\Web\bin\Web.pdb
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\Web\obj\Debug\ResolveAssemblyReference.cache
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\Web\obj\Debug\Web.dll
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\Web\obj\Debug\Web.pdb

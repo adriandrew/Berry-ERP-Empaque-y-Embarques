@@ -1,0 +1,32 @@
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\bin\Release\EYE16.exe
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\bin\Release\EYE16.pdb
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\bin\Release\EYE16.xml
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\bin\Release\itextsharp.dll
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\ACARREO.Principal.resources
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\ACARREO.Catalogos.resources
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\ACARREO.Form3.resources
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\ACARREO.ReportesAcarreo.resources
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\ACARREO.Impresion.resources
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\ACARREO.Resources.resources
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\ACARREO.ReportesVaciado.resources
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\Escritorio.vbproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\EYE16.exe.licenses
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\EYE16.exe
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\EYE16.xml
+C:\Users\Administrator\Desktop\Acarreo\ACARREO\obj\x86\Release\EYE16.pdb
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\bin\Release\EYE16.exe
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\bin\Release\EYE16.pdb
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\bin\Release\EYE16.xml
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\bin\Release\itextsharp.dll
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\ACARREO.Principal.resources
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\ACARREO.Catalogos.resources
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\ACARREO.Form3.resources
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\ACARREO.ReportesAcarreo.resources
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\ACARREO.Impresion.resources
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\ACARREO.Resources.resources
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\ACARREO.ReportesVaciado.resources
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\Escritorio.vbproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\EYE16.exe.licenses
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\EYE16.exe
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\EYE16.xml
+C:\Users\Administrator\Desktop\Fuentes de PVEACU\Empaque y Embarques\Empaque Coyotera\Acarreo\ACARREO\obj\x86\Release\EYE16.pdb

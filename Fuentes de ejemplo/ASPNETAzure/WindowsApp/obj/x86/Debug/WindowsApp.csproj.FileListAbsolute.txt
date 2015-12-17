@@ -1,0 +1,16 @@
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\WindowsApp\bin\Debug\WindowsApp.exe.config
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\WindowsApp\bin\Debug\WindowsApp.exe
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\WindowsApp\bin\Debug\WindowsApp.pdb
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\WindowsApp\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\WindowsApp\obj\x86\Debug\WindowsApp.Form1.resources
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\WindowsApp\obj\x86\Debug\WindowsApp.Properties.Resources.resources
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\WindowsApp\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\WindowsApp\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\WindowsApp\obj\x86\Debug\WindowsApp.exe
+c:\users\omar félix vázquez\documents\visual studio 2010\Projects\ASPNETAzure\WindowsApp\obj\x86\Debug\WindowsApp.pdb
+C:\Users\Administrator\Desktop\ASPNETAzure\WindowsApp\bin\Debug\WindowsApp.exe.config
+C:\Users\Administrator\Desktop\ASPNETAzure\WindowsApp\obj\x86\Debug\WindowsApp.exe
+C:\Users\Administrator\Desktop\ASPNETAzure\WindowsApp\obj\x86\Debug\WindowsApp.pdb
+C:\Users\Administrator\Desktop\Berry EYE\Ejemplo de Proyectos en Capas\ASPNETAzure\WindowsApp\bin\Debug\WindowsApp.exe.config
+C:\Users\Administrator\Desktop\Berry EYE\Ejemplo de Proyectos en Capas\ASPNETAzure\WindowsApp\obj\x86\Debug\WindowsApp.exe
+C:\Users\Administrator\Desktop\Berry EYE\Ejemplo de Proyectos en Capas\ASPNETAzure\WindowsApp\obj\x86\Debug\WindowsApp.pdb

@@ -10,36 +10,20 @@ namespace Entidades
    public class BaseDatos
     {
 
-        private string cadenaConexionPrincipal;
-        private string cadenaConexionEmpresa;
-        public static SqlConnection conexionPrincipal = new SqlConnection();
-        public static SqlConnection conexionEmpresa = new SqlConnection();
-        //public static SqlConnection conexionPrincipal = new SqlConnection(ConfigurationManager.ConnectionStrings["conexionPrincipal"].ConnectionString);
-
-        public string CadenaConexionPrincipal
+        private string cadenaConexionInformacion; 
+        public static SqlConnection conexionInformacion = new SqlConnection(); 
+        public string CadenaConexionInformacion
         {
-            get { return cadenaConexionPrincipal; }
-            set { cadenaConexionPrincipal = value; }
-        }
-        public string CadenaConexionEmpresa
-        {
-            get { return cadenaConexionEmpresa; }
-            set { cadenaConexionEmpresa = value; }
-        }
-              
-        public void AbrirConexionPrincipal()
+            get { return cadenaConexionInformacion; }
+            set { cadenaConexionInformacion = value; }
+        } 
+          //public static SqlConnection conexionPrincipal = new SqlConnection(ConfigurationManager.ConnectionStrings["conexionPrincipal"].ConnectionString);
+            
+        public void AbrirConexionInformacion()
         {
 
-            this.CadenaConexionPrincipal = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionPrincipal);
-            conexionPrincipal.ConnectionString = this.CadenaConexionPrincipal;
-
-        }
-
-        public void AbrirConexionEmpresa()
-        {
-
-            this.CadenaConexionEmpresa = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionEmpresa);
-            conexionEmpresa.ConnectionString = this.CadenaConexionEmpresa;
+            this.CadenaConexionInformacion = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionInformacion);
+            conexionInformacion.ConnectionString = this.CadenaConexionInformacion;
 
         }
         

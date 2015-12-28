@@ -77,7 +77,7 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "INSERT INTO Empresas VALUES (@numero, @nombre, @descripcion, @domicilio, @localidad, @rfc, @directorio, @logo, @activa, @equipo)";                
                 comando.Parameters.AddWithValue("@numero", this.Numero);
                 comando.Parameters.AddWithValue("@nombre", this.Nombre);
@@ -89,9 +89,9 @@ namespace Entidades
                 comando.Parameters.AddWithValue("@logo", this.Logo);
                 comando.Parameters.AddWithValue("@activa", this.Activa);
                 comando.Parameters.AddWithValue("@equipo", this.Equipo);
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 comando.ExecuteNonQuery();
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
             catch (Exception ex)
             {
@@ -99,7 +99,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -110,7 +110,7 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "UPDATE Empresas SET Numero=@numero, Nombre=@nombre, Descripcion=@descripcion, Domicilio=@domicilio, Localidad=@localidad, Rfc=@rfc, Directorio=@directorio, Logo=@logo, Activa=@activa, Equipo=@equipo WHERE Numero=@numero";                
                 comando.Parameters.AddWithValue("@numero", this.Numero);
                 comando.Parameters.AddWithValue("@nombre", this.Nombre);
@@ -122,9 +122,9 @@ namespace Entidades
                 comando.Parameters.AddWithValue("@logo", this.Logo);
                 comando.Parameters.AddWithValue("@activa", this.Activa);
                 comando.Parameters.AddWithValue("@equipo", this.Equipo);                
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 comando.ExecuteNonQuery();
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
             catch (Exception ex)
             {
@@ -132,7 +132,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -143,12 +143,12 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "DELETE FROM Empresas WHERE Numero=@numero";                
                 comando.Parameters.AddWithValue("@numero", this.Numero);
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 comando.ExecuteNonQuery();
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
             catch (Exception ex)
             {
@@ -156,7 +156,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -168,10 +168,10 @@ namespace Entidades
             {
                 bool resultado = false;
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "SELECT * FROM Empresas WHERE Numero=@numero";                
                 comando.Parameters.AddWithValue("@numero", this.Numero);
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 SqlDataReader dataReader = comando.ExecuteReader();
                 if (dataReader.HasRows)
                 {
@@ -181,7 +181,7 @@ namespace Entidades
                 {
                     resultado = false;
                 }
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
                 return resultado;
             }
             catch (Exception ex)
@@ -190,7 +190,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -202,9 +202,9 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "SELECT * FROM Empresas";
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 SqlDataReader dataReader = comando.ExecuteReader();
                 Empresas empresas;
                 while (dataReader.Read())
@@ -222,7 +222,7 @@ namespace Entidades
                     empresas.Equipo = dataReader["equipo"].ToString();
                     lista.Add(empresas);
                 }
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
                 return lista;
             }
             catch (Exception ex)
@@ -231,7 +231,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -242,9 +242,9 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "SELECT * FROM Empresas WHERE Activa='TRUE'";
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 SqlDataReader dataReader = comando.ExecuteReader();
                 while (dataReader.Read())
                 {                    
@@ -259,7 +259,7 @@ namespace Entidades
                     this.Activa = Convert.ToBoolean(dataReader["activa"].ToString());
                     this.Equipo = dataReader["equipo"].ToString();
                 }
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
                 return this.Numero + "|" + this.Nombre + "|" + this.Descripcion + "|" + this.Domicilio + "|" + this.Localidad + "|" + this.Rfc + "|" + this.Directorio + "|" + this.Logo + "|" + this.Activa + "|" + this.Equipo;
             }
             catch (Exception ex)
@@ -268,7 +268,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -279,14 +279,14 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "UPDATE Empresas SET Activa='TRUE' WHERE Numero=@numero";
                 comando.Parameters.AddWithValue("@numero", this.Numero);
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 comando.ExecuteNonQuery();
                 comando.CommandText = "UPDATE Empresas SET Activa='FALSE' WHERE Numero<>@numero";
                 comando.ExecuteNonQuery();               
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
             catch (Exception ex)
             {
@@ -294,7 +294,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }

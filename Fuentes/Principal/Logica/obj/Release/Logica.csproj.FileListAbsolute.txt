@@ -2,4 +2,3 @@ C:\Users\Administrator\Desktop\Berry EYE\Principal\Logica\bin\Release\Logica.dll
 C:\Users\Administrator\Desktop\Berry EYE\Principal\Logica\bin\Release\Logica.pdb
 C:\Users\Administrator\Desktop\Berry EYE\Principal\Logica\obj\Release\Logica.dll
 C:\Users\Administrator\Desktop\Berry EYE\Principal\Logica\obj\Release\Logica.pdb
-C:\Users\Administrator\Desktop\Berry EYE\Principal\Logica\obj\Release\Logica.csprojResolveAssemblyReference.cache

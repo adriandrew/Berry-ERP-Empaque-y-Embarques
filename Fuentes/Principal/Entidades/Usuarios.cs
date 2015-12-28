@@ -53,7 +53,7 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "INSERT INTO Usuarios VALUES (@empresa, @numero, @nombre, @contrasena, @nivel, @acceso)";
                 comando.Parameters.AddWithValue("@empresa", this.Empresa);
                 comando.Parameters.AddWithValue("@numero", this.Numero);
@@ -61,9 +61,9 @@ namespace Entidades
                 comando.Parameters.AddWithValue("@contrasena", this.Contrasena);
                 comando.Parameters.AddWithValue("@nivel", this.Nivel);
                 comando.Parameters.AddWithValue("@acceso", this.Acceso);
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 comando.ExecuteNonQuery();
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -82,7 +82,7 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "UPDATE Usuarios SET Nombre=@nombre, Contrasena=@contrasena, Nivel=@nivel, Acceso=@acceso WHERE Empresa=@empresa AND Numero=@numero";
                 comando.Parameters.AddWithValue("@empresa", this.Empresa);
                 comando.Parameters.AddWithValue("@numero", this.Numero);
@@ -90,10 +90,10 @@ namespace Entidades
                 comando.Parameters.AddWithValue("@contrasena", this.Contrasena);
                 comando.Parameters.AddWithValue("@nivel", this.Nivel);
                 comando.Parameters.AddWithValue("@acceso", this.Acceso);
-                BaseDatos.conexionPrincipal.Close();
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Close();
+                BaseDatos.conexionInformacion.Open();
                 comando.ExecuteNonQuery();
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
             catch (Exception ex)
             {
@@ -101,7 +101,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -112,13 +112,13 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "DELETE FROM Usuarios WHERE Empresa=@empresa AND Numero=@numero";
                 comando.Parameters.AddWithValue("@empresa", this.Empresa);
                 comando.Parameters.AddWithValue("@numero", this.Numero);                
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 comando.ExecuteNonQuery();
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
             catch (Exception ex)
             {
@@ -126,7 +126,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -137,11 +137,11 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "SELECT * FROM Usuarios WHERE Empresa=@empresa AND Nombre=@nombre";
                 comando.Parameters.AddWithValue("@empresa", this.Empresa);
                 comando.Parameters.AddWithValue("@nombre", this.Nombre);
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 SqlDataReader dataReader = comando.ExecuteReader();
                 while (dataReader.Read())
                 {
@@ -156,7 +156,7 @@ namespace Entidades
                 {
                     return string.Empty + "|" + string.Empty + "|" + string.Empty + "|" + string.Empty + "|" + string.Empty + "|" + string.Empty;    
                 }
-                BaseDatos.conexionPrincipal.Close();                
+                BaseDatos.conexionInformacion.Close();                
                 return this.Empresa + "|" + this.Numero + "|" + this.Nombre + "|" + this.Contrasena + "|" + this.Nivel + "|" + this.Acceso;
             }
             catch (Exception ex)
@@ -165,7 +165,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -177,11 +177,11 @@ namespace Entidades
             {
                 bool resultado = false;
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "SELECT * FROM Usuarios WHERE Empresa=@empresa AND Numero=@numero";
                 comando.Parameters.AddWithValue("@empresa", this.Empresa);
                 comando.Parameters.AddWithValue("@numero", this.Numero);
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 SqlDataReader dataReader = comando.ExecuteReader();
                 if (dataReader.HasRows)
                 {
@@ -191,7 +191,7 @@ namespace Entidades
                 {
                     resultado = false;
                 }                
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
                 return resultado;
             }
             catch (Exception ex)
@@ -200,7 +200,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -212,10 +212,10 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "SELECT * FROM Usuarios WHERE Empresa=@empresa";
                 comando.Parameters.AddWithValue("@empresa", this.Empresa);
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 SqlDataReader dataReader = comando.ExecuteReader();
                 Usuarios usuarios;
                 while (dataReader.Read())
@@ -229,7 +229,7 @@ namespace Entidades
                     usuarios.Acceso = dataReader["acceso"].ToString();
                     lista.Add(usuarios);
                 }
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
                 return lista;
             }
             catch (Exception ex)
@@ -238,7 +238,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }
@@ -250,9 +250,9 @@ namespace Entidades
             try
             {
                 SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionPrincipal;
+                comando.Connection = BaseDatos.conexionInformacion;
                 comando.CommandText = "SELECT * FROM Usuarios";
-                BaseDatos.conexionPrincipal.Open();
+                BaseDatos.conexionInformacion.Open();
                 SqlDataReader dataReader = comando.ExecuteReader();
                 Usuarios usuarios;
                 while (dataReader.Read())
@@ -266,7 +266,7 @@ namespace Entidades
                     usuarios.Acceso = dataReader["acceso"].ToString();
                     lista.Add(usuarios);
                 }
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
                 return lista;
             }
             catch (Exception ex)
@@ -275,7 +275,7 @@ namespace Entidades
             }
             finally
             {
-                BaseDatos.conexionPrincipal.Close();
+                BaseDatos.conexionInformacion.Close();
             }
 
         }

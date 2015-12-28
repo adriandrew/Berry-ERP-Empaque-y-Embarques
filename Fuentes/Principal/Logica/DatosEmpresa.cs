@@ -70,5 +70,26 @@ namespace Logica
             set { equipo = value; }
         }
 
+        public void ObtenerParametrosInformacionEmpresa() 
+        {
+
+            string[] parametros = Environment.GetCommandLineArgs();
+            //for (int i = 0; i < parametros.Length; i++)
+            //{
+            //    //MessageBox.Show("Parámetro " + parametros[i]);                
+            //} 
+            this.Numero = Convert.ToInt32(parametros[0]);
+            this.Nombre = parametros[1];
+            this.Descripcion = parametros[2];
+            this.Domicilio = parametros[3];
+            this.Localidad = parametros[4];
+            this.Rfc = parametros[5];
+            this.Directorio = parametros[6];
+            this.Logo = parametros[7];
+            this.Activa = Convert.ToBoolean(parametros[8]);
+            this.Equipo = parametros[9];
+
+        }
+
     }
 }

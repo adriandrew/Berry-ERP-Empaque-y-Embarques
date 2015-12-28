@@ -1,0 +1,4 @@
+C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\bin\Release\EntidadesTarima.dll
+C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\bin\Release\EntidadesTarima.pdb
+C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\obj\Release\EntidadesTarima.dll
+C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\obj\Release\EntidadesTarima.pdb

@@ -1,0 +1,4 @@
+C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Logica\bin\Release\LogicaTarima.dll
+C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Logica\bin\Release\LogicaTarima.pdb
+C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Logica\obj\Release\LogicaTarima.dll
+C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Logica\obj\Release\LogicaTarima.pdb

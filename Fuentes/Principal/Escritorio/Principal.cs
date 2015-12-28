@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -16,7 +18,9 @@ namespace Escritorio
         Entidades.Empresas empresas = new Entidades.Empresas();
         Entidades.BaseDatos baseDatos = new Entidades.BaseDatos();
         Logica.DatosEmpresa datosEmpresa = new Logica.DatosEmpresa();
+        ProcessStartInfo ejecutarProgramaPrincipal = new ProcessStartInfo();
         public int numeroEmpresa;
+        public bool ocupaParametros;
             
         #region Eventos
 
@@ -24,7 +28,7 @@ namespace Escritorio
         {
             InitializeComponent();
         }
-
+        
         private void Principal_Load(object sender, EventArgs e)
         {
 
@@ -32,6 +36,36 @@ namespace Escritorio
             AsignarToopltip();
             AsignarFocos();
             ConfigurarConexiones();
+            ConsultarInformacionEmpresa();
+            this.ocupaParametros = false;
+            CargarTitulosEmpresa();
+
+        }
+
+        private void Principal_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            if (this.ocupaParametros)
+            {
+                ejecutarProgramaPrincipal.UseShellExecute = true;
+                ejecutarProgramaPrincipal.FileName = "Tarimas.exe";
+                ejecutarProgramaPrincipal.WorkingDirectory = Directory.GetCurrentDirectory();
+                ejecutarProgramaPrincipal.Arguments = datosEmpresa.Numero.ToString().Trim().Replace(" ", "|") + " " + datosEmpresa.Nombre.Trim().Replace(" ", "|") + " " + datosEmpresa.Descripcion.Trim().Replace(" ", "|") + " " + datosEmpresa.Domicilio.Trim().Replace(" ", "|") + " " + datosEmpresa.Localidad.Trim().Replace(" ", "|") + " " + datosEmpresa.Rfc.Trim().Replace(" ", "|") + " " + datosEmpresa.Directorio.Trim().Replace(" ", "|") + " " + datosEmpresa.Logo.Trim().Replace(" ", "|") + " " + datosEmpresa.Activa.ToString().Trim().Replace(" ", "|") + " " + datosEmpresa.Equipo.Trim().Replace(" ", "|") + " " + "Aquí terminan ;)";
+                //MessageBox.Show(ejecutarProgramaPrincipal.Arguments);
+                try
+                {
+                    Process.Start(ejecutarProgramaPrincipal);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("No se puede abrir el programa principal en la ruta : " + ejecutarProgramaPrincipal.WorkingDirectory + ex.Message, "Error.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+            }
+            else
+            {
+                Application.Exit();
+            }
 
         }
 
@@ -105,13 +139,6 @@ namespace Escritorio
 
         }
 
-        private void Principal_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
-            Application.Exit();            
-
-        }
-
         #endregion
 
         #region Metodos Privados
@@ -135,6 +162,7 @@ namespace Escritorio
                     string[] datos = usuarios.ObtenerPorNombre().Split('|');
                     if (this.txtContraseña.Text.Equals(datos[3]))
                     {
+                        this.ocupaParametros = true;
                         this.Close();
                     }
                     else
@@ -193,29 +221,20 @@ namespace Escritorio
         private void ConfigurarConexiones() 
         {
 
-            bool esPrueba = true;
+            bool esPrueba = false;
             if (esPrueba)
             {
-                baseDatos.CadenaConexionPrincipal = "C:\\Berry\\Informacion.mdf";
+                baseDatos.CadenaConexionInformacion = "C:\\Berry\\Informacion.mdf";
             }
             else
             {
-                baseDatos.CadenaConexionPrincipal = "|DataDirectory|\\Informacion.mdf";
+                baseDatos.CadenaConexionInformacion = "|DataDirectory|\\Informacion.mdf";
             }
-            baseDatos.AbrirConexionPrincipal();
-            if (esPrueba)
-            {
-                baseDatos.CadenaConexionEmpresa = "C:\\Berry\\BD\\PVE\\EYE.mdf";
-            }
-            else
-            {
-                baseDatos.CadenaConexionEmpresa = ConsultarInformacionEmpresa();
-            }
-            baseDatos.AbrirConexionEmpresa();
+            baseDatos.AbrirConexionInformacion();            
 
         }
 
-        private string ConsultarInformacionEmpresa()
+        private void ConsultarInformacionEmpresa()
         {
 
             string[] datos = empresas.ObtenerPredeterminada().Split('|');
@@ -228,9 +247,13 @@ namespace Escritorio
             datosEmpresa.Directorio = datos[6];
             datosEmpresa.Logo = datos[7];
             datosEmpresa.Activa = Convert.ToBoolean(datos[8]);
-            datosEmpresa.Equipo = datos[9];
-            return datosEmpresa.Directorio;
+            datosEmpresa.Equipo = datos[9]; 
 
+        }
+
+        private void CargarTitulosEmpresa()
+        {
+            this.Text += ": " + datosEmpresa.Numero + " - " + datosEmpresa.Nombre;
         }
         
         #endregion

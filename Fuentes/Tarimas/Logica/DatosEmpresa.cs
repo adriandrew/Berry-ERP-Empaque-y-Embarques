@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Logica
+namespace LogicaTarima
 {
     public class DatosEmpresa
     {
@@ -70,5 +70,33 @@ namespace Logica
             set { equipo = value; }
         }
 
+        public void ObtenerParametrosInformacionEmpresa()
+        {
+             
+            string[] parametros = Environment.GetCommandLineArgs().ToArray();
+            if (parametros.Length > 0)
+            {
+                this.Numero = Convert.ToInt32(parametros[1].Replace("|", " "));
+                this.Nombre = parametros[2].Replace("|", " ");
+                this.Descripcion = parametros[3].Replace("|", " ");
+                this.Domicilio = parametros[4].Replace("|", " ");
+                this.Localidad = parametros[5].Replace("|", " ");
+                this.Rfc = parametros[6].Replace("|", " ");
+                this.Directorio = parametros[7].Replace("|", " ");
+                this.Logo = parametros[8].Replace("|", " ");
+                this.Activa = true; //Convert.ToBoolean(parametros[9].Replace("|", " "));
+                this.Equipo = parametros[10].Replace("|", " ");
+            }
+
+        }
+
+        public string[] RetornarParametros()
+        {
+
+            string[] parametros = Environment.GetCommandLineArgs().ToArray();
+            return parametros;
+
+        }
+        
     }
 }

@@ -17,3 +17,4 @@ C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\bin\Debug\Entidades.p
 C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\obj\Debug\Entidades.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\obj\Debug\Entidades.dll
 C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\obj\Debug\Entidades.pdb
+C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\bin\Debug\Entidades.dll.config

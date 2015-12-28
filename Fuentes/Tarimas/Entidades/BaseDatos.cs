@@ -5,44 +5,58 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Configuration;
 
-namespace Entidades
+namespace EntidadesTarima
 {
    public class BaseDatos
     {
 
-        private string cadenaConexionPrincipal;
-        private string cadenaConexionEmpresa;
+        private string cadenaConexionInformacion;
+        private string cadenaConexionEYE;
+        private string cadenaConexionCatalogo;
         public static SqlConnection conexionPrincipal = new SqlConnection();
-        public static SqlConnection conexionEmpresa = new SqlConnection();
-        //public static SqlConnection conexionPrincipal = new SqlConnection(ConfigurationManager.ConnectionStrings["conexionPrincipal"].ConnectionString);
-
-        public string CadenaConexionPrincipal
+        public static SqlConnection conexionEYE = new SqlConnection();
+        public static SqlConnection conexionCatalogo = new SqlConnection();
+        public string CadenaConexionInformacion
         {
-            get { return cadenaConexionPrincipal; }
-            set { cadenaConexionPrincipal = value; }
+            get { return cadenaConexionInformacion; }
+            set { cadenaConexionInformacion = value; }
         }
-        public string CadenaConexionEmpresa
+        public string CadenaConexionEYE
         {
-            get { return cadenaConexionEmpresa; }
-            set { cadenaConexionEmpresa = value; }
+            get { return cadenaConexionEYE; }
+            set { cadenaConexionEYE = value; }
         }
-              
-        public void AbrirConexionPrincipal()
+        public string CadenaConexionCatalogo
         {
+            get { return cadenaConexionCatalogo; }
+            set { cadenaConexionCatalogo = value; }
+        }       
 
-            this.CadenaConexionPrincipal = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionPrincipal);
-            conexionPrincipal.ConnectionString = this.CadenaConexionPrincipal;
-
-        }
-
-        public void AbrirConexionEmpresa()
+        public void AbrirConexionInformacion()
         {
 
-            this.CadenaConexionEmpresa = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionEmpresa);
-            conexionEmpresa.ConnectionString = this.CadenaConexionEmpresa;
+            this.CadenaConexionInformacion = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionInformacion);
+            conexionPrincipal.ConnectionString = this.CadenaConexionInformacion;
 
         }
-        
+
+        public void AbrirConexionEYE()
+        {
+
+            this.CadenaConexionEYE = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionEYE);
+            conexionEYE.ConnectionString = this.CadenaConexionEYE;
+
+        }
+
+        public void AbrirConexionCatalogo()
+        {
+
+            this.CadenaConexionEYE = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionCatalogo);
+            conexionEYE.ConnectionString = this.CadenaConexionCatalogo;
+
+        }
+
+ 
     }
     
 }

@@ -101,16 +101,6 @@
       <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -143,18 +133,18 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entidades\Entidades.csproj">
-      <Project>{1c8e7df5-4356-46eb-9ef5-ee4847c4b612}</Project>
-      <Name>Entidades</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Logica\Logica.csproj">
-      <Project>{ed839047-9626-412b-882c-d30c940ba6c3}</Project>
-      <Name>Logica</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Logo.ico" />
     <Content Include="Logo2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entidades\EntidadesTarima.csproj">
+      <Project>{1c8e7df5-4356-46eb-9ef5-ee4847c4b612}</Project>
+      <Name>EntidadesTarima</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logica\LogicaTarima.csproj">
+      <Project>{ed839047-9626-412b-882c-d30c940ba6c3}</Project>
+      <Name>LogicaTarima</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

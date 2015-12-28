@@ -296,7 +296,8 @@ namespace Escritorio
             {
                 if (LogicaTarima.Funciones.ValidarNumero(cantidadBultos) > 0)
                 {
-                    GuardarTarima();
+                    // Esto debe ir dentro de un for con un boton de guardado. Quitar de aquí.
+                    //GuardarTarima();
                 }
                 else
                 {
@@ -306,7 +307,7 @@ namespace Escritorio
             }
         }
 
-        private void GuardarTarima(DateTime fecha, int idProductor, int idLote, int idProducto, int idVariedad, int idEnvase, int idTamano, int idEtiqueta, double pesoBultos, int cantidadBultos)
+        private void GuardarTarima(DateTime fecha, int idProductor, int idLote, int idProducto, int idVariedad, int idEnvase, int idTamano, int idEtiqueta, double pesoBultos, int cantidadBultos, int orden)
         {
 
             tarima.FechaEmpaque = fecha;
@@ -317,8 +318,9 @@ namespace Escritorio
             tarima.IdEnvase = idEnvase;
             tarima.IdTamano = idTamano;
             tarima.IdEtiqueta = idEtiqueta;
-            tarima.PesoBultos = pesoBultos;
-
+            tarima.PesoBultos = pesoBultos;            
+            tarima.CantidadBultos = cantidadBultos;
+            tarima.Orden = orden;
             tarima.Guardar();
 
         }

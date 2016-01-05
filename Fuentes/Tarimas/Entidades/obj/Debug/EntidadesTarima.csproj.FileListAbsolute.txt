@@ -3,3 +3,8 @@ C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\bin\Debug\EntidadesTa
 C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\obj\Debug\EntidadesTarima.dll
 C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\obj\Debug\EntidadesTarima.pdb
 C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\obj\Debug\EntidadesTarima.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Entidades\bin\Debug\EntidadesTarima.dll
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Entidades\bin\Debug\EntidadesTarima.pdb
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Entidades\obj\Debug\EntidadesTarima.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Entidades\obj\Debug\EntidadesTarima.dll
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Entidades\obj\Debug\EntidadesTarima.pdb

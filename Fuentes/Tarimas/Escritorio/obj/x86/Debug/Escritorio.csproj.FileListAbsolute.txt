@@ -43,3 +43,17 @@ C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Escritorio\bin\x86\Debug\Entida
 C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Escritorio\bin\x86\Debug\LogicaTarima.pdb
 C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Escritorio\obj\x86\Debug\Tarimas.exe
 C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Escritorio\obj\x86\Debug\Tarimas.pdb
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\Tarimas.exe.config
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\Tarimas.exe
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\Tarimas.pdb
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\EntidadesTarima.dll
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\LogicaTarima.dll
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\EntidadesTarima.pdb
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\LogicaTarima.pdb
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Escritorio.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Escritorio.Principal.resources
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Escritorio.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Tarimas.exe.licenses
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Tarimas.exe
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Tarimas.pdb
+C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Principal.Properties.Resources.resources

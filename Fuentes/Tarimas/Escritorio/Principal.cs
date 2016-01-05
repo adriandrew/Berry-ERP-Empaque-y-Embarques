@@ -25,6 +25,7 @@ namespace Escritorio
         FarPoint.Win.Spread.CellType.TextCellType tipoTexto = new FarPoint.Win.Spread.CellType.TextCellType();
         FarPoint.Win.Spread.CellType.DateTimeCellType tipoFecha = new FarPoint.Win.Spread.CellType.DateTimeCellType();
         ProcessStartInfo ejecutarProgramaPrincipal = new ProcessStartInfo();
+        bool esGuardadoCorrecto = false;
 
         #region Eventos
 
@@ -37,6 +38,7 @@ namespace Escritorio
         {
 
             Centrar();
+            AsignarTooltips();
             ControlarSpread(spTarima);
             FormatearSpread();
             FormatearSpreadTarimas();
@@ -87,6 +89,20 @@ namespace Escritorio
 
         }
 
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+
+            GuardarTarima();
+            if (this.esGuardadoCorrecto)
+            {
+                LimpiarSpread();
+                string idProductor = spTarima.ActiveSheet.Cells[0, spTarima.ActiveSheet.Columns["idProductor"].Index].Text;
+                spTarima.ActiveSheet.Cells[0, spTarima.ActiveSheet.Columns["idTarima"].Index].Text = ObtenerIdTarimaConsecutiva(Convert.ToInt32(idProductor)).ToString();
+                spTarima.ActiveSheet.SetActiveCell(0, spTarima.ActiveSheet.Columns["idLote"].Index - 1);
+            }
+
+        }
+
         #endregion
 
         #region Metodos Privados
@@ -115,7 +131,7 @@ namespace Escritorio
 
             spTarima.ActiveSheetIndex = 0;
             spTarima.ActiveSheet.Columns.Count = 18;
-            spTarima.ActiveSheet.Columns[0].Tag = "fecha";
+            spTarima.ActiveSheet.Columns[0].Tag = "fechaEmpaque";
             spTarima.ActiveSheet.Columns[1].Tag = "idProductor";
             spTarima.ActiveSheet.Columns[2].Tag = "nombreProductor";
             spTarima.ActiveSheet.Columns[3].Tag = "idTarima";
@@ -133,7 +149,7 @@ namespace Escritorio
             spTarima.ActiveSheet.Columns[15].Tag = "nombreEtiqueta";
             spTarima.ActiveSheet.Columns[16].Tag = "pesoBultos";
             spTarima.ActiveSheet.Columns[17].Tag = "cantidadBultos";
-            spTarima.ActiveSheet.Columns["fecha"].Width = 90;
+            spTarima.ActiveSheet.Columns["fechaEmpaque"].Width = 90;
             spTarima.ActiveSheet.Columns["idProductor"].Width = 35;
             spTarima.ActiveSheet.Columns["nombreProductor"].Width = 150;
             spTarima.ActiveSheet.Columns["idTarima"].Width = 100;
@@ -151,7 +167,7 @@ namespace Escritorio
             spTarima.ActiveSheet.Columns["nombreEtiqueta"].Width = 150;
             spTarima.ActiveSheet.Columns["pesoBultos"].Width = 100;
             spTarima.ActiveSheet.Columns["cantidadBultos"].Width = 100;
-            spTarima.ActiveSheet.Columns["fecha"].CellType = tipoFecha;
+            spTarima.ActiveSheet.Columns["fechaEmpaque"].CellType = tipoFecha;
             spTarima.ActiveSheet.Columns["idProductor"].CellType = tipoEntero;
             spTarima.ActiveSheet.Columns["idTarima"].CellType = tipoEntero;
             spTarima.ActiveSheet.Columns["idLote"].CellType = tipoEntero;
@@ -162,7 +178,7 @@ namespace Escritorio
             spTarima.ActiveSheet.Columns["idEtiqueta"].CellType = tipoEntero;
             spTarima.ActiveSheet.Columns["pesoBultos"].CellType = tipoDoble;
             spTarima.ActiveSheet.Columns["cantidadBultos"].CellType = tipoEntero;
-            spTarima.ActiveSheet.ColumnHeader.Cells[0, spTarima.ActiveSheet.Columns["fecha"].Index].Value = "Fecha".ToUpper();
+            spTarima.ActiveSheet.ColumnHeader.Cells[0, spTarima.ActiveSheet.Columns["fechaEmpaque"].Index].Value = "Fecha".ToUpper();
             spTarima.ActiveSheet.ColumnHeader.Cells[0, spTarima.ActiveSheet.Columns["idProductor"].Index].Value = "No.".ToUpper();
             spTarima.ActiveSheet.ColumnHeader.Cells[0, spTarima.ActiveSheet.Columns["nombreProductor"].Index].Value = "Productor".ToUpper();
             spTarima.ActiveSheet.ColumnHeader.Cells[0, spTarima.ActiveSheet.Columns["idTarima"].Index].Value = "No. Tarima".ToUpper();
@@ -204,7 +220,7 @@ namespace Escritorio
 
             int filaActiva = spTarima.ActiveSheet.ActiveRowIndex;
             int columnaActiva = spTarima.ActiveSheet.ActiveColumnIndex;
-            string fecha = spTarima.ActiveSheet.Cells[filaActiva, spTarima.ActiveSheet.Columns["fecha"].Index].Text;
+            string fecha = spTarima.ActiveSheet.Cells[filaActiva, spTarima.ActiveSheet.Columns["fechaEmpaque"].Index].Text;
             string idProductor = spTarima.ActiveSheet.Cells[filaActiva, spTarima.ActiveSheet.Columns["idProductor"].Index].Text;
             string idLote = spTarima.ActiveSheet.Cells[filaActiva, spTarima.ActiveSheet.Columns["idLote"].Index].Text;
             string idProducto = spTarima.ActiveSheet.Cells[filaActiva, spTarima.ActiveSheet.Columns["idProducto"].Index].Text;
@@ -215,11 +231,11 @@ namespace Escritorio
             string pesoBultos = spTarima.ActiveSheet.Cells[filaActiva, spTarima.ActiveSheet.Columns["pesoBultos"].Index].Text;
             string cantidadBultos = spTarima.ActiveSheet.Cells[filaActiva, spTarima.ActiveSheet.Columns["cantidadBultos"].Index].Text; 
 
-            if (columnaActiva == spTarima.ActiveSheet.Columns["fecha"].Index)
+            if (columnaActiva == spTarima.ActiveSheet.Columns["fechaEmpaque"].Index)
             {
                 if (!LogicaTarima.Funciones.ValidarFecha(fecha))
                 { 
-                    spTarima.ActiveSheet.Cells[filaActiva, spTarima.ActiveSheet.Columns["fecha"].Index].Text = DateTime.Now.ToShortDateString();
+                    spTarima.ActiveSheet.Cells[filaActiva, spTarima.ActiveSheet.Columns["fechaEmpaque"].Index].Text = DateTime.Now.ToShortDateString();
                 }
             } 
             else if (columnaActiva == spTarima.ActiveSheet.Columns["idProductor"].Index)
@@ -234,6 +250,10 @@ namespace Escritorio
                     spTarima.ActiveSheet.Cells[filaActiva, spTarima.ActiveSheet.Columns["idProductor"].Index].Text = string.Empty;
                     spTarima.ActiveSheet.SetActiveCell(filaActiva, spTarima.ActiveSheet.Columns["idProductor"].Index - 1);
                 }
+
+            }
+            else if (columnaActiva == spTarima.ActiveSheet.Columns["idTarima"].Index)
+            {
 
             }
             else if (columnaActiva == spTarima.ActiveSheet.Columns["idLote"].Index)
@@ -306,25 +326,7 @@ namespace Escritorio
                 }
             }
         }
-
-        private void GuardarTarima(DateTime fecha, int idProductor, int idLote, int idProducto, int idVariedad, int idEnvase, int idTamano, int idEtiqueta, double pesoBultos, int cantidadBultos, int orden)
-        {
-
-            tarima.FechaEmpaque = fecha;
-            tarima.IdProductor = idProductor;
-            tarima.IdLote = idLote;
-            tarima.IdProducto = idProducto;
-            tarima.IdVariedad = idVariedad;
-            tarima.IdEnvase = idEnvase;
-            tarima.IdTamano = idTamano;
-            tarima.IdEtiqueta = idEtiqueta;
-            tarima.PesoBultos = pesoBultos;            
-            tarima.CantidadBultos = cantidadBultos;
-            tarima.Orden = orden;
-            tarima.Guardar();
-
-        }
-
+        
         private int ObtenerIdTarimaConsecutiva(int idProductor)
         {
 
@@ -355,7 +357,100 @@ namespace Escritorio
             this.Text += ": " + datosEmpresa.Numero + " - " + datosEmpresa.Nombre;
         }
 
+        private void AsignarTooltips()
+        {
+
+            ToolTip tp = new ToolTip();
+            tp.AutoPopDelay = 5000;
+            tp.InitialDelay = 0;
+            tp.ReshowDelay = 100;
+            tp.ShowAlways = true;
+            tp.SetToolTip(this.btnGuardar, "Guardar Tarima."); 
+
+        }
+
+        private void GuardarTarima()
+        { 
+            
+            for (int indice = 0; indice < spTarima.ActiveSheet.Rows.Count-1; indice++)
+			{
+                string id = spTarima.ActiveSheet.Cells[indice, spTarima.ActiveSheet.Columns["idTarima"].Index].Text;
+                string idProductor = spTarima.ActiveSheet.Cells[indice, spTarima.ActiveSheet.Columns["idProductor"].Index].Text;
+                string idEmbarcador = "0";
+                string idCliente = "0";
+                string idProducto = spTarima.ActiveSheet.Cells[indice, spTarima.ActiveSheet.Columns["idProducto"].Index].Text;
+                string idVariedad = spTarima.ActiveSheet.Cells[indice, spTarima.ActiveSheet.Columns["idVariedad"].Index].Text;
+                string idEnvase = spTarima.ActiveSheet.Cells[indice, spTarima.ActiveSheet.Columns["idEnvase"].Index].Text;
+                string idTamano = spTarima.ActiveSheet.Cells[indice, spTarima.ActiveSheet.Columns["idTamano"].Index].Text;
+                string idEtiqueta = spTarima.ActiveSheet.Cells[indice, spTarima.ActiveSheet.Columns["idEtiqueta"].Index].Text;
+                string idLote = spTarima.ActiveSheet.Cells[indice, spTarima.ActiveSheet.Columns["idLote"].Index].Text;
+                string cantidadBultos = spTarima.ActiveSheet.Cells[indice, spTarima.ActiveSheet.Columns["cantidadBultos"].Index].Text;
+                string fechaEmpaque = spTarima.ActiveSheet.Cells[indice, spTarima.ActiveSheet.Columns["fechaEmpaque"].Index].Text;
+                string fechaEmbarque = string.Empty;
+                string idEmbarque = "0";
+                string tipoEmbarque = "0";
+                bool chep = false;
+                string pesoBultos = spTarima.ActiveSheet.Cells[indice, spTarima.ActiveSheet.Columns["pesoBultos"].Index].Text;
+                string ordenEmbarque = "0";
+                bool sobrante = false;
+                bool subidaTrazabilidad = false;
+                string posicion = string.Empty;
+                string numeroHandHeld = "0";
+                string nombreHandHeld = string.Empty;
+                string temperatura = "0";
+                bool estaEmbarcado = false;
+                if (LogicaTarima.Funciones.ValidarNumero(id) > 0 && LogicaTarima.Funciones.ValidarNumero(idProductor) > 0 && LogicaTarima.Funciones.ValidarNumero(idProducto) > 0 && LogicaTarima.Funciones.ValidarNumero(idVariedad) > 0 && LogicaTarima.Funciones.ValidarNumero(idEnvase) > 0 && LogicaTarima.Funciones.ValidarNumero(idTamano) > 0 && LogicaTarima.Funciones.ValidarNumero(idEtiqueta) > 0 && LogicaTarima.Funciones.ValidarNumero(idLote) > 0 && LogicaTarima.Funciones.ValidarNumero(cantidadBultos) > 0 && LogicaTarima.Funciones.ValidarDouble(pesoBultos) > 0 && LogicaTarima.Funciones.ValidarFecha(fechaEmpaque))
+                {
+                    tarima.Id = Convert.ToInt32(id);
+                    tarima.IdProductor = Convert.ToInt32(idProductor);
+                    tarima.IdEmbarcador = Convert.ToInt32(idEmbarcador);
+                    tarima.IdCliente = Convert.ToInt32(idCliente);
+                    tarima.IdProducto = Convert.ToInt32(idProducto);
+                    tarima.IdVariedad = Convert.ToInt32(idVariedad);
+                    tarima.IdEnvase = Convert.ToInt32(idEnvase);
+                    tarima.IdTamano = Convert.ToInt32(idTamano);
+                    tarima.IdEtiqueta = Convert.ToInt32(idEtiqueta);
+                    tarima.IdLote = Convert.ToInt32(idLote);
+                    tarima.CantidadBultos = Convert.ToInt32(cantidadBultos);
+                    tarima.FechaEmpaque = Convert.ToDateTime(fechaEmpaque);
+                    tarima.FechaEmbarque = Convert.ToDateTime("01/01/2001");
+                    tarima.IdEmbarque = Convert.ToInt32(idEmbarque);
+                    tarima.TipoEmbarque = Convert.ToInt32(tipoEmbarque);
+                    tarima.Chep = chep;
+                    tarima.PesoBultos = Convert.ToDouble(pesoBultos);
+                    tarima.OrdenEmbarque = Convert.ToInt32(ordenEmbarque);
+                    tarima.Sobrante = sobrante;
+                    tarima.Orden = indice;
+                    tarima.SubidaTrazabilidad = subidaTrazabilidad;
+                    tarima.Posicion = posicion;
+                    tarima.NumeroHandHeld = Convert.ToInt32(numeroHandHeld);
+                    tarima.NombreHandHeld = nombreHandHeld;
+                    tarima.Temperatura = Convert.ToInt32(temperatura);
+                    tarima.EstaEmbarcado = estaEmbarcado;
+                    tarima.Guardar();
+                    this.esGuardadoCorrecto = true;
+                }
+                else
+                {
+                    if (indice == 0)
+                    {
+                        MessageBox.Show("Favor de rellenar todos los datos. No se puede guardar la tarima.", "Faltan datos.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        this.esGuardadoCorrecto = false;
+                    } 
+                }
+			}
+
+        }
+
+        private void LimpiarSpread()
+        {
+
+            spTarima.ActiveSheet.ClearRange(0, spTarima.ActiveSheet.Columns["idTarima"].Index, spTarima.ActiveSheet.Rows.Count-1, spTarima.ActiveSheet.Columns.Count-1, true);
+
+        }
+
         #endregion
         
     }
+
 }

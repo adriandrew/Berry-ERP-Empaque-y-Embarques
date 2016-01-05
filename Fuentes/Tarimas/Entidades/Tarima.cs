@@ -174,7 +174,7 @@ namespace EntidadesTarima
             {
                 SqlCommand comando = new SqlCommand();
                 comando.Connection = BaseDatos.conexionEYE;
-                comando.CommandText = "INSERT INTO Tarima VALUES (@id, @idProductor, @idEmbarcador, @idCliente, @idProducto, @idVariedad, @idEnvase, @idTamano, @idEtiqueta, @idLote, @cantidadBultos, @fechaEmpaque, @fechaEmbarque, @idEmbarque, @tipoEmbarque, @chep, @peso, @ordenEmbarque, @sobrante, @orden, @subidaTrazabilidad, @posicion, @numeroHandHeld, @nombreHandHeld, @temperatura, @estaEmbarcado)";
+                comando.CommandText = "INSERT INTO Tarima VALUES (@id, @idProductor, @idEmbarcador, @idCliente, @idProducto, @idVariedad, @idEnvase, @idTamano, @idEtiqueta, @idLote, @cantidadBultos, @fechaEmpaque, @fechaEmbarque, @idEmbarque, @tipoEmbarque, @chep, @pesoBultos, @ordenEmbarque, @sobrante, @orden, @subidaTrazabilidad, @posicion, @numeroHandHeld, @nombreHandHeld, @temperatura, @estaEmbarcado)";
                 comando.Parameters.AddWithValue("@id", this.Id);
                 comando.Parameters.AddWithValue("@idProductor", this.IdProductor);
                 comando.Parameters.AddWithValue("@idEmbarcador", this.IdEmbarcador);
@@ -191,7 +191,7 @@ namespace EntidadesTarima
                 comando.Parameters.AddWithValue("@idEmbarque", this.IdEmbarque);
                 comando.Parameters.AddWithValue("@tipoEmbarque", this.TipoEmbarque);
                 comando.Parameters.AddWithValue("@chep", this.Chep);
-                comando.Parameters.AddWithValue("@peso", this.PesoBultos);
+                comando.Parameters.AddWithValue("@pesoBultos", this.PesoBultos);
                 comando.Parameters.AddWithValue("@ordenEmbarque", this.OrdenEmbarque);
                 comando.Parameters.AddWithValue("@sobrante", this.Sobrante);
                 comando.Parameters.AddWithValue("@orden", this.Orden);
@@ -239,7 +239,7 @@ namespace EntidadesTarima
                     }
                     else
                     {
-                        this.Id = Convert.ToInt32(dataReader["Id"].ToString());                    
+                        this.Id = Convert.ToInt32(dataReader["Id"].ToString()) + 1;                    
                     }
                 }                
                 BaseDatos.conexionEYE.Close();

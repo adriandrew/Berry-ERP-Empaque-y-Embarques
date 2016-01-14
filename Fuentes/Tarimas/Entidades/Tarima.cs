@@ -34,8 +34,7 @@ namespace EntidadesTarima
         private int numeroHandHeld;
         private string nombreHandHeld;
         private double temperatura;
-        private bool estaEmbarcado;
-        
+        private bool estaEmbarcado;        
         public int Id
         {
             get { return id; }
@@ -216,6 +215,140 @@ namespace EntidadesTarima
 
         }
 
+        public void Editar()
+        {
+
+            try
+            {
+                SqlCommand comando = new SqlCommand();
+                comando.Connection = BaseDatos.conexionEYE;
+                comando.CommandText = "UPDATE Tarima SET Id=@id, IdProductor=@idProductor, IdEmbarcador=@idEmbarcador, IdCliente=@idCliente, IdProducto=@idProducto, IdVariedad=@idVariedad, IdEnvase=@idEnvase, IdTamano=@idTamano, IdEtiqueta=@idEtiqueta, IdLote=@idLote, CantidadBultos=@cantidadBultos, FechaEmpaque=@fechaEmpaque, FechaEmbarque=@fechaEmbarque, IdEmbarque=@idEmbarque, TipoEmbarque=@tipoEmbarque, Chep=@chep, PesoBultos=@pesoBultos, OrdenEmbarque=@ordenEmbarque, Sobrante=@sobrante, Orden=@orden, SubidaTrazabilidad=@subidaTrazabilidad, Posicion=@posicion, NumeroHandHeld=@numeroHandHeld, NombreHandHeld=@nombreHandHeld, Temperatura=@temperatura, EstaEmbarcado=@estaEmbarcado";
+                comando.Parameters.AddWithValue("@id", this.Id);
+                comando.Parameters.AddWithValue("@idProductor", this.IdProductor);
+                comando.Parameters.AddWithValue("@idEmbarcador", this.IdEmbarcador);
+                comando.Parameters.AddWithValue("@idCliente", this.IdCliente);
+                comando.Parameters.AddWithValue("@idProducto", this.IdProducto);
+                comando.Parameters.AddWithValue("@idVariedad", this.IdVariedad);
+                comando.Parameters.AddWithValue("@idEnvase", this.IdEnvase);
+                comando.Parameters.AddWithValue("@idTamano", this.IdTamano);
+                comando.Parameters.AddWithValue("@idEtiqueta", this.IdEtiqueta);
+                comando.Parameters.AddWithValue("@idLote", this.IdLote);
+                comando.Parameters.AddWithValue("@cantidadBultos", this.CantidadBultos);
+                comando.Parameters.AddWithValue("@fechaEmpaque", this.FechaEmpaque);
+                comando.Parameters.AddWithValue("@fechaEmbarque", this.FechaEmbarque);
+                comando.Parameters.AddWithValue("@idEmbarque", this.IdEmbarque);
+                comando.Parameters.AddWithValue("@tipoEmbarque", this.TipoEmbarque);
+                comando.Parameters.AddWithValue("@chep", this.Chep);
+                comando.Parameters.AddWithValue("@pesoBultos", this.PesoBultos);
+                comando.Parameters.AddWithValue("@ordenEmbarque", this.OrdenEmbarque);
+                comando.Parameters.AddWithValue("@orden", this.Orden);
+                comando.Parameters.AddWithValue("@sobrante", this.Sobrante);
+                comando.Parameters.AddWithValue("@subidaTrazabilidad", this.SubidaTrazabilidad);
+                comando.Parameters.AddWithValue("@posicion", this.Posicion);
+                comando.Parameters.AddWithValue("@numeroHandHeld", this.NumeroHandHeld);
+                comando.Parameters.AddWithValue("@nombreHandHeld", this.NombreHandHeld);
+                comando.Parameters.AddWithValue("@temperatura", this.Temperatura);
+                comando.Parameters.AddWithValue("@estaEmbarcado", this.EstaEmbarcado);
+                BaseDatos.conexionEYE.Open();
+                comando.ExecuteNonQuery();
+                BaseDatos.conexionEYE.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                BaseDatos.conexionEYE.Close();
+            }
+
+        }
+
+        public void Eliminar()
+        {
+
+            try
+            {
+                SqlCommand comando = new SqlCommand();
+                comando.Connection = BaseDatos.conexionEYE;
+                comando.CommandText = "DELETE FROM Tarima WHERE Id=@id AND IdProductor=@idProductor AND IdCliente=@idCliente";
+                comando.Parameters.AddWithValue("@id", this.Id);
+                comando.Parameters.AddWithValue("@idProductor", this.IdProductor);
+                comando.Parameters.AddWithValue("@idCliente", this.IdCliente);
+                BaseDatos.conexionEYE.Open();
+                comando.ExecuteNonQuery();
+                BaseDatos.conexionEYE.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                BaseDatos.conexionEYE.Close();
+            }
+
+        }
+
+        public List<Tarima> ObtenerListado()
+        {
+
+            List<Tarima> lista = new List<Tarima>();
+            try
+            {
+                SqlCommand comando = new SqlCommand();
+                comando.Connection = BaseDatos.conexionEYE;
+                comando.CommandText = "SELECT * FROM Tarima WHERE Id=@id AND IdProductor=@idProductor";
+                comando.Parameters.AddWithValue("@id", this.Id);
+                comando.Parameters.AddWithValue("@idProductor", this.IdProductor);
+                BaseDatos.conexionEYE.Open();
+                SqlDataReader dataReader = comando.ExecuteReader();
+                Tarima tarima;
+                while (dataReader.Read())
+                {
+                    tarima = new Tarima();
+                    tarima.Id = Convert.ToInt32(dataReader["id"]);
+                    tarima.IdProductor = Convert.ToInt32(dataReader["idProductor"]);
+                    tarima.IdEmbarcador = Convert.ToInt32(dataReader["idEmbarcador"]);
+                    tarima.IdCliente = Convert.ToInt32(dataReader["idCliente"]);
+                    tarima.IdProducto = Convert.ToInt32(dataReader["idProducto"]);
+                    tarima.IdVariedad = Convert.ToInt32(dataReader["idVariedad"]);
+                    tarima.IdEnvase = Convert.ToInt32(dataReader["idEnvase"]);
+                    tarima.IdTamano = Convert.ToInt32(dataReader["idTamano"]);
+                    tarima.IdEtiqueta = Convert.ToInt32(dataReader["idEtiqueta"]);
+                    tarima.IdLote = Convert.ToInt32(dataReader["idLote"]);
+                    tarima.CantidadBultos = Convert.ToInt32(dataReader["cantidadBultos"]);
+                    tarima.FechaEmpaque = Convert.ToDateTime(dataReader["fechaEmpaque"]);
+                    tarima.FechaEmbarque = Convert.ToDateTime(dataReader["fechaEmbarque"]);
+                    tarima.IdEmbarque = Convert.ToInt32(dataReader["idEmbarque"]);
+                    tarima.TipoEmbarque = Convert.ToInt32(dataReader["tipoEmbarque"]);
+                    tarima.Chep = Convert.ToBoolean(dataReader["chep"]);
+                    tarima.PesoBultos = Convert.ToDouble(dataReader["pesoBultos"]);
+                    tarima.OrdenEmbarque = Convert.ToInt32(dataReader["ordenEmbarque"]);
+                    tarima.Orden = Convert.ToInt32(dataReader["orden"]);
+                    tarima.Sobrante = Convert.ToBoolean(dataReader["sobrante"]);
+                    tarima.SubidaTrazabilidad = Convert.ToBoolean(dataReader["subidaTrazabilidad"]);
+                    tarima.Posicion = dataReader["posicion"].ToString();
+                    tarima.NumeroHandHeld = Convert.ToInt32(dataReader["numeroHandHeld"]);
+                    tarima.NombreHandHeld = dataReader["nombreHandHeld"].ToString();
+                    tarima.Temperatura = Convert.ToDouble(dataReader["temperatura"]);
+                    tarima.EstaEmbarcado = Convert.ToBoolean(dataReader["estaEmbarcado"]);
+                    lista.Add(tarima);
+                }
+                BaseDatos.conexionEYE.Close();
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                BaseDatos.conexionEYE.Close();
+            }
+
+        }
+
         public int ObtenerIdTarimaConsecutiva()
         {
 
@@ -255,7 +388,43 @@ namespace EntidadesTarima
             }
 
         }
-        
+
+        public bool ValidarPorNumero()
+        {
+
+            try
+            {
+                bool resultado = false;
+                SqlCommand comando = new SqlCommand();
+                comando.Connection = BaseDatos.conexionEYE;
+                comando.CommandText = "SELECT * FROM Tarima WHERE Id=@id AND IdProductor=@idProductor AND IdCliente=@idCliente";
+                comando.Parameters.AddWithValue("@id", this.Id);
+                comando.Parameters.AddWithValue("@idProductor", this.IdProductor);
+                comando.Parameters.AddWithValue("@idCliente", this.IdCliente);
+                BaseDatos.conexionEYE.Open();
+                SqlDataReader dataReader = comando.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    resultado = true;
+                }
+                else
+                {
+                    resultado = false;
+                }
+                BaseDatos.conexionEYE.Close();
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                BaseDatos.conexionEYE.Close();
+            }
+
+        }
+
     }
 }
      

@@ -57,3 +57,17 @@ C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Tarimas.
 C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Tarimas.exe
 C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Tarimas.pdb
 C:\Users\Administrator\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Principal.Properties.Resources.resources
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\Tarimas.exe.config
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\Tarimas.exe
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\Tarimas.pdb
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\EntidadesTarima.dll
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\LogicaTarima.dll
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\EntidadesTarima.pdb
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\bin\x86\Debug\LogicaTarima.pdb
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Escritorio.csprojResolveAssemblyReference.cache
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Escritorio.Principal.resources
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Principal.Properties.Resources.resources
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Escritorio.csproj.GenerateResource.Cache
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Tarimas.exe.licenses
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Tarimas.exe
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Debug\Tarimas.pdb

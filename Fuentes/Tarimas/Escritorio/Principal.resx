@@ -117,29 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="spTarima_Sheet1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnGuardar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         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
-        YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAC/ElEQVR4XuXbUU4cMRCEYZQL
-        cgTOuXfIXTjCMBVloq3yD7aRHDWeh++hLfd21zAPCLEvx3HcGh7eCR7eCR7eSXPweDzeTu+n4wfS3q8n
-        5UCZtzk4L/3U8M/0Q2zCS+ZtDs5L9IGjfv1HNP8ZPoTM2xycl+jDRtGiq9D81DyEzNscnJfog0bRoqvQ
-        fGIPIfM2B3+bvosWHfH7C3RfaP5n/j2EzNscPDV9By06goJf6L7Q/K/8eQiZtzmIplm06AgKfqH7QvN7
-        XjOvFQJNM2jRERT8QveF5ve8Z14rBJpm0KIjKPiF7gvN78q8Vgg1TaBFR1DwC90Xmt+Vea0QappAi46g
-        4Be6LzS/K/NaIdQ0gRYdQcEvdF9oflfmtUKoaQItOoKCX+i+0PyuzGuFUNMEWnQEBb/QfaH5XZnXCqGm
-        CbToCAp+oftC87syrxVCTRNo0VVoflfmtUKoaQItugrN78q8Vgg1TaBFV6H5XZnXCqGmCbToKjS/K/Na
-        IdS0k8xrhVDTTjKvFUJNO8m8Vgg17STzWiHUtJPMa4VQ004yrxVCTTvJvFYINe0k81oh1LSTzGuFUBOg
-        38wqoF1N5rVCqAnQ8ApoV5N5rRBqAjS8AtrVZF4rhJoADa+AdjWZ1wqhJkDDK6BdTea1QqgJ0PAKaFeT
-        ea0QagI0XOhveivQbKFdTea1QqgJ0PAKaFeTea0QagI0vALa1WReK4SaAA0Xel1XoNlCu5rMa4VQE6Dh
-        FdCuJvNaIdQEaHgFtKvJvFYINQEaLvS6rkCzhXY1mdcKoSZAwyugXU3mtUKoCdDwCmhXk3mtEGoCNFzo
-        dV2BZgvtajKvFUJNgIZXQLuazGuFUBOg4RXQribzWiHUBGi40Ou6As0W2tVkXiuEmgANr4B2NZnXCqEm
-        QMMroF1N5rVCqAnQ8ApoV5N5rRBqAjS8AtrVZF4rhJoADa+AdjWZ1wqhJkDDK6BdTea1Qs5LO3xp6jND
-        /y2uLxbs+BCU6S3zWnFHeHgneHgneHgfx8sHz+3um7p6X1sAAAAASUVORK5CYII=
+        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
 </value>
   </data>
-  <metadata name="spTarima_Sheet1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAEBAAAAAAIABoBAAAZgAAACAgAAAAACAAqBAAAM4EAAAwMAAAAAAgAKglAAB2FQAAQEAAAAAA

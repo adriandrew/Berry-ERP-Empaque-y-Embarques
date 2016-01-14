@@ -8,3 +8,7 @@ C:\Users\Administrator\Desktop\Fuentes\Tarimas\Entidades\bin\Debug\EntidadesTari
 C:\Users\Administrator\Desktop\Fuentes\Tarimas\Entidades\obj\Debug\EntidadesTarima.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Desktop\Fuentes\Tarimas\Entidades\obj\Debug\EntidadesTarima.dll
 C:\Users\Administrator\Desktop\Fuentes\Tarimas\Entidades\obj\Debug\EntidadesTarima.pdb
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Entidades\bin\Debug\EntidadesTarima.dll
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Entidades\bin\Debug\EntidadesTarima.pdb
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Entidades\obj\Debug\EntidadesTarima.dll
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Entidades\obj\Debug\EntidadesTarima.pdb

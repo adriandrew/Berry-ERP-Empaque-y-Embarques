@@ -55,8 +55,7 @@ namespace EntidadesTarima
             conexionEYE.ConnectionString = this.CadenaConexionCatalogo;
 
         }
-
- 
+        
     }
     
 }

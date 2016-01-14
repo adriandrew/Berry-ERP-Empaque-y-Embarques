@@ -30,14 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Principal));
             this.pnlEmpresas = new System.Windows.Forms.Panel();
-            this.spTarima = new FarPoint.Win.Spread.FpSpread();
-            this.spTarima_Sheet1 = new FarPoint.Win.Spread.SheetView();
             this.panelOpciones = new System.Windows.Forms.Panel();
             this.btnGuardar = new System.Windows.Forms.Button();
+            this.spTarima = new FarPoint.Win.Spread.FpSpread();
+            this.spTarima_Sheet1 = new FarPoint.Win.Spread.SheetView();
             this.pnlEmpresas.SuspendLayout();
+            this.panelOpciones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spTarima)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spTarima_Sheet1)).BeginInit();
-            this.panelOpciones.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlEmpresas
@@ -46,35 +46,16 @@
             this.pnlEmpresas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pnlEmpresas.Controls.Add(this.panelOpciones);
             this.pnlEmpresas.Controls.Add(this.spTarima);
-            this.pnlEmpresas.Location = new System.Drawing.Point(2, 2);
+            this.pnlEmpresas.Location = new System.Drawing.Point(2, 0);
             this.pnlEmpresas.Name = "pnlEmpresas";
-            this.pnlEmpresas.Size = new System.Drawing.Size(1032, 409);
+            this.pnlEmpresas.Size = new System.Drawing.Size(1032, 319);
             this.pnlEmpresas.TabIndex = 2;
-            // 
-            // spTarima
-            // 
-            this.spTarima.AccessibleDescription = "";
-            this.spTarima.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded;
-            this.spTarima.Location = new System.Drawing.Point(12, 13);
-            this.spTarima.Name = "spTarima";
-            this.spTarima.Sheets.AddRange(new FarPoint.Win.Spread.SheetView[] {
-            this.spTarima_Sheet1});
-            this.spTarima.Size = new System.Drawing.Size(1007, 329);
-            this.spTarima.TabIndex = 1;
-            this.spTarima.VerticalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded;
-            this.spTarima.DialogKey += new FarPoint.Win.Spread.DialogKeyEventHandler(this.spTarima_DialogKey);
-            this.spTarima.KeyDown += new System.Windows.Forms.KeyEventHandler(this.spTarimas_KeyDown);
-            // 
-            // spTarima_Sheet1
-            // 
-            this.spTarima_Sheet1.Reset();
-            spTarima_Sheet1.SheetName = "Sheet1";
             // 
             // panelOpciones
             // 
             this.panelOpciones.BackColor = System.Drawing.Color.White;
             this.panelOpciones.Controls.Add(this.btnGuardar);
-            this.panelOpciones.Location = new System.Drawing.Point(0, 348);
+            this.panelOpciones.Location = new System.Drawing.Point(0, 256);
             this.panelOpciones.Name = "panelOpciones";
             this.panelOpciones.Size = new System.Drawing.Size(1032, 61);
             this.panelOpciones.TabIndex = 2;
@@ -91,12 +72,31 @@
             this.btnGuardar.UseVisualStyleBackColor = false;
             this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
+            // spTarima
+            // 
+            this.spTarima.AccessibleDescription = "";
+            this.spTarima.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded;
+            this.spTarima.Location = new System.Drawing.Point(13, 12);
+            this.spTarima.Name = "spTarima";
+            this.spTarima.Sheets.AddRange(new FarPoint.Win.Spread.SheetView[] {
+            this.spTarima_Sheet1});
+            this.spTarima.Size = new System.Drawing.Size(1007, 238);
+            this.spTarima.TabIndex = 1;
+            this.spTarima.VerticalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded;
+            this.spTarima.DialogKey += new FarPoint.Win.Spread.DialogKeyEventHandler(this.spTarima_DialogKey);
+            this.spTarima.KeyDown += new System.Windows.Forms.KeyEventHandler(this.spTarimas_KeyDown);
+            // 
+            // spTarima_Sheet1
+            // 
+            this.spTarima_Sheet1.Reset();
+            spTarima_Sheet1.SheetName = "Sheet1";
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1034, 411);
+            this.ClientSize = new System.Drawing.Size(1034, 318);
             this.Controls.Add(this.pnlEmpresas);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Principal";
@@ -104,9 +104,9 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Principal_FormClosed);
             this.Load += new System.EventHandler(this.Principal_Load);
             this.pnlEmpresas.ResumeLayout(false);
+            this.panelOpciones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.spTarima)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spTarima_Sheet1)).EndInit();
-            this.panelOpciones.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

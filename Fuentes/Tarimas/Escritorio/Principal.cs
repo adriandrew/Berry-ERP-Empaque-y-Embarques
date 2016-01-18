@@ -45,7 +45,7 @@ namespace Escritorio
             //string[] parametros = datosEmpresa.RetornarParametros();
             //for (int i = 1; i <= parametros.Length - 1; i++)
             //{
-            //    MessageBox.Show(parametros[i].Replace("|", " "));
+            //    MessageBox.Show(i +": "+ parametros[i].Replace("|", " "));
             //}            
             ConfigurarConexiones();
             CargarTitulosEmpresa();
@@ -77,7 +77,7 @@ namespace Escritorio
                 int columnaActiva = spTarima.ActiveSheet.ActiveColumnIndex;
                 if (columnaActiva == spTarima.ActiveSheet.Columns["idProductor"].Index)
                 {
-                    new Escritorio.Catalogos().opcionSeleccionada = (int)LogicaTarima.NumeracionCatalogos.Numeracion.productor;
+                     Catalogos.opcionSeleccionada = (int)LogicaTarima.NumeracionCatalogos.Numeracion.productor;
                     new Escritorio.Catalogos().Show();
                 }
             }
@@ -373,17 +373,20 @@ namespace Escritorio
         private void ConfigurarConexiones()
         {
 
-            bool esPrueba = true;
+            bool esPrueba = false;
             if (esPrueba)
             {
                 baseDatos.CadenaConexionEYE = "C:\\Berry\\BD\\PVE\\EYE.mdf";
+                baseDatos.CadenaConexionCatalogo = "C:\\Berry\\BD\\PVE\\Catalogos.mdf";
             }
             else
             {
                 datosEmpresa.ObtenerParametrosInformacionEmpresa();
-                baseDatos.CadenaConexionEYE = datosEmpresa.Directorio;
+                baseDatos.CadenaConexionEYE = datosEmpresa.Directorio + "\\EYE.mdf";
+                baseDatos.CadenaConexionCatalogo = datosEmpresa.Directorio + "\\Catalogos.mdf";                
             }
-            baseDatos.AbrirConexionEYE(); 
+            baseDatos.AbrirConexionEYE();
+            baseDatos.AbrirConexionCatalogo(); 
 
         }
 

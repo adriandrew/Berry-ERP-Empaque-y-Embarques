@@ -4,6 +4,5 @@ C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\obj\Release\Entidades
 C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Entidades\obj\Release\EntidadesTarima.pdb
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Entidades\bin\Release\EntidadesTarima.dll
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Entidades\bin\Release\EntidadesTarima.pdb
-C:\Users\Andrew\Desktop\Fuentes\Tarimas\Entidades\obj\Release\EntidadesTarima.csprojResolveAssemblyReference.cache
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Entidades\obj\Release\EntidadesTarima.dll
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Entidades\obj\Release\EntidadesTarima.pdb

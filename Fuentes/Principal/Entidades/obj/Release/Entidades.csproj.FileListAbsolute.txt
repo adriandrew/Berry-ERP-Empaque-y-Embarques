@@ -6,3 +6,7 @@ C:\Users\Administrator\Desktop\Berry EYE\Principal\Entidades\bin\Release\Entidad
 C:\Users\Administrator\Desktop\Berry EYE\Principal\Entidades\bin\Release\Entidades.pdb
 C:\Users\Administrator\Desktop\Berry EYE\Principal\Entidades\obj\Release\Entidades.dll
 C:\Users\Administrator\Desktop\Berry EYE\Principal\Entidades\obj\Release\Entidades.pdb
+C:\Users\Andrew\Desktop\Fuentes\Principal\Entidades\bin\Release\Entidades.dll
+C:\Users\Andrew\Desktop\Fuentes\Principal\Entidades\bin\Release\Entidades.pdb
+C:\Users\Andrew\Desktop\Fuentes\Principal\Entidades\obj\Release\Entidades.dll
+C:\Users\Andrew\Desktop\Fuentes\Principal\Entidades\obj\Release\Entidades.pdb

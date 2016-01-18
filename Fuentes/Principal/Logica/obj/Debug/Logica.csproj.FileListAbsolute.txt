@@ -7,3 +7,7 @@ C:\Users\Administrator\Desktop\Berry EYE\Principal\Logica\bin\Debug\Logica.dll
 C:\Users\Administrator\Desktop\Berry EYE\Principal\Logica\bin\Debug\Logica.pdb
 C:\Users\Administrator\Desktop\Berry EYE\Principal\Logica\obj\Debug\Logica.dll
 C:\Users\Administrator\Desktop\Berry EYE\Principal\Logica\obj\Debug\Logica.pdb
+C:\Users\Andrew\Desktop\Fuentes\Principal\Logica\bin\Debug\Logica.dll
+C:\Users\Andrew\Desktop\Fuentes\Principal\Logica\bin\Debug\Logica.pdb
+C:\Users\Andrew\Desktop\Fuentes\Principal\Logica\obj\Debug\Logica.dll
+C:\Users\Andrew\Desktop\Fuentes\Principal\Logica\obj\Debug\Logica.pdb

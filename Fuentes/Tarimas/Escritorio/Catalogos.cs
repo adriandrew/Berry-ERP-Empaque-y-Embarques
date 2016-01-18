@@ -12,7 +12,8 @@ namespace Escritorio
     public partial class Catalogos : Form
     {
 
-        public int opcionSeleccionada;
+        EntidadesTarima.Productor productor = new EntidadesTarima.Productor();
+        public static int opcionSeleccionada;
 
         public Catalogos()
         {
@@ -22,17 +23,17 @@ namespace Escritorio
         private void Catalogos_Load(object sender, EventArgs e)
         {
 
-            if (this.opcionSeleccionada == (int)LogicaTarima.NumeracionCatalogos.Numeracion.productor)
+            if (Catalogos.opcionSeleccionada == (int)LogicaTarima.NumeracionCatalogos.Numeracion.productor)
             {
-                
+                CargarProductores();   
             }
 
         }
 
         private void CargarProductores() 
         {
-            
-            
+
+            this.spCatalogos.DataSource = productor.ObtenerListado();
 
         }
 

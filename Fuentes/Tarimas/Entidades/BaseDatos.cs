@@ -13,7 +13,7 @@ namespace EntidadesTarima
         private string cadenaConexionInformacion;
         private string cadenaConexionEYE;
         private string cadenaConexionCatalogo;
-        public static SqlConnection conexionPrincipal = new SqlConnection();
+        public static SqlConnection conexionInformacion = new SqlConnection();
         public static SqlConnection conexionEYE = new SqlConnection();
         public static SqlConnection conexionCatalogo = new SqlConnection();
         public string CadenaConexionInformacion
@@ -36,7 +36,7 @@ namespace EntidadesTarima
         {
 
             this.CadenaConexionInformacion = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionInformacion);
-            conexionPrincipal.ConnectionString = this.CadenaConexionInformacion;
+            conexionInformacion.ConnectionString = this.CadenaConexionInformacion;
 
         }
 
@@ -51,8 +51,8 @@ namespace EntidadesTarima
         public void AbrirConexionCatalogo()
         {
 
-            this.CadenaConexionEYE = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionCatalogo);
-            conexionEYE.ConnectionString = this.CadenaConexionCatalogo;
+            this.CadenaConexionCatalogo = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionCatalogo);
+            conexionCatalogo.ConnectionString = this.CadenaConexionCatalogo;
 
         }
         

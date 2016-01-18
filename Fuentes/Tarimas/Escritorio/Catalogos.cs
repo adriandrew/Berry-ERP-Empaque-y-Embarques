@@ -21,11 +21,11 @@ namespace Escritorio
 
         private void Catalogos_Load(object sender, EventArgs e)
         {
-            
-            //if (this.opcionSeleccionada = )
-            //{
+
+            if (this.opcionSeleccionada == (int)LogicaTarima.NumeracionCatalogos.Numeracion.productor)
+            {
                 
-            //}
+            }
 
         }
 

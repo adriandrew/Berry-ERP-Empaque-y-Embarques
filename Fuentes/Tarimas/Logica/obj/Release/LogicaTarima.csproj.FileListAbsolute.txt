@@ -4,5 +4,6 @@ C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Logica\obj\Release\LogicaTarima
 C:\Users\Administrator\Desktop\Berry EYE\Tarimas\Logica\obj\Release\LogicaTarima.pdb
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Logica\bin\Release\LogicaTarima.dll
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Logica\bin\Release\LogicaTarima.pdb
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Logica\obj\Release\LogicaTarima.csprojResolveAssemblyReference.cache
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Logica\obj\Release\LogicaTarima.dll
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Logica\obj\Release\LogicaTarima.pdb

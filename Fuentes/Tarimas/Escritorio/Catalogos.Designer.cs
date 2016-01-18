@@ -1,4 +1,4 @@
-﻿namespace Principal
+﻿namespace Escritorio
 {
     partial class Catalogos
     {

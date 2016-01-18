@@ -47,7 +47,7 @@ C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Escritorio.cs
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Interop.FPSpreadADO.dll
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\AxInterop.FPSpreadADO.dll
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Escritorio.csproj.ResolveComReference.cache
-C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Principal.Catalogos.resources
+C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Escritorio.Catalogos.resources
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Escritorio.Principal.resources
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Principal.Properties.Resources.resources
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Escritorio.csproj.GenerateResource.Cache

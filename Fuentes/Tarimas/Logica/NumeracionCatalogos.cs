@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LogicaTarima
 {
-    public class NumeracionCatalogos
+    public static class NumeracionCatalogos
     {
 
         public enum Numeracion

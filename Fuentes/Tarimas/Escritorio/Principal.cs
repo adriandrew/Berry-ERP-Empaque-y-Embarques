@@ -72,12 +72,13 @@ namespace Escritorio
         private void spTarimas_KeyDown(object sender, KeyEventArgs e)
         {
 
-            if (e.KeyData == Keys.F10)
+            if (e.KeyData == Keys.F9)
             {
                 int columnaActiva = spTarima.ActiveSheet.ActiveColumnIndex;
                 if (columnaActiva == spTarima.ActiveSheet.Columns["idProductor"].Index)
                 {
-                    new Escritorio.Catalogos().opcionSeleccionada = LogicaTarima.NumeracionCatalogos.Numeracion.productor;
+                    new Escritorio.Catalogos().opcionSeleccionada = (int)LogicaTarima.NumeracionCatalogos.Numeracion.productor;
+                    new Escritorio.Catalogos().Show();
                 }
             }
             else if (e.KeyData == Keys.Enter)

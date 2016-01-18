@@ -184,5 +184,89 @@ namespace EntidadesTarima
 
         }
 
+        public string ObtenerNombrePorId()
+        {
+
+            try
+            {
+                SqlCommand comando = new SqlCommand();
+                comando.Connection = BaseDatos.conexionCatalogo;
+                comando.CommandText = "SELECT Nombre AS Id FROM Tarima WHERE IdProductor=@idProductor";
+                comando.Parameters.AddWithValue("@id", this.Id);
+                BaseDatos.conexionCatalogo.Open();
+                SqlDataReader dataReader = comando.ExecuteReader();
+                if (!dataReader.HasRows)
+                {
+                    return "Inexistente";
+                }
+                while (dataReader.Read())
+                {
+                    if (string.IsNullOrEmpty(dataReader["Nombre"].ToString()))
+                    {
+                        this.Nombre = "Inexistente";
+                    }
+                    else
+                    {
+                        this.Nombre = dataReader["Nombre"].ToString();
+                    }
+                }
+                BaseDatos.conexionCatalogo.Close();
+                return this.Nombre;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                BaseDatos.conexionCatalogo.Close();
+            }
+
+        }
+
+        public List<Productor> ObtenerListado()
+        {
+
+            List<Productor> lista = new List<Productor>();
+            try
+            {
+                SqlCommand comando = new SqlCommand();
+                comando.Connection = BaseDatos.conexionCatalogo;
+                comando.CommandText = "SELECT * FROM Productor";                
+                BaseDatos.conexionCatalogo.Open();
+                SqlDataReader dataReader = comando.ExecuteReader();
+                Productor productor;
+                while (dataReader.Read())
+                {
+                    productor = new Productor();
+                    productor.Id = Convert.ToInt32(dataReader["id"]);
+                    productor.Nombre = dataReader["idProductor"].ToString();
+                    productor.Domicilio = dataReader["idEmbarcador"].ToString();
+                    productor.Ciudad = dataReader["idCliente"].ToString();
+                    productor.Estado = dataReader["idProducto"].ToString();
+                    productor.CodigoPostal = Convert.ToInt32(dataReader["idVariedad"]);
+                    productor.Rfc = dataReader["idEnvase"].ToString();
+                    productor.Telefono = Convert.ToInt32(dataReader["idTamano"]);
+                    productor.Representante = dataReader["idEtiqueta"].ToString();
+                    productor.Fda = Convert.ToInt32(dataReader["idLote"]);
+                    productor.Gs1 = Convert.ToInt32(dataReader["cantidadBultos"]);
+                    productor.Immex = Convert.ToInt32(dataReader["fechaEmpaque"]);
+                    productor.ClaveTomate = dataReader["fechaEmbarque"].ToString(); 
+                    lista.Add(productor);
+                }
+                BaseDatos.conexionCatalogo.Close();
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                BaseDatos.conexionCatalogo.Close();
+            }
+
+        }
+
     }
 }

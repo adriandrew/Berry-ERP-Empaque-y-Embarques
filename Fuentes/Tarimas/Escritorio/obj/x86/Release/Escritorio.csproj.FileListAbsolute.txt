@@ -54,3 +54,23 @@ C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Escritorio.cs
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Tarimas.exe.licenses
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Tarimas.exe
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Escritorio\obj\x86\Release\Tarimas.pdb
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\bin\x86\Release\Tarimas.exe.config
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\obj\x86\Release\Interop.FPSpreadADO.dll
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\obj\x86\Release\AxInterop.FPSpreadADO.dll
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\obj\x86\Release\Escritorio.csproj.ResolveComReference.cache
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\obj\x86\Release\Tarimas.exe
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\obj\x86\Release\Tarimas.pdb
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\bin\x86\Release\Tarimas.exe
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\bin\x86\Release\Tarimas.pdb
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\bin\x86\Release\EntidadesTarima.dll
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\bin\x86\Release\LogicaTarima.dll
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\bin\x86\Release\EntidadesTarima.pdb
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\bin\x86\Release\LogicaTarima.pdb
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\bin\x86\Release\Interop.FPSpreadADO.dll
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\bin\x86\Release\AxInterop.FPSpreadADO.dll
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\obj\x86\Release\Escritorio.csprojResolveAssemblyReference.cache
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\obj\x86\Release\Escritorio.Catalogos.resources
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\obj\x86\Release\Escritorio.Principal.resources
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\obj\x86\Release\Principal.Properties.Resources.resources
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\obj\x86\Release\Escritorio.csproj.GenerateResource.Cache
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Escritorio\obj\x86\Release\Tarimas.exe.licenses

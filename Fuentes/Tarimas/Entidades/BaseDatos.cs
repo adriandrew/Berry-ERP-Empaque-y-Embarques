@@ -35,7 +35,8 @@ namespace EntidadesTarima
         public void AbrirConexionInformacion()
         {
 
-            this.CadenaConexionInformacion = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionInformacion);
+            //this.CadenaConexionInformacion = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionInformacion);
+            this.CadenaConexionInformacion = string.Format("Data Source=.\\SQLEXPRESS;Initial Catalog={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionInformacion);
             conexionInformacion.ConnectionString = this.CadenaConexionInformacion;
 
         }
@@ -43,7 +44,8 @@ namespace EntidadesTarima
         public void AbrirConexionEYE()
         {
 
-            this.CadenaConexionEYE = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionEYE);
+            //this.CadenaConexionEYE = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionEYE);
+            this.CadenaConexionEYE = string.Format("Data Source=.\\SQLEXPRESS;Initial Catalog={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionEYE);
             conexionEYE.ConnectionString = this.CadenaConexionEYE;
 
         }
@@ -51,7 +53,8 @@ namespace EntidadesTarima
         public void AbrirConexionCatalogo()
         {
 
-            this.CadenaConexionCatalogo = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionCatalogo);
+            //this.CadenaConexionCatalogo = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionCatalogo);
+            this.CadenaConexionCatalogo = string.Format("Data Source=.\\SQLEXPRESS;Initial Catalog={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionCatalogo);
             conexionCatalogo.ConnectionString = this.CadenaConexionCatalogo;
 
         }

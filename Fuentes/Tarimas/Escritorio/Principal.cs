@@ -209,7 +209,7 @@ namespace Escritorio
 
         }
 
-        private void ControlarSpread(FarPoint.Win.Spread.FpSpread spread)
+        public static void ControlarSpread(FarPoint.Win.Spread.FpSpread spread)
         {
 
             FarPoint.Win.Spread.InputMap valor1;
@@ -373,7 +373,7 @@ namespace Escritorio
         private void ConfigurarConexiones()
         {
 
-            bool esPrueba = false;
+            bool esPrueba = true;
             if (esPrueba)
             {
                 baseDatos.CadenaConexionEYE = "C:\\Berry\\BD\\PVE\\EYE.mdf";
@@ -466,14 +466,10 @@ namespace Escritorio
                     tarima.Temperatura = Convert.ToInt32(temperatura);
                     tarima.EstaEmbarcado = estaEmbarcado;
                     bool tieneTarima = tarima.ValidarPorNumero();
-                    if (!tieneTarima)
-                    {
-                        tarima.Guardar();
-                    }
-                    else
-                    {
-                        tarima.Editar();
-                    }                                        
+                    if (!tieneTarima) 
+                        tarima.Guardar(); 
+                    else 
+                        tarima.Editar();                    
                     this.esGuardadoEditadoCorrecto = true;
                 }
                 else

@@ -6,3 +6,7 @@ C:\Users\Andrew\Desktop\Fuentes\Tarimas\Logica\bin\Release\LogicaTarima.dll
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Logica\bin\Release\LogicaTarima.pdb
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Logica\obj\Release\LogicaTarima.dll
 C:\Users\Andrew\Desktop\Fuentes\Tarimas\Logica\obj\Release\LogicaTarima.pdb
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Logica\bin\Release\LogicaTarima.dll
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Logica\bin\Release\LogicaTarima.pdb
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Logica\obj\Release\LogicaTarima.dll
+C:\Users\Andrew\Desktop\Fuentes Modificados\Tarimas\Logica\obj\Release\LogicaTarima.pdb

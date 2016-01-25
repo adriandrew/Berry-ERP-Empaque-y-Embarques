@@ -40,11 +40,21 @@ namespace LogicaTarima
 
         }
 
-        public static bool ValidarFecha(string fecha)
+        public static bool ValidarFecha(string valor)
         {
 
             DateTime temporal; 
-            if (DateTime.TryParse(fecha, out temporal))
+            if (DateTime.TryParse(valor, out temporal))
+                return true;
+            else
+                return false;
+
+        }
+
+        public static bool ValidarString(string valor)
+        {
+            
+            if (string.IsNullOrEmpty(valor))
                 return true;
             else
                 return false;

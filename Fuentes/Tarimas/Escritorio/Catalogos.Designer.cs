@@ -28,46 +28,48 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.spCatalogos = new FarPoint.Win.Spread.FpSpread();
-            this.spCatalogos_Sheet1 = new FarPoint.Win.Spread.SheetView();
-            ((System.ComponentModel.ISupportInitialize)(this.spCatalogos)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spCatalogos_Sheet1)).BeginInit();
+            this.spCatalogo = new FarPoint.Win.Spread.FpSpread();
+            this.spCatalogo_Sheet1 = new FarPoint.Win.Spread.SheetView();
+            ((System.ComponentModel.ISupportInitialize)(this.spCatalogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spCatalogo_Sheet1)).BeginInit();
             this.SuspendLayout();
             // 
-            // spCatalogos
+            // spCatalogo
             // 
-            this.spCatalogos.AccessibleDescription = "";
-            this.spCatalogos.Location = new System.Drawing.Point(13, 13);
-            this.spCatalogos.Name = "spCatalogos";
-            this.spCatalogos.Sheets.AddRange(new FarPoint.Win.Spread.SheetView[] {
-            this.spCatalogos_Sheet1});
-            this.spCatalogos.Size = new System.Drawing.Size(600, 287);
-            this.spCatalogos.TabIndex = 0;
+            this.spCatalogo.AccessibleDescription = "";
+            this.spCatalogo.Location = new System.Drawing.Point(13, 13);
+            this.spCatalogo.Name = "spCatalogo";
+            this.spCatalogo.Sheets.AddRange(new FarPoint.Win.Spread.SheetView[] {
+            this.spCatalogo_Sheet1});
+            this.spCatalogo.Size = new System.Drawing.Size(1100, 287);
+            this.spCatalogo.TabIndex = 0;
+            this.spCatalogo.DialogKey += new FarPoint.Win.Spread.DialogKeyEventHandler(this.spCatalogo_DialogKey);
+            this.spCatalogo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.spCatalogo_KeyDown);
             // 
-            // spCatalogos_Sheet1
+            // spCatalogo_Sheet1
             // 
-            this.spCatalogos_Sheet1.Reset();
-            spCatalogos_Sheet1.SheetName = "Sheet1";
+            this.spCatalogo_Sheet1.Reset();
+            spCatalogo_Sheet1.SheetName = "Sheet1";
             // 
             // Catalogos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 312);
-            this.Controls.Add(this.spCatalogos);
+            this.ClientSize = new System.Drawing.Size(1125, 312);
+            this.Controls.Add(this.spCatalogo);
             this.Name = "Catalogos";
             this.Text = "Catálogos";
             this.Load += new System.EventHandler(this.Catalogos_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.spCatalogos)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spCatalogos_Sheet1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spCatalogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spCatalogo_Sheet1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private FarPoint.Win.Spread.FpSpread spCatalogos;
-        private FarPoint.Win.Spread.SheetView spCatalogos_Sheet1;
+        private FarPoint.Win.Spread.FpSpread spCatalogo;
+        private FarPoint.Win.Spread.SheetView spCatalogo_Sheet1;
 
     }
 }

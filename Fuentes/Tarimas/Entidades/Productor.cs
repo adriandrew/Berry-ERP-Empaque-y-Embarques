@@ -131,7 +131,7 @@ namespace EntidadesTarima
             {
                 SqlCommand comando = new SqlCommand();
                 comando.Connection = BaseDatos.conexionCatalogo;
-                comando.CommandText = "UPDATE Tarima SET Id=@id, Nombre=@nombre, Domicilio=@domicilio, Ciudad=@ciudad, Estado=@estado, CodigoPostal=@codigoPostal, Rfc=@rfc, Telefono=@telefono, Representante=@representante, Fda=@fda, Gs1=@gs1, Immex=@immex, ClaveTomate=@claveTomate";
+                comando.CommandText = "UPDATE Productor SET Id=@id, Nombre=@nombre, Domicilio=@domicilio, Ciudad=@ciudad, Estado=@estado, CodigoPostal=@codigoPostal, Rfc=@rfc, Telefono=@telefono, Representante=@representante, Fda=@fda, Gs1=@gs1, Immex=@immex, ClaveTomate=@claveTomate";
                 comando.Parameters.AddWithValue("@id", this.Id);
                 comando.Parameters.AddWithValue("@nombre", this.Nombre);
                 comando.Parameters.AddWithValue("@domicilio", this.Domicilio);
@@ -184,46 +184,6 @@ namespace EntidadesTarima
 
         }
 
-        public string ObtenerNombrePorId()
-        {
-
-            try
-            {
-                SqlCommand comando = new SqlCommand();
-                comando.Connection = BaseDatos.conexionCatalogo;
-                comando.CommandText = "SELECT Nombre AS Id FROM Tarima WHERE IdProductor=@idProductor";
-                comando.Parameters.AddWithValue("@id", this.Id);
-                BaseDatos.conexionCatalogo.Open();
-                SqlDataReader dataReader = comando.ExecuteReader();
-                if (!dataReader.HasRows)
-                {
-                    return "Inexistente";
-                }
-                while (dataReader.Read())
-                {
-                    if (string.IsNullOrEmpty(dataReader["Nombre"].ToString()))
-                    {
-                        this.Nombre = "Inexistente";
-                    }
-                    else
-                    {
-                        this.Nombre = dataReader["Nombre"].ToString();
-                    }
-                }
-                BaseDatos.conexionCatalogo.Close();
-                return this.Nombre;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                BaseDatos.conexionCatalogo.Close();
-            }
-
-        }
-
         public List<Productor> ObtenerListado()
         {
 
@@ -239,23 +199,57 @@ namespace EntidadesTarima
                 while (dataReader.Read())
                 {
                     productor = new Productor();
-                    productor.Id = Convert.ToInt32(dataReader["id"]);
-                    productor.Nombre = dataReader["idProductor"].ToString();
-                    productor.Domicilio = dataReader["idEmbarcador"].ToString();
-                    productor.Ciudad = dataReader["idCliente"].ToString();
-                    productor.Estado = dataReader["idProducto"].ToString();
-                    productor.CodigoPostal = Convert.ToInt32(dataReader["idVariedad"]);
-                    productor.Rfc = dataReader["idEnvase"].ToString();
-                    productor.Telefono = Convert.ToInt32(dataReader["idTamano"]);
-                    productor.Representante = dataReader["idEtiqueta"].ToString();
-                    productor.Fda = Convert.ToInt32(dataReader["idLote"]);
-                    productor.Gs1 = Convert.ToInt32(dataReader["cantidadBultos"]);
-                    productor.Immex = Convert.ToInt32(dataReader["fechaEmpaque"]);
-                    productor.ClaveTomate = dataReader["fechaEmbarque"].ToString(); 
+                    productor.Id = Convert.ToInt32(dataReader["Id"]);
+                    productor.Nombre = dataReader["Nombre"].ToString();
+                    productor.Domicilio = dataReader["Domicilio"].ToString();
+                    productor.Ciudad = dataReader["Ciudad"].ToString();
+                    productor.Estado = dataReader["Estado"].ToString();
+                    productor.CodigoPostal = Convert.ToInt32(dataReader["CodigoPostal"]);
+                    productor.Rfc = dataReader["Rfc"].ToString();
+                    productor.Telefono = Convert.ToInt32(dataReader["Telefono"]);
+                    productor.Representante = dataReader["Representante"].ToString();
+                    productor.Fda = Convert.ToInt32(dataReader["Fda"]);
+                    productor.Gs1 = Convert.ToInt32(dataReader["Gs1"]);
+                    productor.Immex = Convert.ToInt32(dataReader["Immex"]);
+                    productor.ClaveTomate = dataReader["ClaveTomate"].ToString(); 
                     lista.Add(productor);
                 }
                 BaseDatos.conexionCatalogo.Close();
                 return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                BaseDatos.conexionCatalogo.Close();
+            }
+
+        }
+
+        public bool ValidarPorId()
+        {
+
+            try
+            {
+                bool resultado = false;
+                SqlCommand comando = new SqlCommand();
+                comando.Connection = BaseDatos.conexionCatalogo;
+                comando.CommandText = "SELECT * FROM Productor WHERE Id=@id";
+                comando.Parameters.AddWithValue("@id", this.Id);                
+                BaseDatos.conexionCatalogo.Open();
+                SqlDataReader dataReader = comando.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    resultado = true;
+                }
+                else
+                {
+                    resultado = false;
+                }
+                BaseDatos.conexionCatalogo.Close();
+                return resultado;
             }
             catch (Exception ex)
             {

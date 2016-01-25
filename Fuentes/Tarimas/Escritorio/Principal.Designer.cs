@@ -114,9 +114,9 @@
         #endregion
 
         private System.Windows.Forms.Panel pnlEmpresas;
-        private FarPoint.Win.Spread.FpSpread spTarima;
         private FarPoint.Win.Spread.SheetView spTarima_Sheet1;
         private System.Windows.Forms.Panel panelOpciones;
         private System.Windows.Forms.Button btnGuardar;
+        public FarPoint.Win.Spread.FpSpread spTarima;
     }
 }

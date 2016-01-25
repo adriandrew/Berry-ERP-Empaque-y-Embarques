@@ -36,8 +36,12 @@ namespace Escritorio
             if (Catalogos.opcionSeleccionada == (int)LogicaTarima.NumeracionCatalogos.Numeracion.productor)
             {
                 CargarProductores();
-                FormatearSpread();
             }
+            else if (Catalogos.opcionSeleccionada == (int)LogicaTarima.NumeracionCatalogos.Numeracion.lote)
+            {
+                
+            }
+                FormatearSpread();
 
         }
 
@@ -199,6 +203,22 @@ namespace Escritorio
                         }
                     }
                 }
+            }
+
+        }
+
+        private void spCatalogo_CellDoubleClick(object sender, FarPoint.Win.Spread.CellClickEventArgs e)
+        {
+
+            Principal principal = new Principal();
+            int filaActivaPrincipal = principal.spTarima.ActiveSheet.ActiveRowIndex;
+            int filaActivaCatalogo = spCatalogo.ActiveSheet.ActiveRowIndex;
+            if (Catalogos.opcionSeleccionada == (int)LogicaTarima.NumeracionCatalogos.Numeracion.productor)
+            {
+                // TODO: PENDIENTE no está funcionando, asi que invocar un metodo directo en principal que sea publico que inyecte el texto mandado.
+                //principal.spTarima.ActiveSheet.Cells[filaActivaPrincipal, principal.spTarima.ActiveSheet.Columns["idProductor"].Index].Text = spCatalogo.ActiveSheet.Cells[filaActivaCatalogo, 0].Text;
+               //principal.spTarima.ActiveSheet.Cells[filaActivaPrincipal, 2].Text = "prueba";
+                this.Close();
             }
 
         }

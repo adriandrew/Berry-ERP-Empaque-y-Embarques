@@ -44,6 +44,7 @@
             this.spCatalogo.Size = new System.Drawing.Size(1100, 287);
             this.spCatalogo.TabIndex = 0;
             this.spCatalogo.DialogKey += new FarPoint.Win.Spread.DialogKeyEventHandler(this.spCatalogo_DialogKey);
+            this.spCatalogo.CellDoubleClick += new FarPoint.Win.Spread.CellClickEventHandler(this.spCatalogo_CellDoubleClick);
             this.spCatalogo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.spCatalogo_KeyDown);
             // 
             // spCatalogo_Sheet1

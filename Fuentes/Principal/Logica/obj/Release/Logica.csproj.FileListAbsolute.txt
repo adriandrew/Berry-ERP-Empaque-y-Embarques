@@ -6,3 +6,7 @@ C:\Users\Andrew\Desktop\Fuentes\Principal\Logica\bin\Release\Logica.dll
 C:\Users\Andrew\Desktop\Fuentes\Principal\Logica\bin\Release\Logica.pdb
 C:\Users\Andrew\Desktop\Fuentes\Principal\Logica\obj\Release\Logica.dll
 C:\Users\Andrew\Desktop\Fuentes\Principal\Logica\obj\Release\Logica.pdb
+C:\Users\Andrew\Desktop\Proyecto Berry\Fuentes Modificados\Principal\Logica\bin\Release\Logica.dll
+C:\Users\Andrew\Desktop\Proyecto Berry\Fuentes Modificados\Principal\Logica\bin\Release\Logica.pdb
+C:\Users\Andrew\Desktop\Proyecto Berry\Fuentes Modificados\Principal\Logica\obj\Release\Logica.dll
+C:\Users\Andrew\Desktop\Proyecto Berry\Fuentes Modificados\Principal\Logica\obj\Release\Logica.pdb

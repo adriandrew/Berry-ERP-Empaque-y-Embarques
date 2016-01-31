@@ -22,7 +22,7 @@ namespace Entidades
         public void AbrirConexionInformacion()
         {
 
-            this.CadenaConexionInformacion = string.Format("Data Source=.\\SQLEXPRESS;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionInformacion);
+            this.CadenaConexionInformacion = string.Format("Data Source=.\\SQLEXPRESS;Initial Catalog={0};Integrated Security=True;Connect Timeout=30", this.CadenaConexionInformacion);
             conexionInformacion.ConnectionString = this.CadenaConexionInformacion;
 
         }

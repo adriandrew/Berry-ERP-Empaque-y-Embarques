@@ -228,7 +228,10 @@ namespace Escritorio
             }
             else
             {
-                baseDatos.CadenaConexionInformacion = "|DataDirectory|\\Informacion.mdf";
+                string ruta = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+                //ruta = ruta.Substring(6);
+                ruta = ruta.Replace("file:\\", null);
+                baseDatos.CadenaConexionInformacion = string.Format("{0}\\Informacion.mdf", ruta);
             }
             baseDatos.AbrirConexionInformacion();            
 

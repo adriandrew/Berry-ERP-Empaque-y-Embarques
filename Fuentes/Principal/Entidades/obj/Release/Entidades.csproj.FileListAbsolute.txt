@@ -10,3 +10,8 @@ C:\Users\Andrew\Desktop\Fuentes\Principal\Entidades\bin\Release\Entidades.dll
 C:\Users\Andrew\Desktop\Fuentes\Principal\Entidades\bin\Release\Entidades.pdb
 C:\Users\Andrew\Desktop\Fuentes\Principal\Entidades\obj\Release\Entidades.dll
 C:\Users\Andrew\Desktop\Fuentes\Principal\Entidades\obj\Release\Entidades.pdb
+C:\Users\Andrew\Desktop\Proyecto Berry\Fuentes Modificados\Principal\Entidades\bin\Release\Entidades.dll
+C:\Users\Andrew\Desktop\Proyecto Berry\Fuentes Modificados\Principal\Entidades\bin\Release\Entidades.pdb
+C:\Users\Andrew\Desktop\Proyecto Berry\Fuentes Modificados\Principal\Entidades\obj\Release\Entidades.csprojResolveAssemblyReference.cache
+C:\Users\Andrew\Desktop\Proyecto Berry\Fuentes Modificados\Principal\Entidades\obj\Release\Entidades.dll
+C:\Users\Andrew\Desktop\Proyecto Berry\Fuentes Modificados\Principal\Entidades\obj\Release\Entidades.pdb

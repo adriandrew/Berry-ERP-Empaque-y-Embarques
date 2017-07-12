@@ -1,0 +1,12 @@
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\bin\Release\EntidadesVaciado.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\bin\Release\EntidadesVaciado.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\bin\Release\EntidadesVaciado.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\bin\Release\LogicaVaciado.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\bin\Release\LogicaVaciado.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\bin\Release\LogicaVaciado.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\obj\Release\EntidadesVaciado.vbprojResolveAssemblyReference.cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\obj\Release\EntidadesVaciado.Resources.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\obj\Release\EntidadesVaciado.vbproj.GenerateResource.Cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\obj\Release\EntidadesVaciado.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\obj\Release\EntidadesVaciado.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Entidades\obj\Release\EntidadesVaciado.pdb

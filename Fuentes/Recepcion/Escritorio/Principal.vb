@@ -5,16 +5,11 @@ Public Class Principal
 
     ' Variables de objetos de entidades.
     Public usuarios As New EntidadesRecepcion.Usuarios()
-    Public recepcion As New EntidadesRecepcion.Recepcion()
-    Public almacenes As New EntidadesRecepcion.Almacenes()
-    Public familias As New EntidadesRecepcion.Familias()
-    Public variedades As New EntidadesRecepcion.Variedades()
-    Public articulos As New EntidadesRecepcion.Articulos()
-    Public unidadesMedidas As New EntidadesRecepcion.UnidadesMedidas()
+    Public recepcion As New EntidadesRecepcion.Recepcion()  
+    Public variedades As New EntidadesRecepcion.Variedades()  
     Public choferesCampos As New EntidadesRecepcion.ChoferesCampos()
     Public lotes As New EntidadesRecepcion.Lotes()
-    Public productos As New EntidadesRecepcion.Productos()
-    Public tiposSalidas As New EntidadesRecepcion.TiposSalidas()
+    Public productos As New EntidadesRecepcion.Productos() 
     ' Variables de tipos de datos de spread.
     Public tipoTexto As New FarPoint.Win.Spread.CellType.TextCellType()
     Public tipoTextoContrasena As New FarPoint.Win.Spread.CellType.TextCellType()
@@ -36,7 +31,6 @@ Public Class Principal
     Public Shared alturaFilasEncabezadosChicosSpread As Integer = 22 : Public Shared alturaFilasSpread As Integer = 20
     Public Shared colorAreaGris = Color.White
     ' Variables de eventos de spread.
-    Public filaAlmacen As Integer = -1 : Public filaFamilia As Integer = -1 : Public filaSubFamilia As Integer = -1
     ' Variables generales.
     Public nombreEstePrograma As String = String.Empty
     Public estaMostrado As Boolean = False : Public estaCerrando As Boolean = False
@@ -118,7 +112,7 @@ Public Class Principal
 
     End Sub
 
-    Private Sub spEntradas_KeyDown(sender As Object, e As KeyEventArgs) Handles spRecepcion.KeyDown
+    Private Sub spRecepcion_KeyDown(sender As Object, e As KeyEventArgs) Handles spRecepcion.KeyDown
 
         If (e.KeyData = Keys.F6) Then ' Eliminar un registro.
             If (MessageBox.Show("Confirmas que deseas eliminar el registro seleccionado?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
@@ -126,8 +120,6 @@ Public Class Principal
             End If
         ElseIf (e.KeyData = Keys.Enter) Then ' Validar registros.
             ControlarSpreadEnter(spRecepcion)
-        ElseIf (e.KeyData = Keys.F5) Then ' Abrir catalogos. 
-            CargarCatalogoEnSpread()
         ElseIf (e.KeyData = Keys.Escape) Then
             spRecepcion.ActiveSheet.SetActiveCell(0, 0)
             AsignarFoco(cbVariedades)
@@ -171,31 +163,6 @@ Public Class Principal
     Private Sub pnlEncabezado_MouseEnter(sender As Object, e As EventArgs) Handles pnlPie.MouseEnter, pnlEncabezado.MouseEnter, pnlCuerpo.MouseEnter
 
         AsignarTooltips(String.Empty)
-
-    End Sub
-
-    Private Sub spCatalogos_CellClick(sender As Object, e As FarPoint.Win.Spread.CellClickEventArgs) Handles spCatalogos.CellClick
-
-        Dim fila As Integer = e.Row
-        If (Me.opcionCatalogoSeleccionada = OpcionCatalogo.choferesCampos) Then
-            CargarDatosEnOtrosDeCatalogos(fila)
-        Else
-            CargarDatosEnSpreadDeCatalogos(fila)
-        End If
-
-    End Sub
-
-    Private Sub spCatalogos_CellDoubleClick(sender As Object, e As FarPoint.Win.Spread.CellClickEventArgs) Handles spCatalogos.CellDoubleClick
-
-        VolverFocoCatalogos()
-
-    End Sub
-
-    Private Sub spCatalogos_KeyDown(sender As Object, e As KeyEventArgs) Handles spCatalogos.KeyDown
-
-        If (e.KeyCode = Keys.Escape) Then
-            VolverFocoCatalogos()
-        End If
 
     End Sub
 
@@ -293,6 +260,58 @@ Public Class Principal
             txtId.Text += 1
             CargarRecepcion()
         End If
+
+    End Sub
+
+    Private Sub txtHora_KeyDown(sender As Object, e As KeyEventArgs) Handles txtHora.KeyDown
+
+        If (e.KeyData = Keys.Enter) Then
+            e.SuppressKeyPress = True
+            If (Not String.IsNullOrEmpty(txtHora.Text.Trim.Replace(":", "").Replace("_", "")) And txtHora.Text.Length = 5) Then
+                AsignarFoco(cbLotes)
+            End If
+        ElseIf (e.KeyData = Keys.Escape) Then
+            e.SuppressKeyPress = True
+            AsignarFoco(dtpFecha)
+        End If
+
+    End Sub
+
+    Private Sub cbChoferesCampos_KeyDown(sender As Object, e As KeyEventArgs) Handles cbChoferesCampos.KeyDown
+
+        If (e.KeyData = Keys.Enter) Then
+            e.SuppressKeyPress = True
+            If (cbChoferesCampos.SelectedValue > 0) Then
+                AsignarFoco(cbProductos)
+            Else
+                cbChoferesCampos.SelectedIndex = 0
+            End If
+        ElseIf (e.KeyData = Keys.Escape) Then
+            e.SuppressKeyPress = True
+            AsignarFoco(cbLotes)
+        End If
+
+    End Sub
+
+    Private Sub cbVariedades_KeyDown(sender As Object, e As KeyEventArgs) Handles cbVariedades.KeyDown
+
+        If (e.KeyData = Keys.Enter) Then
+            e.SuppressKeyPress = True
+            If (cbChoferesCampos.SelectedValue > 0) Then
+                AsignarFoco(spRecepcion)
+            Else
+                cbChoferesCampos.SelectedIndex = 0
+            End If
+        ElseIf (e.KeyData = Keys.Escape) Then
+            e.SuppressKeyPress = True
+            AsignarFoco(cbProductos)
+        End If
+
+    End Sub
+
+    Private Sub cbProductos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbProductos.SelectedIndexChanged
+
+        CargarVariedades()
 
     End Sub
 
@@ -621,6 +640,7 @@ Public Class Principal
         CargarTiposDeDatos()
         ' Se cargan las opciones generales. 
         pnlCatalogos.Visible = False
+        spCatalogos.Visible = False
         spRecepcion.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Seashell
         spTotales.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Seashell
         spCatalogos.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Midnight
@@ -716,175 +736,6 @@ Public Class Principal
 
     End Sub
 
-    Private Sub CargarDatosEnSpreadDeCatalogos(ByVal filaCatalogos As Integer)
-
-        If (spRecepcion.ActiveSheet.ActiveColumnIndex = spRecepcion.ActiveSheet.Columns("idFamilia").Index Or spRecepcion.ActiveSheet.ActiveColumnIndex = spRecepcion.ActiveSheet.Columns("nombreFamilia").Index) Then
-            spRecepcion.ActiveSheet.Cells(spRecepcion.ActiveSheet.ActiveRowIndex, spRecepcion.ActiveSheet.Columns("idFamilia").Index).Text = spCatalogos.ActiveSheet.Cells(filaCatalogos, spCatalogos.ActiveSheet.Columns("id").Index).Text
-            spRecepcion.ActiveSheet.Cells(spRecepcion.ActiveSheet.ActiveRowIndex, spRecepcion.ActiveSheet.Columns("nombreFamilia").Index).Text = spCatalogos.ActiveSheet.Cells(filaCatalogos, spCatalogos.ActiveSheet.Columns("nombre").Index).Text
-        ElseIf (spRecepcion.ActiveSheet.ActiveColumnIndex = spRecepcion.ActiveSheet.Columns("idSubFamilia").Index Or spRecepcion.ActiveSheet.ActiveColumnIndex = spRecepcion.ActiveSheet.Columns("nombreSubFamilia").Index) Then
-            spRecepcion.ActiveSheet.Cells(spRecepcion.ActiveSheet.ActiveRowIndex, spRecepcion.ActiveSheet.Columns("idSubFamilia").Index).Text = spCatalogos.ActiveSheet.Cells(filaCatalogos, spCatalogos.ActiveSheet.Columns("id").Index).Text
-            spRecepcion.ActiveSheet.Cells(spRecepcion.ActiveSheet.ActiveRowIndex, spRecepcion.ActiveSheet.Columns("nombreSubFamilia").Index).Text = spCatalogos.ActiveSheet.Cells(filaCatalogos, spCatalogos.ActiveSheet.Columns("nombre").Index).Text
-        ElseIf (spRecepcion.ActiveSheet.ActiveColumnIndex = spRecepcion.ActiveSheet.Columns("idArticulo").Index Or spRecepcion.ActiveSheet.ActiveColumnIndex = spRecepcion.ActiveSheet.Columns("nombreArticulo").Index) Then
-            spRecepcion.ActiveSheet.Cells(spRecepcion.ActiveSheet.ActiveRowIndex, spRecepcion.ActiveSheet.Columns("idArticulo").Index).Text = spCatalogos.ActiveSheet.Cells(filaCatalogos, spCatalogos.ActiveSheet.Columns("id").Index).Text
-            spRecepcion.ActiveSheet.Cells(spRecepcion.ActiveSheet.ActiveRowIndex, spRecepcion.ActiveSheet.Columns("nombreArticulo").Index).Text = spCatalogos.ActiveSheet.Cells(filaCatalogos, spCatalogos.ActiveSheet.Columns("nombre").Index).Text
-            spRecepcion.ActiveSheet.Cells(spRecepcion.ActiveSheet.ActiveRowIndex, spRecepcion.ActiveSheet.Columns("nombreUnidadMedida").Index).Text = spCatalogos.ActiveSheet.Cells(filaCatalogos, spCatalogos.ActiveSheet.Columns("unidadMedida").Index).Text
-        End If
-
-    End Sub
-
-    Private Sub CargarDatosEnOtrosDeCatalogos(ByVal filaCatalogos As Integer)
-
-        'If (Me.opcionCatalogoSeleccionada = OpcionCatalogo.proveedor) Then
-        '    txtIdProveedor.Text = spCatalogos.ActiveSheet.Cells(filaCatalogos, spCatalogos.ActiveSheet.Columns("id").Index).Text
-        '    txtNombreProveedor.Text = spCatalogos.ActiveSheet.Cells(filaCatalogos, spCatalogos.ActiveSheet.Columns("nombre").Index).Text
-        'End If
-
-    End Sub
-
-    Private Sub CargarCatalogoEnSpread()
-
-        spRecepcion.Enabled = False
-        Dim columna As Integer = spRecepcion.ActiveSheet.ActiveColumnIndex
-        If (columna = spRecepcion.ActiveSheet.Columns("idFamilia").Index) Or (columna = spRecepcion.ActiveSheet.Columns("nombreFamilia").Index) Then
-            Me.opcionCatalogoSeleccionada = OpcionCatalogo.familia
-            familias.EId = 0
-            Dim datos As New DataTable
-            datos = familias.ObtenerListadoReporte()
-            If (datos.Rows.Count > 0) Then
-                spCatalogos.ActiveSheet.DataSource = datos
-            Else
-                spCatalogos.ActiveSheet.DataSource = Nothing
-                spCatalogos.ActiveSheet.Rows.Count = 0
-                spRecepcion.Enabled = True
-            End If
-            FormatearSpreadCatalogo(OpcionPosicion.centro)
-        ElseIf (columna = spRecepcion.ActiveSheet.Columns("idSubFamilia").Index) Or (columna = spRecepcion.ActiveSheet.Columns("nombreSubFamilia").Index) Then
-            Me.opcionCatalogoSeleccionada = OpcionCatalogo.subfamilia
-            Dim idFamilia As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(spRecepcion.ActiveSheet.ActiveRowIndex, spRecepcion.ActiveSheet.Columns("idFamilia").Index).Text)
-            If (idFamilia > 0) Then
-                variedades.EIdProducto = idFamilia
-                variedades.EId = 0
-                Dim datos As New DataTable
-                datos = variedades.ObtenerListadoReporte()
-                If (datos.Rows.Count > 0) Then
-                    spCatalogos.ActiveSheet.DataSource = datos
-                Else
-                    spCatalogos.ActiveSheet.DataSource = Nothing
-                    spCatalogos.ActiveSheet.Rows.Count = 0
-                    spRecepcion.Enabled = True
-                End If
-            Else
-                spCatalogos.ActiveSheet.DataSource = Nothing
-                spCatalogos.ActiveSheet.Rows.Count = 0
-                spRecepcion.Enabled = True
-            End If
-            FormatearSpreadCatalogo(OpcionPosicion.centro)
-        ElseIf (columna = spRecepcion.ActiveSheet.Columns("idArticulo").Index) Or (columna = spRecepcion.ActiveSheet.Columns("nombreArticulo").Index) Then
-            Me.opcionCatalogoSeleccionada = OpcionCatalogo.articulo
-            Dim idFamilia As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(spRecepcion.ActiveSheet.ActiveRowIndex, spRecepcion.ActiveSheet.Columns("idFamilia").Index).Text)
-            Dim idSubFamilia As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(spRecepcion.ActiveSheet.ActiveRowIndex, spRecepcion.ActiveSheet.Columns("idSubFamilia").Index).Text)
-            If (idFamilia > 0 And idSubFamilia > 0) Then
-                articulos.EIdFamilia = idFamilia
-                articulos.EIdSubFamilia = idSubFamilia
-                articulos.EId = 0
-                Dim datos As New DataTable
-                datos = articulos.ObtenerListadoReporte()
-                If (datos.Rows.Count > 0) Then
-                    spCatalogos.ActiveSheet.DataSource = datos
-                Else
-                    spCatalogos.ActiveSheet.DataSource = Nothing
-                    spCatalogos.ActiveSheet.Rows.Count = 0
-                    spRecepcion.Enabled = True
-                End If
-            Else
-                spCatalogos.ActiveSheet.DataSource = Nothing
-                spCatalogos.ActiveSheet.Rows.Count = 0
-                spRecepcion.Enabled = True
-            End If
-            FormatearSpreadCatalogo(OpcionPosicion.centro)
-        End If
-
-    End Sub
-
-    Private Sub CargarCatalogoEnOtros()
-
-        pnlCapturaSuperior.Enabled = False
-        If (Me.opcionCatalogoSeleccionada = OpcionCatalogo.choferesCampos) Then
-            choferesCampos.EId = 0
-            Dim datos As New DataTable
-            datos = choferesCampos.ObtenerListadoReporte()
-            If (datos.Rows.Count > 0) Then
-                spCatalogos.ActiveSheet.DataSource = datos
-            Else
-                spCatalogos.ActiveSheet.DataSource = Nothing
-                spCatalogos.ActiveSheet.Rows.Count = 0
-                pnlCapturaSuperior.Enabled = True
-            End If
-            FormatearSpreadCatalogo(OpcionPosicion.centro)
-        End If
-
-    End Sub
-
-    Private Sub FormatearSpreadCatalogo(ByVal posicion As Integer)
-
-        If (Me.opcionCatalogoSeleccionada = OpcionCatalogo.articulo) Then
-            spCatalogos.Width = 450
-            spCatalogos.ActiveSheet.Columns.Count = 3
-        Else
-            spCatalogos.Width = 320
-            spCatalogos.ActiveSheet.Columns.Count = 2
-        End If
-        If (posicion = OpcionPosicion.izquierda) Then ' Izquierda.
-            pnlCatalogos.Location = New Point(Me.izquierda, Me.arriba)
-        ElseIf (posicion = OpcionPosicion.centro) Then ' Centrar.
-            pnlCatalogos.Location = New Point(Me.anchoMitad - (spCatalogos.Width / 2), Me.arriba)
-        ElseIf (posicion = OpcionPosicion.derecha) Then ' Derecha.
-            pnlCatalogos.Location = New Point(Me.anchoTotal - spCatalogos.Width, Me.arriba)
-        End If
-        spCatalogos.ActiveSheet.ColumnHeader.Rows(0).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
-        spCatalogos.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosMedianosSpread
-        spCatalogos.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.Never
-        spCatalogos.VerticalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded
-        spCatalogos.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.SingleSelect
-        Dim numeracion As Integer = 0
-        spCatalogos.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
-        spCatalogos.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
-        If (Me.opcionCatalogoSeleccionada = OpcionCatalogo.articulo) Then
-            spCatalogos.ActiveSheet.Columns(numeracion).Tag = "unidadMedida" : numeracion += 1
-        End If
-        spCatalogos.ActiveSheet.Columns("id").Width = 50
-        spCatalogos.ActiveSheet.Columns("nombre").Width = 235
-        If (Me.opcionCatalogoSeleccionada = OpcionCatalogo.articulo) Then
-            spCatalogos.ActiveSheet.Columns("unidadMedida").Width = 130
-        End If
-        spCatalogos.ActiveSheet.ColumnHeader.Cells(0, spCatalogos.ActiveSheet.Columns("id").Index).Value = "No.".ToUpper
-        spCatalogos.ActiveSheet.ColumnHeader.Cells(0, spCatalogos.ActiveSheet.Columns("nombre").Index).Value = "Nombre".ToUpper
-        If (Me.opcionCatalogoSeleccionada = OpcionCatalogo.articulo) Then
-            spCatalogos.ActiveSheet.ColumnHeader.Cells(0, spCatalogos.ActiveSheet.Columns("unidadMedida").Index).Value = "Unidad".ToUpper
-        End If
-        pnlCatalogos.Height = spRecepcion.Height
-        pnlCatalogos.Size = spCatalogos.Size
-        pnlCatalogos.BringToFront()
-        pnlCatalogos.Visible = True
-        AsignarFoco(pnlCatalogos)
-        AsignarFoco(spCatalogos)
-        Application.DoEvents()
-
-    End Sub
-
-    Private Sub VolverFocoCatalogos()
-
-        'If (Me.opcionCatalogoSeleccionada = OpcionCatalogo.proveedor) Then
-        '    pnlCapturaSuperior.Enabled = True
-        '    AsignarFoco(txtIdProveedor)
-        'Else
-        spRecepcion.Enabled = True
-        AsignarFoco(spRecepcion)
-        'End If
-        pnlCatalogos.Visible = False
-
-    End Sub
-
     Private Sub CargarRecepcion()
 
         Me.Cursor = Cursors.WaitCursor
@@ -915,7 +766,7 @@ Public Class Principal
     Private Sub FormatearSpreadRecepcion()
 
         spRecepcion.ActiveSheet.ColumnHeader.Rows(0, spRecepcion.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
-        spRecepcion.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spRecepcion.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosGrandesSpread
         spRecepcion.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
         spRecepcion.ActiveSheet.Rows.Count = cantidadFilas
         ControlarSpreadEnterASiguienteColumna(spRecepcion)
@@ -927,8 +778,8 @@ Public Class Principal
         spRecepcion.ActiveSheet.Columns("pesoCajas").Width = 220
         spRecepcion.ActiveSheet.Columns("cantidadCajas").CellType = tipoEntero
         spRecepcion.ActiveSheet.Columns("pesoCajas").CellType = tipoDoble
-        spRecepcion.ActiveSheet.ColumnHeader.Cells(0, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Value = "Cantidad de Cajas *".ToUpper()
-        spRecepcion.ActiveSheet.ColumnHeader.Cells(0, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Value = "Peso de Cajas *".ToUpper()
+        spRecepcion.ActiveSheet.ColumnHeader.Cells(0, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Value = "Cantidad Cajas *".ToUpper()
+        spRecepcion.ActiveSheet.ColumnHeader.Cells(0, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Value = "Peso Cajas *".ToUpper()
         Application.DoEvents()
 
     End Sub
@@ -1079,67 +930,6 @@ Public Class Principal
 
     End Enum
 
-    Enum OpcionCatalogo
-
-        familia = 1
-        subfamilia = 2
-        articulo = 3
-        choferesCampos = 4
-
-    End Enum
-
 #End Region
-     
-    Private Sub txtHora_KeyDown(sender As Object, e As KeyEventArgs) Handles txtHora.KeyDown
-
-        If (e.KeyData = Keys.Enter) Then
-            e.SuppressKeyPress = True
-            If (Not String.IsNullOrEmpty(txtHora.Text.Trim.Replace(":", "").Replace("_", ""))) Then
-                AsignarFoco(cbLotes)
-            End If
-        ElseIf (e.KeyData = Keys.Escape) Then
-            e.SuppressKeyPress = True
-            AsignarFoco(dtpFecha)
-        End If
-
-    End Sub
-
-    Private Sub cbChoferesCampos_KeyDown(sender As Object, e As KeyEventArgs) Handles cbChoferesCampos.KeyDown
-
-        If (e.KeyData = Keys.Enter) Then
-            e.SuppressKeyPress = True
-            If (cbChoferesCampos.SelectedValue > 0) Then
-                AsignarFoco(cbProductos)
-            Else
-                cbChoferesCampos.SelectedIndex = 0
-            End If
-        ElseIf (e.KeyData = Keys.Escape) Then
-            e.SuppressKeyPress = True
-            AsignarFoco(cbLotes)
-        End If
-
-    End Sub
-
-    Private Sub cbVariedades_KeyDown(sender As Object, e As KeyEventArgs) Handles cbVariedades.KeyDown
-
-        If (e.KeyData = Keys.Enter) Then
-            e.SuppressKeyPress = True
-            If (cbChoferesCampos.SelectedValue > 0) Then
-                AsignarFoco(spRecepcion)
-            Else
-                cbChoferesCampos.SelectedIndex = 0
-            End If
-        ElseIf (e.KeyData = Keys.Escape) Then
-            e.SuppressKeyPress = True
-            AsignarFoco(cbProductos)
-        End If
-
-    End Sub
-
-    Private Sub cbProductos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbProductos.SelectedIndexChanged
-
-        CargarVariedades()
-
-    End Sub
 
 End Class

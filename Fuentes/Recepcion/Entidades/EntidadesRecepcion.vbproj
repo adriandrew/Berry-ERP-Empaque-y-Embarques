@@ -84,11 +84,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Almacenes.vb" />
-    <Compile Include="Articulos.vb" />
     <Compile Include="BaseDatos.vb" />
     <Compile Include="Recepcion.vb" />
-    <Compile Include="Familias.vb" />
     <Compile Include="Lotes.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -108,8 +105,6 @@
     <Compile Include="ChoferesCampos.vb" />
     <Compile Include="Variedades.vb" />
     <Compile Include="Productos.vb" />
-    <Compile Include="TiposSalidas.vb" />
-    <Compile Include="UnidadesMedidas.vb" />
     <Compile Include="Usuarios.vb" />
   </ItemGroup>
   <ItemGroup>

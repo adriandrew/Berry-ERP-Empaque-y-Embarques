@@ -1,0 +1,8 @@
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Logica\bin\Release\LogicaVaciado.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Logica\bin\Release\LogicaVaciado.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Logica\bin\Release\LogicaVaciado.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Logica\obj\Release\LogicaVaciado.Resources.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Logica\obj\Release\LogicaVaciado.vbproj.GenerateResource.Cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Logica\obj\Release\LogicaVaciado.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Logica\obj\Release\LogicaVaciado.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Vaciado\Logica\obj\Release\LogicaVaciado.pdb

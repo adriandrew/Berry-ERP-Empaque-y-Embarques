@@ -6,11 +6,7 @@ Public Class Principal
     ' Variables de objetos de entidades.
     Public usuarios As New EntidadesVaciado.Usuarios()
     Public vaciado As New EntidadesVaciado.Vaciado()
-    Public recepcion As New EntidadesVaciado.Recepcion()
-    Public variedades As New EntidadesVaciado.Variedades()
-    Public choferesCampos As New EntidadesVaciado.ChoferesCampos()
-    Public lotes As New EntidadesVaciado.Lotes()
-    Public productos As New EntidadesVaciado.Productos()
+    Public recepcion As New EntidadesVaciado.Recepcion() 
     ' Variables de tipos de datos de spread.
     Public tipoTexto As New FarPoint.Win.Spread.CellType.TextCellType()
     Public tipoTextoContrasena As New FarPoint.Win.Spread.CellType.TextCellType()
@@ -41,7 +37,7 @@ Public Class Principal
     Public opcionCatalogoSeleccionada As Integer = 0
     Public esGuardadoValido As Boolean = True
     ' Variable de desarrollo.
-    Public esDesarrollo As Boolean = True
+    Public esDesarrollo As Boolean = False
 
 #Region "Eventos"
 
@@ -198,6 +194,8 @@ Public Class Principal
             e.SuppressKeyPress = True
             If (Not String.IsNullOrEmpty(txtHora.Text.Trim.Replace(":", "").Replace("_", "")) And txtHora.Text.Length = 5) Then
                 CargarVaciado()
+            Else
+                LimpiarPantalla()
             End If
         ElseIf (e.KeyData = Keys.Escape) Then
             e.SuppressKeyPress = True
@@ -515,12 +513,14 @@ Public Class Principal
 
     Private Sub EliminarRegistroDeSpread(ByVal spread As FarPoint.Win.Spread.FpSpread)
 
+        Dim idRecepcion As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spread.ActiveSheet.Cells(spread.ActiveSheet.ActiveRowIndex, spread.ActiveSheet.Columns("idRecepcion").Index).Value)
         If (spread.ActiveSheet.ActiveRowIndex > 0) Then
             spread.ActiveSheet.Rows.Remove(spread.ActiveSheet.ActiveRowIndex, 1)
         Else
             spread.ActiveSheet.ClearRange(spread.ActiveSheet.ActiveRowIndex, 0, 1, spread.ActiveSheet.Columns.Count, False)
             spread.ActiveSheet.SetActiveCell(spread.ActiveSheet.ActiveRowIndex, 0)
         End If
+        CalcularSaldos(idRecepcion)
 
     End Sub
 
@@ -571,10 +571,12 @@ Public Class Principal
                     spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajas").Index).Value = cantidadCajas * pesoCaja
                     Dim idRecepcion As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Value)
                     Dim saldoCajas As Integer = CalcularSaldos(idRecepcion)
-                    If (saldoCajas <= 0) Then
+                    If (saldoCajas < 0) Then
                         MsgBox("Saldos de cajas insuficientes. No puedes sobrepasar la cantidad de cajas de este número de recepción.", MsgBoxStyle.Exclamation, "Saldos insuficientes.")
-                        'spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Text = String.Empty
+                        spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Text = 0
+                        spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajas").Index).Text = 0
                         spVaciado.ActiveSheet.SetActiveCell(fila, spVaciado.ActiveSheet.ActiveColumnIndex - 1)
+                        CalcularSaldos(idRecepcion)
                     End If
                 Else
                     spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Value = String.Empty
@@ -654,7 +656,7 @@ Public Class Principal
         cantidadFilas = spVaciado.ActiveSheet.Rows.Count + 1
         FormatearSpreadVaciado()
         AsignarFoco(spVaciado)
-        spVaciado.ActiveSheet.SetActiveCell(0, 2)
+        spVaciado.ActiveSheet.SetActiveCell(0, 1)
         CalcularSaldosConExcepcion()
         CalcularTotales()
         Me.Cursor = Cursors.Default
@@ -670,8 +672,7 @@ Public Class Principal
         spVaciado.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
         ControlarSpreadEnterASiguienteColumna(spVaciado)
         spVaciado.ActiveSheet.Rows.Count = cantidadFilas
-        Dim numeracion As Integer = 0
-        spVaciado.ActiveSheet.Columns(numeracion).Tag = "existente" : numeracion += 1
+        Dim numeracion As Integer = 0 
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "pesoCajaUnitaria" : numeracion += 1
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "idRecepcion" : numeracion += 1
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "idLote" : numeracion += 1
@@ -731,8 +732,7 @@ Public Class Principal
         spVaciado.ActiveSheet.AddColumnHeaderSpanCell(0, spVaciado.ActiveSheet.Columns("pesoCajas").Index, 2, 1)
         spVaciado.ActiveSheet.ColumnHeader.Cells(0, spVaciado.ActiveSheet.Columns("pesoCajas").Index).Value = "Peso Cajas".ToUpper()
         spVaciado.ActiveSheet.AddColumnHeaderSpanCell(0, spVaciado.ActiveSheet.Columns("saldoCajas").Index, 2, 1)
-        spVaciado.ActiveSheet.ColumnHeader.Cells(0, spVaciado.ActiveSheet.Columns("saldoCajas").Index).Value = "Saldo Cajas".ToUpper()
-        spVaciado.ActiveSheet.Columns("existente").Visible = False
+        spVaciado.ActiveSheet.ColumnHeader.Cells(0, spVaciado.ActiveSheet.Columns("saldoCajas").Index).Value = "Saldo Cajas".ToUpper() 
         spVaciado.ActiveSheet.Columns("pesoCajaUnitaria").Visible = False
         Application.DoEvents()
 
@@ -740,8 +740,7 @@ Public Class Principal
 
     Private Sub FormatearSpreadTotales()
 
-        Dim numeracion As Integer = 0
-        spTotales.ActiveSheet.Columns(numeracion).Tag = "existente" : numeracion += 1
+        Dim numeracion As Integer = 0 
         spTotales.ActiveSheet.Columns(numeracion).Tag = "pesoCajaUnitaria" : numeracion += 1
         spTotales.ActiveSheet.Columns(numeracion).Tag = "idRecepcion" : numeracion += 1
         spTotales.ActiveSheet.Columns(numeracion).Tag = "idLote" : numeracion += 1
@@ -770,7 +769,6 @@ Public Class Principal
         'spTotales.ActiveSheet.Columns("total").Width = 220
         'spTotales.ActiveSheet.Columns("total").CellType = tipoTexto
         spTotales.ActiveSheet.ColumnHeader.Visible = False
-        spTotales.ActiveSheet.Columns("existente").Visible = False
         spTotales.ActiveSheet.Columns("pesoCajaUnitaria").Visible = False
         Application.DoEvents()
 
@@ -788,8 +786,8 @@ Public Class Principal
         End If
         ' Parte inferior.
         For fila As Integer = 0 To spVaciado.ActiveSheet.Rows.Count - 1
-            Dim idRecepcion As String = spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Text
-            Dim idRecepcion2 As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Text)
+            Dim idRecepcion As String = spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Text
+            Dim idRecepcion2 As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Text)
             If (Not String.IsNullOrEmpty(idRecepcion) Or idRecepcion2 > 0) Then
                 Dim idBanda As String = spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).Text
                 Dim idBanda2 As Double = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).Text)

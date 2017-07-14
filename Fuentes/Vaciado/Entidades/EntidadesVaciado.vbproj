@@ -86,7 +86,6 @@
   <ItemGroup>
     <Compile Include="BaseDatos.vb" />
     <Compile Include="Recepcion.vb" />
-    <Compile Include="Lotes.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -102,10 +101,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ChoferesCampos.vb" />
     <Compile Include="Vaciado.vb" />
-    <Compile Include="Variedades.vb" />
-    <Compile Include="Productos.vb" />
     <Compile Include="Usuarios.vb" />
   </ItemGroup>
   <ItemGroup>

@@ -116,7 +116,7 @@ Public Class Vaciado
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque 
-            comando.CommandText = "SELECT 1 AS Existente, SUM(VAC.PesoCajas)/SUM(VAC.CantidadCajas) AS PesoCajaUnitaria, R.Id, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V.Nombre AS NombreVariedad, VAC.IdBanda, VAC.CantidadCajas, VAC.PesoCajas, 0 AS Saldo " & _
+            comando.CommandText = "SELECT SUM(VAC.PesoCajas)/SUM(VAC.CantidadCajas) AS PesoCajaUnitaria, R.Id, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V.Nombre AS NombreVariedad, VAC.IdBanda, VAC.CantidadCajas, VAC.PesoCajas, 0 AS Saldo " & _
             " FROM Vaciado AS VAC " & _
             " LEFT JOIN Recepcion AS R ON VAC.IdRecepcion = R.Id" & _
             " LEFT JOIN " & LogicaVaciado.Programas.bdCatalogo & ".dbo." & LogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
@@ -149,7 +149,7 @@ Public Class Vaciado
             comando.Connection = BaseDatos.conexionEmpaque
             Dim condicion As String = String.Empty
             If (Not soloId) Then
-                condicion &= " AND (Fecha<>@fecha AND Hora<>@hora) "
+                condicion &= " AND (Fecha<>@fecha OR Hora<>@hora) "
             End If
             comando.CommandText = "SELECT ISNULL(SUM(CajasR),0) - ISNULL(SUM(CajasV), 0) AS DiferenciaCajas " & _
             " FROM " & _

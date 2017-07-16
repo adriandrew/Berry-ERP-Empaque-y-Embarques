@@ -1,0 +1,8 @@
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Logica\bin\Release\EYELogicaReporteRecepcion.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Logica\bin\Release\EYELogicaReporteRecepcion.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Logica\bin\Release\EYELogicaReporteRecepcion.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Logica\obj\Release\EYELogicaReporteRecepcion.Resources.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Logica\obj\Release\Logica.vbproj.GenerateResource.Cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Logica\obj\Release\EYELogicaReporteRecepcion.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Logica\obj\Release\EYELogicaReporteRecepcion.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Logica\obj\Release\EYELogicaReporteRecepcion.pdb

@@ -46,8 +46,8 @@ Public Class Lotes
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre FROM " & LogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Lotes " & _
-            " UNION SELECT -1 AS Id, NULL AS Nombre FROM " & LogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Lotes " & _
+            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Lotes " & _
+            " UNION SELECT -1 AS Id, NULL AS Nombre FROM " & EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Lotes " & _
             " ORDER BY Id ASC"
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader
@@ -69,11 +69,11 @@ Public Class Lotes
             Dim lista As New List(Of Lotes)
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            Dim condicion As String = String.Empty 
+            Dim condicion As String = String.Empty
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre, Hectareas, PesoCaja FROM " & LogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Lotes WHERE 0=0 " & condicion 
+            comando.CommandText = "SELECT Id, Nombre, Hectareas, PesoCaja FROM " & EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Lotes WHERE 0=0 " & condicion
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()

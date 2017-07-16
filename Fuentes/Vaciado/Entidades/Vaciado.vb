@@ -97,7 +97,7 @@ Public Class Vaciado
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque 
             comando.CommandText = "DELETE FROM Vaciado WHERE Fecha=@fecha AND Hora=@hora"
-            comando.Parameters.AddWithValue("@fecha", LogicaVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
+            comando.Parameters.AddWithValue("@fecha", EYELogicaVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
             comando.Parameters.AddWithValue("@hora", Me.EHora)
             BaseDatos.conexionEmpaque.Open()
             comando.ExecuteNonQuery()
@@ -115,17 +115,17 @@ Public Class Vaciado
         Try
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
-            comando.Connection = BaseDatos.conexionEmpaque 
+            comando.Connection = BaseDatos.conexionEmpaque
             comando.CommandText = "SELECT SUM(VAC.PesoCajas)/SUM(VAC.CantidadCajas) AS PesoCajaUnitaria, R.Id, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V.Nombre AS NombreVariedad, VAC.IdBanda, VAC.CantidadCajas, VAC.PesoCajas, 0 AS Saldo " & _
             " FROM Vaciado AS VAC " & _
             " LEFT JOIN Recepcion AS R ON VAC.IdRecepcion = R.Id" & _
-            " LEFT JOIN " & LogicaVaciado.Programas.bdCatalogo & ".dbo." & LogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
-            " LEFT JOIN " & LogicaVaciado.Programas.bdCatalogo & ".dbo." & LogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON R.IdProducto = P.Id " & _
-            " LEFT JOIN " & LogicaVaciado.Programas.bdCatalogo & ".dbo." & LogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto" & _
+            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
+            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON R.IdProducto = P.Id " & _
+            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto" & _
             " WHERE VAC.Fecha=@fecha AND VAC.Hora=@hora " & _
             " GROUP BY R.Id, R.IdLote, L.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, VAC.IdBanda, VAC.CantidadCajas, VAC.PesoCajas, VAC.Orden " & _
             " ORDER BY VAC.Orden ASC"
-            comando.Parameters.AddWithValue("@fecha", LogicaVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
+            comando.Parameters.AddWithValue("@fecha", EYELogicaVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
             comando.Parameters.AddWithValue("@hora", Me.EHora)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader
@@ -160,7 +160,7 @@ Public Class Vaciado
             " ) AS T"
             '"SELECT ISNULL(SUM(R.CantidadCajas),0) - ISNULL(SUM(V.CantidadCajas), 0) AS DiferenciaCajas FROM Recepcion AS R LEFT JOIN Vaciado AS V ON R.Id = V.IdRecepcion WHERE R.Id=@id"
             comando.Parameters.AddWithValue("@id", Me.EIdRecepcion)
-            comando.Parameters.AddWithValue("@fecha", LogicaVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
+            comando.Parameters.AddWithValue("@fecha", EYELogicaVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
             comando.Parameters.AddWithValue("@hora", Me.EHora)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader

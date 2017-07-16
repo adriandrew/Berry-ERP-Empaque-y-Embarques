@@ -36,21 +36,21 @@ Public Module BaseDatos
 
     Public Sub AbrirConexionConfiguracion()
 
-        BaseDatos.ECadenaConexionConfiguracion = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", LogicaCatalogos.Directorios.instanciaSql, BaseDatos.ECadenaConexionConfiguracion, LogicaCatalogos.Directorios.usuarioSql, LogicaCatalogos.Directorios.contrasenaSql)
+        BaseDatos.ECadenaConexionConfiguracion = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", EYELogicaCatalogos.Directorios.instanciaSql, BaseDatos.ECadenaConexionConfiguracion, EYELogicaCatalogos.Directorios.usuarioSql, EYELogicaCatalogos.Directorios.contrasenaSql)
         conexionConfiguracion.ConnectionString = BaseDatos.ECadenaConexionConfiguracion
 
     End Sub
 
     Public Sub AbrirConexionCatalogo()
 
-        BaseDatos.ECadenaConexionCatalogo = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", LogicaCatalogos.Directorios.instanciaSql, BaseDatos.ECadenaConexionCatalogo, LogicaCatalogos.Directorios.usuarioSql, LogicaCatalogos.Directorios.contrasenaSql)
+        BaseDatos.ECadenaConexionCatalogo = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", EYELogicaCatalogos.Directorios.instanciaSql, BaseDatos.ECadenaConexionCatalogo, EYELogicaCatalogos.Directorios.usuarioSql, EYELogicaCatalogos.Directorios.contrasenaSql)
         conexionCatalogo.ConnectionString = BaseDatos.ECadenaConexionCatalogo
 
     End Sub
 
     Public Sub AbrirConexionAlmacen()
 
-        BaseDatos.ECadenaConexionAlmacen = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", LogicaCatalogos.Directorios.instanciaSql, BaseDatos.ECadenaConexionAlmacen, LogicaCatalogos.Directorios.usuarioSql, LogicaCatalogos.Directorios.contrasenaSql)
+        BaseDatos.ECadenaConexionAlmacen = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", EYELogicaCatalogos.Directorios.instanciaSql, BaseDatos.ECadenaConexionAlmacen, EYELogicaCatalogos.Directorios.usuarioSql, EYELogicaCatalogos.Directorios.contrasenaSql)
         conexionAgenda.ConnectionString = BaseDatos.ECadenaConexionAlmacen
 
     End Sub

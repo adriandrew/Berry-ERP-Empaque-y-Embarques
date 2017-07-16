@@ -44,8 +44,8 @@ Public Class Variedades
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT -1 AS Id, NULL AS Nombre FROM " & LogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Variedades" & _
-            " UNION SELECT Id, Nombre FROM " & LogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Variedades " & _
+            comando.CommandText = "SELECT -1 AS Id, NULL AS Nombre FROM " & EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Variedades" & _
+            " UNION SELECT Id, Nombre FROM " & EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Variedades " & _
             " WHERE 0=0 " & condicion
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)
             comando.Parameters.AddWithValue("@id", Me.EId)
@@ -76,7 +76,7 @@ Public Class Variedades
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT IdProducto, Id, Nombre FROM " & LogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Variedades WHERE 0=0 " & condicion
+            comando.CommandText = "SELECT IdProducto, Id, Nombre FROM " & EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Variedades WHERE 0=0 " & condicion
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()

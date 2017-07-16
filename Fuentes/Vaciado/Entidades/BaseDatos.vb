@@ -36,21 +36,21 @@ Public Module BaseDatos
 
     Public Sub AbrirConexionConfiguracion()
 
-        BaseDatos.ECadenaConexionConfiguracion = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", LogicaVaciado.Directorios.instanciaSql, BaseDatos.ECadenaConexionConfiguracion, LogicaVaciado.Directorios.usuarioSql, LogicaVaciado.Directorios.contrasenaSql)
+        BaseDatos.ECadenaConexionConfiguracion = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", EYELogicaVaciado.Directorios.instanciaSql, BaseDatos.ECadenaConexionConfiguracion, EYELogicaVaciado.Directorios.usuarioSql, EYELogicaVaciado.Directorios.contrasenaSql)
         conexionConfiguracion.ConnectionString = BaseDatos.ECadenaConexionConfiguracion
 
     End Sub
 
     Public Sub AbrirConexionCatalogo()
 
-        BaseDatos.ECadenaConexionCatalogo = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", LogicaVaciado.Directorios.instanciaSql, BaseDatos.ECadenaConexionCatalogo, LogicaVaciado.Directorios.usuarioSql, LogicaVaciado.Directorios.contrasenaSql)
+        BaseDatos.ECadenaConexionCatalogo = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", EYELogicaVaciado.Directorios.instanciaSql, BaseDatos.ECadenaConexionCatalogo, EYELogicaVaciado.Directorios.usuarioSql, EYELogicaVaciado.Directorios.contrasenaSql)
         conexionCatalogo.ConnectionString = BaseDatos.ECadenaConexionCatalogo
 
     End Sub
 
     Public Sub AbrirConexionEmpaque()
 
-        BaseDatos.ECadenaConexionEmpaque = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", LogicaVaciado.Directorios.instanciaSql, BaseDatos.ECadenaConexionEmpaque, LogicaVaciado.Directorios.usuarioSql, LogicaVaciado.Directorios.contrasenaSql)
+        BaseDatos.ECadenaConexionEmpaque = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", EYELogicaVaciado.Directorios.instanciaSql, BaseDatos.ECadenaConexionEmpaque, EYELogicaVaciado.Directorios.usuarioSql, EYELogicaVaciado.Directorios.contrasenaSql)
         conexionEmpaque.ConnectionString = BaseDatos.ECadenaConexionEmpaque
 
     End Sub

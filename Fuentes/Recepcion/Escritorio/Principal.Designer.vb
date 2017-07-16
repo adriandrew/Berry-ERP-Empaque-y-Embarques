@@ -70,6 +70,8 @@ Partial Class Principal
         Me.btnGuardar = New System.Windows.Forms.Button()
         Me.spRecepcion = New FarPoint.Win.Spread.FpSpread()
         Me.spRecepcion_Sheet1 = New FarPoint.Win.Spread.SheetView()
+        Me.spTotales = New FarPoint.Win.Spread.FpSpread()
+        Me.spTotales_Sheet1 = New FarPoint.Win.Spread.SheetView()
         Me.pnlPie = New System.Windows.Forms.Panel()
         Me.btnAyuda = New System.Windows.Forms.Button()
         Me.lblDescripcionTooltip = New System.Windows.Forms.Label()
@@ -80,8 +82,6 @@ Partial Class Principal
         Me.lblEncabezadoEmpresa = New System.Windows.Forms.Label()
         Me.lblEncabezadoPrograma = New System.Windows.Forms.Label()
         Me.temporizador = New System.Windows.Forms.Timer(Me.components)
-        Me.spTotales = New FarPoint.Win.Spread.FpSpread()
-        Me.spTotales_Sheet1 = New FarPoint.Win.Spread.SheetView()
         Me.pnlContenido.SuspendLayout()
         Me.pnlCuerpo.SuspendLayout()
         Me.pnlCatalogos.SuspendLayout()
@@ -90,10 +90,10 @@ Partial Class Principal
         Me.pnlCapturaSuperior.SuspendLayout()
         CType(Me.spRecepcion, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.spRecepcion_Sheet1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.pnlPie.SuspendLayout()
-        Me.pnlEncabezado.SuspendLayout()
         CType(Me.spTotales, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.spTotales_Sheet1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlPie.SuspendLayout()
+        Me.pnlEncabezado.SuspendLayout()
         Me.SuspendLayout()
         '
         'pnlContenido
@@ -600,6 +600,67 @@ Partial Class Principal
         Me.spRecepcion_Sheet1.SheetCornerStyle.Parent = "CornerSeashell"
         Me.spRecepcion_Sheet1.ReferenceStyle = FarPoint.Win.Spread.Model.ReferenceStyle.A1
         '
+        'spTotales
+        '
+        Me.spTotales.AccessibleDescription = ""
+        Me.spTotales.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.spTotales.BackColor = System.Drawing.Color.White
+        Me.spTotales.HorizontalScrollBar.Buttons = New FarPoint.Win.Spread.FpScrollBarButtonCollection("BackwardLineButton,ThumbTrack,ForwardLineButton")
+        Me.spTotales.HorizontalScrollBar.Name = ""
+        EnhancedScrollBarRenderer6.ArrowColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer6.ArrowHoveredColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer6.ArrowSelectedColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer6.ButtonBackgroundColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer6.ButtonBorderColor = System.Drawing.Color.SlateGray
+        EnhancedScrollBarRenderer6.ButtonHoveredBackgroundColor = System.Drawing.Color.SlateGray
+        EnhancedScrollBarRenderer6.ButtonHoveredBorderColor = System.Drawing.Color.DarkGray
+        EnhancedScrollBarRenderer6.ButtonSelectedBackgroundColor = System.Drawing.Color.DarkGray
+        EnhancedScrollBarRenderer6.ButtonSelectedBorderColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer6.TrackBarBackgroundColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer6.TrackBarSelectedBackgroundColor = System.Drawing.Color.SlateGray
+        Me.spTotales.HorizontalScrollBar.Renderer = EnhancedScrollBarRenderer6
+        Me.spTotales.HorizontalScrollBar.TabIndex = 10
+        Me.spTotales.Location = New System.Drawing.Point(0, 465)
+        Me.spTotales.Name = "spTotales"
+        Me.spTotales.Sheets.AddRange(New FarPoint.Win.Spread.SheetView() {Me.spTotales_Sheet1})
+        Me.spTotales.Size = New System.Drawing.Size(1028, 23)
+        Me.spTotales.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Seashell
+        Me.spTotales.TabIndex = 25
+        Me.spTotales.VerticalScrollBar.Buttons = New FarPoint.Win.Spread.FpScrollBarButtonCollection("BackwardLineButton,ThumbTrack,ForwardLineButton")
+        Me.spTotales.VerticalScrollBar.Name = ""
+        EnhancedScrollBarRenderer7.ArrowColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer7.ArrowHoveredColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer7.ArrowSelectedColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer7.ButtonBackgroundColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer7.ButtonBorderColor = System.Drawing.Color.SlateGray
+        EnhancedScrollBarRenderer7.ButtonHoveredBackgroundColor = System.Drawing.Color.SlateGray
+        EnhancedScrollBarRenderer7.ButtonHoveredBorderColor = System.Drawing.Color.DarkGray
+        EnhancedScrollBarRenderer7.ButtonSelectedBackgroundColor = System.Drawing.Color.DarkGray
+        EnhancedScrollBarRenderer7.ButtonSelectedBorderColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer7.TrackBarBackgroundColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer7.TrackBarSelectedBackgroundColor = System.Drawing.Color.SlateGray
+        Me.spTotales.VerticalScrollBar.Renderer = EnhancedScrollBarRenderer7
+        Me.spTotales.VerticalScrollBar.TabIndex = 11
+        '
+        'spTotales_Sheet1
+        '
+        Me.spTotales_Sheet1.Reset()
+        spTotales_Sheet1.SheetName = "Sheet1"
+        'Formulas and custom names must be loaded with R1C1 reference style
+        Me.spTotales_Sheet1.ReferenceStyle = FarPoint.Win.Spread.Model.ReferenceStyle.R1C1
+        Me.spTotales_Sheet1.ColumnFooter.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red
+        Me.spTotales_Sheet1.ColumnFooter.DefaultStyle.Parent = "ColumnHeaderSeashell"
+        Me.spTotales_Sheet1.ColumnFooterSheetCornerStyle.NoteIndicatorColor = System.Drawing.Color.Red
+        Me.spTotales_Sheet1.ColumnFooterSheetCornerStyle.Parent = "CornerSeashell"
+        Me.spTotales_Sheet1.ColumnHeader.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red
+        Me.spTotales_Sheet1.ColumnHeader.DefaultStyle.Parent = "ColumnHeaderSeashell"
+        Me.spTotales_Sheet1.RowHeader.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red
+        Me.spTotales_Sheet1.RowHeader.DefaultStyle.Parent = "RowHeaderSeashell"
+        Me.spTotales_Sheet1.SheetCornerStyle.NoteIndicatorColor = System.Drawing.Color.Red
+        Me.spTotales_Sheet1.SheetCornerStyle.Parent = "CornerSeashell"
+        Me.spTotales_Sheet1.ReferenceStyle = FarPoint.Win.Spread.Model.ReferenceStyle.A1
+        '
         'pnlPie
         '
         Me.pnlPie.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
@@ -726,67 +787,6 @@ Partial Class Principal
         '
         Me.temporizador.Interval = 1
         '
-        'spTotales
-        '
-        Me.spTotales.AccessibleDescription = ""
-        Me.spTotales.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.spTotales.BackColor = System.Drawing.Color.White
-        Me.spTotales.HorizontalScrollBar.Buttons = New FarPoint.Win.Spread.FpScrollBarButtonCollection("BackwardLineButton,ThumbTrack,ForwardLineButton")
-        Me.spTotales.HorizontalScrollBar.Name = ""
-        EnhancedScrollBarRenderer6.ArrowColor = System.Drawing.Color.DarkSlateGray
-        EnhancedScrollBarRenderer6.ArrowHoveredColor = System.Drawing.Color.DarkSlateGray
-        EnhancedScrollBarRenderer6.ArrowSelectedColor = System.Drawing.Color.DarkSlateGray
-        EnhancedScrollBarRenderer6.ButtonBackgroundColor = System.Drawing.Color.CadetBlue
-        EnhancedScrollBarRenderer6.ButtonBorderColor = System.Drawing.Color.SlateGray
-        EnhancedScrollBarRenderer6.ButtonHoveredBackgroundColor = System.Drawing.Color.SlateGray
-        EnhancedScrollBarRenderer6.ButtonHoveredBorderColor = System.Drawing.Color.DarkGray
-        EnhancedScrollBarRenderer6.ButtonSelectedBackgroundColor = System.Drawing.Color.DarkGray
-        EnhancedScrollBarRenderer6.ButtonSelectedBorderColor = System.Drawing.Color.CadetBlue
-        EnhancedScrollBarRenderer6.TrackBarBackgroundColor = System.Drawing.Color.CadetBlue
-        EnhancedScrollBarRenderer6.TrackBarSelectedBackgroundColor = System.Drawing.Color.SlateGray
-        Me.spTotales.HorizontalScrollBar.Renderer = EnhancedScrollBarRenderer6
-        Me.spTotales.HorizontalScrollBar.TabIndex = 10
-        Me.spTotales.Location = New System.Drawing.Point(0, 465)
-        Me.spTotales.Name = "spTotales"
-        Me.spTotales.Sheets.AddRange(New FarPoint.Win.Spread.SheetView() {Me.spTotales_Sheet1})
-        Me.spTotales.Size = New System.Drawing.Size(1028, 23)
-        Me.spTotales.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Seashell
-        Me.spTotales.TabIndex = 25
-        Me.spTotales.VerticalScrollBar.Buttons = New FarPoint.Win.Spread.FpScrollBarButtonCollection("BackwardLineButton,ThumbTrack,ForwardLineButton")
-        Me.spTotales.VerticalScrollBar.Name = ""
-        EnhancedScrollBarRenderer7.ArrowColor = System.Drawing.Color.DarkSlateGray
-        EnhancedScrollBarRenderer7.ArrowHoveredColor = System.Drawing.Color.DarkSlateGray
-        EnhancedScrollBarRenderer7.ArrowSelectedColor = System.Drawing.Color.DarkSlateGray
-        EnhancedScrollBarRenderer7.ButtonBackgroundColor = System.Drawing.Color.CadetBlue
-        EnhancedScrollBarRenderer7.ButtonBorderColor = System.Drawing.Color.SlateGray
-        EnhancedScrollBarRenderer7.ButtonHoveredBackgroundColor = System.Drawing.Color.SlateGray
-        EnhancedScrollBarRenderer7.ButtonHoveredBorderColor = System.Drawing.Color.DarkGray
-        EnhancedScrollBarRenderer7.ButtonSelectedBackgroundColor = System.Drawing.Color.DarkGray
-        EnhancedScrollBarRenderer7.ButtonSelectedBorderColor = System.Drawing.Color.CadetBlue
-        EnhancedScrollBarRenderer7.TrackBarBackgroundColor = System.Drawing.Color.CadetBlue
-        EnhancedScrollBarRenderer7.TrackBarSelectedBackgroundColor = System.Drawing.Color.SlateGray
-        Me.spTotales.VerticalScrollBar.Renderer = EnhancedScrollBarRenderer7
-        Me.spTotales.VerticalScrollBar.TabIndex = 11
-        '
-        'spTotales_Sheet1
-        '
-        Me.spTotales_Sheet1.Reset()
-        spTotales_Sheet1.SheetName = "Sheet1"
-        'Formulas and custom names must be loaded with R1C1 reference style
-        Me.spTotales_Sheet1.ReferenceStyle = FarPoint.Win.Spread.Model.ReferenceStyle.R1C1
-        Me.spTotales_Sheet1.ColumnFooter.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red
-        Me.spTotales_Sheet1.ColumnFooter.DefaultStyle.Parent = "ColumnHeaderSeashell"
-        Me.spTotales_Sheet1.ColumnFooterSheetCornerStyle.NoteIndicatorColor = System.Drawing.Color.Red
-        Me.spTotales_Sheet1.ColumnFooterSheetCornerStyle.Parent = "CornerSeashell"
-        Me.spTotales_Sheet1.ColumnHeader.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red
-        Me.spTotales_Sheet1.ColumnHeader.DefaultStyle.Parent = "ColumnHeaderSeashell"
-        Me.spTotales_Sheet1.RowHeader.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red
-        Me.spTotales_Sheet1.RowHeader.DefaultStyle.Parent = "RowHeaderSeashell"
-        Me.spTotales_Sheet1.SheetCornerStyle.NoteIndicatorColor = System.Drawing.Color.Red
-        Me.spTotales_Sheet1.SheetCornerStyle.Parent = "CornerSeashell"
-        Me.spTotales_Sheet1.ReferenceStyle = FarPoint.Win.Spread.Model.ReferenceStyle.A1
-        '
         'Principal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -798,7 +798,7 @@ Partial Class Principal
         Me.ForeColor = System.Drawing.Color.Black
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Principal"
-        Me.Text = "Recepción de Empaque y Embarques"
+        Me.Text = "Empaque y Embarques - Recepción"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pnlContenido.ResumeLayout(False)
         Me.pnlCuerpo.ResumeLayout(False)
@@ -809,12 +809,12 @@ Partial Class Principal
         Me.pnlCapturaSuperior.PerformLayout()
         CType(Me.spRecepcion, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.spRecepcion_Sheet1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.spTotales, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.spTotales_Sheet1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlPie.ResumeLayout(False)
         Me.pnlPie.PerformLayout()
         Me.pnlEncabezado.ResumeLayout(False)
         Me.pnlEncabezado.PerformLayout()
-        CType(Me.spTotales, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.spTotales_Sheet1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

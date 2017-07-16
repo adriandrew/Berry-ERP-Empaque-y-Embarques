@@ -27,7 +27,7 @@ Public Class UnidadesMedidas
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "UnidadesMedidas (Id, Nombre) VALUES (@id, @nombre)"
+            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "UnidadesMedidas (Id, Nombre) VALUES (@id, @nombre)"
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@nombre", Me.ENombre)
             BaseDatos.conexionCatalogo.Open()
@@ -50,7 +50,7 @@ Public Class UnidadesMedidas
             If (Me.EId > 0) Then
                 condicion &= " WHERE Id=@id"
             End If
-            comando.CommandText = "DELETE FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "UnidadesMedidas " & condicion
+            comando.CommandText = "DELETE FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "UnidadesMedidas " & condicion
             comando.Parameters.AddWithValue("@id", Me.id)
             BaseDatos.conexionCatalogo.Open()
             comando.ExecuteNonQuery()
@@ -73,7 +73,7 @@ Public Class UnidadesMedidas
             If (Me.EId > 0) Then
                 condicion &= " WHERE Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "UnidadesMedidas " & condicion & " ORDER BY Id ASC"
+            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "UnidadesMedidas " & condicion & " ORDER BY Id ASC"
             comando.Parameters.AddWithValue("@id", Me.id)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader

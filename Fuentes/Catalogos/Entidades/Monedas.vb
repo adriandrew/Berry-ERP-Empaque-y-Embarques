@@ -27,7 +27,7 @@ Public Class Monedas
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Monedas (Id, Nombre) VALUES (@id, @nombre)"
+            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Monedas (Id, Nombre) VALUES (@id, @nombre)"
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@nombre", Me.ENombre)
             BaseDatos.conexionCatalogo.Open()
@@ -50,7 +50,7 @@ Public Class Monedas
             If (Me.EId > 0) Then
                 condicion &= " WHERE Id=@id"
             End If
-            comando.CommandText = "DELETE FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Monedas " & condicion
+            comando.CommandText = "DELETE FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Monedas " & condicion
             comando.Parameters.AddWithValue("@id", Me.id)
             BaseDatos.conexionCatalogo.Open()
             comando.ExecuteNonQuery()
@@ -69,7 +69,7 @@ Public Class Monedas
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Monedas ORDER BY Id ASC"
+            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Monedas ORDER BY Id ASC"
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader
             dataReader = comando.ExecuteReader()
@@ -94,7 +94,7 @@ Public Class Monedas
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Monedas WHERE 0=0 " & condicion
+            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Monedas WHERE 0=0 " & condicion
             comando.Parameters.AddWithValue("@id", Me.id)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader = comando.ExecuteReader()

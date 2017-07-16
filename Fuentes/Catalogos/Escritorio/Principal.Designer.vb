@@ -750,7 +750,7 @@ Partial Class Principal
         Me.ForeColor = System.Drawing.Color.Black
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Principal"
-        Me.Text = "Catálogos de Empaque y Embarques"
+        Me.Text = "Empaque y Embarques - Catálogos"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pnlContenido.ResumeLayout(False)
         Me.pnlCuerpo.ResumeLayout(False)

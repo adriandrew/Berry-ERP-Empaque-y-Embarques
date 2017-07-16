@@ -4,12 +4,12 @@ Imports System.ComponentModel
 Public Class Principal
 
     ' Variables de objetos de entidades.
-    Public usuarios As New EntidadesRecepcion.Usuarios()
-    Public recepcion As New EntidadesRecepcion.Recepcion()  
-    Public variedades As New EntidadesRecepcion.Variedades()  
-    Public choferesCampos As New EntidadesRecepcion.ChoferesCampos()
-    Public lotes As New EntidadesRecepcion.Lotes()
-    Public productos As New EntidadesRecepcion.Productos() 
+    Public usuarios As New EYEEntidadesRecepcion.Usuarios()
+    Public recepcion As New EYEEntidadesRecepcion.Recepcion()
+    Public variedades As New EYEEntidadesRecepcion.Variedades()
+    Public choferesCampos As New EYEEntidadesRecepcion.ChoferesCampos()
+    Public lotes As New EYEEntidadesRecepcion.Lotes()
+    Public productos As New EYEEntidadesRecepcion.Productos()
     ' Variables de tipos de datos de spread.
     Public tipoTexto As New FarPoint.Win.Spread.CellType.TextCellType()
     Public tipoTextoContrasena As New FarPoint.Win.Spread.CellType.TextCellType()
@@ -70,7 +70,7 @@ Public Class Principal
         FormatearSpreadTotales()
         CargarLotes()
         CargarChoferesCampo()
-        CargarProductos() 
+        CargarProductos()
         Me.Enabled = True
         CargarIdConsecutivo()
         Me.estaMostrado = True
@@ -247,7 +247,7 @@ Public Class Principal
 
     Private Sub btnIdAnterior_Click(sender As Object, e As EventArgs) Handles btnIdAnterior.Click
 
-        If (LogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text) > 1) Then
+        If (EYELogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text) > 1) Then
             txtId.Text -= 1
             CargarRecepcion()
         End If
@@ -256,7 +256,7 @@ Public Class Principal
 
     Private Sub btnIdSiguiente_Click(sender As Object, e As EventArgs) Handles btnIdSiguiente.Click
 
-        If (LogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text) >= 1) Then
+        If (EYELogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text) >= 1) Then
             txtId.Text += 1
             CargarRecepcion()
         End If
@@ -377,7 +377,7 @@ Public Class Principal
 
     Private Function ValidarAccesoTotal() As Boolean
 
-        If ((Not LogicaRecepcion.Usuarios.accesoTotal) Or (LogicaRecepcion.Usuarios.accesoTotal = 0) Or (LogicaRecepcion.Usuarios.accesoTotal = False)) Then
+        If ((Not EYELogicaRecepcion.Usuarios.accesoTotal) Or (EYELogicaRecepcion.Usuarios.accesoTotal = 0) Or (EYELogicaRecepcion.Usuarios.accesoTotal = False)) Then
             MsgBox("No tienes permisos suficientes para acceder a este programa.", MsgBoxStyle.Information, "Permisos insuficientes.")
             Return False
         Else
@@ -425,23 +425,23 @@ Public Class Principal
     Private Sub ConfigurarConexiones()
 
         If (Me.esDesarrollo) Then
-            LogicaRecepcion.Directorios.id = 1
-            LogicaRecepcion.Directorios.instanciaSql = "BERRY1-DELL\SQLEXPRESS2008"
-            LogicaRecepcion.Directorios.usuarioSql = "AdminBerry"
-            LogicaRecepcion.Directorios.contrasenaSql = "@berry2017" 
+            EYELogicaRecepcion.Directorios.id = 1
+            EYELogicaRecepcion.Directorios.instanciaSql = "BERRY1-DELL\SQLEXPRESS2008"
+            EYELogicaRecepcion.Directorios.usuarioSql = "AdminBerry"
+            EYELogicaRecepcion.Directorios.contrasenaSql = "@berry2017"
         Else
-            LogicaRecepcion.Directorios.ObtenerParametros()
-            LogicaRecepcion.Usuarios.ObtenerParametros()
+            EYELogicaRecepcion.Directorios.ObtenerParametros()
+            EYELogicaRecepcion.Usuarios.ObtenerParametros()
         End If
-        LogicaRecepcion.Programas.bdCatalogo = "Catalogo" & LogicaRecepcion.Directorios.id
-        LogicaRecepcion.Programas.bdConfiguracion = "Configuracion" & LogicaRecepcion.Directorios.id
-        LogicaRecepcion.Programas.bdEmpaque = "Empaque" & LogicaRecepcion.Directorios.id
-        EntidadesRecepcion.BaseDatos.ECadenaConexionCatalogo = LogicaRecepcion.Programas.bdCatalogo
-        EntidadesRecepcion.BaseDatos.ECadenaConexionConfiguracion = LogicaRecepcion.Programas.bdConfiguracion
-        EntidadesRecepcion.BaseDatos.ECadenaConexionEmpaque = LogicaRecepcion.Programas.bdEmpaque
-        EntidadesRecepcion.BaseDatos.AbrirConexionCatalogo()
-        EntidadesRecepcion.BaseDatos.AbrirConexionConfiguracion()
-        EntidadesRecepcion.BaseDatos.AbrirConexionEmpaque()
+        EYELogicaRecepcion.Programas.bdCatalogo = "Catalogo" & EYELogicaRecepcion.Directorios.id
+        EYELogicaRecepcion.Programas.bdConfiguracion = "Configuracion" & EYELogicaRecepcion.Directorios.id
+        EYELogicaRecepcion.Programas.bdEmpaque = "Empaque" & EYELogicaRecepcion.Directorios.id
+        EYEEntidadesRecepcion.BaseDatos.ECadenaConexionCatalogo = EYELogicaRecepcion.Programas.bdCatalogo
+        EYEEntidadesRecepcion.BaseDatos.ECadenaConexionConfiguracion = EYELogicaRecepcion.Programas.bdConfiguracion
+        EYEEntidadesRecepcion.BaseDatos.ECadenaConexionEmpaque = EYELogicaRecepcion.Programas.bdEmpaque
+        EYEEntidadesRecepcion.BaseDatos.AbrirConexionCatalogo()
+        EYEEntidadesRecepcion.BaseDatos.AbrirConexionConfiguracion()
+        EYEEntidadesRecepcion.BaseDatos.AbrirConexionEmpaque()
         ConsultarInformacionUsuario()
         CargarPrefijoBaseDatosEmpaque()
 
@@ -449,36 +449,36 @@ Public Class Principal
 
     Private Sub CargarPrefijoBaseDatosEmpaque()
 
-        LogicaRecepcion.Programas.prefijoBaseDatosEmpaque = Me.prefijoBaseDatosEmpaque
+        EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque = Me.prefijoBaseDatosEmpaque
 
     End Sub
 
     Private Sub ConsultarInformacionUsuario()
 
-        Dim lista As New List(Of EntidadesRecepcion.Usuarios)
-        usuarios.EId = LogicaRecepcion.Usuarios.id
+        Dim lista As New List(Of EYEEntidadesRecepcion.Usuarios)
+        usuarios.EId = EYELogicaRecepcion.Usuarios.id
         lista = usuarios.ObtenerListado()
         If (lista.Count = 1) Then
-            LogicaRecepcion.Usuarios.id = lista(0).EId
-            LogicaRecepcion.Usuarios.nombre = lista(0).ENombre
-            LogicaRecepcion.Usuarios.contrasena = lista(0).EContrasena
-            LogicaRecepcion.Usuarios.nivel = lista(0).ENivel
-            LogicaRecepcion.Usuarios.accesoTotal = lista(0).EAccesoTotal
+            EYELogicaRecepcion.Usuarios.id = lista(0).EId
+            EYELogicaRecepcion.Usuarios.nombre = lista(0).ENombre
+            EYELogicaRecepcion.Usuarios.contrasena = lista(0).EContrasena
+            EYELogicaRecepcion.Usuarios.nivel = lista(0).ENivel
+            EYELogicaRecepcion.Usuarios.accesoTotal = lista(0).EAccesoTotal
         End If
 
     End Sub
 
     Private Sub CargarTitulosDirectorio()
 
-        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + LogicaRecepcion.Directorios.nombre + "              Usuario:  " + LogicaRecepcion.Usuarios.nombre
+        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaRecepcion.Directorios.nombre + "              Usuario:  " + EYELogicaRecepcion.Usuarios.nombre
 
     End Sub
 
     Private Sub CargarEncabezados()
 
         lblEncabezadoPrograma.Text = "Programa: " + Me.Text
-        lblEncabezadoEmpresa.Text = "Directorio: " + LogicaRecepcion.Directorios.nombre
-        lblEncabezadoUsuario.Text = "Usuario: " + LogicaRecepcion.Usuarios.nombre
+        lblEncabezadoEmpresa.Text = "Directorio: " + EYELogicaRecepcion.Directorios.nombre
+        lblEncabezadoUsuario.Text = "Usuario: " + EYELogicaRecepcion.Usuarios.nombre
 
     End Sub
 
@@ -490,7 +490,7 @@ Public Class Principal
         ejecutarProgramaPrincipal.UseShellExecute = True
         ejecutarProgramaPrincipal.FileName = nombre & Convert.ToString(".exe")
         ejecutarProgramaPrincipal.WorkingDirectory = Directory.GetCurrentDirectory()
-        ejecutarProgramaPrincipal.Arguments = LogicaRecepcion.Directorios.id.ToString().Trim().Replace(" ", "|") & " " & LogicaRecepcion.Directorios.nombre.ToString().Trim().Replace(" ", "|") & " " & LogicaRecepcion.Directorios.descripcion.ToString().Trim().Replace(" ", "|") & " " & LogicaRecepcion.Directorios.rutaLogo.ToString().Trim().Replace(" ", "|") & " " & LogicaRecepcion.Directorios.esPredeterminado.ToString().Trim().Replace(" ", "|") & " " & LogicaRecepcion.Directorios.instanciaSql.ToString().Trim().Replace(" ", "|") & " " & LogicaRecepcion.Directorios.usuarioSql.ToString().Trim().Replace(" ", "|") & " " & LogicaRecepcion.Directorios.contrasenaSql.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de directorios, indice 9 ;)".Replace(" ", "|") & " " & LogicaRecepcion.Usuarios.id.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de usuario, indice 11 ;)".Replace(" ", "|")
+        ejecutarProgramaPrincipal.Arguments = EYELogicaRecepcion.Directorios.id.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.nombre.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.descripcion.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.rutaLogo.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.esPredeterminado.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.instanciaSql.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.usuarioSql.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.contrasenaSql.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de directorios, indice 9 ;)".Replace(" ", "|") & " " & EYELogicaRecepcion.Usuarios.id.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de usuario, indice 11 ;)".Replace(" ", "|")
         Try
             Dim proceso = Process.Start(ejecutarProgramaPrincipal)
             proceso.WaitForInputIdle()
@@ -687,9 +687,9 @@ Public Class Principal
             Dim fila As Integer = 0
             If (columnaActiva = spRecepcion.ActiveSheet.Columns("cantidadCajas").Index) Then
                 fila = spRecepcion.ActiveSheet.ActiveRowIndex
-                Dim cantidadCajas As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Value)
+                Dim cantidadCajas As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Value)
                 If (cantidadCajas > 0) Then
-                    Dim lista As New List(Of EntidadesRecepcion.Lotes)
+                    Dim lista As New List(Of EYEEntidadesRecepcion.Lotes)
                     Dim idLote As Integer = cbLotes.SelectedValue
                     lotes.EId = idLote
                     lista = lotes.ObtenerListado()
@@ -703,7 +703,7 @@ Public Class Principal
                 End If
             ElseIf (columnaActiva = spRecepcion.ActiveSheet.Columns("pesoCajas").Index) Then
                 fila = spRecepcion.ActiveSheet.ActiveRowIndex
-                Dim pesoCajas As Double = LogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Value)
+                Dim pesoCajas As Double = EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Value)
                 If (pesoCajas <= 0) Then
                     spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Value = String.Empty
                     spRecepcion.ActiveSheet.SetActiveCell(fila, spRecepcion.ActiveSheet.ActiveColumnIndex - 1)
@@ -719,7 +719,7 @@ Public Class Principal
         Dim total As Double = 0
         For columna = 0 To spRecepcion.ActiveSheet.Columns.Count - 1
             For fila = 0 To spRecepcion.ActiveSheet.Rows.Count - 1
-                total += LogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, columna).Text)
+                total += EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, columna).Text)
             Next
             spTotales.ActiveSheet.Cells(0, columna).Text = total
             total = 0
@@ -739,9 +739,9 @@ Public Class Principal
     Private Sub CargarRecepcion()
 
         Me.Cursor = Cursors.WaitCursor
-        recepcion.EId = LogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
+        recepcion.EId = EYELogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
         If (recepcion.EId > 0) Then
-            Dim lista As New List(Of EntidadesRecepcion.Recepcion)
+            Dim lista As New List(Of EYEEntidadesRecepcion.Recepcion)
             lista = recepcion.ObtenerListado()
             If (lista.Count > 0) Then
                 dtpFecha.Value = lista(0).EFecha
@@ -808,7 +808,7 @@ Public Class Principal
         Me.Cursor = Cursors.WaitCursor
         Me.esGuardadoValido = True
         ' Parte superior. 
-        Dim id As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
+        Dim id As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
         If (id <= 0) Then
             txtId.BackColor = Color.Orange
             Me.esGuardadoValido = False
@@ -818,22 +818,22 @@ Public Class Principal
             txtHora.BackColor = Color.Orange
             Me.esGuardadoValido = False
         End If
-        Dim idLote As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(cbLotes.SelectedValue)
+        Dim idLote As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbLotes.SelectedValue)
         If (idLote <= 0) Then
             cbLotes.BackColor = Color.Orange
             Me.esGuardadoValido = False
         End If
-        Dim idChofer As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(cbChoferesCampos.SelectedValue)
+        Dim idChofer As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbChoferesCampos.SelectedValue)
         If (idChofer <= 0) Then
             cbChoferesCampos.BackColor = Color.Orange
             Me.esGuardadoValido = False
         End If
-        Dim idProducto As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(cbProductos.SelectedValue)
+        Dim idProducto As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbProductos.SelectedValue)
         If (idProducto <= 0) Then
             cbProductos.BackColor = Color.Orange
             Me.esGuardadoValido = False
         End If
-        Dim idVariedad As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(cbVariedades.SelectedValue)
+        Dim idVariedad As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbVariedades.SelectedValue)
         If (idVariedad <= 0) Then
             cbVariedades.BackColor = Color.Orange
             Me.esGuardadoValido = False
@@ -841,10 +841,10 @@ Public Class Principal
         ' Parte inferior.
         For fila As Integer = 0 To spRecepcion.ActiveSheet.Rows.Count - 1
             Dim cantidadCajas As String = spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Text
-            Dim cantidadCajas2 As Double = LogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Text)
+            Dim cantidadCajas2 As Double = EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Text)
             If (Not String.IsNullOrEmpty(cantidadCajas) Or cantidadCajas2 > 0) Then
                 Dim pesoCajas As String = spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Text
-                Dim pesoCajas2 As Double = LogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Text)
+                Dim pesoCajas2 As Double = EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Text)
                 If (String.IsNullOrEmpty(pesoCajas) Or pesoCajas2 < 0) Then
                     spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).BackColor = Color.Orange
                     Me.esGuardadoValido = False
@@ -860,17 +860,17 @@ Public Class Principal
         Me.Cursor = Cursors.WaitCursor
         EliminarRecepcion(False)
         ' Parte superior. 
-        Dim id As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
+        Dim id As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
         Dim fecha As Date = dtpFecha.Value
         Dim hora As String = txtHora.Text
-        Dim idLote As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(cbLotes.SelectedValue)
-        Dim idChofer As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(cbChoferesCampos.SelectedValue)
-        Dim idProducto As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(cbProductos.SelectedValue)
-        Dim idVariedad As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(cbVariedades.SelectedValue)
+        Dim idLote As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbLotes.SelectedValue)
+        Dim idChofer As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbChoferesCampos.SelectedValue)
+        Dim idProducto As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbProductos.SelectedValue)
+        Dim idVariedad As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbVariedades.SelectedValue)
         ' Parte inferior.
         For fila As Integer = 0 To spRecepcion.ActiveSheet.Rows.Count - 1
-            Dim cantidadCajas As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Text)
-            Dim pesoCajas As Integer = LogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Text)
+            Dim cantidadCajas As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Text)
+            Dim pesoCajas As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Text)
             If (id > 0 AndAlso IsDate(fecha) AndAlso idLote > 0 AndAlso idChofer > 0 AndAlso idProducto > 0 And idVariedad > 0 AndAlso cantidadCajas > 0 AndAlso pesoCajas > 0) Then
                 recepcion.EId = id
                 recepcion.EFecha = fecha
@@ -903,7 +903,7 @@ Public Class Principal
             End If
         End If
         If ((respuestaSi) Or (Not conMensaje)) Then
-            recepcion.EId = LogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
+            recepcion.EId = EYELogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
             recepcion.Eliminar()
         End If
         If (conMensaje And respuestaSi) Then

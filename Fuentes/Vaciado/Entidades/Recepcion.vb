@@ -106,9 +106,9 @@ Public Class Recepcion
             End If
             comando.CommandText = "SELECT SUM(R.PesoCajas)/SUM(R.CantidadCajas) AS PesoCajaUnitaria, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V.Nombre AS NombreVariedad " & _
             " FROM Recepcion AS R " & _
-            " LEFT JOIN " & LogicaVaciado.Programas.bdCatalogo & ".dbo." & LogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
-            " LEFT JOIN " & LogicaVaciado.Programas.bdCatalogo & ".dbo." & LogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON R.IdProducto = P.Id " & _
-            " LEFT JOIN " & LogicaVaciado.Programas.bdCatalogo & ".dbo." & LogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto" & _
+            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
+            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON R.IdProducto = P.Id " & _
+            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto" & _
             " WHERE 0=0 " & condicion & _
             " GROUP BY R.IdLote, L.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre"
             comando.Parameters.AddWithValue("@id", Me.EId)

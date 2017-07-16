@@ -154,7 +154,7 @@ Public Class Recepcion
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
             Dim valor As Integer = 0
             While lectorDatos.Read()
-                valor = LogicaRecepcion.Funciones.ValidarNumeroACero(lectorDatos("IdMaximo").ToString()) + 1
+                valor = EYELogicaRecepcion.Funciones.ValidarNumeroACero(lectorDatos("IdMaximo").ToString()) + 1
             End While
             BaseDatos.conexionEmpaque.Close()
             Return valor

@@ -36,7 +36,7 @@ Public Class Productos
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos (Id, Nombre, Abreviatura) VALUES (@id, @nombre, @abreviatura)" 
+            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos (Id, Nombre, Abreviatura) VALUES (@id, @nombre, @abreviatura)"
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@nombre", Me.ENombre)
             comando.Parameters.AddWithValue("@abreviatura", Me.EAbreviatura)
@@ -56,11 +56,11 @@ Public Class Productos
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            Dim condicion As String = String.Empty 
+            Dim condicion As String = String.Empty
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "DELETE FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos WHERE 0=0 " & condicion
+            comando.CommandText = "DELETE FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos WHERE 0=0 " & condicion
             comando.Parameters.AddWithValue("@id", Me.id)
             BaseDatos.conexionCatalogo.Open()
             comando.ExecuteNonQuery()
@@ -83,7 +83,7 @@ Public Class Productos
             If Me.EId > 0 Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre, Abreviatura FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos WHERE 0=0 " & condicion & " ORDER BY Id ASC"
+            comando.CommandText = "SELECT Id, Nombre, Abreviatura FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos WHERE 0=0 " & condicion & " ORDER BY Id ASC"
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader
@@ -111,11 +111,11 @@ Public Class Productos
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            Dim condicion As String = String.Empty 
+            Dim condicion As String = String.Empty
             If Me.EId > 0 Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre, Abreviatura FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos WHERE 0=0 " & condicion & " ORDER BY Id ASC"
+            comando.CommandText = "SELECT Id, Nombre, Abreviatura FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos WHERE 0=0 " & condicion & " ORDER BY Id ASC"
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader

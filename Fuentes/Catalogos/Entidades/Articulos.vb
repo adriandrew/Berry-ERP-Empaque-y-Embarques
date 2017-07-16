@@ -126,7 +126,7 @@ Public Class Articulos
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Articulos (IdAlmacen, IdFamilia, IdSubFamilia, Id, Nombre, NombreComercial, IdUnidadMedida, CantidadMinima, CantidadMaxima, Precio, Seccion, Estante, Nivel) VALUES (@idAlmacen, @idFamilia, @idSubFamilia, @id, @nombre, @nombreComercial, @idUnidadMedida, @cantidadMinima, @cantidadMaxima, @precio, @seccion, @estante, @nivel)"
+            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Articulos (IdAlmacen, IdFamilia, IdSubFamilia, Id, Nombre, NombreComercial, IdUnidadMedida, CantidadMinima, CantidadMaxima, Precio, Seccion, Estante, Nivel) VALUES (@idAlmacen, @idFamilia, @idSubFamilia, @id, @nombre, @nombreComercial, @idUnidadMedida, @cantidadMinima, @cantidadMaxima, @precio, @seccion, @estante, @nivel)"
             comando.Parameters.AddWithValue("@idAlmacen", Me.EIdAlmacen)
             comando.Parameters.AddWithValue("@idFamilia", Me.EIdFamilia)
             comando.Parameters.AddWithValue("@idSubFamilia", Me.EIdSubFamilia)
@@ -169,7 +169,7 @@ Public Class Articulos
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "DELETE FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Articulos WHERE 0=0 " & condicion
+            comando.CommandText = "DELETE FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Articulos WHERE 0=0 " & condicion
             comando.Parameters.AddWithValue("@idAlmacen", Me.EIdAlmacen)
             comando.Parameters.AddWithValue("@idFamilia", Me.EIdFamilia)
             comando.Parameters.AddWithValue("@idSubFamilia", Me.EIdSubFamilia)
@@ -204,7 +204,7 @@ Public Class Articulos
             If Me.EId > 0 Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT A.Id, A.Nombre, A.NombreComercial, A.IdUnidadMedida, UM.Nombre, A.CantidadMinima, A.CantidadMaxima, A.Precio, A.Seccion, A.Estante, A.Nivel FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Articulos AS A LEFT JOIN " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "UnidadesMedidas AS UM ON A.IdUnidadMedida=UM.Id WHERE 0=0 " & condicion & " ORDER BY A.IdAlmacen, A.IdFamilia, A.IdSubFamilia, A.Id ASC"
+            comando.CommandText = "SELECT A.Id, A.Nombre, A.NombreComercial, A.IdUnidadMedida, UM.Nombre, A.CantidadMinima, A.CantidadMaxima, A.Precio, A.Seccion, A.Estante, A.Nivel FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Articulos AS A LEFT JOIN " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "UnidadesMedidas AS UM ON A.IdUnidadMedida=UM.Id WHERE 0=0 " & condicion & " ORDER BY A.IdAlmacen, A.IdFamilia, A.IdSubFamilia, A.Id ASC"
             comando.Parameters.AddWithValue("@idAlmacen", Me.EIdAlmacen)
             comando.Parameters.AddWithValue("@idFamilia", Me.EIdFamilia)
             comando.Parameters.AddWithValue("@idSubFamilia", Me.EIdSubFamilia)

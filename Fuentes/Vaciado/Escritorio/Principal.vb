@@ -4,9 +4,9 @@ Imports System.ComponentModel
 Public Class Principal
 
     ' Variables de objetos de entidades.
-    Public usuarios As New EntidadesVaciado.Usuarios()
-    Public vaciado As New EntidadesVaciado.Vaciado()
-    Public recepcion As New EntidadesVaciado.Recepcion() 
+    Public usuarios As New EYEEntidadesVaciado.Usuarios()
+    Public vaciado As New EYEEntidadesVaciado.Vaciado()
+    Public recepcion As New EYEEntidadesVaciado.Recepcion()
     ' Variables de tipos de datos de spread.
     Public tipoTexto As New FarPoint.Win.Spread.CellType.TextCellType()
     Public tipoTextoContrasena As New FarPoint.Win.Spread.CellType.TextCellType()
@@ -266,7 +266,7 @@ Public Class Principal
 
     Private Function ValidarAccesoTotal() As Boolean
 
-        If ((Not LogicaVaciado.Usuarios.accesoTotal) Or (LogicaVaciado.Usuarios.accesoTotal = 0) Or (LogicaVaciado.Usuarios.accesoTotal = False)) Then
+        If ((Not EYELogicaVaciado.Usuarios.accesoTotal) Or (EYELogicaVaciado.Usuarios.accesoTotal = 0) Or (EYELogicaVaciado.Usuarios.accesoTotal = False)) Then
             MsgBox("No tienes permisos suficientes para acceder a este programa.", MsgBoxStyle.Information, "Permisos insuficientes.")
             Return False
         Else
@@ -314,23 +314,23 @@ Public Class Principal
     Private Sub ConfigurarConexiones()
 
         If (Me.esDesarrollo) Then
-            LogicaVaciado.Directorios.id = 1
-            LogicaVaciado.Directorios.instanciaSql = "BERRY1-DELL\SQLEXPRESS2008"
-            LogicaVaciado.Directorios.usuarioSql = "AdminBerry"
-            LogicaVaciado.Directorios.contrasenaSql = "@berry2017"
+            EYELogicaVaciado.Directorios.id = 1
+            EYELogicaVaciado.Directorios.instanciaSql = "BERRY1-DELL\SQLEXPRESS2008"
+            EYELogicaVaciado.Directorios.usuarioSql = "AdminBerry"
+            EYELogicaVaciado.Directorios.contrasenaSql = "@berry2017"
         Else
-            LogicaVaciado.Directorios.ObtenerParametros()
-            LogicaVaciado.Usuarios.ObtenerParametros()
+            EYELogicaVaciado.Directorios.ObtenerParametros()
+            EYELogicaVaciado.Usuarios.ObtenerParametros()
         End If
-        LogicaVaciado.Programas.bdCatalogo = "Catalogo" & LogicaVaciado.Directorios.id
-        LogicaVaciado.Programas.bdConfiguracion = "Configuracion" & LogicaVaciado.Directorios.id
-        LogicaVaciado.Programas.bdEmpaque = "Empaque" & LogicaVaciado.Directorios.id
-        EntidadesVaciado.BaseDatos.ECadenaConexionCatalogo = LogicaVaciado.Programas.bdCatalogo
-        EntidadesVaciado.BaseDatos.ECadenaConexionConfiguracion = LogicaVaciado.Programas.bdConfiguracion
-        EntidadesVaciado.BaseDatos.ECadenaConexionEmpaque = LogicaVaciado.Programas.bdEmpaque
-        EntidadesVaciado.BaseDatos.AbrirConexionCatalogo()
-        EntidadesVaciado.BaseDatos.AbrirConexionConfiguracion()
-        EntidadesVaciado.BaseDatos.AbrirConexionEmpaque()
+        EYELogicaVaciado.Programas.bdCatalogo = "Catalogo" & EYELogicaVaciado.Directorios.id
+        EYELogicaVaciado.Programas.bdConfiguracion = "Configuracion" & EYELogicaVaciado.Directorios.id
+        EYELogicaVaciado.Programas.bdEmpaque = "Empaque" & EYELogicaVaciado.Directorios.id
+        EYEEntidadesVaciado.BaseDatos.ECadenaConexionCatalogo = EYELogicaVaciado.Programas.bdCatalogo
+        EYEEntidadesVaciado.BaseDatos.ECadenaConexionConfiguracion = EYELogicaVaciado.Programas.bdConfiguracion
+        EYEEntidadesVaciado.BaseDatos.ECadenaConexionEmpaque = EYELogicaVaciado.Programas.bdEmpaque
+        EYEEntidadesVaciado.BaseDatos.AbrirConexionCatalogo()
+        EYEEntidadesVaciado.BaseDatos.AbrirConexionConfiguracion()
+        EYEEntidadesVaciado.BaseDatos.AbrirConexionEmpaque()
         ConsultarInformacionUsuario()
         CargarPrefijoBaseDatosEmpaque()
 
@@ -338,36 +338,36 @@ Public Class Principal
 
     Private Sub CargarPrefijoBaseDatosEmpaque()
 
-        LogicaVaciado.Programas.prefijoBaseDatosEmpaque = Me.prefijoBaseDatosEmpaque
+        EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque = Me.prefijoBaseDatosEmpaque
 
     End Sub
 
     Private Sub ConsultarInformacionUsuario()
 
-        Dim lista As New List(Of EntidadesVaciado.Usuarios)
-        usuarios.EId = LogicaVaciado.Usuarios.id
+        Dim lista As New List(Of EYEEntidadesVaciado.Usuarios)
+        usuarios.EId = EYELogicaVaciado.Usuarios.id
         lista = usuarios.ObtenerListado()
         If (lista.Count = 1) Then
-            LogicaVaciado.Usuarios.id = lista(0).EId
-            LogicaVaciado.Usuarios.nombre = lista(0).ENombre
-            LogicaVaciado.Usuarios.contrasena = lista(0).EContrasena
-            LogicaVaciado.Usuarios.nivel = lista(0).ENivel
-            LogicaVaciado.Usuarios.accesoTotal = lista(0).EAccesoTotal
+            EYELogicaVaciado.Usuarios.id = lista(0).EId
+            EYELogicaVaciado.Usuarios.nombre = lista(0).ENombre
+            EYELogicaVaciado.Usuarios.contrasena = lista(0).EContrasena
+            EYELogicaVaciado.Usuarios.nivel = lista(0).ENivel
+            EYELogicaVaciado.Usuarios.accesoTotal = lista(0).EAccesoTotal
         End If
 
     End Sub
 
     Private Sub CargarTitulosDirectorio()
 
-        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + LogicaVaciado.Directorios.nombre + "              Usuario:  " + LogicaVaciado.Usuarios.nombre
+        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaVaciado.Directorios.nombre + "              Usuario:  " + EYELogicaVaciado.Usuarios.nombre
 
     End Sub
 
     Private Sub CargarEncabezados()
 
         lblEncabezadoPrograma.Text = "Programa: " + Me.Text
-        lblEncabezadoEmpresa.Text = "Directorio: " + LogicaVaciado.Directorios.nombre
-        lblEncabezadoUsuario.Text = "Usuario: " + LogicaVaciado.Usuarios.nombre
+        lblEncabezadoEmpresa.Text = "Directorio: " + EYELogicaVaciado.Directorios.nombre
+        lblEncabezadoUsuario.Text = "Usuario: " + EYELogicaVaciado.Usuarios.nombre
 
     End Sub
 
@@ -379,7 +379,7 @@ Public Class Principal
         ejecutarProgramaPrincipal.UseShellExecute = True
         ejecutarProgramaPrincipal.FileName = nombre & Convert.ToString(".exe")
         ejecutarProgramaPrincipal.WorkingDirectory = Directory.GetCurrentDirectory()
-        ejecutarProgramaPrincipal.Arguments = LogicaVaciado.Directorios.id.ToString().Trim().Replace(" ", "|") & " " & LogicaVaciado.Directorios.nombre.ToString().Trim().Replace(" ", "|") & " " & LogicaVaciado.Directorios.descripcion.ToString().Trim().Replace(" ", "|") & " " & LogicaVaciado.Directorios.rutaLogo.ToString().Trim().Replace(" ", "|") & " " & LogicaVaciado.Directorios.esPredeterminado.ToString().Trim().Replace(" ", "|") & " " & LogicaVaciado.Directorios.instanciaSql.ToString().Trim().Replace(" ", "|") & " " & LogicaVaciado.Directorios.usuarioSql.ToString().Trim().Replace(" ", "|") & " " & LogicaVaciado.Directorios.contrasenaSql.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de directorios, indice 9 ;)".Replace(" ", "|") & " " & LogicaVaciado.Usuarios.id.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de usuario, indice 11 ;)".Replace(" ", "|")
+        ejecutarProgramaPrincipal.Arguments = EYELogicaVaciado.Directorios.id.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.nombre.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.descripcion.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.rutaLogo.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.esPredeterminado.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.instanciaSql.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.usuarioSql.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.contrasenaSql.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de directorios, indice 9 ;)".Replace(" ", "|") & " " & EYELogicaVaciado.Usuarios.id.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de usuario, indice 11 ;)".Replace(" ", "|")
         Try
             Dim proceso = Process.Start(ejecutarProgramaPrincipal)
             proceso.WaitForInputIdle()
@@ -513,7 +513,7 @@ Public Class Principal
 
     Private Sub EliminarRegistroDeSpread(ByVal spread As FarPoint.Win.Spread.FpSpread)
 
-        Dim idRecepcion As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spread.ActiveSheet.Cells(spread.ActiveSheet.ActiveRowIndex, spread.ActiveSheet.Columns("idRecepcion").Index).Value)
+        Dim idRecepcion As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spread.ActiveSheet.Cells(spread.ActiveSheet.ActiveRowIndex, spread.ActiveSheet.Columns("idRecepcion").Index).Value)
         If (spread.ActiveSheet.ActiveRowIndex > 0) Then
             spread.ActiveSheet.Rows.Remove(spread.ActiveSheet.ActiveRowIndex, 1)
         Else
@@ -534,7 +534,7 @@ Public Class Principal
             Dim fila As Integer = 0
             If (columnaActiva = spVaciado.ActiveSheet.Columns("idRecepcion").Index) Then
                 fila = spVaciado.ActiveSheet.ActiveRowIndex
-                Dim idRecepcion As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Value)
+                Dim idRecepcion As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Value)
                 If (idRecepcion > 0) Then
                     Dim datos As New DataTable
                     recepcion.EId = idRecepcion
@@ -558,18 +558,18 @@ Public Class Principal
                 End If
             ElseIf (columnaActiva = spVaciado.ActiveSheet.Columns("idBanda").Index) Then
                 fila = spVaciado.ActiveSheet.ActiveRowIndex
-                Dim idBanda As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).Value)
+                Dim idBanda As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).Value)
                 If (idBanda <= 0) Then
                     spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).Value = String.Empty
                     spVaciado.ActiveSheet.SetActiveCell(fila, spVaciado.ActiveSheet.ActiveColumnIndex - 1)
                 End If
             ElseIf (columnaActiva = spVaciado.ActiveSheet.Columns("cantidadCajas").Index) Then
                 fila = spVaciado.ActiveSheet.ActiveRowIndex
-                Dim cantidadCajas As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Value)
+                Dim cantidadCajas As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Value)
                 If (cantidadCajas > 0) Then
-                    Dim pesoCaja As Double = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajaUnitaria").Index).Value)
+                    Dim pesoCaja As Double = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajaUnitaria").Index).Value)
                     spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajas").Index).Value = cantidadCajas * pesoCaja
-                    Dim idRecepcion As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Value)
+                    Dim idRecepcion As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Value)
                     Dim saldoCajas As Integer = CalcularSaldos(idRecepcion)
                     If (saldoCajas < 0) Then
                         MsgBox("Saldos de cajas insuficientes. No puedes sobrepasar la cantidad de cajas de este número de recepción.", MsgBoxStyle.Exclamation, "Saldos insuficientes.")
@@ -623,7 +623,7 @@ Public Class Principal
         spVaciado.ActiveSheet.BindDataColumn(spVaciado.ActiveSheet.Columns("saldoCajas").Index, Nothing)
         ' Con esto se calculan todos los saldos de algún id.
         For fila As Integer = 0 To spVaciado.ActiveSheet.Rows.Count - 1
-            Dim idRecepcion As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Text)
+            Dim idRecepcion As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Text)
             vaciado.EIdRecepcion = idRecepcion
             Dim cajasRestantes As Integer = vaciado.ObtenerSaldosReporte(True)
             spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("saldoCajas").Index).Value = cajasRestantes
@@ -636,7 +636,7 @@ Public Class Principal
         Dim total As Double = 0
         For columna = spVaciado.ActiveSheet.Columns("cantidadCajas").Index To spVaciado.ActiveSheet.Columns("pesoCajas").Index
             For fila = 0 To spVaciado.ActiveSheet.Rows.Count - 1
-                total += LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, columna).Text)
+                total += EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, columna).Text)
             Next
             spTotales.ActiveSheet.Cells(0, columna).Text = total
             total = 0
@@ -672,7 +672,7 @@ Public Class Principal
         spVaciado.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
         ControlarSpreadEnterASiguienteColumna(spVaciado)
         spVaciado.ActiveSheet.Rows.Count = cantidadFilas
-        Dim numeracion As Integer = 0 
+        Dim numeracion As Integer = 0
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "pesoCajaUnitaria" : numeracion += 1
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "idRecepcion" : numeracion += 1
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "idLote" : numeracion += 1
@@ -732,7 +732,7 @@ Public Class Principal
         spVaciado.ActiveSheet.AddColumnHeaderSpanCell(0, spVaciado.ActiveSheet.Columns("pesoCajas").Index, 2, 1)
         spVaciado.ActiveSheet.ColumnHeader.Cells(0, spVaciado.ActiveSheet.Columns("pesoCajas").Index).Value = "Peso Cajas".ToUpper()
         spVaciado.ActiveSheet.AddColumnHeaderSpanCell(0, spVaciado.ActiveSheet.Columns("saldoCajas").Index, 2, 1)
-        spVaciado.ActiveSheet.ColumnHeader.Cells(0, spVaciado.ActiveSheet.Columns("saldoCajas").Index).Value = "Saldo Cajas".ToUpper() 
+        spVaciado.ActiveSheet.ColumnHeader.Cells(0, spVaciado.ActiveSheet.Columns("saldoCajas").Index).Value = "Saldo Cajas".ToUpper()
         spVaciado.ActiveSheet.Columns("pesoCajaUnitaria").Visible = False
         Application.DoEvents()
 
@@ -740,7 +740,7 @@ Public Class Principal
 
     Private Sub FormatearSpreadTotales()
 
-        Dim numeracion As Integer = 0 
+        Dim numeracion As Integer = 0
         spTotales.ActiveSheet.Columns(numeracion).Tag = "pesoCajaUnitaria" : numeracion += 1
         spTotales.ActiveSheet.Columns(numeracion).Tag = "idRecepcion" : numeracion += 1
         spTotales.ActiveSheet.Columns(numeracion).Tag = "idLote" : numeracion += 1
@@ -787,22 +787,22 @@ Public Class Principal
         ' Parte inferior.
         For fila As Integer = 0 To spVaciado.ActiveSheet.Rows.Count - 1
             Dim idRecepcion As String = spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Text
-            Dim idRecepcion2 As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Text)
+            Dim idRecepcion2 As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Text)
             If (Not String.IsNullOrEmpty(idRecepcion) Or idRecepcion2 > 0) Then
                 Dim idBanda As String = spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).Text
-                Dim idBanda2 As Double = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).Text)
+                Dim idBanda2 As Double = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).Text)
                 If (String.IsNullOrEmpty(idBanda) Or idBanda2 < 0) Then
                     spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).BackColor = Color.Orange
                     Me.esGuardadoValido = False
                 End If
                 Dim cantidadCajas As String = spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Text
-                Dim cantidadCajas2 As Double = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Text)
+                Dim cantidadCajas2 As Double = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Text)
                 If (String.IsNullOrEmpty(cantidadCajas) Or cantidadCajas2 < 0) Then
                     spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).BackColor = Color.Orange
                     Me.esGuardadoValido = False
                 End If
                 Dim pesoCajas As String = spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajas").Index).Text
-                Dim pesoCajas2 As Double = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajas").Index).Text)
+                Dim pesoCajas2 As Double = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajas").Index).Text)
                 If (String.IsNullOrEmpty(pesoCajas) Or pesoCajas2 < 0) Then
                     spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajas").Index).BackColor = Color.Orange
                     Me.esGuardadoValido = False
@@ -822,10 +822,10 @@ Public Class Principal
         Dim hora As String = txtHora.Text
         ' Parte inferior.
         For fila As Integer = 0 To spVaciado.ActiveSheet.Rows.Count - 1
-            Dim idRecepcion As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Text)
-            Dim idBanda As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).Text)
-            Dim cantidadCajas As Integer = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Text)
-            Dim pesoCajas As Double = LogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajas").Index).Text)
+            Dim idRecepcion As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Text)
+            Dim idBanda As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).Text)
+            Dim cantidadCajas As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Text)
+            Dim pesoCajas As Double = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajas").Index).Text)
             If (IsDate(fecha) AndAlso idBanda > 0 AndAlso cantidadCajas > 0 AndAlso pesoCajas > 0) Then
                 vaciado.EIdRecepcion = idRecepcion
                 vaciado.EFecha = fecha

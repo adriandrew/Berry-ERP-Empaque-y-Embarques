@@ -45,7 +45,7 @@ Public Class Variedades
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Variedades (IdProducto, Id, Nombre, Abreviatura) VALUES (@idProducto, @id, @nombre, @abreviatura)"
+            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Variedades (IdProducto, Id, Nombre, Abreviatura) VALUES (@idProducto, @id, @nombre, @abreviatura)"
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@nombre", Me.ENombre)
@@ -73,7 +73,7 @@ Public Class Variedades
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "DELETE FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Variedades WHERE 0=0 " & condicion
+            comando.CommandText = "DELETE FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Variedades WHERE 0=0 " & condicion
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)
             comando.Parameters.AddWithValue("@id", Me.id)
             BaseDatos.conexionCatalogo.Open()
@@ -100,7 +100,7 @@ Public Class Variedades
             If (Me.EId > 0) Then
                 condicion &= " AND V.Id=@id"
             End If
-            comando.CommandText = "SELECT V.IdProducto, P.Nombre, V.Id, V.Nombre, V.Abreviatura FROM " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Variedades AS V LEFT JOIN " & LogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON V.IdProducto = P.Id WHERE 0=0 " & condicion & " ORDER BY V.IdProducto, V.Id ASC" 
+            comando.CommandText = "SELECT V.IdProducto, P.Nombre, V.Id, V.Nombre, V.Abreviatura FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Variedades AS V LEFT JOIN " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON V.IdProducto = P.Id WHERE 0=0 " & condicion & " ORDER BY V.IdProducto, V.Id ASC"
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()

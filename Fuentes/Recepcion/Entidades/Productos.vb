@@ -28,8 +28,8 @@ Public Class Productos
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre FROM " & LogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Productos " & _
-            " UNION SELECT -1 AS Id, NULL AS Nombre FROM " & LogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Productos " & _
+            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Productos " & _
+            " UNION SELECT -1 AS Id, NULL AS Nombre FROM " & EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Productos " & _
             " ORDER BY Id ASC"
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader

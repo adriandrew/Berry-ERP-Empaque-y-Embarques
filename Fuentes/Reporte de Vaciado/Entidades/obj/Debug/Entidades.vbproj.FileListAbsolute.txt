@@ -1,0 +1,32 @@
+C:\Users\Administrator\Desktop\PROYECTOS PERSONALES\Proyecto Agenda-Bitacora\FUENTES MODIFICADOS\Catalogos\Entidades\bin\Debug\EntidadesCatalogos.dll
+C:\Users\Administrator\Desktop\PROYECTOS PERSONALES\Proyecto Agenda-Bitacora\FUENTES MODIFICADOS\Catalogos\Entidades\bin\Debug\EntidadesCatalogos.pdb
+C:\Users\Administrator\Desktop\PROYECTOS PERSONALES\Proyecto Agenda-Bitacora\FUENTES MODIFICADOS\Catalogos\Entidades\bin\Debug\EntidadesCatalogos.xml
+C:\Users\Administrator\Desktop\PROYECTOS PERSONALES\Proyecto Agenda-Bitacora\FUENTES MODIFICADOS\Catalogos\Entidades\obj\Debug\EntidadesCatalogos.Resources.resources
+C:\Users\Administrator\Desktop\PROYECTOS PERSONALES\Proyecto Agenda-Bitacora\FUENTES MODIFICADOS\Catalogos\Entidades\obj\Debug\Entidades.vbproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\PROYECTOS PERSONALES\Proyecto Agenda-Bitacora\FUENTES MODIFICADOS\Catalogos\Entidades\obj\Debug\EntidadesCatalogos.dll
+C:\Users\Administrator\Desktop\PROYECTOS PERSONALES\Proyecto Agenda-Bitacora\FUENTES MODIFICADOS\Catalogos\Entidades\obj\Debug\EntidadesCatalogos.xml
+C:\Users\Administrator\Desktop\PROYECTOS PERSONALES\Proyecto Agenda-Bitacora\FUENTES MODIFICADOS\Catalogos\Entidades\obj\Debug\EntidadesCatalogos.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\bin\Debug\EYEEntidadesReporteRecepcion.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\bin\Debug\EYEEntidadesReporteRecepcion.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\bin\Debug\EYEEntidadesReporteRecepcion.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\bin\Debug\EYELogicaReporteRecepcion.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\bin\Debug\EYELogicaReporteRecepcion.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\bin\Debug\EYELogicaReporteRecepcion.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\obj\Debug\Entidades.vbprojResolveAssemblyReference.cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\obj\Debug\EYEEntidadesReporteRecepcion.Resources.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\obj\Debug\Entidades.vbproj.GenerateResource.Cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\obj\Debug\EYEEntidadesReporteRecepcion.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\obj\Debug\EYEEntidadesReporteRecepcion.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\obj\Debug\EYEEntidadesReporteRecepcion.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYEEntidadesReporteVaciado.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYEEntidadesReporteVaciado.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYEEntidadesReporteVaciado.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYELogicaReporteVaciado.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYELogicaReporteVaciado.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYELogicaReporteVaciado.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\Entidades.vbprojResolveAssemblyReference.cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\EYEEntidadesReporteVaciado.Resources.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\Entidades.vbproj.GenerateResource.Cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\EYEEntidadesReporteVaciado.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\EYEEntidadesReporteVaciado.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\EYEEntidadesReporteVaciado.pdb

@@ -221,7 +221,7 @@ Public Class Principal
 
     End Sub
 
-    Private Sub cbAlmacen_KeyDown(sender As Object, e As KeyEventArgs) Handles cbLote.KeyDown
+    Private Sub cbLote_KeyDown(sender As Object, e As KeyEventArgs) Handles cbLote.KeyDown
 
         If (e.KeyCode = Keys.Enter) Then
             If (cbLote.SelectedValue <= 0) Then
@@ -235,7 +235,7 @@ Public Class Principal
 
     End Sub
 
-    Private Sub cbFamilia_KeyDown(sender As Object, e As KeyEventArgs) Handles cbChofer.KeyDown
+    Private Sub cbChofer_KeyDown(sender As Object, e As KeyEventArgs) Handles cbChofer.KeyDown
 
         If (e.KeyCode = Keys.Enter) Then
             If (cbChofer.SelectedValue <= 0) Then
@@ -249,7 +249,7 @@ Public Class Principal
 
     End Sub
 
-    Private Sub cbSubFamilia_KeyDown(sender As Object, e As KeyEventArgs) Handles cbProducto.KeyDown
+    Private Sub cbProducto_KeyDown(sender As Object, e As KeyEventArgs) Handles cbProducto.KeyDown
 
         If (e.KeyCode = Keys.Enter) Then
             If (cbProducto.SelectedValue <= 0) Then
@@ -263,7 +263,7 @@ Public Class Principal
 
     End Sub
 
-    Private Sub cbArticulo_KeyDown(sender As Object, e As KeyEventArgs) Handles cbVariedad.KeyDown
+    Private Sub cbVariedad_KeyDown(sender As Object, e As KeyEventArgs) Handles cbVariedad.KeyDown
 
         If (e.KeyCode = Keys.Enter) Then
             If (cbVariedad.SelectedValue <= 0) Then
@@ -289,6 +289,17 @@ Public Class Principal
             ElseIf (cbLote.Enabled) Then
                 AsignarFoco(cbLote)
             End If
+        End If
+
+    End Sub
+
+    Private Sub cbProducto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbProducto.SelectedIndexChanged
+
+        If (cbProducto.SelectedValue > 0) Then
+            cbVariedad.Enabled = True
+            CargarComboVariedades()
+        Else
+            cbVariedad.Enabled = False
         End If
 
     End Sub
@@ -904,7 +915,8 @@ Public Class Principal
         Dim anchoFiltros As Integer = 25
         For columna = 0 To spReporte.ActiveSheet.Columns.Count - 1
             spReporte.ActiveSheet.Columns(columna).Width += anchoFiltros
-        Next 
+        Next
+        spReporte.ActiveSheet.Columns("cantidadCajas").CellType = tipoEntero
         spReporte.ActiveSheet.Columns("pesoCajas").CellType = tipoDoble
         spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("id").Index, 2, 1)
         spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("id").Index).Value = "No.".ToUpper
@@ -995,16 +1007,5 @@ Public Class Principal
     End Enum
 
 #End Region
-
-    Private Sub cbProducto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbProducto.SelectedIndexChanged
-
-        If (cbProducto.SelectedValue > 0) Then
-            cbVariedad.Enabled = True
-            CargarComboVariedades()
-        Else
-            cbVariedad.Enabled = False
-        End If
-
-    End Sub
 
 End Class

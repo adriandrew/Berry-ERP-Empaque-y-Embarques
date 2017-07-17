@@ -88,7 +88,7 @@
     <Compile Include="Variedades.vb" />
     <Compile Include="BaseDatos.vb" />
     <Compile Include="Empresas.vb" />
-    <Compile Include="ChoferesCampo.vb" />
+    <Compile Include="ChoferesCampos.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

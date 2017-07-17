@@ -179,6 +179,7 @@ Partial Class Principal
         Me.rbtnClientes.Appearance = System.Windows.Forms.Appearance.Button
         Me.rbtnClientes.AutoSize = True
         Me.rbtnClientes.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnClientes.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbtnClientes.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnClientes.FlatAppearance.BorderSize = 2
         Me.rbtnClientes.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine
@@ -200,6 +201,7 @@ Partial Class Principal
         Me.rbtnTiposCambios.Appearance = System.Windows.Forms.Appearance.Button
         Me.rbtnTiposCambios.AutoSize = True
         Me.rbtnTiposCambios.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnTiposCambios.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbtnTiposCambios.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnTiposCambios.FlatAppearance.BorderSize = 2
         Me.rbtnTiposCambios.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine
@@ -221,6 +223,7 @@ Partial Class Principal
         Me.rbtnUnidadesMedidas.Appearance = System.Windows.Forms.Appearance.Button
         Me.rbtnUnidadesMedidas.AutoSize = True
         Me.rbtnUnidadesMedidas.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnUnidadesMedidas.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbtnUnidadesMedidas.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnUnidadesMedidas.FlatAppearance.BorderSize = 2
         Me.rbtnUnidadesMedidas.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine
@@ -242,6 +245,7 @@ Partial Class Principal
         Me.rbtnTiposSalidas.Appearance = System.Windows.Forms.Appearance.Button
         Me.rbtnTiposSalidas.AutoSize = True
         Me.rbtnTiposSalidas.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnTiposSalidas.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbtnTiposSalidas.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnTiposSalidas.FlatAppearance.BorderSize = 2
         Me.rbtnTiposSalidas.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine
@@ -263,6 +267,7 @@ Partial Class Principal
         Me.rbtnTiposEntradas.Appearance = System.Windows.Forms.Appearance.Button
         Me.rbtnTiposEntradas.AutoSize = True
         Me.rbtnTiposEntradas.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnTiposEntradas.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbtnTiposEntradas.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnTiposEntradas.FlatAppearance.BorderSize = 2
         Me.rbtnTiposEntradas.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine
@@ -284,6 +289,7 @@ Partial Class Principal
         Me.rbtnMonedas.Appearance = System.Windows.Forms.Appearance.Button
         Me.rbtnMonedas.AutoSize = True
         Me.rbtnMonedas.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnMonedas.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbtnMonedas.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnMonedas.FlatAppearance.BorderSize = 2
         Me.rbtnMonedas.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine
@@ -305,6 +311,7 @@ Partial Class Principal
         Me.rbtnChoferesCampos.Appearance = System.Windows.Forms.Appearance.Button
         Me.rbtnChoferesCampos.AutoSize = True
         Me.rbtnChoferesCampos.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnChoferesCampos.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbtnChoferesCampos.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnChoferesCampos.FlatAppearance.BorderSize = 2
         Me.rbtnChoferesCampos.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine
@@ -325,6 +332,7 @@ Partial Class Principal
         Me.rbtnVariedades.Appearance = System.Windows.Forms.Appearance.Button
         Me.rbtnVariedades.AutoSize = True
         Me.rbtnVariedades.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnVariedades.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbtnVariedades.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnVariedades.FlatAppearance.BorderSize = 2
         Me.rbtnVariedades.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine
@@ -345,6 +353,7 @@ Partial Class Principal
         Me.rbtnLotes.Appearance = System.Windows.Forms.Appearance.Button
         Me.rbtnLotes.AutoSize = True
         Me.rbtnLotes.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnLotes.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbtnLotes.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnLotes.FlatAppearance.BorderSize = 2
         Me.rbtnLotes.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine
@@ -365,6 +374,7 @@ Partial Class Principal
         Me.rbtnProductos.Appearance = System.Windows.Forms.Appearance.Button
         Me.rbtnProductos.AutoSize = True
         Me.rbtnProductos.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnProductos.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbtnProductos.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnProductos.FlatAppearance.BorderSize = 2
         Me.rbtnProductos.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine
@@ -385,6 +395,7 @@ Partial Class Principal
         Me.rbtnArticulos.Appearance = System.Windows.Forms.Appearance.Button
         Me.rbtnArticulos.AutoSize = True
         Me.rbtnArticulos.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnArticulos.Cursor = System.Windows.Forms.Cursors.Hand
         Me.rbtnArticulos.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnArticulos.FlatAppearance.BorderSize = 2
         Me.rbtnArticulos.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine

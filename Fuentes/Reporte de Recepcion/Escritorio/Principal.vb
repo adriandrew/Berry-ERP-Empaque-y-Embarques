@@ -7,6 +7,7 @@ Public Class Principal
     ' Variables de objetos de entidades.
     Public recepcion As New EYEEntidadesReporteRecepcion.Recepcion()
     Public usuarios As New EYEEntidadesReporteRecepcion.Usuarios()
+    Public productores As New EYEEntidadesReporteRecepcion.Productores()
     Public lotes As New EYEEntidadesReporteRecepcion.Lotes()
     Public choferesCampos As New EYEEntidadesReporteRecepcion.ChoferesCampos()
     Public productos As New EYEEntidadesReporteRecepcion.Productos()
@@ -74,6 +75,7 @@ Public Class Principal
         CargarEncabezados()
         CargarTitulosDirectorio()
         CargarValorColor()
+        CargarComboProductores()
         CargarComboLotes()
         CargarComboChoferes()
         CargarComboProductos()
@@ -121,7 +123,7 @@ Public Class Principal
 
     End Sub
 
-    Private Sub pnlFiltros_MouseHover(sender As Object, e As EventArgs) Handles pnlFiltros.MouseHover, gbFechas.MouseHover, gbNiveles.MouseHover, chkFecha.MouseHover, cbLote.MouseHover, cbChofer.MouseHover, cbProducto.MouseHover, cbVariedad.MouseHover
+    Private Sub pnlFiltros_MouseHover(sender As Object, e As EventArgs) Handles pnlFiltros.MouseHover, gbFechas.MouseHover, gbNiveles.MouseHover, chkFecha.MouseHover, cbLote.MouseHover, cbChofer.MouseHover, cbProducto.MouseHover, cbVariedad.MouseHover, cbProductor.MouseHover
 
         AlinearFiltrosNormal()
         AsignarTooltips("Filtros para Generar el Reporte.")
@@ -214,9 +216,23 @@ Public Class Principal
     Private Sub dtpFechaFinal_KeyDown(sender As Object, e As KeyEventArgs) Handles dtpFechaFinal.KeyDown
 
         If (e.KeyCode = Keys.Enter) Then
-            AsignarFoco(cbLote)
+            AsignarFoco(cbProductor)
         ElseIf (e.KeyCode = Keys.Escape) Then
             AsignarFoco(dtpFecha)
+        End If
+
+    End Sub
+
+    Private Sub cbProductor_KeyDown(sender As Object, e As KeyEventArgs) Handles cbProductor.KeyDown
+
+        If (e.KeyCode = Keys.Enter) Then
+            If (cbProductor.SelectedValue <= 0) Then
+                AsignarFoco(btnGenerar)
+            Else
+                AsignarFoco(cbLote)
+            End If
+        ElseIf (e.KeyCode = Keys.Escape) Then
+            AsignarFoco(dtpFechaFinal)
         End If
 
     End Sub
@@ -230,7 +246,7 @@ Public Class Principal
                 AsignarFoco(cbChofer)
             End If
         ElseIf (e.KeyCode = Keys.Escape) Then
-            AsignarFoco(dtpFechaFinal)
+            AsignarFoco(cbProductor)
         End If
 
     End Sub
@@ -422,6 +438,8 @@ Public Class Principal
             EYELogicaReporteRecepcion.Directorios.instanciaSql = "BERRY1-DELL\SQLEXPRESS2008"
             EYELogicaReporteRecepcion.Directorios.usuarioSql = "AdminBerry"
             EYELogicaReporteRecepcion.Directorios.contrasenaSql = "@berry2017"
+            pnlEncabezado.BackColor = Color.DarkRed
+            pnlPie.BackColor = Color.DarkRed
         Else
             EYELogicaReporteRecepcion.Directorios.ObtenerParametros()
             EYELogicaReporteRecepcion.Usuarios.ObtenerParametros()
@@ -770,8 +788,8 @@ Public Class Principal
         temporizador.Start()
         Dim ancho As Integer = -(pnlFiltros.Width - (pnlFiltros.Width / 3))
         If (pnlFiltros.Location.X > ancho) Then
-            pnlFiltros.Location = New Point(pnlFiltros.Location.X - 80, pnlFiltros.Location.Y)
-            spReporte.Location = New Point(spReporte.Location.X - 80, spReporte.Location.Y)
+            pnlFiltros.Location = New Point(pnlFiltros.Location.X - (pnlFiltros.Width / 5), pnlFiltros.Location.Y)
+            spReporte.Location = New Point(spReporte.Location.X - (pnlFiltros.Width / 5), spReporte.Location.Y)
             Application.DoEvents()
         Else
             temporizador.Enabled = False
@@ -785,7 +803,7 @@ Public Class Principal
 
         pnlFiltros.BackColor = Color.Gray
         btnGenerar.Enabled = False
-        spReporte.Width = pnlCuerpo.Width - 80
+        spReporte.Width = pnlCuerpo.Width - (pnlFiltros.Width / 5) - 5
         Application.DoEvents()
 
     End Sub
@@ -808,6 +826,7 @@ Public Class Principal
         FormatearSpread()
         Dim datos As New DataTable
         If (Me.estaMostrado) Then
+            recepcion.EIdProductor = cbProductor.SelectedValue
             recepcion.EIdLote = cbLote.SelectedValue
             recepcion.EIdChofer = cbChofer.SelectedValue
             recepcion.EIdProducto = cbProducto.SelectedValue
@@ -889,6 +908,8 @@ Public Class Principal
         spReporte.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "fecha" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "hora" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "idProductor" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "nombreProductor" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "idLote" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "nombreLote" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "idChofer" : numeracion += 1
@@ -902,6 +923,8 @@ Public Class Principal
         spReporte.ActiveSheet.Columns("id").Width = 50
         spReporte.ActiveSheet.Columns("fecha").Width = 80
         spReporte.ActiveSheet.Columns("hora").Width = 70
+        spReporte.ActiveSheet.Columns("idProductor").Width = 50
+        spReporte.ActiveSheet.Columns("nombreProductor").Width = 170
         spReporte.ActiveSheet.Columns("idLote").Width = 50
         spReporte.ActiveSheet.Columns("nombreLote").Width = 170
         spReporte.ActiveSheet.Columns("idChofer").Width = 50
@@ -912,7 +935,7 @@ Public Class Principal
         spReporte.ActiveSheet.Columns("nombreVariedad").Width = 170
         spReporte.ActiveSheet.Columns("cantidadCajas").Width = 120
         spReporte.ActiveSheet.Columns("pesoCajas").Width = 100
-        Dim anchoFiltros As Integer = 25
+        Dim anchoFiltros As Integer = 15
         For columna = 0 To spReporte.ActiveSheet.Columns.Count - 1
             spReporte.ActiveSheet.Columns(columna).Width += anchoFiltros
         Next
@@ -923,7 +946,11 @@ Public Class Principal
         spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("fecha").Index, 2, 1)
         spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("fecha").Index).Value = "Fecha".ToUpper
         spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("hora").Index, 2, 1)
-        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("hora").Index).Value = "Hora".ToUpper 
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("hora").Index).Value = "Hora".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("idProductor").Index, 1, 2)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("idProductor").Index).Value = "Productor".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("idProductor").Index).Value = "No.".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("nombreProductor").Index).Value = "Nombre".ToUpper
         spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("idLote").Index, 1, 2)
         spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("idLote").Index).Value = "Lote".ToUpper
         spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("idLote").Index).Value = "No.".ToUpper
@@ -945,9 +972,18 @@ Public Class Principal
         spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("pesoCajas").Index, 2, 1)
         spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("pesoCajas").Index).Value = "Peso Cajas".ToUpper
         spReporte.ActiveSheet.Columns(0, spReporte.ActiveSheet.Columns.Count - 1).AllowAutoFilter = True
-        spReporte.ActiveSheet.Columns(0, spReporte.ActiveSheet.Columns.Count - 1).AllowAutoSort = True
+        'spReporte.ActiveSheet.Columns(0, spReporte.ActiveSheet.Columns.Count - 1).AllowAutoSort = True
         spReporte.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.SingleSelect
         Application.DoEvents()
+
+    End Sub
+
+    Private Sub CargarComboProductores()
+
+        productores.EId = 0
+        cbProductor.ValueMember = "Id"
+        cbProductor.DisplayMember = "Nombre"
+        cbProductor.DataSource = productores.ObtenerListadoReporte()
 
     End Sub
 

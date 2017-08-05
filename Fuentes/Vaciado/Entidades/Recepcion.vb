@@ -104,13 +104,14 @@ Public Class Recepcion
             If (Me.EId > 0) Then
                 condicion &= " AND R.Id=@id"
             End If
-            comando.CommandText = "SELECT SUM(R.PesoCajas)/SUM(R.CantidadCajas) AS PesoCajaUnitaria, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V.Nombre AS NombreVariedad " & _
+            comando.CommandText = "SELECT SUM(R.PesoCajas)/SUM(R.CantidadCajas) AS PesoCajaUnitaria, R.IdProductor, PR.Nombre AS NombreProductor, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V.Nombre AS NombreVariedad " & _
             " FROM Recepcion AS R " & _
+            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Productores AS PR ON R.IdProductor = PR.Id " & _
             " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
             " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON R.IdProducto = P.Id " & _
             " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto" & _
             " WHERE 0=0 " & condicion & _
-            " GROUP BY R.IdLote, L.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre"
+            " GROUP BY R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre"
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader
@@ -140,20 +141,20 @@ Public Class Recepcion
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim recepcion As Recepcion
+            Dim tabla As Recepcion
             While lectorDatos.Read()
-                recepcion = New Recepcion()
-                recepcion.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                recepcion.fecha = Convert.ToDateTime(lectorDatos("Fecha").ToString())
-                recepcion.hora = lectorDatos("Hora").ToString()
-                recepcion.idLote = Convert.ToInt32(lectorDatos("IdLote").ToString())
-                recepcion.idChofer = Convert.ToInt32(lectorDatos("IdChofer").ToString())
-                recepcion.idProducto = Convert.ToInt32(lectorDatos("IdProducto").ToString())
-                recepcion.idVariedad = Convert.ToInt32(lectorDatos("IdVariedad").ToString())
-                recepcion.cantidadCajas = Convert.ToInt32(lectorDatos("CantidadCajas").ToString())
-                recepcion.pesoCajas = Convert.ToDouble(lectorDatos("PesoCajas").ToString())
-                recepcion.orden = Convert.ToInt32(lectorDatos("Orden").ToString())
-                lista.Add(recepcion)
+                tabla = New Recepcion()
+                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
+                tabla.fecha = Convert.ToDateTime(lectorDatos("Fecha").ToString())
+                tabla.hora = lectorDatos("Hora").ToString()
+                tabla.idLote = Convert.ToInt32(lectorDatos("IdLote").ToString())
+                tabla.idChofer = Convert.ToInt32(lectorDatos("IdChofer").ToString())
+                tabla.idProducto = Convert.ToInt32(lectorDatos("IdProducto").ToString())
+                tabla.idVariedad = Convert.ToInt32(lectorDatos("IdVariedad").ToString())
+                tabla.cantidadCajas = Convert.ToInt32(lectorDatos("CantidadCajas").ToString())
+                tabla.pesoCajas = Convert.ToDouble(lectorDatos("PesoCajas").ToString())
+                tabla.orden = Convert.ToInt32(lectorDatos("Orden").ToString())
+                lista.Add(tabla)
             End While
             BaseDatos.conexionEmpaque.Close()
             Return lista

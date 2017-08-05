@@ -76,7 +76,7 @@ Public Class Vaciado
             comando.Parameters.AddWithValue("@idRecepcion", Me.EIdRecepcion)
             comando.Parameters.AddWithValue("@fecha", Me.EFecha)
             comando.Parameters.AddWithValue("@hora", Me.EHora)
-            comando.Parameters.AddWithValue("@idBanda", Me.EIdBanda) 
+            comando.Parameters.AddWithValue("@idBanda", Me.EIdBanda)
             comando.Parameters.AddWithValue("@cantidadCajas", Me.ECantidadCajas)
             comando.Parameters.AddWithValue("@pesoCajas", Me.EPesoCajas)
             comando.Parameters.AddWithValue("@orden", Me.EOrden)
@@ -95,7 +95,7 @@ Public Class Vaciado
 
         Try
             Dim comando As New SqlCommand()
-            comando.Connection = BaseDatos.conexionEmpaque 
+            comando.Connection = BaseDatos.conexionEmpaque
             comando.CommandText = "DELETE FROM Vaciado WHERE Fecha=@fecha AND Hora=@hora"
             comando.Parameters.AddWithValue("@fecha", EYELogicaVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
             comando.Parameters.AddWithValue("@hora", Me.EHora)
@@ -116,14 +116,15 @@ Public Class Vaciado
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "SELECT SUM(VAC.PesoCajas)/SUM(VAC.CantidadCajas) AS PesoCajaUnitaria, R.Id, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V.Nombre AS NombreVariedad, VAC.IdBanda, VAC.CantidadCajas, VAC.PesoCajas, 0 AS Saldo " & _
+            comando.CommandText = "SELECT SUM(VAC.PesoCajas)/SUM(VAC.CantidadCajas) AS PesoCajaUnitaria, R.Id, R.IdProductor, PR.Nombre AS NombreProductor, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V.Nombre AS NombreVariedad, VAC.IdBanda, VAC.CantidadCajas, VAC.PesoCajas, 0 AS Saldo " & _
             " FROM Vaciado AS VAC " & _
             " LEFT JOIN Recepcion AS R ON VAC.IdRecepcion = R.Id" & _
+            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Productores AS PR ON R.IdProductor = PR.Id " & _
             " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
             " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON R.IdProducto = P.Id " & _
             " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto" & _
             " WHERE VAC.Fecha=@fecha AND VAC.Hora=@hora " & _
-            " GROUP BY R.Id, R.IdLote, L.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, VAC.IdBanda, VAC.CantidadCajas, VAC.PesoCajas, VAC.Orden " & _
+            " GROUP BY R.Id, R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, VAC.IdBanda, VAC.CantidadCajas, VAC.PesoCajas, VAC.Orden " & _
             " ORDER BY VAC.Orden ASC"
             comando.Parameters.AddWithValue("@fecha", EYELogicaVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
             comando.Parameters.AddWithValue("@hora", Me.EHora)
@@ -185,23 +186,23 @@ Public Class Vaciado
         Try
             Dim lista As New List(Of Vaciado)
             Dim comando As New SqlCommand()
-            comando.Connection = BaseDatos.conexionEmpaque 
+            comando.Connection = BaseDatos.conexionEmpaque
             comando.CommandText = "SELECT IdRecepcion, Fecha, Hora, IdBanda, CantidadCajas, PesoCajas, Orden FROM Vaciado WHERE Fecha=@fecha AND Hora=@hora ORDER BY Orden ASC"
             comando.Parameters.AddWithValue("@fecha", Me.EFecha)
             comando.Parameters.AddWithValue("@hora", Me.EHora)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim vaciado As Vaciado
+            Dim tabla As Vaciado
             While lectorDatos.Read()
-                vaciado = New Vaciado()
-                vaciado.idRecepcion = Convert.ToInt32(lectorDatos("IdRecepcion").ToString())
-                vaciado.fecha = Convert.ToDateTime(lectorDatos("Fecha").ToString())
-                vaciado.hora = lectorDatos("Hora").ToString()
-                vaciado.idBanda = Convert.ToInt32(lectorDatos("IdBanda").ToString())
-                vaciado.cantidadCajas = Convert.ToInt32(lectorDatos("CantidadCajas").ToString())
-                vaciado.pesoCajas = Convert.ToDouble(lectorDatos("PesoCajas").ToString())
-                vaciado.orden = Convert.ToInt32(lectorDatos("Orden").ToString())
-                lista.Add(vaciado)
+                tabla = New Vaciado()
+                tabla.idRecepcion = Convert.ToInt32(lectorDatos("IdRecepcion").ToString())
+                tabla.fecha = Convert.ToDateTime(lectorDatos("Fecha").ToString())
+                tabla.hora = lectorDatos("Hora").ToString()
+                tabla.idBanda = Convert.ToInt32(lectorDatos("IdBanda").ToString())
+                tabla.cantidadCajas = Convert.ToInt32(lectorDatos("CantidadCajas").ToString())
+                tabla.pesoCajas = Convert.ToDouble(lectorDatos("PesoCajas").ToString())
+                tabla.orden = Convert.ToInt32(lectorDatos("Orden").ToString())
+                lista.Add(tabla)
             End While
             BaseDatos.conexionEmpaque.Close()
             Return lista

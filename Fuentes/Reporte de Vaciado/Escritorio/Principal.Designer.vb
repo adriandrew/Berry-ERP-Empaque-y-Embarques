@@ -36,12 +36,18 @@ Partial Class Principal
         Me.spParaClonar = New FarPoint.Win.Spread.FpSpread()
         Me.spParaClonar_Sheet1 = New FarPoint.Win.Spread.SheetView()
         Me.pnlFiltros = New System.Windows.Forms.Panel()
+        Me.gbMasOpciones = New System.Windows.Forms.GroupBox()
+        Me.rbtnSinMovimientos = New System.Windows.Forms.RadioButton()
+        Me.rbtnConMovimientos = New System.Windows.Forms.RadioButton()
+        Me.rbtnTodos = New System.Windows.Forms.RadioButton()
         Me.gbFechas = New System.Windows.Forms.GroupBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.chkFecha = New System.Windows.Forms.CheckBox()
         Me.dtpFechaFinal = New System.Windows.Forms.DateTimePicker()
         Me.dtpFecha = New System.Windows.Forms.DateTimePicker()
-        Me.gbNiveles = New System.Windows.Forms.GroupBox()
+        Me.gbOpciones = New System.Windows.Forms.GroupBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.cbProductor = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cbVariedad = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -74,8 +80,9 @@ Partial Class Principal
         CType(Me.spParaClonar, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.spParaClonar_Sheet1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlFiltros.SuspendLayout()
+        Me.gbMasOpciones.SuspendLayout()
         Me.gbFechas.SuspendLayout()
-        Me.gbNiveles.SuspendLayout()
+        Me.gbOpciones.SuspendLayout()
         CType(Me.spReporte, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.spReporte_Sheet1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlPie.SuspendLayout()
@@ -141,10 +148,10 @@ Partial Class Principal
         Me.rbtnVaciado.ForeColor = System.Drawing.Color.Black
         Me.rbtnVaciado.Location = New System.Drawing.Point(7, 3)
         Me.rbtnVaciado.Name = "rbtnVaciado"
-        Me.rbtnVaciado.Size = New System.Drawing.Size(82, 32)
+        Me.rbtnVaciado.Size = New System.Drawing.Size(93, 32)
         Me.rbtnVaciado.TabIndex = 3
         Me.rbtnVaciado.TabStop = True
-        Me.rbtnVaciado.Text = "Vaciado"
+        Me.rbtnVaciado.Text = "VACIADO"
         Me.rbtnVaciado.UseVisualStyleBackColor = False
         '
         'rbtnSaldos
@@ -159,12 +166,12 @@ Partial Class Principal
         Me.rbtnSaldos.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.rbtnSaldos.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbtnSaldos.ForeColor = System.Drawing.Color.Black
-        Me.rbtnSaldos.Location = New System.Drawing.Point(95, 3)
+        Me.rbtnSaldos.Location = New System.Drawing.Point(105, 3)
         Me.rbtnSaldos.Name = "rbtnSaldos"
-        Me.rbtnSaldos.Size = New System.Drawing.Size(74, 32)
+        Me.rbtnSaldos.Size = New System.Drawing.Size(88, 32)
         Me.rbtnSaldos.TabIndex = 2
         Me.rbtnSaldos.TabStop = True
-        Me.rbtnSaldos.Text = "Saldos"
+        Me.rbtnSaldos.Text = "SALDOS"
         Me.rbtnSaldos.UseVisualStyleBackColor = False
         '
         'spParaClonar
@@ -188,7 +195,7 @@ Partial Class Principal
         EnhancedScrollBarRenderer5.TrackBarSelectedBackgroundColor = System.Drawing.Color.SlateGray
         Me.spParaClonar.HorizontalScrollBar.Renderer = EnhancedScrollBarRenderer5
         Me.spParaClonar.HorizontalScrollBar.TabIndex = 2
-        Me.spParaClonar.Location = New System.Drawing.Point(319, 400)
+        Me.spParaClonar.Location = New System.Drawing.Point(357, 396)
         Me.spParaClonar.Name = "spParaClonar"
         Me.spParaClonar.Sheets.AddRange(New FarPoint.Win.Spread.SheetView() {Me.spParaClonar_Sheet1})
         Me.spParaClonar.Size = New System.Drawing.Size(148, 94)
@@ -236,13 +243,61 @@ Partial Class Principal
         Me.pnlFiltros.AutoScroll = True
         Me.pnlFiltros.BackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
         Me.pnlFiltros.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlFiltros.Controls.Add(Me.gbMasOpciones)
         Me.pnlFiltros.Controls.Add(Me.gbFechas)
-        Me.pnlFiltros.Controls.Add(Me.gbNiveles)
+        Me.pnlFiltros.Controls.Add(Me.gbOpciones)
         Me.pnlFiltros.Controls.Add(Me.btnGenerar)
         Me.pnlFiltros.Location = New System.Drawing.Point(0, 41)
         Me.pnlFiltros.Name = "pnlFiltros"
-        Me.pnlFiltros.Size = New System.Drawing.Size(318, 453)
+        Me.pnlFiltros.Size = New System.Drawing.Size(355, 453)
         Me.pnlFiltros.TabIndex = 22
+        '
+        'gbMasOpciones
+        '
+        Me.gbMasOpciones.BackColor = System.Drawing.Color.Transparent
+        Me.gbMasOpciones.Controls.Add(Me.rbtnSinMovimientos)
+        Me.gbMasOpciones.Controls.Add(Me.rbtnConMovimientos)
+        Me.gbMasOpciones.Controls.Add(Me.rbtnTodos)
+        Me.gbMasOpciones.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbMasOpciones.ForeColor = System.Drawing.Color.White
+        Me.gbMasOpciones.Location = New System.Drawing.Point(4, 262)
+        Me.gbMasOpciones.Name = "gbMasOpciones"
+        Me.gbMasOpciones.Size = New System.Drawing.Size(345, 110)
+        Me.gbMasOpciones.TabIndex = 18
+        Me.gbMasOpciones.TabStop = False
+        Me.gbMasOpciones.Text = "MAS OPCIONES"
+        '
+        'rbtnSinMovimientos
+        '
+        Me.rbtnSinMovimientos.AutoSize = True
+        Me.rbtnSinMovimientos.Location = New System.Drawing.Point(8, 80)
+        Me.rbtnSinMovimientos.Name = "rbtnSinMovimientos"
+        Me.rbtnSinMovimientos.Size = New System.Drawing.Size(186, 24)
+        Me.rbtnSinMovimientos.TabIndex = 2
+        Me.rbtnSinMovimientos.Text = "SIN MOVIMIENTOS"
+        Me.rbtnSinMovimientos.UseVisualStyleBackColor = True
+        '
+        'rbtnConMovimientos
+        '
+        Me.rbtnConMovimientos.AutoSize = True
+        Me.rbtnConMovimientos.Location = New System.Drawing.Point(8, 53)
+        Me.rbtnConMovimientos.Name = "rbtnConMovimientos"
+        Me.rbtnConMovimientos.Size = New System.Drawing.Size(193, 24)
+        Me.rbtnConMovimientos.TabIndex = 1
+        Me.rbtnConMovimientos.Text = "CON MOVIMIENTOS"
+        Me.rbtnConMovimientos.UseVisualStyleBackColor = True
+        '
+        'rbtnTodos
+        '
+        Me.rbtnTodos.AutoSize = True
+        Me.rbtnTodos.Checked = True
+        Me.rbtnTodos.Location = New System.Drawing.Point(7, 26)
+        Me.rbtnTodos.Name = "rbtnTodos"
+        Me.rbtnTodos.Size = New System.Drawing.Size(76, 24)
+        Me.rbtnTodos.TabIndex = 0
+        Me.rbtnTodos.TabStop = True
+        Me.rbtnTodos.Text = "TODO"
+        Me.rbtnTodos.UseVisualStyleBackColor = True
         '
         'gbFechas
         '
@@ -253,12 +308,12 @@ Partial Class Principal
         Me.gbFechas.Controls.Add(Me.dtpFecha)
         Me.gbFechas.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbFechas.ForeColor = System.Drawing.Color.White
-        Me.gbFechas.Location = New System.Drawing.Point(3, 5)
+        Me.gbFechas.Location = New System.Drawing.Point(4, 5)
         Me.gbFechas.Name = "gbFechas"
-        Me.gbFechas.Size = New System.Drawing.Size(309, 64)
+        Me.gbFechas.Size = New System.Drawing.Size(345, 64)
         Me.gbFechas.TabIndex = 17
         Me.gbFechas.TabStop = False
-        Me.gbFechas.Text = "Rango de Fechas"
+        Me.gbFechas.Text = "RANGO DE FECHAS"
         '
         'Label6
         '
@@ -266,7 +321,7 @@ Partial Class Principal
         Me.Label6.BackColor = System.Drawing.Color.Transparent
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.White
-        Me.Label6.Location = New System.Drawing.Point(253, 12)
+        Me.Label6.Location = New System.Drawing.Point(280, 12)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(53, 13)
         Me.Label6.TabIndex = 23
@@ -284,7 +339,7 @@ Partial Class Principal
         Me.chkFecha.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkFecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkFecha.ForeColor = System.Drawing.Color.White
-        Me.chkFecha.Location = New System.Drawing.Point(256, 27)
+        Me.chkFecha.Location = New System.Drawing.Point(283, 27)
         Me.chkFecha.Name = "chkFecha"
         Me.chkFecha.Size = New System.Drawing.Size(45, 25)
         Me.chkFecha.TabIndex = 20
@@ -297,9 +352,9 @@ Partial Class Principal
         Me.dtpFechaFinal.Cursor = System.Windows.Forms.Cursors.Hand
         Me.dtpFechaFinal.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtpFechaFinal.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpFechaFinal.Location = New System.Drawing.Point(132, 27)
+        Me.dtpFechaFinal.Location = New System.Drawing.Point(149, 27)
         Me.dtpFechaFinal.Name = "dtpFechaFinal"
-        Me.dtpFechaFinal.Size = New System.Drawing.Size(120, 26)
+        Me.dtpFechaFinal.Size = New System.Drawing.Size(130, 26)
         Me.dtpFechaFinal.TabIndex = 17
         '
         'dtpFecha
@@ -307,42 +362,69 @@ Partial Class Principal
         Me.dtpFecha.Cursor = System.Windows.Forms.Cursors.Hand
         Me.dtpFecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpFecha.Location = New System.Drawing.Point(8, 26)
+        Me.dtpFecha.Location = New System.Drawing.Point(16, 27)
         Me.dtpFecha.Name = "dtpFecha"
-        Me.dtpFecha.Size = New System.Drawing.Size(120, 26)
+        Me.dtpFecha.Size = New System.Drawing.Size(130, 26)
         Me.dtpFecha.TabIndex = 0
         '
-        'gbNiveles
+        'gbOpciones
         '
-        Me.gbNiveles.BackColor = System.Drawing.Color.Transparent
-        Me.gbNiveles.Controls.Add(Me.Label1)
-        Me.gbNiveles.Controls.Add(Me.cbVariedad)
-        Me.gbNiveles.Controls.Add(Me.Label2)
-        Me.gbNiveles.Controls.Add(Me.cbChofer)
-        Me.gbNiveles.Controls.Add(Me.Label11)
-        Me.gbNiveles.Controls.Add(Me.cbProducto)
-        Me.gbNiveles.Controls.Add(Me.Label10)
-        Me.gbNiveles.Controls.Add(Me.cbLote)
-        Me.gbNiveles.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbNiveles.ForeColor = System.Drawing.Color.White
-        Me.gbNiveles.Location = New System.Drawing.Point(3, 75)
-        Me.gbNiveles.Name = "gbNiveles"
-        Me.gbNiveles.Size = New System.Drawing.Size(309, 156)
-        Me.gbNiveles.TabIndex = 15
-        Me.gbNiveles.TabStop = False
-        Me.gbNiveles.Text = "Opciones"
+        Me.gbOpciones.BackColor = System.Drawing.Color.Transparent
+        Me.gbOpciones.Controls.Add(Me.Label3)
+        Me.gbOpciones.Controls.Add(Me.cbProductor)
+        Me.gbOpciones.Controls.Add(Me.Label1)
+        Me.gbOpciones.Controls.Add(Me.cbVariedad)
+        Me.gbOpciones.Controls.Add(Me.Label2)
+        Me.gbOpciones.Controls.Add(Me.cbChofer)
+        Me.gbOpciones.Controls.Add(Me.Label11)
+        Me.gbOpciones.Controls.Add(Me.cbProducto)
+        Me.gbOpciones.Controls.Add(Me.Label10)
+        Me.gbOpciones.Controls.Add(Me.cbLote)
+        Me.gbOpciones.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.gbOpciones.ForeColor = System.Drawing.Color.White
+        Me.gbOpciones.Location = New System.Drawing.Point(4, 75)
+        Me.gbOpciones.Name = "gbOpciones"
+        Me.gbOpciones.Size = New System.Drawing.Size(345, 182)
+        Me.gbOpciones.TabIndex = 15
+        Me.gbOpciones.TabStop = False
+        Me.gbOpciones.Text = "OPCIONES"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.BackColor = System.Drawing.Color.Transparent
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.White
+        Me.Label3.Location = New System.Drawing.Point(4, 30)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(120, 18)
+        Me.Label3.TabIndex = 19
+        Me.Label3.Text = "PRODUCTOR:"
+        '
+        'cbProductor
+        '
+        Me.cbProductor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cbProductor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cbProductor.BackColor = System.Drawing.Color.White
+        Me.cbProductor.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.cbProductor.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbProductor.FormattingEnabled = True
+        Me.cbProductor.Location = New System.Drawing.Point(124, 27)
+        Me.cbProductor.Name = "cbProductor"
+        Me.cbProductor.Size = New System.Drawing.Size(215, 28)
+        Me.cbProductor.TabIndex = 18
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(4, 116)
+        Me.Label1.Location = New System.Drawing.Point(4, 146)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(86, 20)
+        Me.Label1.Size = New System.Drawing.Size(94, 18)
         Me.Label1.TabIndex = 17
-        Me.Label1.Text = "Variedad:"
+        Me.Label1.Text = "VARIEDAD:"
         '
         'cbVariedad
         '
@@ -353,22 +435,22 @@ Partial Class Principal
         Me.cbVariedad.Enabled = False
         Me.cbVariedad.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbVariedad.FormattingEnabled = True
-        Me.cbVariedad.Location = New System.Drawing.Point(108, 113)
+        Me.cbVariedad.Location = New System.Drawing.Point(124, 143)
         Me.cbVariedad.Name = "cbVariedad"
-        Me.cbVariedad.Size = New System.Drawing.Size(194, 28)
+        Me.cbVariedad.Size = New System.Drawing.Size(215, 28)
         Me.cbVariedad.TabIndex = 16
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(4, 58)
+        Me.Label2.Location = New System.Drawing.Point(4, 88)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(68, 20)
+        Me.Label2.Size = New System.Drawing.Size(83, 18)
         Me.Label2.TabIndex = 15
-        Me.Label2.Text = "Chofer:"
+        Me.Label2.Text = "CHOFER:"
         '
         'cbChofer
         '
@@ -378,22 +460,22 @@ Partial Class Principal
         Me.cbChofer.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cbChofer.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbChofer.FormattingEnabled = True
-        Me.cbChofer.Location = New System.Drawing.Point(108, 55)
+        Me.cbChofer.Location = New System.Drawing.Point(124, 85)
         Me.cbChofer.Name = "cbChofer"
-        Me.cbChofer.Size = New System.Drawing.Size(194, 28)
+        Me.cbChofer.Size = New System.Drawing.Size(215, 28)
         Me.cbChofer.TabIndex = 14
         '
         'Label11
         '
         Me.Label11.AutoSize = True
         Me.Label11.BackColor = System.Drawing.Color.Transparent
-        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.ForeColor = System.Drawing.Color.White
-        Me.Label11.Location = New System.Drawing.Point(5, 87)
+        Me.Label11.Location = New System.Drawing.Point(5, 117)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(86, 20)
+        Me.Label11.Size = New System.Drawing.Size(108, 18)
         Me.Label11.TabIndex = 13
-        Me.Label11.Text = "Producto:"
+        Me.Label11.Text = "PRODUCTO:"
         '
         'cbProducto
         '
@@ -403,22 +485,22 @@ Partial Class Principal
         Me.cbProducto.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cbProducto.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbProducto.FormattingEnabled = True
-        Me.cbProducto.Location = New System.Drawing.Point(108, 84)
+        Me.cbProducto.Location = New System.Drawing.Point(124, 114)
         Me.cbProducto.Name = "cbProducto"
-        Me.cbProducto.Size = New System.Drawing.Size(194, 28)
+        Me.cbProducto.Size = New System.Drawing.Size(215, 28)
         Me.cbProducto.TabIndex = 12
         '
         'Label10
         '
         Me.Label10.AutoSize = True
         Me.Label10.BackColor = System.Drawing.Color.Transparent
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.White
-        Me.Label10.Location = New System.Drawing.Point(5, 29)
+        Me.Label10.Location = New System.Drawing.Point(5, 59)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(50, 20)
+        Me.Label10.Size = New System.Drawing.Size(56, 18)
         Me.Label10.TabIndex = 11
-        Me.Label10.Text = "Lote:"
+        Me.Label10.Text = "LOTE:"
         '
         'cbLote
         '
@@ -428,9 +510,9 @@ Partial Class Principal
         Me.cbLote.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cbLote.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbLote.FormattingEnabled = True
-        Me.cbLote.Location = New System.Drawing.Point(108, 26)
+        Me.cbLote.Location = New System.Drawing.Point(124, 56)
         Me.cbLote.Name = "cbLote"
-        Me.cbLote.Size = New System.Drawing.Size(194, 28)
+        Me.cbLote.Size = New System.Drawing.Size(215, 28)
         Me.cbLote.TabIndex = 10
         '
         'btnGenerar
@@ -443,11 +525,11 @@ Partial Class Principal
         Me.btnGenerar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnGenerar.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnGenerar.ForeColor = System.Drawing.Color.Black
-        Me.btnGenerar.Location = New System.Drawing.Point(184, 235)
+        Me.btnGenerar.Location = New System.Drawing.Point(200, 378)
         Me.btnGenerar.Name = "btnGenerar"
-        Me.btnGenerar.Size = New System.Drawing.Size(128, 55)
+        Me.btnGenerar.Size = New System.Drawing.Size(146, 55)
         Me.btnGenerar.TabIndex = 10
-        Me.btnGenerar.Text = "Generar"
+        Me.btnGenerar.Text = "GENERAR"
         Me.btnGenerar.UseVisualStyleBackColor = False
         '
         'spReporte
@@ -472,10 +554,10 @@ Partial Class Principal
         EnhancedScrollBarRenderer1.TrackBarSelectedBackgroundColor = System.Drawing.Color.SlateGray
         Me.spReporte.HorizontalScrollBar.Renderer = EnhancedScrollBarRenderer1
         Me.spReporte.HorizontalScrollBar.TabIndex = 0
-        Me.spReporte.Location = New System.Drawing.Point(319, 41)
+        Me.spReporte.Location = New System.Drawing.Point(357, 41)
         Me.spReporte.Name = "spReporte"
         Me.spReporte.Sheets.AddRange(New FarPoint.Win.Spread.SheetView() {Me.spReporte_Sheet1})
-        Me.spReporte.Size = New System.Drawing.Size(715, 453)
+        Me.spReporte.Size = New System.Drawing.Size(677, 453)
         Me.spReporte.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Seashell
         Me.spReporte.TabIndex = 3
         Me.spReporte.VerticalScrollBar.Buttons = New FarPoint.Win.Spread.FpScrollBarButtonCollection("BackwardLineButton,ThumbTrack,ForwardLineButton")
@@ -722,10 +804,12 @@ Partial Class Principal
         CType(Me.spParaClonar, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.spParaClonar_Sheet1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlFiltros.ResumeLayout(False)
+        Me.gbMasOpciones.ResumeLayout(False)
+        Me.gbMasOpciones.PerformLayout()
         Me.gbFechas.ResumeLayout(False)
         Me.gbFechas.PerformLayout()
-        Me.gbNiveles.ResumeLayout(False)
-        Me.gbNiveles.PerformLayout()
+        Me.gbOpciones.ResumeLayout(False)
+        Me.gbOpciones.PerformLayout()
         CType(Me.spReporte, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.spReporte_Sheet1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlPie.ResumeLayout(False)
@@ -749,7 +833,7 @@ Partial Class Principal
     Friend WithEvents spReporte_Sheet1 As FarPoint.Win.Spread.SheetView
     Friend WithEvents pnlFiltros As System.Windows.Forms.Panel
     Friend WithEvents btnGenerar As System.Windows.Forms.Button
-    Friend WithEvents gbNiveles As System.Windows.Forms.GroupBox
+    Friend WithEvents gbOpciones As System.Windows.Forms.GroupBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents cbVariedad As System.Windows.Forms.ComboBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
@@ -775,4 +859,10 @@ Partial Class Principal
     Private WithEvents pnlMenu As System.Windows.Forms.Panel
     Private WithEvents rbtnVaciado As System.Windows.Forms.RadioButton
     Private WithEvents rbtnSaldos As System.Windows.Forms.RadioButton
+    Friend WithEvents gbMasOpciones As System.Windows.Forms.GroupBox
+    Friend WithEvents rbtnSinMovimientos As System.Windows.Forms.RadioButton
+    Friend WithEvents rbtnConMovimientos As System.Windows.Forms.RadioButton
+    Friend WithEvents rbtnTodos As System.Windows.Forms.RadioButton
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents cbProductor As System.Windows.Forms.ComboBox
 End Class

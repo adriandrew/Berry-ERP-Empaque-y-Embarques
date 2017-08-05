@@ -5,6 +5,7 @@ Public Class Principal
 
     ' Variables de objetos de entidades.
     Public usuarios As New EYEEntidadesRecepcion.Usuarios()
+    Public productores As New EYEEntidadesRecepcion.Productores()
     Public recepcion As New EYEEntidadesRecepcion.Recepcion()
     Public variedades As New EYEEntidadesRecepcion.Variedades()
     Public choferesCampos As New EYEEntidadesRecepcion.ChoferesCampos()
@@ -68,6 +69,7 @@ Public Class Principal
         FormatearSpread()
         FormatearSpreadRecepcion()
         FormatearSpreadTotales()
+        CargarProductores()
         CargarLotes()
         CargarChoferesCampo()
         CargarProductos()
@@ -213,6 +215,22 @@ Public Class Principal
 
     End Sub
 
+    Private Sub cbProductores_KeyDown(sender As Object, e As KeyEventArgs) Handles cbProductores.KeyDown
+
+        If (e.KeyData = Keys.Enter) Then
+            e.SuppressKeyPress = True
+            If (cbProductores.SelectedValue > 0) Then
+                AsignarFoco(cbLotes)
+            Else
+                cbProductores.SelectedIndex = 0
+            End If
+        ElseIf (e.KeyData = Keys.Escape) Then
+            e.SuppressKeyPress = True
+            AsignarFoco(txtHora)
+        End If
+
+    End Sub
+
     Private Sub cbLotes_KeyDown(sender As Object, e As KeyEventArgs) Handles cbLotes.KeyDown
 
         If (e.KeyData = Keys.Enter) Then
@@ -224,7 +242,7 @@ Public Class Principal
             End If
         ElseIf (e.KeyData = Keys.Escape) Then
             e.SuppressKeyPress = True
-            AsignarFoco(txtHora)
+            AsignarFoco(cbProductores)
         End If
 
     End Sub
@@ -268,7 +286,7 @@ Public Class Principal
         If (e.KeyData = Keys.Enter) Then
             e.SuppressKeyPress = True
             If (Not String.IsNullOrEmpty(txtHora.Text.Trim.Replace(":", "").Replace("_", "")) And txtHora.Text.Length = 5) Then
-                AsignarFoco(cbLotes)
+                AsignarFoco(cbProductores)
             End If
         ElseIf (e.KeyData = Keys.Escape) Then
             e.SuppressKeyPress = True
@@ -297,10 +315,10 @@ Public Class Principal
 
         If (e.KeyData = Keys.Enter) Then
             e.SuppressKeyPress = True
-            If (cbChoferesCampos.SelectedValue > 0) Then
+            If (cbVariedades.SelectedValue > 0) Then
                 AsignarFoco(spRecepcion)
             Else
-                cbChoferesCampos.SelectedIndex = 0
+                cbVariedades.SelectedIndex = 0
             End If
         ElseIf (e.KeyData = Keys.Escape) Then
             e.SuppressKeyPress = True
@@ -429,6 +447,8 @@ Public Class Principal
             EYELogicaRecepcion.Directorios.instanciaSql = "BERRY1-DELL\SQLEXPRESS2008"
             EYELogicaRecepcion.Directorios.usuarioSql = "AdminBerry"
             EYELogicaRecepcion.Directorios.contrasenaSql = "@berry2017"
+            pnlEncabezado.BackColor = Color.DarkRed
+            pnlPie.BackColor = Color.DarkRed
         Else
             EYELogicaRecepcion.Directorios.ObtenerParametros()
             EYELogicaRecepcion.Usuarios.ObtenerParametros()
@@ -489,7 +509,7 @@ Public Class Principal
         End If
         ejecutarProgramaPrincipal.UseShellExecute = True
         ejecutarProgramaPrincipal.FileName = nombre & Convert.ToString(".exe")
-        ejecutarProgramaPrincipal.WorkingDirectory = Directory.GetCurrentDirectory()
+        ejecutarProgramaPrincipal.WorkingDirectory = Application.StartupPath
         ejecutarProgramaPrincipal.Arguments = EYELogicaRecepcion.Directorios.id.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.nombre.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.descripcion.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.rutaLogo.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.esPredeterminado.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.instanciaSql.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.usuarioSql.ToString().Trim().Replace(" ", "|") & " " & EYELogicaRecepcion.Directorios.contrasenaSql.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de directorios, indice 9 ;)".Replace(" ", "|") & " " & EYELogicaRecepcion.Usuarios.id.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de usuario, indice 11 ;)".Replace(" ", "|")
         Try
             Dim proceso = Process.Start(ejecutarProgramaPrincipal)
@@ -575,6 +595,7 @@ Public Class Principal
             Next
         Next
         If (Not chkConservarDatos.Checked) Then
+            cbProductores.SelectedIndex = 0
             cbLotes.SelectedIndex = 0
             cbChoferesCampos.SelectedIndex = 0
             cbProductos.SelectedIndex = 0
@@ -592,6 +613,14 @@ Public Class Principal
     Private Sub LimpiarSpread(ByVal spread As FarPoint.Win.Spread.FpSpread)
 
         spread.ActiveSheet.ClearRange(0, 0, spread.ActiveSheet.Rows.Count, spread.ActiveSheet.Columns.Count, True)
+
+    End Sub
+
+    Private Sub CargarProductores()
+
+        cbProductores.DataSource = productores.ObtenerListadoReporte()
+        cbProductores.DisplayMember = "Nombre"
+        cbProductores.ValueMember = "Id"
 
     End Sub
 
@@ -746,6 +775,7 @@ Public Class Principal
             If (lista.Count > 0) Then
                 dtpFecha.Value = lista(0).EFecha
                 txtHora.Text = lista(0).EHora
+                cbProductores.SelectedValue = lista(0).EIdProductor
                 cbLotes.SelectedValue = lista(0).EIdLote
                 cbChoferesCampos.SelectedValue = lista(0).EIdChofer
                 cbProductos.SelectedValue = lista(0).EIdProducto
@@ -818,6 +848,11 @@ Public Class Principal
             txtHora.BackColor = Color.Orange
             Me.esGuardadoValido = False
         End If
+        Dim idProductor As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbProductores.SelectedValue)
+        If (idProductor <= 0) Then
+            cbProductores.BackColor = Color.Orange
+            Me.esGuardadoValido = False
+        End If
         Dim idLote As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbLotes.SelectedValue)
         If (idLote <= 0) Then
             cbLotes.BackColor = Color.Orange
@@ -863,6 +898,7 @@ Public Class Principal
         Dim id As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
         Dim fecha As Date = dtpFecha.Value
         Dim hora As String = txtHora.Text
+        Dim idProductor As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbProductores.SelectedValue)
         Dim idLote As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbLotes.SelectedValue)
         Dim idChofer As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbChoferesCampos.SelectedValue)
         Dim idProducto As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbProductos.SelectedValue)
@@ -871,10 +907,11 @@ Public Class Principal
         For fila As Integer = 0 To spRecepcion.ActiveSheet.Rows.Count - 1
             Dim cantidadCajas As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Text)
             Dim pesoCajas As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Text)
-            If (id > 0 AndAlso IsDate(fecha) AndAlso idLote > 0 AndAlso idChofer > 0 AndAlso idProducto > 0 And idVariedad > 0 AndAlso cantidadCajas > 0 AndAlso pesoCajas > 0) Then
+            If (id > 0 AndAlso IsDate(fecha) AndAlso idProductor > 0 AndAlso idLote > 0 AndAlso idChofer > 0 AndAlso idProducto > 0 And idVariedad > 0 AndAlso cantidadCajas > 0 AndAlso pesoCajas > 0) Then
                 recepcion.EId = id
                 recepcion.EFecha = fecha
                 recepcion.EHora = hora
+                recepcion.EIdProductor = idProductor
                 recepcion.EIdLote = idLote
                 recepcion.EIdChofer = idChofer
                 recepcion.EIdProducto = idProducto
@@ -931,5 +968,5 @@ Public Class Principal
     End Enum
 
 #End Region
-
+     
 End Class

@@ -81,13 +81,13 @@ Public Class Variedades
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim variedades As Variedades
+            Dim tabla As Variedades
             While lectorDatos.Read()
-                variedades = New Variedades()
-                variedades.idProducto = Convert.ToInt32(lectorDatos("IdProducto").ToString())
-                variedades.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                variedades.nombre = lectorDatos("Nombre").ToString()
-                lista.Add(variedades)
+                tabla = New Variedades()
+                tabla.idProducto = Convert.ToInt32(lectorDatos("IdProducto").ToString())
+                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
+                tabla.nombre = lectorDatos("Nombre").ToString()
+                lista.Add(tabla)
             End While
             BaseDatos.conexionCatalogo.Close()
             Return lista

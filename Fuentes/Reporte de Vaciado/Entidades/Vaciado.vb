@@ -2,6 +2,7 @@
 
 Public Class Vaciado
 
+    Private idProductor As Integer
     Private idLote As Integer
     Private idChofer As Integer
     Private idProducto As Integer
@@ -9,6 +10,14 @@ Public Class Vaciado
     Private fecha As Date
     Private fecha2 As Date
 
+    Public Property EIdProductor() As Integer
+        Get
+            Return Me.idProductor
+        End Get
+        Set(value As Integer)
+            Me.idProductor = value
+        End Set
+    End Property
     Public Property EIdLote() As Integer
         Get
             Return Me.idLote
@@ -64,8 +73,8 @@ Public Class Vaciado
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            Dim condicionSuma As String = String.Empty
-            Dim condicionsumaPrimera As String = String.Empty
+            Dim condicionSumaSegunda As String = String.Empty
+            Dim condicionSumaPrimera As String = String.Empty
             Dim condicionFechaRango As String = String.Empty
             If (aplicaFecha) Then
                 condicionFechaRango &= " AND Fecha BETWEEN @fecha AND @fecha2 "
@@ -80,10 +89,10 @@ Public Class Vaciado
             datos.Load(dataReader)
             BaseDatos.conexionEmpaque.Close()
             For fila As Integer = 0 To datos.Rows.Count - 1
-                condicionSuma &= ", CASE WHEN (V.IdBanda = " & datos.Rows(fila).Item("IdBanda") & ") THEN SUM(V.Cajass) END AS Banda_" & datos.Rows(fila).Item("IdBanda") & "" 
-                condicionsumaPrimera &= ", SUM(VT.Banda_" & datos.Rows(fila).Item("IdBanda") & ") AS Banda_" & datos.Rows(fila).Item("IdBanda") & ""
+                condicionSumaSegunda &= ", CASE WHEN (V.IdBanda = " & datos.Rows(fila).Item("IdBanda") & ") THEN SUM(V.Cajas) END AS Banda_" & datos.Rows(fila).Item("IdBanda") & ""
+                condicionSumaPrimera &= ", SUM(VT.Banda_" & datos.Rows(fila).Item("IdBanda") & ") AS Banda_" & datos.Rows(fila).Item("IdBanda") & ""
             Next
-            Return condicionSuma & "|" & condicionsumaPrimera
+            Return condicionSumaSegunda & "|" & condicionSumaPrimera
         Catch ex As Exception
             Throw ex
         Finally
@@ -97,17 +106,15 @@ Public Class Vaciado
         Try
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
-            comando.Connection = BaseDatos.conexionEmpaque
-
-            Dim suma() As String = ArmarBandas(aplicaFecha).Split("|")
-            Dim primeraSumaBandas As String = suma(1)
-            Dim segundaSumaBandas As String = suma(0)
-
+            comando.Connection = BaseDatos.conexionEmpaque 
+            Dim seleccionarBandas() As String = ArmarBandas(aplicaFecha).Split("|")
+            Dim primeraSumaBandas As String = seleccionarBandas(1)
+            Dim segundaSumaBandas As String = seleccionarBandas(0)
             Dim condicionFechaRango As String = String.Empty 
             If (aplicaFecha) Then
                 condicionFechaRango &= " AND Fecha BETWEEN @fecha AND @fecha2 "
             End If
-            comando.CommandText = "SELECT VT.Hora " & primeraSumaBandas & " FROM (SELECT V.Hora " & segundaSumaBandas & " FROM (SELECT IdBanda, SUM(CantidadCajas) AS Cajass, CONVERT(VARCHAR(5), Hora, 108) AS Hora FROM Vaciado WHERE 0=0 " & condicionFechaRango & " GROUP BY IdBanda, CONVERT(VARCHAR(5), Hora, 108) ) AS V GROUP BY V.Hora, V.IdBanda) AS VT GROUP BY VT.Hora"
+            comando.CommandText = "SELECT VT.Hora " & primeraSumaBandas & " FROM (SELECT V.Hora " & segundaSumaBandas & " FROM (SELECT IdBanda, ISNULL(SUM(CantidadCajas), 0) AS Cajas, CONVERT(VARCHAR(5), Hora, 108) AS Hora FROM Vaciado WHERE 0=0 " & condicionFechaRango & " GROUP BY IdBanda, CONVERT(VARCHAR(5), Hora, 108) ) AS V GROUP BY V.Hora, V.IdBanda) AS VT GROUP BY VT.Hora"
             comando.Parameters.AddWithValue("@fecha", EYELogicaReporteVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
             comando.Parameters.AddWithValue("@fecha2", EYELogicaReporteVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha2))
             BaseDatos.conexionEmpaque.Open()
@@ -124,8 +131,7 @@ Public Class Vaciado
 
     End Function
 
-
-    Public Function ObtenerListadoReporteSaldos(ByVal aplicaFecha As Boolean) As DataTable
+    Public Function ObtenerListadoReporteSaldos(ByVal aplicaFecha As Boolean, ByVal opcionMovimiento As Integer) As DataTable
 
         Try
             Dim datos As New DataTable
@@ -133,6 +139,9 @@ Public Class Vaciado
             comando.Connection = BaseDatos.conexionEmpaque
             Dim condicion As String = String.Empty
             Dim condicionFechaRango As String = String.Empty
+            If (Me.EIdProductor > 0) Then
+                condicion &= " AND R.IdProductor=@idProductor "
+            End If
             If (Me.EIdLote > 0) Then
                 condicion &= " AND R.IdLote=@idLote "
             End If
@@ -146,15 +155,24 @@ Public Class Vaciado
                 condicion &= " AND R.IdVariedad=@idVariedad "
             End If
             If (aplicaFecha) Then
-                condicionFechaRango &= " AND Fecha BETWEEN @fecha AND @fecha2 "
+                condicionFechaRango &= " AND VAC.Fecha BETWEEN @fecha AND @fecha2 "
             End If
-            comando.CommandText = "SELECT R.Id, R.Fecha, CONVERT(VARCHAR(5), R.Hora, 108), R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, SUM(ISNULL(R.CantidadCajas, 0)), SUM(ISNULL(R.PesoCajas, 0)) " & _
-            " FROM Recepcion AS R LEFT JOIN " & EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
+            If (opcionMovimiento = 2) Then ' Con movimientos.
+                condicion &= " AND ISNULL(VAC.CantidadCajas, 0) > 0 "
+            ElseIf (opcionMovimiento = 3) Then ' Sin movimientos.
+                condicion &= " AND ISNULL(VAC.CantidadCajas, 0) = 0 "
+            End If
+            comando.CommandText = "SELECT R.Id, R.Fecha, CONVERT(VARCHAR(5), R.Hora, 108), R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, MAX(VAC.Fecha), ISNULL(SUM(R.CantidadCajas), 0) AS CajasRecepcion, VAC.CantidadCajas AS CajasVaciado, ISNULL(SUM(R.CantidadCajas), 0)-ISNULL(VAC.CantidadCajas, 0) AS Saldo" & _
+            " FROM Recepcion AS R " & _
+            " LEFT JOIN (SELECT IdRecepcion, MAX(Fecha) AS Fecha, ISNULL(SUM(CantidadCajas), 0) AS CantidadCajas FROM Vaciado GROUP BY IdRecepcion) AS VAC ON R.Id = VAC.IdRecepcion " & _
+            " LEFT JOIN " & EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Productores AS PR ON R.IdProductor = PR.Id " & _
+            " LEFT JOIN " & EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
             " LEFT JOIN " & EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "ChoferesCampos AS CC ON R.IdChofer = CC.Id " & _
             " LEFT JOIN " & EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON R.IdProducto = P.Id " & _
             " LEFT JOIN " & EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto " & _
             " WHERE 0=0 " & condicion & condicionFechaRango & _
-            " GROUP BY R.Id, R.Fecha, R.Hora, R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre"
+            " GROUP BY R.Id, R.Fecha, R.Hora, R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, VAC.CantidadCajas"
+            comando.Parameters.AddWithValue("@idProductor", Me.EIdProductor)
             comando.Parameters.AddWithValue("@idLote", Me.EIdLote)
             comando.Parameters.AddWithValue("@idChofer", Me.EIdChofer)
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)

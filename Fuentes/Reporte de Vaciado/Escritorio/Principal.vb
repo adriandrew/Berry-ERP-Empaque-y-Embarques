@@ -7,6 +7,7 @@ Public Class Principal
     ' Variables de objetos de entidades.
     Public vaciado As New EYEEntidadesReporteVaciado.Vaciado()
     Public usuarios As New EYEEntidadesReporteVaciado.Usuarios()
+    Public productores As New EYEEntidadesReporteVaciado.Productores()
     Public lotes As New EYEEntidadesReporteVaciado.Lotes()
     Public choferesCampos As New EYEEntidadesReporteVaciado.ChoferesCampos()
     Public productos As New EYEEntidadesReporteVaciado.Productos()
@@ -27,7 +28,7 @@ Public Class Principal
     Public Shared colorAreaGris = Color.White
     ' Variables generales.
     Public nombreEstePrograma As String = String.Empty
-    Public opcionSeleccionadaTipoReporte As Integer = -1
+    Public opcionSeleccionadaTipoReporte As Integer = -1 : Public opcionSeleccionadaTipoMovimiento As Integer = -1
     Public estaMostrado As Boolean = False
     Public ejecutarProgramaPrincipal As New ProcessStartInfo()
     Public rutaTemporal As String = CurDir() & "\ArchivosTemporales"
@@ -35,7 +36,7 @@ Public Class Principal
     Public prefijoBaseDatosEmpaque As String = "EYE" & "_"
     Public colorFiltros As Color
     ' Variable de desarrollo.
-    Public esDesarrollo As Boolean = True
+    Public esDesarrollo As Boolean = False
 
 #Region "Eventos"
 
@@ -74,6 +75,7 @@ Public Class Principal
         CargarEncabezados()
         CargarTitulosDirectorio()
         CargarValorColor()
+        CargarComboProductores()
         CargarComboLotes()
         CargarComboChoferes()
         CargarComboProductos()
@@ -123,7 +125,7 @@ Public Class Principal
 
     End Sub
 
-    Private Sub pnlFiltros_MouseHover(sender As Object, e As EventArgs) Handles pnlFiltros.MouseHover, gbFechas.MouseHover, gbNiveles.MouseHover, chkFecha.MouseHover, cbLote.MouseHover, cbChofer.MouseHover, cbProducto.MouseHover, cbVariedad.MouseHover
+    Private Sub pnlFiltros_MouseHover(sender As Object, e As EventArgs) Handles pnlFiltros.MouseHover, gbFechas.MouseHover, gbOpciones.MouseHover, chkFecha.MouseHover, cbLote.MouseHover, cbChofer.MouseHover, cbProducto.MouseHover, cbVariedad.MouseHover, cbProductor.MouseHover
 
         AlinearFiltrosNormal()
         AsignarTooltips("Filtros para Generar el Reporte.")
@@ -216,9 +218,23 @@ Public Class Principal
     Private Sub dtpFechaFinal_KeyDown(sender As Object, e As KeyEventArgs) Handles dtpFechaFinal.KeyDown
 
         If (e.KeyCode = Keys.Enter) Then
-            AsignarFoco(cbLote)
+            AsignarFoco(cbProductor)
         ElseIf (e.KeyCode = Keys.Escape) Then
             AsignarFoco(dtpFecha)
+        End If
+
+    End Sub
+
+    Private Sub cbProductor_KeyDown(sender As Object, e As KeyEventArgs) Handles cbProductor.KeyDown
+
+        If (e.KeyCode = Keys.Enter) Then
+            If (cbProductor.SelectedValue <= 0) Then
+                AsignarFoco(btnGenerar)
+            Else
+                AsignarFoco(cbLote)
+            End If
+        ElseIf (e.KeyCode = Keys.Escape) Then
+            AsignarFoco(dtpFechaFinal)
         End If
 
     End Sub
@@ -232,7 +248,7 @@ Public Class Principal
                 AsignarFoco(cbChofer)
             End If
         ElseIf (e.KeyCode = Keys.Escape) Then
-            AsignarFoco(dtpFechaFinal)
+            AsignarFoco(cbProductor)
         End If
 
     End Sub
@@ -302,6 +318,50 @@ Public Class Principal
             ElseIf (cbLote.Enabled) Then
                 AsignarFoco(cbLote)
             End If
+        End If
+
+    End Sub
+
+    Private Sub rbtnVaciado_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnVaciado.CheckedChanged
+
+        If (rbtnVaciado.Checked) Then
+            Me.opcionSeleccionadaTipoReporte = OpcionTipoReporte.vaciado
+            gbOpciones.Enabled = False
+            gbMasOpciones.Enabled = False
+        End If
+
+    End Sub
+
+    Private Sub rbtnSaldos_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnSaldos.CheckedChanged
+
+        If (rbtnSaldos.Checked) Then
+            Me.opcionSeleccionadaTipoReporte = OpcionTipoReporte.saldos
+            gbOpciones.Enabled = True
+            gbMasOpciones.Enabled = True
+        End If
+
+    End Sub
+
+    Private Sub rbtnTodos_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnTodos.CheckedChanged
+
+        If (rbtnTodos.Checked) Then
+            Me.opcionSeleccionadaTipoMovimiento = OpcionTipoMovimientoVaciado.todo
+        End If
+
+    End Sub
+
+    Private Sub rbtnConMovimientos_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnConMovimientos.CheckedChanged
+
+        If (rbtnConMovimientos.Checked) Then
+            Me.opcionSeleccionadaTipoMovimiento = OpcionTipoMovimientoVaciado.conMovimiento
+        End If
+
+    End Sub
+
+    Private Sub rbtnSinMovimientos_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnSinMovimientos.CheckedChanged
+
+        If (rbtnSinMovimientos.Checked) Then
+            Me.opcionSeleccionadaTipoMovimiento = OpcionTipoMovimientoVaciado.sinMovimiento
         End If
 
     End Sub
@@ -424,6 +484,8 @@ Public Class Principal
             EYELogicaReporteVaciado.Directorios.instanciaSql = "BERRY1-DELL\SQLEXPRESS2008"
             EYELogicaReporteVaciado.Directorios.usuarioSql = "AdminBerry"
             EYELogicaReporteVaciado.Directorios.contrasenaSql = "@berry2017"
+            pnlEncabezado.BackColor = Color.DarkRed
+            pnlPie.BackColor = Color.DarkRed
         Else
             EYELogicaReporteVaciado.Directorios.ObtenerParametros()
             EYELogicaReporteVaciado.Usuarios.ObtenerParametros()
@@ -772,8 +834,8 @@ Public Class Principal
         temporizador.Start()
         Dim ancho As Integer = -(pnlFiltros.Width - (pnlFiltros.Width / 3))
         If (pnlFiltros.Location.X > ancho) Then
-            pnlFiltros.Location = New Point(pnlFiltros.Location.X - 80, pnlFiltros.Location.Y)
-            spReporte.Location = New Point(spReporte.Location.X - 80, spReporte.Location.Y)
+            pnlFiltros.Location = New Point(pnlFiltros.Location.X - (pnlFiltros.Width / 5), pnlFiltros.Location.Y)
+            spReporte.Location = New Point(spReporte.Location.X - (pnlFiltros.Width / 5), spReporte.Location.Y)
             Application.DoEvents()
         Else
             temporizador.Enabled = False
@@ -787,7 +849,7 @@ Public Class Principal
 
         pnlFiltros.BackColor = Color.Gray
         btnGenerar.Enabled = False
-        spReporte.Width = pnlCuerpo.Width - 80
+        spReporte.Width = pnlCuerpo.Width - (pnlFiltros.Width / 5) - 5
         Application.DoEvents()
 
     End Sub
@@ -826,15 +888,20 @@ Public Class Principal
         If (Me.opcionSeleccionadaTipoReporte = OpcionTipoReporte.vaciado) Then
             datos = vaciado.ObtenerListadoReporteVaciado(aplicaFecha)
         ElseIf (Me.opcionSeleccionadaTipoReporte = OpcionTipoReporte.saldos) Then
-            datos = vaciado.ObtenerListadoReporteSaldos(aplicaFecha)
+            datos = vaciado.ObtenerListadoReporteSaldos(aplicaFecha, Me.opcionSeleccionadaTipoMovimiento)
         End If
         spReporte.ActiveSheet.DataSource = datos
-        For columna = 0 To datos.Columns.Count - 1 
-            datos.Columns(columna).ColumnName = datos.Columns(columna).ToString.Replace("_", " ").ToUpper
-        Next
-        FormatearSpreadReporteVaciado(spReporte.ActiveSheet.Columns.Count)
-        CalcularTotalesHorizontales(0, "Total", spReporte.ActiveSheet.Columns("hora").Index, spReporte.ActiveSheet.Columns("hora").Index + 1, spReporte.ActiveSheet.Columns.Count, 0, spReporte.ActiveSheet.Rows.Count)
-        CalcularTotalesVerticales(spReporte.ActiveSheet.Columns.Count, "Total", spReporte.ActiveSheet.Columns("hora").Index + 1, spReporte.ActiveSheet.Columns.Count, 0, spReporte.ActiveSheet.Rows.Count - 1)
+        If (Me.opcionSeleccionadaTipoReporte = OpcionTipoReporte.vaciado) Then
+            For columna = 0 To datos.Columns.Count - 1
+                datos.Columns(columna).ColumnName = datos.Columns(columna).ToString.Replace("_", " ").ToUpper
+            Next
+            FormatearSpreadReporteVaciado(spReporte.ActiveSheet.Columns.Count)
+            CalcularTotalesHorizontales(0, "Total", spReporte.ActiveSheet.Columns("hora").Index, spReporte.ActiveSheet.Columns("hora").Index + 1, spReporte.ActiveSheet.Columns.Count, 0, spReporte.ActiveSheet.Rows.Count)
+            CalcularTotalesVerticales(spReporte.ActiveSheet.Columns.Count, "Total", spReporte.ActiveSheet.Columns("hora").Index + 1, spReporte.ActiveSheet.Columns.Count, 0, spReporte.ActiveSheet.Rows.Count - 1)
+        ElseIf (Me.opcionSeleccionadaTipoReporte = OpcionTipoReporte.saldos) Then
+            FormatearSpreadReporteSaldos(spReporte.ActiveSheet.Columns.Count)
+            CalcularTotalesHorizontales(0, "Total", spReporte.ActiveSheet.Columns("cantidadCajasRecepcion").Index, spReporte.ActiveSheet.Columns("cantidadCajasRecepcion").Index, spReporte.ActiveSheet.Columns.Count, 0, spReporte.ActiveSheet.Rows.Count)
+        End If
         AlinearFiltrosIzquierda()
         btnImprimir.Enabled = True
         btnExportarExcel.Enabled = True
@@ -928,9 +995,9 @@ Public Class Principal
         spReporte.ActiveSheet.Columns(numeracion).Tag = "hora" : numeracion += 1
         spReporte.ActiveSheet.Columns("hora").Width = 70
         If (cantidadColumnas > 1) Then
-            spReporte.ActiveSheet.Columns(spReporte.ActiveSheet.Columns("hora").Index + 1, spReporte.ActiveSheet.Columns.Count - 1).Width = 90
+            spReporte.ActiveSheet.Columns(spReporte.ActiveSheet.Columns("hora").Index + 1, spReporte.ActiveSheet.Columns.Count - 1).Width = 100
         End If
-        Dim anchoFiltros As Integer = 25
+        Dim anchoFiltros As Integer = 15
         For columna = 0 To spReporte.ActiveSheet.Columns.Count - 1
             spReporte.ActiveSheet.Columns(columna).Width += anchoFiltros
         Next
@@ -947,6 +1014,108 @@ Public Class Principal
         'spReporte.ActiveSheet.Columns(0, spReporte.ActiveSheet.Columns.Count - 1).AllowAutoSort = True
         spReporte.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.SingleSelect
         Application.DoEvents()
+
+    End Sub
+
+    Private Sub FormatearSpreadReporteSaldos(ByVal cantidadColumnas As Integer)
+
+        spReporte.Visible = True
+        spReporte.ActiveSheet.SheetName = "Reporte de Vaciado con Saldos"
+        spReporte.ActiveSheet.GrayAreaBackColor = Principal.colorAreaGris
+        spReporte.ActiveSheet.ColumnHeader.RowCount = 2
+        spReporte.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spReporte.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosMedianosSpread
+        spReporte.ActiveSheet.ColumnHeader.Rows(0, spReporte.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        Dim numeracion As Integer = 0
+        spReporte.ActiveSheet.Columns.Count = cantidadColumnas
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "fecha" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "hora" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "idProductor" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "nombreProductor" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "idLote" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "nombreLote" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "idChofer" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "nombreChofer" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "idProducto" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "nombreProducto" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "idVariedad" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "nombreVariedad" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "fechaVaciado" : numeracion += 1 
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "cantidadCajasRecepcion" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "cantidadCajasVaciado" : numeracion += 1
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "cantidadCajasSaldo" : numeracion += 1
+        spReporte.ActiveSheet.Columns("id").Width = 120
+        spReporte.ActiveSheet.Columns("fecha").Width = 110
+        spReporte.ActiveSheet.Columns("hora").Width = 110
+        spReporte.ActiveSheet.Columns("idProductor").Width = 50
+        spReporte.ActiveSheet.Columns("nombreProductor").Width = 170
+        spReporte.ActiveSheet.Columns("idLote").Width = 50
+        spReporte.ActiveSheet.Columns("nombreLote").Width = 150
+        spReporte.ActiveSheet.Columns("idChofer").Width = 50
+        spReporte.ActiveSheet.Columns("nombreChofer").Width = 150
+        spReporte.ActiveSheet.Columns("idProducto").Width = 50
+        spReporte.ActiveSheet.Columns("nombreProducto").Width = 150
+        spReporte.ActiveSheet.Columns("idVariedad").Width = 50
+        spReporte.ActiveSheet.Columns("nombreVariedad").Width = 150
+        spReporte.ActiveSheet.Columns("fechaVaciado").Width = 100 
+        spReporte.ActiveSheet.Columns("cantidadCajasRecepcion").Width = 120
+        spReporte.ActiveSheet.Columns("cantidadCajasVaciado").Width = 120
+        spReporte.ActiveSheet.Columns("cantidadCajasSaldo").Width = 100
+        Dim anchoFiltros As Integer = 15
+        For columna = 0 To spReporte.ActiveSheet.Columns.Count - 1
+            spReporte.ActiveSheet.Columns(columna).Width += anchoFiltros
+        Next
+        spReporte.ActiveSheet.Columns("cantidadCajasRecepcion").CellType = tipoEntero
+        spReporte.ActiveSheet.Columns("cantidadCajasVaciado").CellType = tipoEntero
+        spReporte.ActiveSheet.Columns("cantidadCajasSaldo").CellType = tipoEntero
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("id").Index, 2, 1)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("id").Index).Value = "No. Recepción".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("fecha").Index, 2, 1)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("fecha").Index).Value = "Fecha Recepción".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("hora").Index, 2, 1)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("hora").Index).Value = "Hora Recepción".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("idProductor").Index, 1, 2)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("idProductor").Index).Value = "Productor Recepción".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("idProductor").Index).Value = "No.".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("nombreProductor").Index).Value = "Nombre".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("idLote").Index, 1, 2)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("idLote").Index).Value = "Lote Recepción".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("idLote").Index).Value = "No.".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("nombreLote").Index).Value = "Nombre".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("idChofer").Index, 1, 2)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("idChofer").Index).Value = "Chofer Recepción".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("idChofer").Index).Value = "No.".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("nombreChofer").Index).Value = "Nombre".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("idProducto").Index, 1, 2)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("idProducto").Index).Value = "Producto Recepción".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("idProducto").Index).Value = "No.".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("nombreProducto").Index).Value = "Nombre".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("idVariedad").Index, 1, 2)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("idVariedad").Index).Value = "Variedad Recepción".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("idVariedad").Index).Value = "No.".ToUpper
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("nombreVariedad").Index).Value = "Nombre".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("fechaVaciado").Index, 2, 1)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("fechaVaciado").Index).Value = "Fecha Último Vaciado".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("cantidadCajasRecepcion").Index, 2, 1)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("cantidadCajasRecepcion").Index).Value = "Cantidad Cajas Recepcion".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("cantidadCajasVaciado").Index, 2, 1)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("cantidadCajasVaciado").Index).Value = "Cantidad Cajas Vaciado".ToUpper
+        spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("cantidadCajasSaldo").Index, 2, 1)
+        spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("cantidadCajasSaldo").Index).Value = "Saldo Cajas".ToUpper
+        spReporte.ActiveSheet.Columns(0, spReporte.ActiveSheet.Columns.Count - 1).AllowAutoFilter = True
+        'spReporte.ActiveSheet.Columns(0, spReporte.ActiveSheet.Columns.Count - 1).AllowAutoSort = True
+        spReporte.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.SingleSelect
+        Application.DoEvents()
+
+    End Sub
+
+    Private Sub CargarComboProductores()
+
+        productores.EId = 0
+        cbProductor.ValueMember = "Id"
+        cbProductor.DisplayMember = "Nombre"
+        cbProductor.DataSource = productores.ObtenerListadoReporte()
 
     End Sub
 
@@ -996,15 +1165,6 @@ Public Class Principal
 
 #Region "Enumeraciones"
 
-    Enum OpcionNivel
-
-        lote = 0
-        familia = 1
-        subFamilia = 2
-        articulo = 3
-
-    End Enum
-
     Enum OpcionTipoReporte
 
         vaciado = 1
@@ -1012,22 +1172,14 @@ Public Class Principal
 
     End Enum
 
+    Enum OpcionTipoMovimientoVaciado
+
+        todo = 1
+        conMovimiento = 2
+        sinMovimiento = 3
+
+    End Enum
+
 #End Region
-
-    Private Sub rbtnVaciado_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnVaciado.CheckedChanged
-
-        If (rbtnVaciado.Checked) Then
-            Me.opcionSeleccionadaTipoReporte = OpcionTipoReporte.vaciado
-        End If
-
-    End Sub
-
-    Private Sub rbtnSaldos_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnSaldos.CheckedChanged
-
-        If (rbtnSaldos.Checked) Then
-            Me.opcionSeleccionadaTipoReporte = OpcionTipoReporte.saldos
-        End If
-
-    End Sub
 
 End Class

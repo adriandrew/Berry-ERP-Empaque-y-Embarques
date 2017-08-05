@@ -88,12 +88,12 @@ Public Class Productos
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader
             dataReader = comando.ExecuteReader()
-            Dim productos As Productos
+            Dim tabla As Productos
             While dataReader.Read()
-                productos = New Productos()
-                productos.id = Convert.ToInt32(dataReader("Id").ToString())
-                productos.nombre = dataReader("Nombre").ToString()
-                lista.Add(productos)
+                tabla = New Productos()
+                tabla.id = Convert.ToInt32(dataReader("Id").ToString())
+                tabla.nombre = dataReader("Nombre").ToString()
+                lista.Add(tabla)
             End While
             BaseDatos.conexionCatalogo.Close()
             Return lista

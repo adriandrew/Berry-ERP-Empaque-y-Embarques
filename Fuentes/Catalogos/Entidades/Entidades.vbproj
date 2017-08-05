@@ -85,11 +85,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lotes.vb" />
-    <Compile Include="Articulos.vb" />
+    <Compile Include="Productores.vb" />
     <Compile Include="BaseDatos.vb" />
     <Compile Include="Clientes.vb" />
     <Compile Include="Productos.vb" />
-    <Compile Include="Monedas.vb" />
+    <Compile Include="Envases.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -107,10 +107,10 @@
     </Compile>
     <Compile Include="ChoferesCampos.vb" />
     <Compile Include="Variedades.vb" />
-    <Compile Include="TiposCambios.vb" />
+    <Compile Include="Tamaños.vb" />
     <Compile Include="TiposEntradas.vb" />
     <Compile Include="TiposSalidas.vb" />
-    <Compile Include="UnidadesMedidas.vb" />
+    <Compile Include="Etiquetas.vb" />
     <Compile Include="Usuarios.vb" />
   </ItemGroup>
   <ItemGroup>

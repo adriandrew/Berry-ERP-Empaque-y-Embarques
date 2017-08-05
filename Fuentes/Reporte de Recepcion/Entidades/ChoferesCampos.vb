@@ -49,35 +49,4 @@ Public Class ChoferesCampos
 
     End Function
 
-    Public Function ObtenerListado() As List(Of ChoferesCampos)
-
-        Try
-            Dim lista As New List(Of ChoferesCampos)
-            Dim comando As New SqlCommand()
-            comando.Connection = BaseDatos.conexionCatalogo
-            Dim condicion As String = String.Empty
-            If (Me.EId > 0) Then
-                condicion &= " AND Id=@id"
-            End If
-            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaReporteRecepcion.Programas.prefijoBaseDatosEmpaque & "ChoferesCampos WHERE 0=0 " & condicion
-            comando.Parameters.AddWithValue("@id", Me.EId)
-            BaseDatos.conexionCatalogo.Open()
-            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim familias As ChoferesCampos
-            While lectorDatos.Read()
-                familias = New ChoferesCampos()
-                familias.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                familias.nombre = lectorDatos("Nombre").ToString()
-                lista.Add(familias)
-            End While
-            BaseDatos.conexionCatalogo.Close()
-            Return lista
-        Catch ex As Exception
-            Throw ex
-        Finally
-            BaseDatos.conexionCatalogo.Close()
-        End Try
-
-    End Function
-
 End Class

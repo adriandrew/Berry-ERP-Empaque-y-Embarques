@@ -5,6 +5,7 @@ Public Class Recepcion
     Private id As Integer
     Private fecha As Date
     Private hora As String
+    Private idProductor As Integer
     Private idLote As Integer
     Private idChofer As Integer
     Private idProducto As Integer
@@ -35,6 +36,14 @@ Public Class Recepcion
         End Get
         Set(value As String)
             hora = value
+        End Set
+    End Property
+    Public Property EIdProductor() As Integer
+        Get
+            Return idProductor
+        End Get
+        Set(value As Integer)
+            idProductor = value
         End Set
     End Property
     Public Property EIdLote() As Integer
@@ -99,10 +108,11 @@ Public Class Recepcion
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "INSERT INTO Recepcion (Id, Fecha, Hora, IdLote, IdChofer, IdProducto, IdVariedad, CantidadCajas, PesoCajas, Orden) VALUES (@id, @fecha, @hora, @idLote, @idChofer, @idProducto, @idVariedad, @cantidadCajas, @pesoCajas, @orden)"
+            comando.CommandText = "INSERT INTO Recepcion (Id, Fecha, Hora, IdProductor, IdLote, IdChofer, IdProducto, IdVariedad, CantidadCajas, PesoCajas, Orden) VALUES (@id, @fecha, @hora, @idProductor, @idLote, @idChofer, @idProducto, @idVariedad, @cantidadCajas, @pesoCajas, @orden)"
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@fecha", Me.EFecha)
             comando.Parameters.AddWithValue("@hora", Me.EHora)
+            comando.Parameters.AddWithValue("@idProductor", Me.EIdProductor)
             comando.Parameters.AddWithValue("@idLote", Me.EIdLote)
             comando.Parameters.AddWithValue("@idChofer", Me.EIdChofer)
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)
@@ -202,24 +212,25 @@ Public Class Recepcion
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Fecha, Hora, IdLote, IdChofer, IdProducto, IdVariedad, CantidadCajas, PesoCajas, Orden FROM Recepcion WHERE 0=0 " & condicion & " ORDER BY Orden ASC"
+            comando.CommandText = "SELECT Id, Fecha, Hora, IdProductor, IdLote, IdChofer, IdProducto, IdVariedad, CantidadCajas, PesoCajas, Orden FROM Recepcion WHERE 0=0 " & condicion & " ORDER BY Orden ASC"
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim recepcion As Recepcion
+            Dim tabla As Recepcion
             While lectorDatos.Read()
-                recepcion = New Recepcion()
-                recepcion.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                recepcion.fecha = Convert.ToDateTime(lectorDatos("Fecha").ToString())
-                recepcion.hora = lectorDatos("Hora").ToString()
-                recepcion.idLote = Convert.ToInt32(lectorDatos("IdLote").ToString())
-                recepcion.idChofer = Convert.ToInt32(lectorDatos("IdChofer").ToString())
-                recepcion.idProducto = Convert.ToInt32(lectorDatos("IdProducto").ToString())
-                recepcion.idVariedad = Convert.ToInt32(lectorDatos("IdVariedad").ToString())
-                recepcion.cantidadCajas = Convert.ToInt32(lectorDatos("CantidadCajas").ToString())
-                recepcion.pesoCajas = Convert.ToDouble(lectorDatos("PesoCajas").ToString())
-                recepcion.orden = Convert.ToInt32(lectorDatos("Orden").ToString())
-                lista.Add(recepcion)
+                tabla = New Recepcion()
+                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
+                tabla.fecha = Convert.ToDateTime(lectorDatos("Fecha").ToString())
+                tabla.hora = lectorDatos("Hora").ToString()
+                tabla.idProductor = Convert.ToInt32(lectorDatos("IdProductor").ToString())
+                tabla.idLote = Convert.ToInt32(lectorDatos("IdLote").ToString())
+                tabla.idChofer = Convert.ToInt32(lectorDatos("IdChofer").ToString())
+                tabla.idProducto = Convert.ToInt32(lectorDatos("IdProducto").ToString())
+                tabla.idVariedad = Convert.ToInt32(lectorDatos("IdVariedad").ToString())
+                tabla.cantidadCajas = Convert.ToInt32(lectorDatos("CantidadCajas").ToString())
+                tabla.pesoCajas = Convert.ToDouble(lectorDatos("PesoCajas").ToString())
+                tabla.orden = Convert.ToInt32(lectorDatos("Orden").ToString())
+                lista.Add(tabla)
             End While
             BaseDatos.conexionEmpaque.Close()
             Return lista

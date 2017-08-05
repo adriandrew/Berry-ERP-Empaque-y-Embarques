@@ -318,6 +318,8 @@ Public Class Principal
             EYELogicaVaciado.Directorios.instanciaSql = "BERRY1-DELL\SQLEXPRESS2008"
             EYELogicaVaciado.Directorios.usuarioSql = "AdminBerry"
             EYELogicaVaciado.Directorios.contrasenaSql = "@berry2017"
+            pnlEncabezado.BackColor = Color.DarkRed
+            pnlPie.BackColor = Color.DarkRed
         Else
             EYELogicaVaciado.Directorios.ObtenerParametros()
             EYELogicaVaciado.Usuarios.ObtenerParametros()
@@ -378,7 +380,7 @@ Public Class Principal
         End If
         ejecutarProgramaPrincipal.UseShellExecute = True
         ejecutarProgramaPrincipal.FileName = nombre & Convert.ToString(".exe")
-        ejecutarProgramaPrincipal.WorkingDirectory = Directory.GetCurrentDirectory()
+        ejecutarProgramaPrincipal.WorkingDirectory = Application.StartupPath
         ejecutarProgramaPrincipal.Arguments = EYELogicaVaciado.Directorios.id.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.nombre.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.descripcion.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.rutaLogo.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.esPredeterminado.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.instanciaSql.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.usuarioSql.ToString().Trim().Replace(" ", "|") & " " & EYELogicaVaciado.Directorios.contrasenaSql.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de directorios, indice 9 ;)".Replace(" ", "|") & " " & EYELogicaVaciado.Usuarios.id.ToString().Trim().Replace(" ", "|") & " " & "Aquí terminan los de usuario, indice 11 ;)".Replace(" ", "|")
         Try
             Dim proceso = Process.Start(ejecutarProgramaPrincipal)
@@ -540,6 +542,8 @@ Public Class Principal
                     recepcion.EId = idRecepcion
                     datos = recepcion.ObtenerListadoReporte()
                     If (datos.Rows.Count = 1) Then
+                        spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idProductor").Index).Value = datos.Rows(0).Item("idProductor")
+                        spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("nombreProductor").Index).Value = datos.Rows(0).Item("nombreProductor")
                         spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idLote").Index).Value = datos.Rows(0).Item("idLote")
                         spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("nombreLote").Index).Value = datos.Rows(0).Item("nombreLote")
                         spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idProducto").Index).Value = datos.Rows(0).Item("idProducto")
@@ -675,6 +679,8 @@ Public Class Principal
         Dim numeracion As Integer = 0
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "pesoCajaUnitaria" : numeracion += 1
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "idRecepcion" : numeracion += 1
+        spVaciado.ActiveSheet.Columns(numeracion).Tag = "idProductor" : numeracion += 1
+        spVaciado.ActiveSheet.Columns(numeracion).Tag = "nombreProductor" : numeracion += 1
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "idLote" : numeracion += 1
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "nombreLote" : numeracion += 1
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "idProducto" : numeracion += 1
@@ -687,6 +693,8 @@ Public Class Principal
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "saldoCajas" : numeracion += 1
         spVaciado.ActiveSheet.Columns.Count = numeracion
         spVaciado.ActiveSheet.Columns("idRecepcion").Width = 120
+        spVaciado.ActiveSheet.Columns("idProductor").Width = 50
+        spVaciado.ActiveSheet.Columns("nombreProductor").Width = 150
         spVaciado.ActiveSheet.Columns("idLote").Width = 50
         spVaciado.ActiveSheet.Columns("nombreLote").Width = 150
         spVaciado.ActiveSheet.Columns("idProducto").Width = 50
@@ -698,6 +706,8 @@ Public Class Principal
         spVaciado.ActiveSheet.Columns("pesoCajas").Width = 100
         spVaciado.ActiveSheet.Columns("saldoCajas").Width = 100
         spVaciado.ActiveSheet.Columns("idRecepcion").CellType = tipoEntero
+        spVaciado.ActiveSheet.Columns("idProductor").CellType = tipoEntero
+        spVaciado.ActiveSheet.Columns("nombreProductor").CellType = tipoTexto
         spVaciado.ActiveSheet.Columns("idLote").CellType = tipoEntero
         spVaciado.ActiveSheet.Columns("nombreLote").CellType = tipoTexto
         spVaciado.ActiveSheet.Columns("idProducto").CellType = tipoEntero
@@ -708,11 +718,15 @@ Public Class Principal
         spVaciado.ActiveSheet.Columns("cantidadCajas").CellType = tipoEntero
         spVaciado.ActiveSheet.Columns("pesoCajas").CellType = tipoDoble
         spVaciado.ActiveSheet.Columns("saldoCajas").CellType = tipoEntero
-        spVaciado.ActiveSheet.Columns(spVaciado.ActiveSheet.Columns("idLote").Index, spVaciado.ActiveSheet.Columns("nombreVariedad").Index).Locked = True
+        spVaciado.ActiveSheet.Columns(spVaciado.ActiveSheet.Columns("idProductor").Index, spVaciado.ActiveSheet.Columns("nombreVariedad").Index).Locked = True
         spVaciado.ActiveSheet.Columns("pesoCajas").Locked = True
         spVaciado.ActiveSheet.Columns("saldoCajas").Locked = True
         spVaciado.ActiveSheet.AddColumnHeaderSpanCell(0, spVaciado.ActiveSheet.Columns("idRecepcion").Index, 2, 1)
         spVaciado.ActiveSheet.ColumnHeader.Cells(0, spVaciado.ActiveSheet.Columns("idRecepcion").Index).Value = "No. Recepción *".ToUpper()
+        spVaciado.ActiveSheet.AddColumnHeaderSpanCell(0, spVaciado.ActiveSheet.Columns("idProductor").Index, 1, 2)
+        spVaciado.ActiveSheet.ColumnHeader.Cells(0, spVaciado.ActiveSheet.Columns("idProductor").Index).Value = "P  r  o  d  u  c  t  o  r".ToUpper()
+        spVaciado.ActiveSheet.ColumnHeader.Cells(1, spVaciado.ActiveSheet.Columns("idProductor").Index).Value = "No.".ToUpper()
+        spVaciado.ActiveSheet.ColumnHeader.Cells(1, spVaciado.ActiveSheet.Columns("nombreProductor").Index).Value = "Nombre".ToUpper()
         spVaciado.ActiveSheet.AddColumnHeaderSpanCell(0, spVaciado.ActiveSheet.Columns("idLote").Index, 1, 2)
         spVaciado.ActiveSheet.ColumnHeader.Cells(0, spVaciado.ActiveSheet.Columns("idLote").Index).Value = "L  o  t  e".ToUpper()
         spVaciado.ActiveSheet.ColumnHeader.Cells(1, spVaciado.ActiveSheet.Columns("idLote").Index).Value = "No.".ToUpper()
@@ -743,6 +757,8 @@ Public Class Principal
         Dim numeracion As Integer = 0
         spTotales.ActiveSheet.Columns(numeracion).Tag = "pesoCajaUnitaria" : numeracion += 1
         spTotales.ActiveSheet.Columns(numeracion).Tag = "idRecepcion" : numeracion += 1
+        spTotales.ActiveSheet.Columns(numeracion).Tag = "idProductor" : numeracion += 1
+        spTotales.ActiveSheet.Columns(numeracion).Tag = "nombreProductor" : numeracion += 1
         spTotales.ActiveSheet.Columns(numeracion).Tag = "idLote" : numeracion += 1
         spTotales.ActiveSheet.Columns(numeracion).Tag = "nombreLote" : numeracion += 1
         spTotales.ActiveSheet.Columns(numeracion).Tag = "idProducto" : numeracion += 1
@@ -755,17 +771,19 @@ Public Class Principal
         spTotales.ActiveSheet.Columns(numeracion).Tag = "saldoCajas" : numeracion += 1
         'spTotales.ActiveSheet.Columns(numeracion).Tag = "total" : numeracion += 1
         spTotales.ActiveSheet.Columns.Count = numeracion
-        spTotales.ActiveSheet.Columns("idRecepcion").Width = 120
-        spTotales.ActiveSheet.Columns("idLote").Width = 50
-        spTotales.ActiveSheet.Columns("nombreLote").Width = 150
-        spTotales.ActiveSheet.Columns("idProducto").Width = 50
-        spTotales.ActiveSheet.Columns("nombreProducto").Width = 150
-        spTotales.ActiveSheet.Columns("idVariedad").Width = 50
-        spTotales.ActiveSheet.Columns("nombreVariedad").Width = 150
-        spTotales.ActiveSheet.Columns("idBanda").Width = 120
-        spTotales.ActiveSheet.Columns("cantidadCajas").Width = 130
-        spTotales.ActiveSheet.Columns("pesoCajas").Width = 100
-        spTotales.ActiveSheet.Columns("saldoCajas").Width = 100
+        spTotales.ActiveSheet.Columns("idRecepcion").Width = spVaciado.ActiveSheet.Columns("idRecepcion").Width
+        spTotales.ActiveSheet.Columns("idProductor").Width = spVaciado.ActiveSheet.Columns("idProductor").Width
+        spTotales.ActiveSheet.Columns("nombreProductor").Width = spVaciado.ActiveSheet.Columns("nombreProductor").Width
+        spTotales.ActiveSheet.Columns("idLote").Width = spVaciado.ActiveSheet.Columns("idLote").Width
+        spTotales.ActiveSheet.Columns("nombreLote").Width = spVaciado.ActiveSheet.Columns("nombreLote").Width
+        spTotales.ActiveSheet.Columns("idProducto").Width = spVaciado.ActiveSheet.Columns("idProducto").Width
+        spTotales.ActiveSheet.Columns("nombreProducto").Width = spVaciado.ActiveSheet.Columns("nombreProducto").Width
+        spTotales.ActiveSheet.Columns("idVariedad").Width = spVaciado.ActiveSheet.Columns("idVariedad").Width
+        spTotales.ActiveSheet.Columns("nombreVariedad").Width = spVaciado.ActiveSheet.Columns("nombreVariedad").Width
+        spTotales.ActiveSheet.Columns("idBanda").Width = spVaciado.ActiveSheet.Columns("idBanda").Width
+        spTotales.ActiveSheet.Columns("cantidadCajas").Width = spVaciado.ActiveSheet.Columns("cantidadCajas").Width
+        spTotales.ActiveSheet.Columns("pesoCajas").Width = spVaciado.ActiveSheet.Columns("pesoCajas").Width
+        spTotales.ActiveSheet.Columns("saldoCajas").Width = spVaciado.ActiveSheet.Columns("saldoCajas").Width
         'spTotales.ActiveSheet.Columns("total").Width = 220
         'spTotales.ActiveSheet.Columns("total").CellType = tipoTexto
         spTotales.ActiveSheet.ColumnHeader.Visible = False

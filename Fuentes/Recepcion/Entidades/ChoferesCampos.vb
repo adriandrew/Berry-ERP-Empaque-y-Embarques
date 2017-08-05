@@ -59,12 +59,12 @@ Public Class ChoferesCampos
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim choferesCampos As ChoferesCampos
+            Dim tabla As ChoferesCampos
             While lectorDatos.Read()
-                choferesCampos = New ChoferesCampos()
-                choferesCampos.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                choferesCampos.nombre = lectorDatos("Nombre").ToString()
-                lista.Add(choferesCampos)
+                tabla = New ChoferesCampos()
+                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
+                tabla.nombre = lectorDatos("Nombre").ToString()
+                lista.Add(tabla)
             End While
             BaseDatos.conexionCatalogo.Close()
             Return lista

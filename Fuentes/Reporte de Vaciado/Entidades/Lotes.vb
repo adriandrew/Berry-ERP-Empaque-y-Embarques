@@ -45,35 +45,4 @@ Public Class Lotes
 
     End Function
 
-    Public Function ObtenerListado() As List(Of Lotes)
-
-        Try
-            Dim lista As New List(Of Lotes)
-            Dim comando As New SqlCommand()
-            comando.Connection = BaseDatos.conexionCatalogo
-            Dim condicion As String = String.Empty
-            If (Me.EId > 0) Then
-                condicion &= " WHERE Id=@id"
-            End If
-            comando.CommandText = "SELECT * FROM " & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes " & condicion
-            comando.Parameters.AddWithValue("@id", Me.id)
-            BaseDatos.conexionCatalogo.Open()
-            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim almacenes As Lotes
-            While lectorDatos.Read()
-                almacenes = New Lotes()
-                almacenes.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                almacenes.nombre = lectorDatos("Nombre").ToString()
-                lista.Add(almacenes)
-            End While
-            BaseDatos.conexionCatalogo.Close()
-            Return lista
-        Catch ex As Exception
-            Throw ex
-        Finally
-            BaseDatos.conexionCatalogo.Close()
-        End Try
-
-    End Function
-
 End Class

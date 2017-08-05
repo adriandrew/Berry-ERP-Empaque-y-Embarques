@@ -18,15 +18,3 @@ C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modific
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\obj\Debug\EYEEntidadesReporteRecepcion.dll
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\obj\Debug\EYEEntidadesReporteRecepcion.xml
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Entidades\obj\Debug\EYEEntidadesReporteRecepcion.pdb
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYEEntidadesReporteVaciado.dll
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYEEntidadesReporteVaciado.pdb
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYEEntidadesReporteVaciado.xml
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYELogicaReporteVaciado.dll
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYELogicaReporteVaciado.pdb
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\bin\Debug\EYELogicaReporteVaciado.xml
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\Entidades.vbprojResolveAssemblyReference.cache
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\EYEEntidadesReporteVaciado.Resources.resources
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\Entidades.vbproj.GenerateResource.Cache
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\EYEEntidadesReporteVaciado.dll
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\EYEEntidadesReporteVaciado.xml
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Entidades\obj\Debug\EYEEntidadesReporteVaciado.pdb

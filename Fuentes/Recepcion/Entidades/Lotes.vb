@@ -77,14 +77,14 @@ Public Class Lotes
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim lotes As Lotes
+            Dim tabla As Lotes
             While lectorDatos.Read()
-                lotes = New Lotes()
-                lotes.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                lotes.nombre = lectorDatos("Nombre").ToString()
-                lotes.hectareas = Convert.ToDouble(lectorDatos("Hectareas").ToString())
-                lotes.pesoCaja = Convert.ToDouble(lectorDatos("PesoCaja").ToString())
-                lista.Add(lotes)
+                tabla = New Lotes()
+                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
+                tabla.nombre = lectorDatos("Nombre").ToString()
+                tabla.hectareas = Convert.ToDouble(lectorDatos("Hectareas").ToString())
+                tabla.pesoCaja = Convert.ToDouble(lectorDatos("PesoCaja").ToString())
+                lista.Add(tabla)
             End While
             BaseDatos.conexionCatalogo.Close()
             Return lista

@@ -6,11 +6,3 @@ C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modific
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Logica\obj\Debug\EYELogicaReporteRecepcion.dll
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Logica\obj\Debug\EYELogicaReporteRecepcion.xml
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Logica\obj\Debug\EYELogicaReporteRecepcion.pdb
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Logica\bin\Debug\EYELogicaReporteVaciado.dll
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Logica\bin\Debug\EYELogicaReporteVaciado.pdb
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Logica\bin\Debug\EYELogicaReporteVaciado.xml
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Logica\obj\Debug\EYELogicaReporteVaciado.Resources.resources
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Logica\obj\Debug\Logica.vbproj.GenerateResource.Cache
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Logica\obj\Debug\EYELogicaReporteVaciado.dll
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Logica\obj\Debug\EYELogicaReporteVaciado.xml
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Vaciado\Logica\obj\Debug\EYELogicaReporteVaciado.pdb

@@ -1,0 +1,24 @@
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\bin\Release\EntidadesEntradas.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\bin\Release\EntidadesEntradas.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\bin\Release\EntidadesEntradas.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\bin\Release\LogicaEntradas.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\bin\Release\LogicaEntradas.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\bin\Release\LogicaEntradas.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\obj\Release\EntidadesEntradas.vbprojResolveAssemblyReference.cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\obj\Release\EntidadesEntradas.Resources.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\obj\Release\EntidadesEntradas.vbproj.GenerateResource.Cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\obj\Release\EntidadesEntradas.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\obj\Release\EntidadesEntradas.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP-Almacen\Fuentes Modificados\Entradas\Entidades\obj\Release\EntidadesEntradas.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\bin\Release\EntidadesRecepcion.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\bin\Release\EntidadesRecepcion.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\bin\Release\EntidadesRecepcion.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\bin\Release\LogicaRecepcion.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\bin\Release\LogicaRecepcion.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\bin\Release\LogicaRecepcion.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\obj\Release\EntidadesEntradas.vbprojResolveAssemblyReference.cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\obj\Release\EntidadesRecepcion.Resources.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\obj\Release\EntidadesEntradas.vbproj.GenerateResource.Cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\obj\Release\EntidadesRecepcion.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\obj\Release\EntidadesRecepcion.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Recepcion\Entidades\obj\Release\EntidadesRecepcion.pdb

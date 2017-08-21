@@ -6,7 +6,7 @@ Public Class ConfigurarImpresion
     Public impresoras As New EYEEntidadesEmpaque.Impresoras()
     ' Variables generales.
     Public nombreEstePrograma As String = String.Empty
-    Public tipoImpresora As Integer = 3 ' Siempre es 3 en el catalogo.
+    Public tipoImpresora As Integer = 3 ' Siempre es 3 en el catálogo, corresponde al area del empaque.
     Public Shared nombreImpresoraTarima As String = String.Empty
     Public Shared habilitarImpresoraTarima As Boolean = False
     Public Shared margenIzquierdoTarima As Integer = 0
@@ -86,7 +86,7 @@ Public Class ConfigurarImpresion
 
     Private Sub CargarTitulosDirectorio()
 
-        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaEmpaque.Directorios.nombre + "              Usuario:  " + EYELogicaEmpaque.Usuarios.nombre
+        Me.Text = "Programa:  " & Me.nombreEstePrograma & "  -  Directorio:  " & EYELogicaEmpaque.Directorios.nombre & "  -  Usuario:  " & EYELogicaEmpaque.Usuarios.nombre
 
     End Sub
 

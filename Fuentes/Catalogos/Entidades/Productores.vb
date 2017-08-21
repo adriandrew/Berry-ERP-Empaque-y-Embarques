@@ -5,6 +5,9 @@ Public Class Productores
     Private id As Integer
     Private nombre As String
     Private domicilio As String
+    Private municipio As String
+    Private estado As String
+    Private rfc As String
     Private fda As String
     Private gs1 As String
     Private ggn As String
@@ -32,6 +35,30 @@ Public Class Productores
         End Get
         Set(value As String)
             domicilio = value
+        End Set
+    End Property
+    Public Property EMunicipio() As String
+        Get
+            Return municipio
+        End Get
+        Set(value As String)
+            municipio = value
+        End Set
+    End Property
+    Public Property EEstado() As String
+        Get
+            Return estado
+        End Get
+        Set(value As String)
+            estado = value
+        End Set
+    End Property
+    Public Property ERfc() As String
+        Get
+            Return rfc
+        End Get
+        Set(value As String)
+            rfc = value
         End Set
     End Property
     Public Property EFda() As String
@@ -72,10 +99,13 @@ Public Class Productores
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productores (Id, Nombre, Domicilio, Fda, Gs1, Ggn, ClaveAgricola) VALUES (@id, @nombre, @domicilio, @fda, @gs1, @ggn, @claveAgricola)"
+            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productores (Id, Nombre, Domicilio, Municipio, Estado, Rfc, Fda, Gs1, Ggn, ClaveAgricola) VALUES (@id, @nombre, @domicilio, @municipio, @estado, @rfc, @fda, @gs1, @ggn, @claveAgricola)"
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@nombre", Me.ENombre)
             comando.Parameters.AddWithValue("@domicilio", Me.EDomicilio)
+            comando.Parameters.AddWithValue("@municipio", Me.EMunicipio)
+            comando.Parameters.AddWithValue("@estado", Me.EEstado)
+            comando.Parameters.AddWithValue("@rfc", Me.ERfc)
             comando.Parameters.AddWithValue("@fda", Me.EFda)
             comando.Parameters.AddWithValue("@gs1", Me.EGs1)
             comando.Parameters.AddWithValue("@ggn", Me.EGgn)
@@ -123,7 +153,7 @@ Public Class Productores
             If Me.EId > 0 Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre, Domicilio, Fda, Gs1, Ggn, ClaveAgricola FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productores WHERE 0=0 " & condicion & " ORDER BY Id ASC"
+            comando.CommandText = "SELECT Id, Nombre, Domicilio, Municipio, Estado, Rfc, Fda, Gs1, Ggn, ClaveAgricola FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productores WHERE 0=0 " & condicion & " ORDER BY Id ASC"
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader

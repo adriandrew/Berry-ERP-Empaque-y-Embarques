@@ -93,6 +93,7 @@ Public Class Productos
                 tabla = New Productos()
                 tabla.id = Convert.ToInt32(dataReader("Id").ToString())
                 tabla.nombre = dataReader("Nombre").ToString()
+                tabla.abreviatura = dataReader("Abreviatura").ToString()
                 lista.Add(tabla)
             End While
             BaseDatos.conexionCatalogo.Close()
@@ -116,6 +117,32 @@ Public Class Productos
                 condicion &= " AND Id=@id"
             End If
             comando.CommandText = "SELECT Id, Nombre, Abreviatura FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos WHERE 0=0 " & condicion & " ORDER BY Id ASC"
+            comando.Parameters.AddWithValue("@id", Me.EId)
+            BaseDatos.conexionCatalogo.Open()
+            Dim dataReader As SqlDataReader
+            dataReader = comando.ExecuteReader()
+            datos.Load(dataReader)
+            BaseDatos.conexionCatalogo.Close()
+            Return datos
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionCatalogo.Close()
+        End Try
+
+    End Function
+
+    Public Function ObtenerListadoReporteCatalogo() As DataTable
+
+        Try
+            Dim datos As New DataTable
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionCatalogo
+            Dim condicion As String = String.Empty
+            If Me.EId > 0 Then
+                condicion &= " AND Id=@id"
+            End If
+            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos WHERE 0=0 " & condicion & " ORDER BY Id ASC"
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader

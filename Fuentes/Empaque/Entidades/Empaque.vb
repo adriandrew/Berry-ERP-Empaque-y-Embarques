@@ -12,8 +12,8 @@ Public Class Empaque
     Private idEnvase As Integer
     Private idTamano As Integer
     Private idEtiqueta As Integer
-    Private fechaEmpaque As Date
-    Private horaEmpaque As String
+    Private fecha As Date
+    Private hora As String
     Private cantidadCajas As Integer
     Private pesoUnitarioCajas As Double
     Private pesoTotalCajas As Double
@@ -25,8 +25,6 @@ Public Class Empaque
     Private orden As Integer
     Private estaEmbarcado As Boolean
     Private idEmbarque As Integer
-    Private fechaEmbarque As Date
-    Private horaEmbarque As String
     Private idTipoEmbarque As Integer
     Private ordenEmbarque As Integer
 
@@ -110,20 +108,20 @@ Public Class Empaque
             idEtiqueta = value
         End Set
     End Property
-    Public Property EFechaEmpaque() As Date
+    Public Property EFecha() As Date
         Get
-            Return fechaEmpaque
+            Return fecha
         End Get
         Set(value As Date)
-            fechaEmpaque = value
+            fecha = value
         End Set
     End Property
-    Public Property EHoraEmpaque() As String
+    Public Property EHora() As String
         Get
-            Return horaEmpaque
+            Return hora
         End Get
         Set(value As String)
-            horaEmpaque = value
+            hora = value
         End Set
     End Property
     Public Property ECantidadCajas() As Integer
@@ -214,22 +212,6 @@ Public Class Empaque
             idEmbarque = value
         End Set
     End Property
-    Public Property EFechaEmbarque() As Date
-        Get
-            Return fechaEmbarque
-        End Get
-        Set(value As Date)
-            fechaEmbarque = value
-        End Set
-    End Property
-    Public Property EHoraEmbarque() As String
-        Get
-            Return horaEmbarque
-        End Get
-        Set(value As String)
-            horaEmbarque = value
-        End Set
-    End Property
     Public Property EIdTipoEmbarque() As Integer
         Get
             Return idTipoEmbarque
@@ -252,7 +234,7 @@ Public Class Empaque
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "INSERT INTO Tarimas (Id, IdProductor, IdEmbarcador, IdCliente, IdLote, IdProducto, IdVariedad, IdEnvase, IdTamano, IdEtiqueta, FechaEmpaque, HoraEmpaque, CantidadCajas, PesoUnitarioCajas, PesoTotalCajas, Temperatura, Observaciones, EsPropio, EsSobrante, EsTrazable, Orden, EstaEmbarcado, IdEmbarque, FechaEmbarque, HoraEmbarque, IdTipoEmbarque, OrdenEmbarque) VALUES (@id, @idProductor, @idEmbarcador, @idCliente, @idLote, @idProducto, @idVariedad, @idEnvase, @idTamano, @idEtiqueta, @fechaEmpaque, @horaEmpaque, @cantidadCajas, @pesoUnitarioCajas, @pesoTotalCajas, @temperatura, @observaciones, @esPropio, @esSobrante, @esTrazable, @orden, @estaEmbarcado, @idEmbarque, @fechaEmbarque, @horaEmbarque, @idTipoEmbarque, @ordenEmbarque)"
+            comando.CommandText = "INSERT INTO Tarimas (Id, IdProductor, IdEmbarcador, IdCliente, IdLote, IdProducto, IdVariedad, IdEnvase, IdTamano, IdEtiqueta, Fecha, Hora, CantidadCajas, PesoUnitarioCajas, PesoTotalCajas, Temperatura, Observaciones, EsPropio, EsSobrante, EsTrazable, Orden, EstaEmbarcado, IdEmbarque, IdTipoEmbarque, OrdenEmbarque) VALUES (@id, @idProductor, @idEmbarcador, @idCliente, @idLote, @idProducto, @idVariedad, @idEnvase, @idTamano, @idEtiqueta, @fecha, @hora, @cantidadCajas, @pesoUnitarioCajas, @pesoTotalCajas, @temperatura, @observaciones, @esPropio, @esSobrante, @esTrazable, @orden, @estaEmbarcado, @idEmbarque, @idTipoEmbarque, @ordenEmbarque)"
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@idProductor", Me.EIdProductor)
             comando.Parameters.AddWithValue("@idEmbarcador", Me.EIdEmbarcador)
@@ -263,8 +245,8 @@ Public Class Empaque
             comando.Parameters.AddWithValue("@idEnvase", Me.EIdEnvase)
             comando.Parameters.AddWithValue("@idTamano", Me.EIdTamano)
             comando.Parameters.AddWithValue("@idEtiqueta", Me.EIdEtiqueta)
-            comando.Parameters.AddWithValue("@fechaEmpaque", Me.EFechaEmpaque)
-            comando.Parameters.AddWithValue("@horaEmpaque", Me.EHoraEmpaque)
+            comando.Parameters.AddWithValue("@fecha", Me.EFecha)
+            comando.Parameters.AddWithValue("@hora", Me.EHora)
             comando.Parameters.AddWithValue("@cantidadCajas", Me.ECantidadCajas)
             comando.Parameters.AddWithValue("@pesoUnitarioCajas", Me.EPesoUnitarioCajas)
             comando.Parameters.AddWithValue("@pesoTotalCajas", Me.EPesoTotalCajas)
@@ -276,8 +258,6 @@ Public Class Empaque
             comando.Parameters.AddWithValue("@orden", Me.EOrden)
             comando.Parameters.AddWithValue("@estaEmbarcado", Me.EEstaEmbarcado)
             comando.Parameters.AddWithValue("@idEmbarque", Me.EIdEmbarque)
-            comando.Parameters.AddWithValue("@fechaEmbarque", Me.EFechaEmbarque)
-            comando.Parameters.AddWithValue("@horaEmbarque", Me.EHoraEmbarque)
             comando.Parameters.AddWithValue("@idTipoEmbarque", Me.EIdTipoEmbarque)
             comando.Parameters.AddWithValue("@ordenEmbarque", Me.EOrdenEmbarque)
             BaseDatos.conexionEmpaque.Open()
@@ -317,7 +297,7 @@ Public Class Empaque
 
         Try
             Dim comando As New SqlCommand()
-            comando.Connection = BaseDatos.conexionEmpaque 
+            comando.Connection = BaseDatos.conexionEmpaque
             comando.CommandText = "SELECT MAX(CAST (Id AS Int)) AS IdMaximo FROM Tarimas"
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
@@ -379,7 +359,7 @@ Public Class Empaque
             If (Me.EId > 0) Then
                 condicion &= " AND T.Id=@id"
             End If
-            comando.CommandText = "SELECT T.Id, T.IdProductor, P.Nombre AS NombreProductor, T.IdEmbarcador, E.Nombre AS NombreEmbarcador, T.IdLote, L.Nombre AS NombreLote, T.IdProducto, PR.Nombre AS NombreProducto, T.IdVariedad, V.Nombre AS NombreVariedad, T.IdEnvase, EN.Nombre AS NombreEnvase, T.IdTamano, TA.Nombre AS NombreTamano, T.IdEtiqueta, ET.Nombre AS NombreEtiqueta, T.CantidadCajas, T.PesoTotalCajas, T.FechaEmpaque, T.HoraEmpaque, T.EsPropio " & _
+            comando.CommandText = "SELECT T.Id, T.IdProductor, P.Nombre AS NombreProductor, T.IdEmbarcador, E.Nombre AS NombreEmbarcador, T.IdLote, L.Nombre AS NombreLote, T.IdProducto, PR.Nombre AS NombreProducto, T.IdVariedad, V.Nombre AS NombreVariedad, T.IdEnvase, EN.Nombre AS NombreEnvase, T.IdTamano, TA.Nombre AS NombreTamano, T.IdEtiqueta, ET.Nombre AS NombreEtiqueta, T.CantidadCajas, T.PesoTotalCajas, T.Fecha, T.Hora, T.EsPropio " & _
             " FROM Tarimas AS T " & _
             " LEFT JOIN " & EYELogicaEmpaque.Programas.bdCatalogo & ".dbo." & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Productores AS P ON T.IdProductor = P.Id " & _
             " LEFT JOIN " & EYELogicaEmpaque.Programas.bdCatalogo & ".dbo." & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Productores AS E ON T.IdEmbarcador = E.Id " & _
@@ -415,9 +395,9 @@ Public Class Empaque
             If (Me.EId > 0) Then
                 condicion &= " AND T.Id=@id"
             End If
-            comando.CommandText = "SELECT T.Id AS IdTarima, C.Id, C.DiaJuliano, C.ClaveAgricola, T.IdProductor, P.Nombre AS NombreProductor, T.IdEmbarcador, E.Nombre AS NombreEmbarcador, E.Domicilio AS DomicilioEmbarcador, E.Municipio AS MunicipioEmbarcador, E.Estado AS EstadoEmbarcador, T.IdLote, L.Nombre AS NombreLote, T.IdProducto, PR.Nombre AS NombreProducto, T.IdVariedad, V.Nombre AS NombreVariedad, T.IdEnvase, EN.Nombre AS NombreEnvase, T.IdTamano, TA.Nombre AS NombreTamano, T.IdEtiqueta, ET.Nombre AS NombreEtiqueta, T.CantidadCajas, T.PesoTotalCajas, T.FechaEmpaque, T.HoraEmpaque, T.EsPropio " & _
+            comando.CommandText = "SELECT T.Id AS IdTarima, C.Id, C.DiaJuliano, C.ClaveAgricola, T.IdProductor, P.Nombre AS NombreProductor, T.IdEmbarcador, E.Nombre AS NombreEmbarcador, E.Domicilio AS DomicilioEmbarcador, E.Municipio AS MunicipioEmbarcador, E.Estado AS EstadoEmbarcador, T.IdLote, L.Nombre AS NombreLote, T.IdProducto, PR.Nombre AS NombreProducto, T.IdVariedad, V.Nombre AS NombreVariedad, T.IdEnvase, EN.Nombre AS NombreEnvase, T.IdTamano, TA.Nombre AS NombreTamano, T.IdEtiqueta, ET.Nombre AS NombreEtiqueta, T.CantidadCajas, T.PesoTotalCajas, T.Fecha, T.Hora, T.EsPropio " & _
             " FROM Tarimas AS T " & _
-            " LEFT JOIN Cajas AS C ON T.Id = C.IdTarima " & _
+            " LEFT JOIN Cajas AS C ON T.Id = C.IdTarima AND T.Orden = C.OrdenTarima " & _
             " LEFT JOIN " & EYELogicaEmpaque.Programas.bdCatalogo & ".dbo." & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Productores AS P ON T.IdProductor = P.Id " & _
             " LEFT JOIN " & EYELogicaEmpaque.Programas.bdCatalogo & ".dbo." & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Productores AS E ON T.IdEmbarcador = E.Id " & _
             " LEFT JOIN " & EYELogicaEmpaque.Programas.bdCatalogo & ".dbo." & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON T.IdLote = L.Id " & _
@@ -452,7 +432,7 @@ Public Class Empaque
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, FechaEmpaque, HoraEmpaque, IdProductor, EsPropio, EsSobrante FROM Tarimas WHERE 0=0 " & condicion & " ORDER BY Orden ASC"
+            comando.CommandText = "SELECT Id, Fecha, Hora, IdProductor, EsPropio, EsSobrante, EstaEmbarcado FROM Tarimas WHERE 0=0 " & condicion & " ORDER BY Orden ASC"
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
@@ -460,11 +440,12 @@ Public Class Empaque
             While lectorDatos.Read()
                 tabla = New Empaque()
                 tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                tabla.fechaEmpaque = Convert.ToDateTime(lectorDatos("FechaEmpaque").ToString())
-                tabla.horaEmpaque = lectorDatos("HoraEmpaque").ToString()
+                tabla.fecha = Convert.ToDateTime(lectorDatos("Fecha").ToString())
+                tabla.hora = lectorDatos("Hora").ToString()
                 tabla.idProductor = Convert.ToInt32(lectorDatos("IdProductor").ToString())
                 tabla.esPropio = Convert.ToBoolean(lectorDatos("EsPropio").ToString())
                 tabla.esSobrante = Convert.ToBoolean(lectorDatos("EsSobrante"))
+                tabla.estaEmbarcado = Convert.ToBoolean(lectorDatos("EstaEmbarcado"))
                 lista.Add(tabla)
             End While
             BaseDatos.conexionEmpaque.Close()
@@ -482,7 +463,7 @@ Public Class Empaque
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "SELECT MIN(FechaEmpaque) AS FechaMinima FROM Tarimas"
+            comando.CommandText = "SELECT MIN(Fecha) AS FechaMinima FROM Tarimas"
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
             Dim valor As Date
@@ -494,6 +475,39 @@ Public Class Empaque
             End If
             BaseDatos.conexionEmpaque.Close()
             Return valor
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionEmpaque.Close()
+        End Try
+
+    End Function
+
+    Public Function ObtenerParaValidar() As List(Of Empaque)
+
+        Try
+            Dim lista As New List(Of Empaque)
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionEmpaque
+            comando.CommandText = "SELECT Id, EstaEmbarcado, IdEmbarque, IdTipoEmbarque, OrdenEmbarque " & _
+            " FROM Tarimas " & _
+            " WHERE Id=@id " & _
+            " GROUP BY  Id, EstaEmbarcado, IdEmbarque, IdTipoEmbarque, OrdenEmbarque"
+            comando.Parameters.AddWithValue("@id", Me.EId)
+            BaseDatos.conexionEmpaque.Open()
+            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
+            Dim tabla As Empaque
+            While lectorDatos.Read()
+                tabla = New Empaque()
+                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
+                tabla.estaEmbarcado = Convert.ToBoolean(lectorDatos("EstaEmbarcado").ToString())
+                tabla.idEmbarque = lectorDatos("IdEmbarque").ToString()
+                tabla.idTipoEmbarque = Convert.ToInt32(lectorDatos("IdTipoEmbarque").ToString())
+                tabla.ordenEmbarque = Convert.ToInt32(lectorDatos("OrdenEmbarque").ToString())
+                lista.Add(tabla)
+            End While
+            BaseDatos.conexionEmpaque.Close()
+            Return lista
         Catch ex As Exception
             Throw ex
         Finally

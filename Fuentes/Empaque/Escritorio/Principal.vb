@@ -341,6 +341,30 @@ Public Class Principal
 
     End Sub
 
+    Private Sub cbFormatoEtiquetaTarima_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbFormatoEtiquetaTarima.SelectedIndexChanged
+
+        If (Me.estaMostrado) Then
+            Dim id As Integer = cbFormatoEtiquetaTarima.SelectedValue
+            formatosEtiquetas.EIdTipo = OpcionTipoEtiqueta.tarima
+            formatosEtiquetas.EId = id
+            formatosEtiquetas.EditarPredeterminado()
+            Me.opcionEtiquetaTarimaSeleccionada = id
+        End If
+
+    End Sub
+
+    Private Sub cbFormatoEtiquetaCaja_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbFormatoEtiquetaCaja.SelectedIndexChanged
+
+        If (Me.estaMostrado) Then
+            Dim id As Integer = cbFormatoEtiquetaCaja.SelectedValue
+            formatosEtiquetas.EIdTipo = OpcionTipoEtiqueta.caja
+            formatosEtiquetas.EId = id
+            formatosEtiquetas.EditarPredeterminado()
+            Me.opcionEtiquetaCajaSeleccionada = id
+        End If
+
+    End Sub
+
 #End Region
 
 #Region "Métodos"
@@ -499,15 +523,15 @@ Public Class Principal
 
     Private Sub CargarTitulosDirectorio()
 
-        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaEmpaque.Directorios.nombre + "              Usuario:  " + EYELogicaEmpaque.Usuarios.nombre
+        Me.Text = "Programa:  " & Me.nombreEstePrograma & "              Directorio:  " & EYELogicaEmpaque.Directorios.nombre & "              Usuario:  " & EYELogicaEmpaque.Usuarios.nombre
 
     End Sub
 
     Private Sub CargarEncabezados()
 
-        lblEncabezadoPrograma.Text = "Programa: " + Me.Text
-        lblEncabezadoEmpresa.Text = "Directorio: " + EYELogicaEmpaque.Directorios.nombre
-        lblEncabezadoUsuario.Text = "Usuario: " + EYELogicaEmpaque.Usuarios.nombre
+        lblEncabezadoPrograma.Text = "Programa: " & Me.Text
+        lblEncabezadoEmpresa.Text = "Directorio: " & EYELogicaEmpaque.Directorios.nombre
+        lblEncabezadoUsuario.Text = "Usuario: " & EYELogicaEmpaque.Usuarios.nombre
 
     End Sub
 
@@ -623,6 +647,8 @@ Public Class Principal
     Private Sub HabilitarControles()
 
         txtCantidad.Enabled = True
+        btnGuardar.Enabled = True
+        btnEliminar.Enabled = True
 
     End Sub
 
@@ -1070,16 +1096,23 @@ Public Class Principal
         Me.Cursor = Cursors.WaitCursor
         empaque.EId = EYELogicaEmpaque.Funciones.ValidarNumeroACero(txtId.Text)
         If (empaque.EId > 0) Then
-            Dim lista As New List(Of EYEEntidadesEmpaque.Empaque)
-            lista = empaque.ObtenerListado()
-            If (lista.Count > 0) Then
+            Dim listaTarimas As New List(Of EYEEntidadesEmpaque.Empaque)
+            listaTarimas = empaque.ObtenerListado()
+            If (listaTarimas.Count > 0) Then
                 txtCantidad.Text = "1"
                 txtCantidad.Enabled = False
-                dtpFecha.Value = lista(0).EFechaEmpaque
-                txtHora.Text = lista(0).EHoraEmpaque
-                cbProductores.SelectedValue = lista(0).EIdProductor
-                chkPropio.Checked = lista(0).EEsPropio
-                chkSobrante.Checked = lista(0).EEsSobrante
+                dtpFecha.Value = listaTarimas(0).EFecha
+                txtHora.Text = listaTarimas(0).EHora
+                cbProductores.SelectedValue = listaTarimas(0).EIdProductor
+                chkPropio.Checked = listaTarimas(0).EEsPropio
+                chkSobrante.Checked = listaTarimas(0).EEsSobrante
+                If (listaTarimas(0).EEstaEmbarcado) Then
+                    btnGuardar.Enabled = False
+                    btnEliminar.Enabled = False
+                Else
+                    btnGuardar.Enabled = True
+                    btnEliminar.Enabled = True
+                End If
                 spEmpaque.ActiveSheet.DataSource = empaque.ObtenerListadoReporte()
                 cantidadFilas = spEmpaque.ActiveSheet.Rows.Count + 1
                 FormatearSpreadTarimas()
@@ -1224,6 +1257,15 @@ Public Class Principal
             txtId.BackColor = Color.Orange
             Me.esGuardadoValido = False
         End If
+        Dim listaTarimasParaValidar As List(Of EYEEntidadesEmpaque.Empaque)
+        empaque.EId = id
+        listaTarimasParaValidar = empaque.ObtenerParaValidar()
+        If (listaTarimasParaValidar.Count > 0) Then
+            If (listaTarimasParaValidar(0).EEstaEmbarcado) Then
+                MsgBox(String.Format("Esta tarima ya fue embarcada en el embarque número {0}, en la posición {1}, con destino de {2}.", listaTarimasParaValidar(0).EIdEmbarque, listaTarimasParaValidar(0).EOrdenEmbarque + 1, IIf(listaTarimasParaValidar(0).EIdTipoEmbarque = 1, "exportación", "nacional")), MsgBoxStyle.Exclamation, "No permitido.")
+                Me.esGuardadoValido = False
+            End If
+        End If
         Dim hora As String = txtHora.Text
         If (String.IsNullOrEmpty(hora) Or hora.Length <> 5) Then
             txtHora.BackColor = Color.Orange
@@ -1307,8 +1349,8 @@ Public Class Principal
             ' Parte superior. 
             Dim id As Integer = EYELogicaEmpaque.Funciones.ValidarNumeroACero(txtId.Text)
             EliminarCajas(id)
-            Dim fechaEmpaque As Date = dtpFecha.Value
-            Dim horaEmpaque As String = txtHora.Text
+            Dim fecha As Date = dtpFecha.Value
+            Dim hora As String = txtHora.Text
             Dim idProductor As Integer = EYELogicaEmpaque.Funciones.ValidarNumeroACero(cbProductores.SelectedValue)
             Dim esPropio As Boolean = chkPropio.Checked
             Dim esSobrante As Boolean = chkSobrante.Checked
@@ -1322,15 +1364,13 @@ Public Class Principal
             If (listaProductores.Count = 1) Then
                 claveAgricola = listaProductores(0).EClaveAgricola
             End If
-            Dim diaJuliano As String = (DatePart(DateInterval.DayOfYear, CDate(fechaEmpaque))).ToString.PadLeft(3, "0")
-            diaJuliano = Mid(diaJuliano, 3, 1) & Mid(diaJuliano, 2, 1) & Mid(diaJuliano, 1, 1) & Mid((Year(fechaEmpaque).ToString), 4, 1)
+            Dim diaJuliano As String = (DatePart(DateInterval.DayOfYear, CDate(fecha))).ToString.PadLeft(3, "0")
+            diaJuliano = Mid(diaJuliano, 3, 1) & Mid(diaJuliano, 2, 1) & Mid(diaJuliano, 1, 1) & Mid((Year(fecha).ToString), 4, 1)
             Dim idCliente As Integer = 0
             Dim temperatura As Integer = 0
             Dim esTrazable As Boolean = False
             Dim estaEmbarcado As Boolean = False
             Dim idEmbarque As Integer = 0
-            Dim fechaEmbarque As Date = "01/01/2001"
-            Dim horaEmbarque As String = "00:00"
             Dim idTipoEmbarque As Integer = 0 ' Siempre es cero, significa que no está en piso.
             Dim ordenEmbarque As Integer = 0
             For fila As Integer = 0 To spEmpaque.ActiveSheet.Rows.Count - 1
@@ -1343,7 +1383,7 @@ Public Class Principal
                 Dim cantidadCajas As Integer = EYELogicaEmpaque.Funciones.ValidarNumeroACero(spEmpaque.ActiveSheet.Cells(fila, spEmpaque.ActiveSheet.Columns("cantidadCajas").Index).Text)
                 Dim pesoUnitarioCajas As Integer = EYELogicaEmpaque.Funciones.ValidarNumeroACero(spEmpaque.ActiveSheet.Cells(fila, spEmpaque.ActiveSheet.Columns("pesoUnitarioCajas").Index).Text)
                 Dim pesoCajas As Integer = EYELogicaEmpaque.Funciones.ValidarNumeroACero(spEmpaque.ActiveSheet.Cells(fila, spEmpaque.ActiveSheet.Columns("pesoTotalCajas").Index).Text)
-                If (id > 0 AndAlso IsDate(fechaEmpaque) And Not String.IsNullOrEmpty(txtHora.Text) AndAlso idProductor > 0 AndAlso idLote > 0 AndAlso idProducto > 0 AndAlso idVariedad > 0 AndAlso idEnvase > 0 AndAlso idTamano > 0 AndAlso idEtiqueta > 0 AndAlso cantidadCajas > 0 AndAlso pesoUnitarioCajas > 0 AndAlso pesoCajas > 0) Then
+                If (id > 0 AndAlso IsDate(fecha) And Not String.IsNullOrEmpty(txtHora.Text) AndAlso idProductor > 0 AndAlso idLote > 0 AndAlso idProducto > 0 AndAlso idVariedad > 0 AndAlso idEnvase > 0 AndAlso idTamano > 0 AndAlso idEtiqueta > 0 AndAlso cantidadCajas > 0 AndAlso pesoUnitarioCajas > 0 AndAlso pesoCajas > 0) Then
                     empaque.EId = id
                     empaque.EIdProductor = idProductor
                     empaque.EIdEmbarcador = idEmbarcador
@@ -1354,8 +1394,8 @@ Public Class Principal
                     empaque.EIdEnvase = idEnvase
                     empaque.EIdTamano = idTamano
                     empaque.EIdEtiqueta = idEtiqueta
-                    empaque.EFechaEmpaque = fechaEmpaque
-                    empaque.EHoraEmpaque = horaEmpaque
+                    empaque.EFecha = fecha
+                    empaque.EHora = hora
                     empaque.ECantidadCajas = cantidadCajas
                     empaque.EPesoUnitarioCajas = pesoUnitarioCajas
                     empaque.EPesoTotalCajas = pesoCajas
@@ -1367,8 +1407,6 @@ Public Class Principal
                     empaque.EOrden = fila
                     empaque.EEstaEmbarcado = estaEmbarcado
                     empaque.EIdEmbarque = idEmbarque
-                    empaque.EFechaEmbarque = fechaEmbarque
-                    empaque.EHoraEmbarque = horaEmbarque
                     empaque.EIdTipoEmbarque = idTipoEmbarque
                     empaque.EOrdenEmbarque = ordenEmbarque
                     empaque.Guardar()
@@ -1379,13 +1417,12 @@ Public Class Principal
                     ' GuardarSalidaAlmacen() 
                 End If
             Next
-
-            ' TODO. Agregar la validación de impresión de etiquetas.
-            Me.opcionTipoSeleccionada = OpcionTipoEtiqueta.tarima
-            PrepararImpresion(id)
-            ' TODO. Agregar la validación de impresión de etiquetas.
-            Me.opcionTipoSeleccionada = OpcionTipoEtiqueta.caja
-            PrepararImpresion(id)
+            If (Not chkSobrante.Checked) Then
+                Me.opcionTipoSeleccionada = OpcionTipoEtiqueta.tarima
+                PrepararImpresion(id)
+                Me.opcionTipoSeleccionada = OpcionTipoEtiqueta.caja
+                PrepararImpresion(id)
+            End If
             txtId.Text += 1 ' Se suma uno, para generar la siguiente tarima.
         Next
         If (Not chkSobrante.Checked) Then
@@ -1522,9 +1559,7 @@ Public Class Principal
     Private Sub MandarImprimir()
 
         Me.estaImprimiendo = True
-        ' Impresión de etiquetas de tarima.
-        ' TODO. Validar si se imprime desde configuración.
-
+        ' Impresión de etiquetas de tarima. 
         ' Si hay datos para imprimir.
         If (Me.listaTarimasParaImprimir.Count > 0) Then
             pdTarima.PrinterSettings.PrinterName = ConfigurarImpresion.nombreImpresoraTarima
@@ -1541,9 +1576,7 @@ Public Class Principal
         Me.listaTarimasParaImprimir.Clear()
         Me.datosTarimasParaImprimir.Clear()
 
-        ' Impresion de etiquetas de caja.
-        ' TODO. Validar si se imprime desde configuración.
-
+        ' Impresion de etiquetas de caja. 
         ' Si hay datos para imprimir.
         If (Me.listaCajasParaImprimir.Count > 0) Then
             pdCaja.PrinterSettings.PrinterName = ConfigurarImpresion.nombreImpresoraCaja
@@ -1715,23 +1748,23 @@ Public Class Principal
         e.Graphics.DrawString("(01)" & gtin & "(10)" & lotBatch, fuente6, Brushes.Black, margenIzquierdoCaja + 95, margenSuperiorCaja + 144, formatoHorizontalCentrado) 'Id de codigo de barras.
         e.Graphics.DrawString(idTarima, fuente7, Brushes.Black, margenIzquierdoCaja + 0, margenSuperiorCaja + 156) ' Id de tarima.
         e.Graphics.DrawString("Produce of MX", fuente85, Brushes.Black, margenIzquierdoCaja + 0, margenSuperiorCaja + 172) ' Mexico. 
-        ' Se agrega el logo.
-        Dim ruta As String = Application.StartupPath & "\logoBerry.png"
-        If (Not String.IsNullOrEmpty(nombreEmbarcador)) Then
-            ruta = Application.StartupPath & "\logoCliente.jpg"
-        Else
-            ruta = Application.StartupPath & "\logoBerry.png"
-        End If
-        If (Me.esDesarrollo) Then
-            ruta = "W:\logoBerry.png"
-        End If
-        If (System.IO.File.Exists(ruta)) Then
-            imagen = System.Drawing.Image.FromFile(ruta)
-            'e.Graphics.DrawImage(imagen, margenIzquierdoCaja + 160, margenSuperiorCaja + 170, 30, 30)
-        End If
-        ' Se aumenta el contador de tarimas.
+        '' Se agrega el logo.
+        'Dim ruta As String = Application.StartupPath & "\logoBerry.png"
+        'If (Not String.IsNullOrEmpty(nombreEmbarcador)) Then
+        '    ruta = Application.StartupPath & "\logoCliente.jpg"
+        'Else
+        '    ruta = Application.StartupPath & "\logoBerry.png"
+        'End If
+        'If (Me.esDesarrollo) Then
+        '    ruta = "W:\logoBerry.png"
+        'End If
+        'If (System.IO.File.Exists(ruta)) Then
+        '    imagen = System.Drawing.Image.FromFile(ruta)
+        '    e.Graphics.DrawImage(imagen, margenIzquierdoCaja + 160, margenSuperiorCaja + 170, 30, 30)
+        'End If
+        ' Se aumenta el contador de cajas.
         contadorCajasParaImprimir += 1
-        ' Se verifica si tiene mas impresiones pendientes de acuerdo a las tarimas.
+        ' Se verifica si tiene mas impresiones pendientes de acuerdo a las cajas.
         If (contadorCajasParaImprimir < Me.listaCajasParaImprimir.Count) Then
             e.HasMorePages = True
         Else
@@ -1814,29 +1847,5 @@ Public Class Principal
     End Enum
 
 #End Region
-
-    Private Sub cbFormatoEtiquetaTarima_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbFormatoEtiquetaTarima.SelectedIndexChanged
-
-        If (Me.estaMostrado) Then
-            Dim id As Integer = cbFormatoEtiquetaTarima.SelectedValue
-            formatosEtiquetas.EIdTipo = OpcionTipoEtiqueta.tarima
-            formatosEtiquetas.EId = id
-            formatosEtiquetas.EditarPredeterminado() 
-            Me.opcionEtiquetaTarimaSeleccionada = id
-        End If
-
-    End Sub
-
-    Private Sub cbFormatoEtiquetaCaja_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbFormatoEtiquetaCaja.SelectedIndexChanged
-
-        If (Me.estaMostrado) Then
-            Dim id As Integer = cbFormatoEtiquetaCaja.SelectedValue
-            formatosEtiquetas.EIdTipo = OpcionTipoEtiqueta.caja
-            formatosEtiquetas.EId = id
-            formatosEtiquetas.EditarPredeterminado()
-            Me.opcionEtiquetaCajaSeleccionada = id
-        End If
-
-    End Sub
 
 End Class

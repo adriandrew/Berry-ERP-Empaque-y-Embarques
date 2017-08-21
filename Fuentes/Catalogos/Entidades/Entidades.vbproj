@@ -84,6 +84,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AduanasMex.vb" />
+    <Compile Include="AduanasUsa.vb" />
+    <Compile Include="CajasTrailers.vb" />
+    <Compile Include="Choferes.vb" />
+    <Compile Include="Documentadores.vb" />
+    <Compile Include="LineasTransportes.vb" />
     <Compile Include="Lotes.vb" />
     <Compile Include="Productores.vb" />
     <Compile Include="BaseDatos.vb" />
@@ -106,10 +112,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ChoferesCampos.vb" />
+    <Compile Include="Trailers.vb" />
     <Compile Include="Variedades.vb" />
     <Compile Include="Tamaños.vb" />
-    <Compile Include="TiposEntradas.vb" />
-    <Compile Include="TiposSalidas.vb" />
     <Compile Include="Etiquetas.vb" />
     <Compile Include="Usuarios.vb" />
   </ItemGroup>

@@ -81,7 +81,7 @@ Public Class Clientes
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Clientes (Id, Nombre, Rfc, Domicilio, Municipio, Estado, Telefono, Correo) VALUES (@id, @nombre, @rfc, @domicilio, @municipio, @estado,@telefono, @correo)"
+            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Clientes (Id, Nombre, Rfc, Domicilio, Municipio, Estado, Telefono, Correo) VALUES (@id, @nombre, @rfc, @domicilio, @municipio, @estado, @telefono, @correo)"
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@nombre", Me.ENombre)
             comando.Parameters.AddWithValue("@rfc", Me.Erfc)

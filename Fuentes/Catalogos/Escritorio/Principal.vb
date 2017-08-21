@@ -14,8 +14,13 @@ Public Class Principal
     Public clientes As New EYEEntidadesCatalogos.Clientes()
     Public envases As New EYEEntidadesCatalogos.Envases()
     Public tamaños As New EYEEntidadesCatalogos.Tamaños()
-    Public tiposEntradas As New EYEEntidadesCatalogos.TiposEntradas()
-    Public tiposSalidas As New EYEEntidadesCatalogos.TiposSalidas()
+    Public lineasTransportes As New EYEEntidadesCatalogos.LineasTransportes()
+    Public trailers As New EYEEntidadesCatalogos.Trailers()
+    Public cajasTrailers As New EYEEntidadesCatalogos.CajasTrailers()
+    Public choferes As New EYEEntidadesCatalogos.Choferes()
+    Public aduanasMex As New EYEEntidadesCatalogos.AduanasMex()
+    Public aduanasUsa As New EYEEntidadesCatalogos.AduanasUsa()
+    Public documentadores As New EYEEntidadesCatalogos.Documentadores()
     ' Variables de tipos de datos de spread.
     Public tipoTexto As New FarPoint.Win.Spread.CellType.TextCellType()
     Public tipoTextoContrasena As New FarPoint.Win.Spread.CellType.TextCellType()
@@ -100,6 +105,7 @@ Public Class Principal
 
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
 
+        Me.Cursor = Cursors.WaitCursor
         If (Me.opcionSeleccionada = OpcionMenu.lotes) Then
             GuardarEditarLotes()
         ElseIf (Me.opcionSeleccionada = OpcionMenu.productos) Then
@@ -116,18 +122,30 @@ Public Class Principal
             GuardarEditarEnvases()
         ElseIf (Me.opcionSeleccionada = OpcionMenu.tamaños) Then
             GuardarEditarTamaños()
-        ElseIf (Me.opcionSeleccionada = OpcionMenu.tiposEntradas) Then
-            GuardarEditarTiposEntradas()
-        ElseIf (Me.opcionSeleccionada = OpcionMenu.tiposSalidas) Then
-            GuardarEditarTiposSalidas()
         ElseIf (Me.opcionSeleccionada = OpcionMenu.etiquetas) Then
             GuardarEditarEtiquetas()
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.lineas) Then
+            GuardarEditarLineasTransportes()
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.trailers) Then
+            GuardarEditarTrailers()
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.cajasTrailers) Then
+            GuardarEditarCajasTrailers()
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.choferes) Then
+            GuardarEditarChoferes()
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.aduanaMex) Then
+            GuardarEditarAduanasMex()
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.aduanaUsa) Then
+            GuardarEditarAduanasUsa()
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.documentadores) Then
+            GuardarEditarDocumentadores()
         End If
+        Me.Cursor = Cursors.Default
 
     End Sub
 
     Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
 
+        Me.Cursor = Cursors.WaitCursor
         If (Me.opcionSeleccionada = OpcionMenu.lotes) Then
             EliminarLotes(True)
         ElseIf (Me.opcionSeleccionada = OpcionMenu.productos) Then
@@ -144,13 +162,24 @@ Public Class Principal
             EliminarEnvases(True)
         ElseIf (Me.opcionSeleccionada = OpcionMenu.tamaños) Then
             EliminarTamaños(True)
-        ElseIf (Me.opcionSeleccionada = OpcionMenu.tiposEntradas) Then
-            EliminarTiposEntradas(True)
-        ElseIf (Me.opcionSeleccionada = OpcionMenu.tiposSalidas) Then
-            EliminarTiposSalidas(True)
         ElseIf (Me.opcionSeleccionada = OpcionMenu.etiquetas) Then
             EliminarEtiquetas(True)
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.lineas) Then
+            EliminarLineasTransportes(True)
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.trailers) Then
+            EliminarTrailers(True)
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.cajasTrailers) Then
+            EliminarCajasTrailers(True)
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.choferes) Then
+            EliminarChoferes(True)
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.aduanaMex) Then
+            EliminarAduanasMex(True)
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.aduanaUsa) Then
+            EliminarAduanasUsa(True)
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.documentadores) Then
+            EliminarDocumentadores(True)
         End If
+        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -180,30 +209,20 @@ Public Class Principal
 
     Private Sub spCatalogos_CellClick(sender As Object, e As FarPoint.Win.Spread.CellClickEventArgs) Handles spCatalogos.CellClick
 
-        Dim fila As Integer = e.Row
-        If (Me.opcionSeleccionada = OpcionMenu.variedades Or Me.opcionSeleccionada = OpcionMenu.tamaños) Then
-            spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("idProducto").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("id").Index).Text
-            spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("nombreProducto").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("nombre").Index).Text
-            'ElseIf (Me.opcionSeleccionada = OpcionMenu.productores) Then
-            'spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("idUnidadMedida").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("id").Index).Text
-            'spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("nombreUnidadMedida").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("nombre").Index).Text
-            'ElseIf (Me.opcionSeleccionada = OpcionMenu.tamaños) Then
-            '    spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("idMoneda").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("id").Index).Text
-            '    spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("nombreMoneda").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("nombre").Index).Text
-        End If
+        AsignarDatoDeCatalogos(e.Row)
 
     End Sub
 
     Private Sub spCatalogos_CellDoubleClick(sender As Object, e As FarPoint.Win.Spread.CellClickEventArgs) Handles spCatalogos.CellDoubleClick
 
-        VolverFocoCatalogos()
+        VolverFocoDeCatalogos()
 
     End Sub
 
     Private Sub spCatalogos_KeyDown(sender As Object, e As KeyEventArgs) Handles spCatalogos.KeyDown
 
         If (e.KeyCode = Keys.Escape) Then
-            VolverFocoCatalogos()
+            VolverFocoDeCatalogos()
         End If
 
     End Sub
@@ -297,13 +316,12 @@ Public Class Principal
                     pnlMenu.Enabled = False
                     CargarCatalogoProductos()
                 End If
-                'ElseIf (Me.opcionSeleccionada = OpcionMenu.TiposCambios) Then
-                '    If (spVarios.ActiveSheet.ActiveColumnIndex = spVarios.ActiveSheet.Columns("idMoneda").Index) Or (spVarios.ActiveSheet.ActiveColumnIndex = spVarios.ActiveSheet.Columns("nombreMoneda").Index) Then
-                '        spVarios.Enabled = False
-                '        CargarCatalogoMonedas()
-                '        FormatearSpreadCatalogo(False)
-                '        spCatalogos.Focus()
-                '    End If
+            ElseIf (Me.opcionSeleccionada = OpcionMenu.trailers) Then
+                If (spVarios.ActiveSheet.ActiveColumnIndex = spVarios.ActiveSheet.Columns("idLineaTransporte").Index) Or (spVarios.ActiveSheet.ActiveColumnIndex = spVarios.ActiveSheet.Columns("nombreLineaTransporte").Index) Then
+                    spVarios.Enabled = False
+                    pnlMenu.Enabled = False
+                    CargarCatalogoLineasTransporte()
+                End If
             End If
         End If
 
@@ -313,22 +331,6 @@ Public Class Principal
 
         If (rbtnEnvases.Checked) Then
             SeleccionoEnvases()
-        End If
-
-    End Sub
-
-    Private Sub rbtnTiposEntradas_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnTiposEntradas.CheckedChanged
-
-        If (rbtnTiposEntradas.Checked) Then
-            SeleccionoTiposEntradas()
-        End If
-
-    End Sub
-
-    Private Sub rbtnTiposSalidas_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnTiposSalidas.CheckedChanged
-
-        If (rbtnTiposSalidas.Checked) Then
-            SeleccionoTiposSalidas()
         End If
 
     End Sub
@@ -489,7 +491,7 @@ Public Class Principal
             EYELogicaCatalogos.Directorios.id = 1
             EYELogicaCatalogos.Directorios.instanciaSql = "BERRY1-DELL\SQLEXPRESS2008"
             EYELogicaCatalogos.Directorios.usuarioSql = "AdminBerry"
-            EYELogicaCatalogos.Directorios.contrasenaSql = "@berry2017" 
+            EYELogicaCatalogos.Directorios.contrasenaSql = "@berry2017"
             pnlEncabezado.BackColor = Color.DarkRed
             pnlPie.BackColor = Color.DarkRed
         Else
@@ -653,6 +655,7 @@ Public Class Principal
         spCatalogos.ActiveSheet.Rows(-1).Height = Principal.alturaFilasSpread
         spVarios.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded
         spVarios.VerticalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded
+        spVarios.EditModeReplace = True
         Application.DoEvents()
 
     End Sub
@@ -683,19 +686,19 @@ Public Class Principal
                     End If
                 End If
             End If
-            'ElseIf (Me.opcionSeleccionada = OpcionMenu.productores) Then
-            'If (columnaActiva = spVarios.ActiveSheet.Columns("idUnidadMedida").Index) Then
-            '    fila = spVarios.ActiveSheet.ActiveRowIndex
-            '    Dim idUnidadMedida As Integer = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("idUnidadMedida").Index).Value
-            '    unidadesMedidas.EId = idUnidadMedida
-            '    If (idUnidadMedida > 0) Then
-            '        Dim lista As New List(Of EntidadesCatalogos.UnidadesMedidas)
-            '        lista = unidadesMedidas.ObtenerListado()
-            '        If (lista.Count > 0) Then
-            '            spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("nombreUnidadMedida").Index).Value = lista(0).ENombre
-            '        End If
-            '    End If
-            'End If
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.trailers) Then
+            If (columnaActiva = spVarios.ActiveSheet.Columns("idLineaTransporte").Index) Then
+                fila = spVarios.ActiveSheet.ActiveRowIndex
+                Dim idLineaTransporte As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("idLineaTransporte").Index).Value)
+                lineasTransportes.EId = idLineaTransporte
+                If (idLineaTransporte > 0) Then
+                    Dim lista As New List(Of EYEEntidadesCatalogos.LineasTransportes)
+                    lista = lineasTransportes.ObtenerListado()
+                    If (lista.Count > 0) Then
+                        spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("nombreLineaTransporte").Index).Value = lista(0).ENombre
+                    End If
+                End If
+            End If
             'ElseIf (Me.opcionSeleccionada = OpcionMenu.tamaños) Then
             '    fila = spVarios.ActiveSheet.ActiveRowIndex
             '    If (columnaActiva = spVarios.ActiveSheet.Columns("idMoneda").Index) Then
@@ -755,26 +758,19 @@ Public Class Principal
 
     End Sub
 
-    Private Sub CargarCatalogoUnidadesMedidas()
-
-        etiquetas.EId = 0
-        spCatalogos.ActiveSheet.DataSource = etiquetas.ObtenerListado() ': Application.DoEvents()
-        spCatalogos.Focus()
-
-    End Sub
-
-    Private Sub CargarCatalogoMonedas()
-
-        envases.EId = 0
-        spCatalogos.ActiveSheet.DataSource = envases.ObtenerListado()
-        spCatalogos.Focus()
-
-    End Sub
-
     Private Sub CargarCatalogoProductos()
 
         productos.EId = 0
-        spCatalogos.ActiveSheet.DataSource = productos.ObtenerListado()
+        spCatalogos.ActiveSheet.DataSource = productos.ObtenerListadoReporteCatalogo()
+        FormatearSpreadCatalogo(False)
+        AsignarFoco(spCatalogos)
+
+    End Sub
+
+    Private Sub CargarCatalogoLineasTransporte()
+
+        lineasTransportes.EId = 0
+        spCatalogos.ActiveSheet.DataSource = lineasTransportes.ObtenerListadoReporteCatalogo()
         FormatearSpreadCatalogo(False)
         AsignarFoco(spCatalogos)
 
@@ -806,23 +802,39 @@ Public Class Principal
 
     End Sub
 
-    Private Sub VolverFocoCatalogos()
+    Private Sub VolverFocoDeCatalogos()
 
         If (Me.opcionSeleccionada = OpcionMenu.variedades Or Me.opcionSeleccionada = OpcionMenu.tamaños) Then
             spVarios.Enabled = True
             pnlMenu.Enabled = True
-            spVarios.Focus()
+            AsignarFoco(spVarios)
             spVarios.ActiveSheet.SetActiveCell(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("idProducto").Index + 2)
-            'ElseIf (Me.opcionSeleccionada = OpcionMenu.productores) Then
-            'spVarios.Enabled = True
-            'spVarios.Focus()
-            'spVarios.ActiveSheet.SetActiveCell(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("idUnidadMedida").Index + 2)
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.trailers) Then
+            spVarios.Enabled = True
+            pnlMenu.Enabled = True
+            AsignarFoco(spVarios)
+            spVarios.ActiveSheet.SetActiveCell(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("idLineaTransporte").Index + 2)
             'ElseIf (Me.opcionSeleccionada = OpcionMenu.tamaños) Then
             '    spVarios.Enabled = True
             '    spVarios.Focus()
             '    spVarios.ActiveSheet.SetActiveCell(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("idMoneda").Index + 2)
         End If
         spCatalogos.Visible = False
+
+    End Sub
+
+    Private Sub AsignarDatoDeCatalogos(ByVal fila As Integer)
+
+        If (Me.opcionSeleccionada = OpcionMenu.variedades Or Me.opcionSeleccionada = OpcionMenu.tamaños) Then
+            spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("idProducto").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("id").Index).Text
+            spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("nombreProducto").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("nombre").Index).Text
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.trailers) Then
+            spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("idLineaTransporte").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("id").Index).Text
+            spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("nombreLineaTransporte").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("nombre").Index).Text
+            'ElseIf (Me.opcionSeleccionada = OpcionMenu.tamaños) Then
+            '    spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("idMoneda").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("id").Index).Text
+            '    spVarios.ActiveSheet.Cells(spVarios.ActiveSheet.ActiveRowIndex, spVarios.ActiveSheet.Columns("nombreMoneda").Index).Text = spCatalogos.ActiveSheet.Cells(fila, spCatalogos.ActiveSheet.Columns("nombre").Index).Text
+        End If
 
     End Sub
 
@@ -1157,6 +1169,9 @@ Public Class Principal
         spVarios.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
         spVarios.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
         spVarios.ActiveSheet.Columns(numeracion).Tag = "domicilio" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "municipio" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "estado" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "rfc" : numeracion += 1
         spVarios.ActiveSheet.Columns(numeracion).Tag = "fda" : numeracion += 1
         spVarios.ActiveSheet.Columns(numeracion).Tag = "gs1" : numeracion += 1
         spVarios.ActiveSheet.Columns(numeracion).Tag = "ggn" : numeracion += 1
@@ -1164,6 +1179,9 @@ Public Class Principal
         spVarios.ActiveSheet.Columns("id").Width = 50
         spVarios.ActiveSheet.Columns("nombre").Width = 400
         spVarios.ActiveSheet.Columns("domicilio").Width = 300
+        spVarios.ActiveSheet.Columns("municipio").Width = 150
+        spVarios.ActiveSheet.Columns("estado").Width = 150
+        spVarios.ActiveSheet.Columns("rfc").Width = 150
         spVarios.ActiveSheet.Columns("fda").Width = 150
         spVarios.ActiveSheet.Columns("gs1").Width = 150
         spVarios.ActiveSheet.Columns("ggn").Width = 150
@@ -1171,6 +1189,9 @@ Public Class Principal
         spVarios.ActiveSheet.Columns("id").CellType = tipoEntero
         spVarios.ActiveSheet.Columns("nombre").CellType = tipoTexto
         spVarios.ActiveSheet.Columns("domicilio").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("municipio").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("estado").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("rfc").CellType = tipoTexto
         spVarios.ActiveSheet.Columns("fda").CellType = tipoTexto
         spVarios.ActiveSheet.Columns("gs1").CellType = tipoTexto
         spVarios.ActiveSheet.Columns("ggn").CellType = tipoTexto
@@ -1180,6 +1201,9 @@ Public Class Principal
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("id").Index).Value = "No. *".ToUpper()
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombre").Index).Value = "Nombre *".ToUpper()
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("domicilio").Index).Value = "Domicilio".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("municipio").Index).Value = "Municipio".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("estado").Index).Value = "Estado".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("rfc").Index).Value = "Rfc".ToUpper()
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("fda").Index).Value = "Fda".ToUpper()
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("gs1").Index).Value = "Gs1".ToUpper()
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("ggn").Index).Value = "Ggn".ToUpper()
@@ -1197,6 +1221,9 @@ Public Class Principal
             Dim id As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("id").Index).Text)
             Dim nombre As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("nombre").Index).Text
             Dim domicilio As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("domicilio").Index).Text
+            Dim municipio As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("municipio").Index).Text
+            Dim estado As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("estado").Index).Text
+            Dim rfc As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("rfc").Index).Text
             Dim fda As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("fda").Index).Text
             Dim gs1 As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("gs1").Index).Text
             Dim ggn As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("ggn").Index).Text
@@ -1205,6 +1232,9 @@ Public Class Principal
                 productores.EId = id
                 productores.ENombre = nombre
                 productores.EDomicilio = domicilio
+                productores.EMunicipio = municipio
+                productores.EEstado = estado
+                productores.ERfc = rfc
                 productores.EFda = fda
                 productores.EGs1 = gs1
                 productores.EGgn = ggn
@@ -1408,176 +1438,6 @@ Public Class Principal
         If (conMensaje And respuestaSi) Then
             MessageBox.Show("Eliminado finalizado.", "Finalizado.", MessageBoxButtons.OK)
             CargarEnvases()
-        End If
-
-    End Sub
-
-    Private Sub SeleccionoTiposEntradas()
-
-        Me.Cursor = Cursors.WaitCursor
-        Me.opcionSeleccionada = OpcionMenu.tiposEntradas
-        OcultarSpreads()
-        LimpiarSpread(spVarios)
-        CargarTiposEntradas()
-        Me.Cursor = Cursors.Default
-
-    End Sub
-
-    Private Sub CargarTiposEntradas()
-
-        spVarios.Height = Me.altoTotal
-        spVarios.Width = Me.anchoTotal
-        spVarios.Top = Me.arriba
-        spVarios.Left = Me.izquierda
-        spVarios.Show()
-        tiposEntradas.EId = 0
-        spVarios.ActiveSheet.DataSource = tiposEntradas.ObtenerListadoReporte()
-        FormatearSpreadTiposEntradas()
-
-    End Sub
-
-    Private Sub FormatearSpreadTiposEntradas()
-
-        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
-        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
-        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
-        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
-        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
-        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
-        ControlarSpreadEnterASiguienteColumna(spVarios)
-        Dim numeracion As Integer = 0
-        spVarios.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
-        spVarios.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
-        spVarios.ActiveSheet.Columns("id").Width = 50
-        spVarios.ActiveSheet.Columns("nombre").Width = 400
-        spVarios.ActiveSheet.Columns("id").CellType = tipoEntero
-        spVarios.ActiveSheet.Columns("nombre").CellType = tipoTexto
-        spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
-        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "T  i  p  o  s      d  e      E  n  t  r  a  d  a  s".ToUpper()
-        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("id").Index).Value = "No. *".ToUpper()
-        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombre").Index).Value = "Nombre *".ToUpper()
-        spVarios.ActiveSheet.Rows.Count += 1
-        Application.DoEvents()
-
-    End Sub
-
-    Private Sub GuardarEditarTiposEntradas()
-
-        EliminarTiposEntradas(False)
-        For fila As Integer = 0 To spVarios.ActiveSheet.Rows.Count - 1
-            Dim id As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("id").Index).Text)
-            Dim nombre As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("nombre").Index).Text
-            If (id > 0 AndAlso Not String.IsNullOrEmpty(nombre)) Then
-                tiposEntradas.EId = id
-                tiposEntradas.ENombre = nombre
-                tiposEntradas.Guardar()
-            End If
-        Next
-        MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
-        CargarTiposEntradas()
-
-    End Sub
-
-    Private Sub EliminarTiposEntradas(ByVal conMensaje As Boolean)
-
-        Dim respuestaSi As Boolean = False
-        If (conMensaje) Then
-            If (MessageBox.Show("Confirmas que deseas eliminar todo?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
-                respuestaSi = True
-            End If
-        End If
-        If ((respuestaSi) Or (Not conMensaje)) Then
-            tiposEntradas.EId = 0
-            tiposEntradas.Eliminar()
-        End If
-        If (conMensaje And respuestaSi) Then
-            MessageBox.Show("Eliminado finalizado.", "Finalizado.", MessageBoxButtons.OK)
-            CargarTiposEntradas()
-        End If
-
-    End Sub
-
-    Private Sub SeleccionoTiposSalidas()
-
-        Me.Cursor = Cursors.WaitCursor
-        Me.opcionSeleccionada = OpcionMenu.tiposSalidas
-        OcultarSpreads()
-        LimpiarSpread(spVarios)
-        CargarTiposSalidas()
-        Me.Cursor = Cursors.Default
-
-    End Sub
-
-    Private Sub CargarTiposSalidas()
-
-        spVarios.Height = Me.altoTotal
-        spVarios.Width = Me.anchoTotal
-        spVarios.Top = Me.arriba
-        spVarios.Left = Me.izquierda
-        spVarios.Show()
-        tiposSalidas.EId = 0
-        spVarios.ActiveSheet.DataSource = tiposSalidas.ObtenerListadoReporte()
-        FormatearSpreadTiposSalidas()
-
-    End Sub
-
-    Private Sub FormatearSpreadTiposSalidas()
-
-        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
-        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
-        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
-        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
-        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
-        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
-        ControlarSpreadEnterASiguienteColumna(spVarios)
-        Dim numeracion As Integer = 0
-        spVarios.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
-        spVarios.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
-        spVarios.ActiveSheet.Columns("id").Width = 50
-        spVarios.ActiveSheet.Columns("nombre").Width = 400
-        spVarios.ActiveSheet.Columns("id").CellType = tipoEntero
-        spVarios.ActiveSheet.Columns("nombre").CellType = tipoTexto
-        spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
-        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "T  i  p  o  s      d  e      S  a  l  i  d  a  s".ToUpper()
-        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("id").Index).Value = "No. *".ToUpper()
-        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombre").Index).Value = "Nombre *".ToUpper()
-        spVarios.ActiveSheet.Rows.Count += 1
-        Application.DoEvents()
-
-    End Sub
-
-    Private Sub GuardarEditarTiposSalidas()
-
-        EliminarTiposSalidas(False)
-        For fila As Integer = 0 To spVarios.ActiveSheet.Rows.Count - 1
-            Dim id As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("id").Index).Text)
-            Dim nombre As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("nombre").Index).Text
-            If (id > 0 AndAlso Not String.IsNullOrEmpty(nombre)) Then
-                tiposSalidas.EId = id
-                tiposSalidas.ENombre = nombre
-                tiposSalidas.Guardar()
-            End If
-        Next
-        MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
-        CargarTiposSalidas()
-
-    End Sub
-
-    Private Sub EliminarTiposSalidas(ByVal conMensaje As Boolean)
-
-        Dim respuestaSi As Boolean = False
-        If (conMensaje) Then
-            If (MessageBox.Show("Confirmas que deseas eliminar todo?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
-                respuestaSi = True
-            End If
-        End If
-        If ((respuestaSi) Or (Not conMensaje)) Then
-            tiposSalidas.EId = 0
-            tiposSalidas.Eliminar()
-        End If
-        If (conMensaje And respuestaSi) Then
-            MessageBox.Show("Eliminado finalizado.", "Finalizado.", MessageBoxButtons.OK)
-            CargarTiposSalidas()
         End If
 
     End Sub
@@ -1885,6 +1745,747 @@ Public Class Principal
 
     End Sub
 
+    Private Sub SeleccionoLineasTransportes()
+
+        Me.Cursor = Cursors.WaitCursor
+        Me.opcionSeleccionada = OpcionMenu.lineas
+        OcultarSpreads()
+        LimpiarSpread(spVarios)
+        CargarLineasTransportes()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub CargarLineasTransportes()
+
+        AcomodarSpread()
+        lineasTransportes.EId = 0
+        spVarios.ActiveSheet.DataSource = lineasTransportes.ObtenerListadoReporte()
+        FormatearSpreadLineasTransportes()
+
+    End Sub
+
+    Private Sub FormatearSpreadLineasTransportes()
+
+        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
+        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
+        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
+        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
+        ControlarSpreadEnterASiguienteColumna(spVarios)
+        Dim numeracion As Integer = 0
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "domicilio" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "municipio" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "estado" : numeracion += 1
+        spVarios.ActiveSheet.Columns("id").Width = 50
+        spVarios.ActiveSheet.Columns("nombre").Width = 400
+        spVarios.ActiveSheet.Columns("domicilio").Width = 300
+        spVarios.ActiveSheet.Columns("municipio").Width = 200
+        spVarios.ActiveSheet.Columns("estado").Width = 180
+        spVarios.ActiveSheet.Columns("id").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombre").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("domicilio").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("municipio").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("estado").CellType = tipoTexto
+        spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
+        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "L  i  n  e  a  s      d  e      T  r  a  n  s  p  o  r  t  e".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("id").Index).Value = "No. *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombre").Index).Value = "Nombre *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("domicilio").Index).Value = "Domicilio".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("municipio").Index).Value = "Municipio".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("estado").Index).Value = "Estado".ToUpper()
+        spVarios.ActiveSheet.Rows.Count += 1
+        Application.DoEvents()
+
+    End Sub
+
+    Private Sub GuardarEditarLineasTransportes()
+
+        EliminarLineasTransportes(False)
+        For fila As Integer = 0 To spVarios.ActiveSheet.Rows.Count - 1
+            Dim id As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("id").Index).Text)
+            Dim nombre As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("nombre").Index).Text
+            Dim domicilio As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("domicilio").Index).Text
+            Dim municipio As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("municipio").Index).Text
+            Dim estado As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("estado").Index).Text
+            If (id > 0 AndAlso Not String.IsNullOrEmpty(nombre)) Then
+                lineasTransportes.EId = id
+                lineasTransportes.ENombre = nombre
+                lineasTransportes.EDomicilio = domicilio
+                lineasTransportes.EMunicipio = municipio
+                lineasTransportes.EEstado = estado
+                lineasTransportes.Guardar()
+            End If
+        Next
+        MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+        CargarLineasTransportes()
+
+    End Sub
+
+    Private Sub EliminarLineasTransportes(ByVal conMensaje As Boolean)
+
+        Dim respuestaSi As Boolean = False
+        If (conMensaje) Then
+            If (MessageBox.Show("Confirmas que deseas eliminar todo?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
+                respuestaSi = True
+            End If
+        End If
+        If ((respuestaSi) Or (Not conMensaje)) Then
+            lineasTransportes.EId = 0
+            lineasTransportes.Eliminar()
+        End If
+        If (conMensaje And respuestaSi) Then
+            MessageBox.Show("Eliminado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+            CargarLineasTransportes()
+        End If
+
+    End Sub
+
+    Private Sub SeleccionoTrailers()
+
+        Me.Cursor = Cursors.WaitCursor
+        Me.opcionSeleccionada = OpcionMenu.trailers
+        OcultarSpreads()
+        LimpiarSpread(spVarios)
+        CargarTrailers()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub CargarTrailers()
+
+        AcomodarSpread()
+        trailers.EIdLineaTransporte = 0
+        trailers.EId = 0
+        spVarios.ActiveSheet.DataSource = trailers.ObtenerListadoReporte()
+        FormatearSpreadTrailers()
+
+    End Sub
+
+    Private Sub FormatearSpreadTrailers()
+
+        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
+        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
+        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
+        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
+        ControlarSpreadEnterASiguienteColumna(spVarios)
+        Dim numeracion As Integer = 0
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "idLineaTransporte" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "nombreLineaTransporte" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "marca" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "modelo" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "serie" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "numeroEconomico" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "placasMex" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "placasUsa" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "scac" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "fda" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "color" : numeracion += 1
+        spVarios.ActiveSheet.Columns("idLineaTransporte").Width = 50
+        spVarios.ActiveSheet.Columns("nombreLineaTransporte").Width = 250
+        spVarios.ActiveSheet.Columns("id").Width = 50
+        spVarios.ActiveSheet.Columns("marca").Width = 250
+        spVarios.ActiveSheet.Columns("modelo").Width = 100
+        spVarios.ActiveSheet.Columns("serie").Width = 150
+        spVarios.ActiveSheet.Columns("numeroEconomico").Width = 150
+        spVarios.ActiveSheet.Columns("placasMex").Width = 150
+        spVarios.ActiveSheet.Columns("placasUsa").Width = 150
+        spVarios.ActiveSheet.Columns("scac").Width = 150
+        spVarios.ActiveSheet.Columns("fda").Width = 150
+        spVarios.ActiveSheet.Columns("color").Width = 150
+        spVarios.ActiveSheet.Columns("idLineaTransporte").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombreLineaTransporte").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("id").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("marca").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("modelo").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("serie").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("numeroEconomico").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("placasMex").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("placasUsa").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("scac").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("fda").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("color").CellType = tipoTexto
+        spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
+        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "T  r  a  i  l  e  r  s".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("idLineaTransporte").Index).Value = "No. *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombreLineaTransporte").Index).Value = "Nombre Linea Transporte *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("id").Index).Value = "No. *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("marca").Index).Value = "Marca *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("modelo").Index).Value = "Modelo".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("serie").Index).Value = "Serie".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("numeroEconomico").Index).Value = "No. Económico".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("placasMex").Index).Value = "Placas Mex".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("placasUsa").Index).Value = "Placas Usa".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("scac").Index).Value = "Scac".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("fda").Index).Value = "Fda".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("color").Index).Value = "Color".ToUpper()
+        spVarios.ActiveSheet.Rows.Count += 1
+        Application.DoEvents()
+
+    End Sub
+
+    Private Sub GuardarEditarTrailers()
+
+        EliminarTrailers(False)
+        For fila As Integer = 0 To spVarios.ActiveSheet.Rows.Count - 1
+            Dim idLineaTransporte As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("idLineaTransporte").Index).Text)
+            Dim id As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("id").Index).Text)
+            Dim marca As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("marca").Index).Text
+            Dim modelo As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("modelo").Index).Text)
+            Dim serie As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("serie").Index).Text
+            Dim numeroEconomico As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("numeroEconomico").Index).Text
+            Dim placasMex As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("placasMex").Index).Text
+            Dim placasUsa As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("placasUsa").Index).Text
+            Dim scac As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("scac").Index).Text
+            Dim fda As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("fda").Index).Text
+            Dim color As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("color").Index).Text
+            If (idLineaTransporte > 0 AndAlso id > 0 AndAlso Not String.IsNullOrEmpty(marca)) Then
+                trailers.EIdLineaTransporte = idLineaTransporte
+                trailers.EId = id
+                trailers.EMarca = marca
+                trailers.EModelo = modelo
+                trailers.ESerie = serie
+                trailers.ENumeroEconomico = numeroEconomico
+                trailers.EPlacasMex = placasMex
+                trailers.EPlacasUsa = placasUsa
+                trailers.EScac = scac
+                trailers.EFda = fda
+                trailers.EColor = color
+                trailers.Guardar()
+            End If
+        Next
+        MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+        CargarTrailers()
+
+    End Sub
+
+    Private Sub EliminarTrailers(ByVal conMensaje As Boolean)
+
+        Dim respuestaSi As Boolean = False
+        If (conMensaje) Then
+            If (MessageBox.Show("Confirmas que deseas eliminar todo?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
+                respuestaSi = True
+            End If
+        End If
+        If ((respuestaSi) Or (Not conMensaje)) Then
+            trailers.EIdLineaTransporte = 0
+            trailers.EId = 0
+            trailers.Eliminar()
+        End If
+        If (conMensaje And respuestaSi) Then
+            MessageBox.Show("Eliminado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+            CargarTrailers()
+        End If
+
+    End Sub
+
+    Private Sub SeleccionoCajasTrailers()
+
+        Me.Cursor = Cursors.WaitCursor
+        Me.opcionSeleccionada = OpcionMenu.cajasTrailers
+        OcultarSpreads()
+        LimpiarSpread(spVarios)
+        CargarCajasTrailers()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub CargarCajasTrailers()
+
+        AcomodarSpread()
+        cajasTrailers.EId = 0
+        spVarios.ActiveSheet.DataSource = cajasTrailers.ObtenerListadoReporte()
+        FormatearSpreadCajasTrailers()
+
+    End Sub
+
+    Private Sub FormatearSpreadCajasTrailers()
+
+        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
+        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
+        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
+        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
+        ControlarSpreadEnterASiguienteColumna(spVarios)
+        Dim numeracion As Integer = 0
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "marca" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "serie" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "numeroEconomico" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "placasMex" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "placasUsa" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "longitud" : numeracion += 1
+        spVarios.ActiveSheet.Columns("id").Width = 50
+        spVarios.ActiveSheet.Columns("marca").Width = 250
+        spVarios.ActiveSheet.Columns("serie").Width = 150
+        spVarios.ActiveSheet.Columns("numeroEconomico").Width = 150
+        spVarios.ActiveSheet.Columns("placasMex").Width = 150
+        spVarios.ActiveSheet.Columns("placasUsa").Width = 150
+        spVarios.ActiveSheet.Columns("longitud").Width = 150
+        spVarios.ActiveSheet.Columns("id").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("marca").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("serie").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("numeroEconomico").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("placasMex").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("placasUsa").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("longitud").CellType = tipoDoble
+        spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
+        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "C  a  j  a  s      d  e      T  r  a  i  l  e  r  s".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("id").Index).Value = "No. *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("marca").Index).Value = "Marca *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("serie").Index).Value = "Serie".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("numeroEconomico").Index).Value = "No. Económico".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("placasMex").Index).Value = "Placas Mex".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("placasUsa").Index).Value = "Placas Usa".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("longitud").Index).Value = "Longitud".ToUpper()
+        spVarios.ActiveSheet.Rows.Count += 1
+        Application.DoEvents()
+
+    End Sub
+
+    Private Sub GuardarEditarCajasTrailers()
+
+        EliminarCajasTrailers(False)
+        For fila As Integer = 0 To spVarios.ActiveSheet.Rows.Count - 1
+            Dim id As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("id").Index).Text)
+            Dim marca As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("marca").Index).Text
+            Dim serie As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("serie").Index).Text
+            Dim numeroEconomico As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("numeroEconomico").Index).Text
+            Dim placasMex As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("placasMex").Index).Text
+            Dim placasUsa As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("placasUsa").Index).Text
+            Dim longitud As Double = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("longitud").Index).Text)
+            If (id > 0 AndAlso Not String.IsNullOrEmpty(marca)) Then
+                cajasTrailers.EId = id
+                cajasTrailers.EMarca = marca
+                cajasTrailers.ESerie = serie
+                cajasTrailers.ENumeroEconomico = numeroEconomico
+                cajasTrailers.EPlacasMex = placasMex
+                cajasTrailers.EPlacasUsa = placasUsa
+                cajasTrailers.ELongitud = longitud
+                cajasTrailers.Guardar()
+            End If
+        Next
+        MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+        CargarCajasTrailers()
+
+    End Sub
+
+    Private Sub EliminarCajasTrailers(ByVal conMensaje As Boolean)
+
+        Dim respuestaSi As Boolean = False
+        If (conMensaje) Then
+            If (MessageBox.Show("Confirmas que deseas eliminar todo?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
+                respuestaSi = True
+            End If
+        End If
+        If ((respuestaSi) Or (Not conMensaje)) Then
+            cajasTrailers.EId = 0
+            cajasTrailers.Eliminar()
+        End If
+        If (conMensaje And respuestaSi) Then
+            MessageBox.Show("Eliminado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+            CargarCajasTrailers()
+        End If
+
+    End Sub
+
+    Private Sub SeleccionoChoferes()
+
+        Me.Cursor = Cursors.WaitCursor
+        Me.opcionSeleccionada = OpcionMenu.choferes
+        OcultarSpreads()
+        LimpiarSpread(spVarios)
+        CargarChoferes()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub CargarChoferes()
+
+        AcomodarSpread()
+        choferes.EId = 0
+        spVarios.ActiveSheet.DataSource = choferes.ObtenerListadoReporte()
+        FormatearSpreadChoferes()
+
+    End Sub
+
+    Private Sub FormatearSpreadChoferes()
+
+        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
+        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
+        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
+        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
+        ControlarSpreadEnterASiguienteColumna(spVarios)
+        Dim numeracion As Integer = 0
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "domicilio" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "municipio" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "estado" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "licencia" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "visa" : numeracion += 1
+        spVarios.ActiveSheet.Columns("id").Width = 50
+        spVarios.ActiveSheet.Columns("nombre").Width = 250
+        spVarios.ActiveSheet.Columns("domicilio").Width = 150
+        spVarios.ActiveSheet.Columns("municipio").Width = 150
+        spVarios.ActiveSheet.Columns("estado").Width = 150
+        spVarios.ActiveSheet.Columns("licencia").Width = 150
+        spVarios.ActiveSheet.Columns("visa").Width = 150
+        spVarios.ActiveSheet.Columns("id").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombre").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("domicilio").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("municipio").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("estado").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("licencia").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("visa").CellType = tipoTexto
+        spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
+        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "C  h  o  f  e  r  e  s".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("id").Index).Value = "No. *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombre").Index).Value = "Nombre *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("domicilio").Index).Value = "Domicilio".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("municipio").Index).Value = "Municipio".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("estado").Index).Value = "Estado".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("licencia").Index).Value = "Licencia".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("visa").Index).Value = "Visa".ToUpper()
+        spVarios.ActiveSheet.Rows.Count += 1
+        Application.DoEvents()
+
+    End Sub
+
+    Private Sub GuardarEditarChoferes()
+
+        EliminarChoferes(False)
+        For fila As Integer = 0 To spVarios.ActiveSheet.Rows.Count - 1
+            Dim id As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("id").Index).Text)
+            Dim nombre As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("nombre").Index).Text
+            Dim domicilio As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("domicilio").Index).Text
+            Dim municipio As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("municipio").Index).Text
+            Dim estado As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("estado").Index).Text
+            Dim licencia As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("licencia").Index).Text
+            Dim visa As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("visa").Index).Text
+            If (id > 0 AndAlso Not String.IsNullOrEmpty(nombre)) Then
+                choferes.EId = id
+                choferes.ENombre = nombre
+                choferes.EDomicilio = domicilio
+                choferes.EMunicipio = municipio
+                choferes.EEstado = estado
+                choferes.ELicencia = licencia
+                choferes.EVisa = visa
+                choferes.Guardar()
+            End If
+        Next
+        MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+        CargarChoferes()
+
+    End Sub
+
+    Private Sub EliminarChoferes(ByVal conMensaje As Boolean)
+
+        Dim respuestaSi As Boolean = False
+        If (conMensaje) Then
+            If (MessageBox.Show("Confirmas que deseas eliminar todo?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
+                respuestaSi = True
+            End If
+        End If
+        If ((respuestaSi) Or (Not conMensaje)) Then
+            choferes.EId = 0
+            choferes.Eliminar()
+        End If
+        If (conMensaje And respuestaSi) Then
+            MessageBox.Show("Eliminado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+            CargarChoferes()
+        End If
+
+    End Sub
+
+    Private Sub SeleccionoAduanasMex()
+
+        Me.Cursor = Cursors.WaitCursor
+        Me.opcionSeleccionada = OpcionMenu.aduanaMex
+        OcultarSpreads()
+        LimpiarSpread(spVarios)
+        CargarAduanasMex()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub CargarAduanasMex()
+
+        AcomodarSpread()
+        aduanasMex.EId = 0
+        spVarios.ActiveSheet.DataSource = aduanasMex.ObtenerListadoReporte()
+        FormatearSpreadAduanasMex()
+
+    End Sub
+
+    Private Sub FormatearSpreadAduanasMex()
+
+        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
+        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
+        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
+        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
+        ControlarSpreadEnterASiguienteColumna(spVarios)
+        Dim numeracion As Integer = 0
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "domicilio" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "municipio" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "estado" : numeracion += 1
+        spVarios.ActiveSheet.Columns("id").Width = 50
+        spVarios.ActiveSheet.Columns("nombre").Width = 250
+        spVarios.ActiveSheet.Columns("domicilio").Width = 150
+        spVarios.ActiveSheet.Columns("municipio").Width = 150
+        spVarios.ActiveSheet.Columns("estado").Width = 150
+        spVarios.ActiveSheet.Columns("id").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombre").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("domicilio").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("municipio").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("estado").CellType = tipoTexto
+        spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
+        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "A  d  u  a  n  a  s      d  e      M  e  x".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("id").Index).Value = "No. *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombre").Index).Value = "Nombre *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("domicilio").Index).Value = "Domicilio".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("municipio").Index).Value = "Municipio".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("estado").Index).Value = "Estado".ToUpper()
+        spVarios.ActiveSheet.Rows.Count += 1
+        Application.DoEvents()
+
+    End Sub
+
+    Private Sub GuardarEditarAduanasMex()
+
+        EliminarAduanasMex(False)
+        For fila As Integer = 0 To spVarios.ActiveSheet.Rows.Count - 1
+            Dim id As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("id").Index).Text)
+            Dim nombre As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("nombre").Index).Text
+            Dim domicilio As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("domicilio").Index).Text
+            Dim municipio As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("municipio").Index).Text
+            Dim estado As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("estado").Index).Text
+            If (id > 0 AndAlso Not String.IsNullOrEmpty(nombre)) Then
+                aduanasMex.EId = id
+                aduanasMex.ENombre = nombre
+                aduanasMex.EDomicilio = domicilio
+                aduanasMex.EMunicipio = municipio
+                aduanasMex.EEstado = estado
+                aduanasMex.Guardar()
+            End If
+        Next
+        MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+        CargarAduanasMex()
+
+    End Sub
+
+    Private Sub EliminarAduanasMex(ByVal conMensaje As Boolean)
+
+        Dim respuestaSi As Boolean = False
+        If (conMensaje) Then
+            If (MessageBox.Show("Confirmas que deseas eliminar todo?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
+                respuestaSi = True
+            End If
+        End If
+        If ((respuestaSi) Or (Not conMensaje)) Then
+            aduanasMex.EId = 0
+            aduanasMex.Eliminar()
+        End If
+        If (conMensaje And respuestaSi) Then
+            MessageBox.Show("Eliminado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+            CargarAduanasMex()
+        End If
+
+    End Sub
+
+    Private Sub SeleccionoAduanasUsa()
+
+        Me.Cursor = Cursors.WaitCursor
+        Me.opcionSeleccionada = OpcionMenu.aduanaUsa
+        OcultarSpreads()
+        LimpiarSpread(spVarios)
+        CargarAduanasUsa()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub CargarAduanasUsa()
+
+        AcomodarSpread()
+        aduanasUsa.EId = 0
+        spVarios.ActiveSheet.DataSource = aduanasUsa.ObtenerListadoReporte()
+        FormatearSpreadAduanasUsa()
+
+    End Sub
+
+    Private Sub FormatearSpreadAduanasUsa()
+
+        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
+        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
+        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
+        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
+        ControlarSpreadEnterASiguienteColumna(spVarios)
+        Dim numeracion As Integer = 0
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "domicilio" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "municipio" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "estado" : numeracion += 1
+        spVarios.ActiveSheet.Columns("id").Width = 50
+        spVarios.ActiveSheet.Columns("nombre").Width = 250
+        spVarios.ActiveSheet.Columns("domicilio").Width = 150
+        spVarios.ActiveSheet.Columns("municipio").Width = 150
+        spVarios.ActiveSheet.Columns("estado").Width = 150
+        spVarios.ActiveSheet.Columns("id").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombre").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("domicilio").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("municipio").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("estado").CellType = tipoTexto
+        spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
+        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "A  d  u  a  n  a  s      d  e      U  s  a".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("id").Index).Value = "No. *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombre").Index).Value = "Nombre *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("domicilio").Index).Value = "Domicilio".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("municipio").Index).Value = "Municipio".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("estado").Index).Value = "Estado".ToUpper()
+        spVarios.ActiveSheet.Rows.Count += 1
+        Application.DoEvents()
+
+    End Sub
+
+    Private Sub GuardarEditarAduanasUsa()
+
+        EliminarAduanasUsa(False)
+        For fila As Integer = 0 To spVarios.ActiveSheet.Rows.Count - 1
+            Dim id As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("id").Index).Text)
+            Dim nombre As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("nombre").Index).Text
+            Dim domicilio As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("domicilio").Index).Text
+            Dim municipio As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("municipio").Index).Text
+            Dim estado As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("estado").Index).Text
+            If (id > 0 AndAlso Not String.IsNullOrEmpty(nombre)) Then
+                aduanasUsa.EId = id
+                aduanasUsa.ENombre = nombre
+                aduanasUsa.EDomicilio = domicilio
+                aduanasUsa.EMunicipio = municipio
+                aduanasUsa.EEstado = estado
+                aduanasUsa.Guardar()
+            End If
+        Next
+        MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+        CargarAduanasUsa()
+
+    End Sub
+
+    Private Sub EliminarAduanasUsa(ByVal conMensaje As Boolean)
+
+        Dim respuestaSi As Boolean = False
+        If (conMensaje) Then
+            If (MessageBox.Show("Confirmas que deseas eliminar todo?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
+                respuestaSi = True
+            End If
+        End If
+        If ((respuestaSi) Or (Not conMensaje)) Then
+            aduanasUsa.EId = 0
+            aduanasUsa.Eliminar()
+        End If
+        If (conMensaje And respuestaSi) Then
+            MessageBox.Show("Eliminado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+            CargarAduanasUsa()
+        End If
+
+    End Sub
+
+    Private Sub SeleccionoDocumentadores()
+
+        Me.Cursor = Cursors.WaitCursor
+        Me.opcionSeleccionada = OpcionMenu.documentadores
+        OcultarSpreads()
+        LimpiarSpread(spVarios)
+        CargarDocumentadores()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub CargarDocumentadores()
+
+        AcomodarSpread()
+        documentadores.EId = 0
+        spVarios.ActiveSheet.DataSource = documentadores.ObtenerListadoReporte()
+        FormatearSpreadDocumentadores()
+
+    End Sub
+
+    Private Sub FormatearSpreadDocumentadores()
+
+        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
+        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
+        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
+        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
+        ControlarSpreadEnterASiguienteColumna(spVarios)
+        Dim numeracion As Integer = 0
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
+        spVarios.ActiveSheet.Columns("id").Width = 50
+        spVarios.ActiveSheet.Columns("nombre").Width = 400
+        spVarios.ActiveSheet.Columns("id").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombre").CellType = tipoTexto
+        spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
+        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "D  o  c  u  m  e  n  t  a  d  o  r  e  s".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("id").Index).Value = "No. *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombre").Index).Value = "Nombre *".ToUpper()
+        spVarios.ActiveSheet.Rows.Count += 1
+        Application.DoEvents()
+
+    End Sub
+
+    Private Sub GuardarEditarDocumentadores()
+
+        EliminarDocumentadores(False)
+        For fila As Integer = 0 To spVarios.ActiveSheet.Rows.Count - 1
+            Dim id As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("id").Index).Text)
+            Dim nombre As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("nombre").Index).Text
+            If (id > 0 AndAlso Not String.IsNullOrEmpty(nombre)) Then
+                documentadores.EId = id
+                documentadores.ENombre = nombre
+                documentadores.Guardar()
+            End If
+        Next
+        MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+        CargarDocumentadores()
+
+    End Sub
+
+    Private Sub EliminarDocumentadores(ByVal conMensaje As Boolean)
+
+        Dim respuestaSi As Boolean = False
+        If (conMensaje) Then
+            If (MessageBox.Show("Confirmas que deseas eliminar todo?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
+                respuestaSi = True
+            End If
+        End If
+        If ((respuestaSi) Or (Not conMensaje)) Then
+            documentadores.EId = 0
+            documentadores.Eliminar()
+        End If
+        If (conMensaje And respuestaSi) Then
+            MessageBox.Show("Eliminado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+            CargarDocumentadores()
+        End If
+
+    End Sub
+
 #End Region
 
 #End Region
@@ -1904,9 +2505,71 @@ Public Class Principal
         tiposEntradas = 9
         tiposSalidas = 10
         etiquetas = 11
+        lineas = 12
+        trailers = 13
+        cajasTrailers = 14
+        choferes = 15
+        aduanaMex = 16
+        aduanaUsa = 17
+        documentadores = 18
 
     End Enum
 
 #End Region
 
+    Private Sub rbtnLineasTransportes_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnLineasTransportes.CheckedChanged
+
+        If (rbtnLineasTransportes.Checked) Then
+            SeleccionoLineasTransportes()
+        End If
+
+    End Sub
+
+    Private Sub rbtnTrailers_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnTrailers.CheckedChanged
+
+        If (rbtnTrailers.Checked) Then
+            SeleccionoTrailers()
+        End If
+
+    End Sub
+
+    Private Sub rbtnChoferes_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnChoferes.CheckedChanged
+
+        If (rbtnChoferes.Checked) Then
+            SeleccionoChoferes()
+        End If
+
+    End Sub
+
+    Private Sub rbtnDocumentadores_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnDocumentadores.CheckedChanged
+
+        If (rbtnDocumentadores.Checked) Then
+            SeleccionoDocumentadores()
+        End If
+
+    End Sub
+
+    Private Sub rbtnCajasTrailers_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnCajasTrailers.CheckedChanged
+
+        If (rbtnCajasTrailers.Checked) Then
+            SeleccionoCajasTrailers()
+        End If
+
+    End Sub
+
+    Private Sub rbtnAduanasMex_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnAduanasMex.CheckedChanged
+
+        If (rbtnAduanasMex.Checked) Then
+            SeleccionoAduanasMex()
+        End If
+
+    End Sub
+
+    Private Sub rbtnAduanasUsa_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnAduanasUsa.CheckedChanged
+
+        If (rbtnAduanasUsa.Checked) Then
+            SeleccionoAduanasUsa()
+        End If
+
+    End Sub
 End Class

@@ -85,10 +85,13 @@ Public Class Clientes
             comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Clientes " & _
             " UNION SELECT -1 AS Id, NULL AS Nombre FROM " & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Clientes " & _
             " ORDER BY Id ASC"
+            'If (BaseDatos.conexionCatalogo.State = ConnectionState.Closed) Then
             BaseDatos.conexionCatalogo.Open()
+            'End If
             Dim lectorDatos As SqlDataReader
             lectorDatos = comando.ExecuteReader()
             datos.Load(lectorDatos)
+            lectorDatos.Close()
             BaseDatos.conexionCatalogo.Close()
             Return datos
         Catch ex As Exception

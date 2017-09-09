@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.ComponentModel
+Imports System.Threading
 
 Public Class Principal
 
@@ -36,6 +37,10 @@ Public Class Principal
     Public cantidadFilas As Integer = 1
     Public opcionCatalogoSeleccionada As Integer = 0
     Public esGuardadoValido As Boolean = True
+    ' Hilos para carga rapida. 
+    Public hiloCentrar As New Thread(AddressOf Centrar)
+    Public hiloNombrePrograma As New Thread(AddressOf CargarNombrePrograma)
+    Public hiloEncabezadosTitulos As New Thread(AddressOf CargarEncabezadosTitulos)
     ' Variable de desarrollo.
     Public esDesarrollo As Boolean = False
 
@@ -44,10 +49,12 @@ Public Class Principal
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.Cursor = Cursors.WaitCursor
-        Centrar()
-        CargarNombrePrograma()
-        AsignarTooltips()
+        MostrarCargando(True)
+        'Centrar()
+        'CargarNombrePrograma()
         ConfigurarConexiones()
+        IniciarHilosCarga()
+        AsignarTooltips()
         CargarMedidas()
         Me.Cursor = Cursors.Default
 
@@ -56,18 +63,17 @@ Public Class Principal
     Private Sub Principal_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
         Me.Cursor = Cursors.WaitCursor
-        Me.Enabled = False
         'If (Not ValidarAccesoTotal()) Then
         '    Salir()
         'End If
-        CargarEncabezados()
-        CargarTitulosDirectorio()
+        'CargarEncabezados()
+        'CargarTitulosDirectorio()
         FormatearSpread()
         FormatearSpreadVaciado()
         FormatearSpreadTotales()
-        Me.Enabled = True
         Me.estaMostrado = True
         AsignarFoco(dtpFecha)
+        MostrarCargando(False)
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -86,6 +92,7 @@ Public Class Principal
 
         Me.Cursor = Cursors.WaitCursor
         Me.estaCerrando = True
+        MostrarCargando(True)
         Desvanecer()
         Me.Cursor = Cursors.Default
 
@@ -210,6 +217,67 @@ Public Class Principal
 
 #Region "Básicos"
 
+    Private Sub MostrarCargando(ByVal mostrar As Boolean)
+
+        Dim pnlCargando As New Panel
+        Dim lblCargando As New Label
+        Dim crear As Boolean = False
+        If (Me.Controls.Find("pnlCargando", True).Count = 0) Then ' Si no existe, se crea. 
+            crear = True
+        Else ' Si existe, se obtiene.
+            pnlCargando = Me.Controls.Find("pnlCargando", False)(0)
+            crear = False
+        End If
+        If (crear And mostrar) Then ' Si se tiene que crear y mostrar.
+            ' Imagen de fondo.
+            Try
+                pnlCargando.BackgroundImage = Image.FromFile(String.Format("{0}\{1}\{2}", IIf(Me.esDesarrollo, "W:", Application.StartupPath), "Imagenes", "cargando.png"))
+            Catch
+                pnlCargando.BackgroundImage = Image.FromFile(String.Format("{0}\{1}\{2}", IIf(Me.esDesarrollo, "W:", Application.StartupPath), "Imagenes", "logoBerry.png"))
+            End Try
+            pnlCargando.BackgroundImageLayout = ImageLayout.Center
+            pnlCargando.BackColor = Color.DarkSlateGray
+            pnlCargando.Width = Me.Width
+            pnlCargando.Height = Me.Height
+            pnlCargando.Location = New Point(Me.Location)
+            pnlCargando.Name = "pnlCargando"
+            pnlCargando.Visible = True
+            Me.Controls.Add(pnlCargando)
+            ' Etiqueta de cargando.
+            lblCargando.Text = "¡cargando!"
+            lblCargando.BackColor = pnlCargando.BackColor
+            lblCargando.ForeColor = Color.White
+            lblCargando.AutoSize = False
+            lblCargando.Width = Me.Width
+            lblCargando.Height = 75
+            lblCargando.TextAlign = ContentAlignment.TopCenter
+            lblCargando.Font = New Font(Principal.tipoLetraSpread, 40, FontStyle.Regular)
+            lblCargando.Location = New Point(lblCargando.Location.X, (Me.Height / 2) + 140)
+            pnlCargando.Controls.Add(lblCargando)
+            pnlCargando.BringToFront()
+            pnlCargando.Focus()
+        ElseIf (Not crear) Then ' Si ya existe, se checa si se muestra o no.
+            If (mostrar) Then ' Se muestra.
+                pnlCargando.Visible = True
+                pnlCargando.BringToFront()
+            Else ' No se muestra.
+                pnlCargando.Visible = False
+                pnlCargando.SendToBack()
+            End If
+        End If
+        Application.DoEvents()
+
+    End Sub
+
+    Public Sub IniciarHilosCarga()
+
+        CheckForIllegalCrossThreadCalls = False
+        hiloNombrePrograma.Start()
+        hiloCentrar.Start()
+        hiloEncabezadosTitulos.Start()
+
+    End Sub
+
     Private Sub Salir()
 
         Application.Exit()
@@ -281,12 +349,14 @@ Public Class Principal
         Me.Opacity = 0.98
         Me.Location = Screen.PrimaryScreen.WorkingArea.Location
         Me.Size = Screen.PrimaryScreen.WorkingArea.Size
+        hiloCentrar.Abort()
 
     End Sub
 
     Private Sub CargarNombrePrograma()
 
         Me.nombreEstePrograma = Me.Text
+        hiloNombrePrograma.Abort()
 
     End Sub
 
@@ -358,18 +428,14 @@ Public Class Principal
         End If
 
     End Sub
-
-    Private Sub CargarTitulosDirectorio()
-
-        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaVaciado.Directorios.nombre + "              Usuario:  " + EYELogicaVaciado.Usuarios.nombre
-
-    End Sub
-
-    Private Sub CargarEncabezados()
+     
+    Private Sub CargarEncabezadosTitulos()
 
         lblEncabezadoPrograma.Text = "Programa: " + Me.Text
         lblEncabezadoEmpresa.Text = "Directorio: " + EYELogicaVaciado.Directorios.nombre
         lblEncabezadoUsuario.Text = "Usuario: " + EYELogicaVaciado.Usuarios.nombre
+        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaVaciado.Directorios.nombre + "              Usuario:  " + EYELogicaVaciado.Usuarios.nombre
+        hiloEncabezadosTitulos.Abort()
 
     End Sub
 
@@ -788,6 +854,8 @@ Public Class Principal
         'spTotales.ActiveSheet.Columns("total").CellType = tipoTexto
         spTotales.ActiveSheet.ColumnHeader.Visible = False
         spTotales.ActiveSheet.Columns("pesoCajaUnitaria").Visible = False
+        spTotales.VerticalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.Never
+        spTotales.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.Never
         Application.DoEvents()
 
     End Sub

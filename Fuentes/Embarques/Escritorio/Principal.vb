@@ -48,20 +48,24 @@ Public Class Principal
     Public opcionTipoSeleccionada As Integer = -1
     Public esIzquierda As Boolean = False
     Public esGuardadoValido As Boolean = True
-    Public estaImprimiendo As Boolean = False
+    Public estaImprimiendo As Boolean = False 
+    ' Hilos para carga rapida. 
+    Public hiloCentrar As New Thread(AddressOf Centrar)
+    Public hiloNombrePrograma As New Thread(AddressOf CargarNombrePrograma) 
+    Public hiloEncabezadosTitulos As New Thread(AddressOf CargarEncabezadosTitulos)
+    Public hiloFecha As New Thread(AddressOf CargarFechaHora)
     ' Variable de desarrollo.
     Public esDesarrollo As Boolean = False
 
 #Region "Eventos"
-
+     
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Me.Cursor = Cursors.WaitCursor
-        Centrar()
-        CargarNombrePrograma()
-        AsignarTooltips()
+        Me.Cursor = Cursors.WaitCursor 
+        MostrarCargando(True)
         ConfigurarConexiones()
-        CargarMedidas()
+        IniciarHilosCarga()
+        AsignarTooltips()
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -69,15 +73,8 @@ Public Class Principal
     Private Sub Principal_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
         Me.Cursor = Cursors.WaitCursor
-        Me.Enabled = False
-        'If (Not ValidarAccesoTotal()) Then
-        '    Salir()
-        'End If
-        CargarEncabezados()
-        CargarTitulosDirectorio()
         FormatearSpread()
         FormatearSpreadEmbarques()
-        CargarFechaHora()
         CargarProductores()
         CargarClientes()
         CargarLineasTransportes()
@@ -87,10 +84,10 @@ Public Class Principal
         CargarAduanasMex()
         CargarAduanasUsa()
         CargarDocumentadores()
-        Me.Enabled = True
         CargarIdConsecutivo()
+        AsignarFoco(txtId) 
         Me.estaMostrado = True
-        AsignarFoco(txtId)
+        MostrarCargando(False)
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -109,6 +106,7 @@ Public Class Principal
 
         Me.Cursor = Cursors.WaitCursor
         Me.estaCerrando = True
+        MostrarCargando(True)
         Desvanecer()
         Me.Cursor = Cursors.Default
 
@@ -159,7 +157,7 @@ Public Class Principal
     End Sub
 
     Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
-         
+
         EliminarEmbarques(True)
 
     End Sub
@@ -692,11 +690,111 @@ Public Class Principal
 
     End Sub
 
+    Private Sub btnManifiesto_Click(sender As Object, e As EventArgs) Handles btnManifiesto.Click
+
+        Documentos.opcionSeleccionada = Documentos.OpcionDocumento.manifiesto
+        Documentos.Show()
+        pnlContenido.Enabled = False
+
+    End Sub
+
+    Private Sub btnRemision_Click(sender As Object, e As EventArgs) Handles btnRemision.Click
+
+        Documentos.opcionSeleccionada = Documentos.OpcionDocumento.remision
+        Documentos.Show()
+        pnlContenido.Enabled = False
+
+    End Sub
+
+    Private Sub btnDistribucionCarga_Click(sender As Object, e As EventArgs) Handles btnDistribucionCarga.Click
+
+        Documentos.opcionSeleccionada = Documentos.OpcionDocumento.distribucion
+        Documentos.Show()
+        pnlContenido.Enabled = False
+
+    End Sub
+
+    Private Sub btnCartaResponsiva_Click(sender As Object, e As EventArgs) Handles btnCartaResponsiva.Click
+
+        Documentos.opcionSeleccionada = Documentos.OpcionDocumento.responsiva
+        Documentos.Show()
+        pnlContenido.Enabled = False
+
+    End Sub
+
+    Private Sub btnBitacoraSellos_Click(sender As Object, e As EventArgs) Handles btnBitacoraSellos.Click
+
+        Documentos.opcionSeleccionada = Documentos.OpcionDocumento.sellos
+        Documentos.Show()
+        pnlContenido.Enabled = False
+
+    End Sub
+
+    Private Sub btnPrecos_Click(sender As Object, e As EventArgs) Handles btnPrecos.Click
+
+        Documentos.opcionSeleccionada = Documentos.OpcionDocumento.precos
+        Documentos.Show()
+        pnlContenido.Enabled = False
+
+    End Sub
+
 #End Region
 
 #Region "Métodos"
 
 #Region "Básicos"
+
+    Private Sub MostrarCargando(ByVal mostrar As Boolean)
+
+        Dim pnlCargando As New Panel
+        Dim lblCargando As New Label
+        Dim crear As Boolean = False
+        If (Me.Controls.Find("pnlCargando", True).Count = 0) Then ' Si no existe, se crea. 
+            crear = True
+        Else ' Si existe, se obtiene.
+            pnlCargando = Me.Controls.Find("pnlCargando", False)(0)
+            crear = False
+        End If
+        If (crear And mostrar) Then ' Si se tiene que crear y mostrar.
+            ' Imagen de fondo.
+            Try
+                pnlCargando.BackgroundImage = Image.FromFile(String.Format("{0}\{1}\{2}", IIf(Me.esDesarrollo, "W:", Application.StartupPath), "Imagenes", "cargando.png"))
+            Catch
+                pnlCargando.BackgroundImage = Image.FromFile(String.Format("{0}\{1}\{2}", IIf(Me.esDesarrollo, "W:", Application.StartupPath), "Imagenes", "logoBerry.png"))
+            End Try
+            pnlCargando.BackgroundImageLayout = ImageLayout.Center
+            pnlCargando.BackColor = Color.DarkSlateGray
+            pnlCargando.Width = Me.Width
+            pnlCargando.Height = Me.Height
+            pnlCargando.Location = New Point(Me.Location)
+            pnlCargando.Name = "pnlCargando"
+            pnlCargando.Visible = True
+            Me.Controls.Add(pnlCargando)
+            ' Etiqueta de cargando.
+            lblCargando.Text = "¡cargando!"
+            lblCargando.BackColor = pnlCargando.BackColor
+            lblCargando.ForeColor = Color.White
+            lblCargando.AutoSize = False
+            lblCargando.Width = Me.Width
+            lblCargando.Height = 75
+            lblCargando.TextAlign = ContentAlignment.TopCenter
+            lblCargando.Font = New Font(Principal.tipoLetraSpread, 40, FontStyle.Regular)
+            lblCargando.Location = New Point(lblCargando.Location.X, (Me.Height / 2) + 140)
+            pnlCargando.Controls.Add(lblCargando)
+            pnlCargando.BringToFront()
+            pnlCargando.Focus()
+        ElseIf (Not crear) Then ' Si ya existe, se checa si se muestra o no.
+            If (mostrar) Then ' Se muestra.
+                pnlCargando.Visible = True
+                pnlCargando.BringToFront()
+            Else ' No se muestra.
+                pnlCargando.Visible = False
+                pnlCargando.SendToBack()
+            End If
+        End If
+        Application.DoEvents()
+
+    End Sub
 
     Private Sub MostrarOcultar()
 
@@ -707,14 +805,14 @@ Public Class Principal
             spEmbarques.Left = anchoMenor + espacio
             spEmbarques.Width += anchoMenor * 4 - espacio
             btnMostrarOcultar.BackgroundImage = Nothing
-            btnMostrarOcultar.BackgroundImage = Global.Embarques.My.Resources.hand_right_32
+            btnMostrarOcultar.BackgroundImage = Global.EYEEmbarques.My.Resources.hand_right_32
             Me.esIzquierda = True
         Else
             pnlCapturaSuperior.Left = 0
             spEmbarques.Left = pnlCapturaSuperior.Width + espacio
             spEmbarques.Width -= anchoMenor * 4 - espacio
             btnMostrarOcultar.BackgroundImage = Nothing
-            btnMostrarOcultar.BackgroundImage = Global.Embarques.My.Resources.hand_left_32
+            btnMostrarOcultar.BackgroundImage = Global.EYEEmbarques.My.Resources.hand_left_32
             Me.esIzquierda = False
         End If
 
@@ -730,17 +828,17 @@ Public Class Principal
 
         Dim pnlAyuda As New Panel()
         Dim txtAyuda As New TextBox()
-        If (pnlContenido.Controls.Find("pnlAyuda", True).Count = 0) Then
+        If (pnlContenido.Controls.Find("pnlAyuda", True).Count = 0) Then ' Si no existe, se crea uno oculto.
             pnlAyuda.Name = "pnlAyuda" : Application.DoEvents()
             pnlAyuda.Visible = False : Application.DoEvents()
             pnlContenido.Controls.Add(pnlAyuda) : Application.DoEvents()
             txtAyuda.Name = "txtAyuda" : Application.DoEvents()
             pnlAyuda.Controls.Add(txtAyuda) : Application.DoEvents()
-        Else
+        Else ' Si existe, se asigna a los objetos que se acaban de crear.
             pnlAyuda = pnlContenido.Controls.Find("pnlAyuda", False)(0) : Application.DoEvents()
             txtAyuda = pnlAyuda.Controls.Find("txtAyuda", False)(0) : Application.DoEvents()
         End If
-        If (Not pnlAyuda.Visible) Then
+        If (Not pnlAyuda.Visible) Then ' Si está oculto, es que se acaba de crear solo el objeto, entonces se agregan todas las demás propiedades.
             pnlCuerpo.Visible = False : Application.DoEvents()
             pnlAyuda.Visible = True : Application.DoEvents()
             pnlAyuda.Size = pnlCuerpo.Size : Application.DoEvents()
@@ -753,7 +851,7 @@ Public Class Principal
             txtAyuda.Location = New Point(5, 5) : Application.DoEvents()
             txtAyuda.Text = "Sección de Ayuda: " & vbNewLine & vbNewLine & "* Teclas básicas: " & vbNewLine & "F5 sirve para mostrar catálogos. " & vbNewLine & "F6 sirve para eliminar un registro únicamente. " & vbNewLine & "Escape sirve para ocultar catálogos que se encuentren desplegados. " & vbNewLine & vbNewLine & "* Catálogos desplegados: " & vbNewLine & "Cuando se muestra algún catálogo, al seleccionar alguna opción de este, se va mostrando en tiempo real en la captura de donde se originó. Cuando se le da doble clic en alguna opción o a la tecla escape se oculta dicho catálogo. " & vbNewLine & vbNewLine & "* Datos obligatorios: " & vbNewLine & "Todos los que tengan el simbolo * son estrictamente obligatorios." & vbNewLine & vbNewLine & "* Captura:" & vbNewLine & "* Parte superior: " & vbNewLine & "En esta parte se capturarán todos los datos que son generales, tal cual como el número de la entrada, el almacén al que corresponde, etc." & vbNewLine & "* Parte inferior: " & vbNewLine & "En esta parte se capturarán todos los datos que pueden combinarse, por ejemplo los distintos artículos de ese número de entrada." & vbNewLine & vbNewLine & "* Existen los botones de guardar/editar y eliminar todo dependiendo lo que se necesite hacer. " : Application.DoEvents()
             pnlAyuda.Controls.Add(txtAyuda) : Application.DoEvents()
-        Else
+        Else ' Si está visible y existe, pues se oculta.
             pnlCuerpo.Visible = True : Application.DoEvents()
             pnlAyuda.Visible = False : Application.DoEvents()
         End If
@@ -791,12 +889,14 @@ Public Class Principal
         Me.Opacity = 0.98
         Me.Location = Screen.PrimaryScreen.WorkingArea.Location
         Me.Size = Screen.PrimaryScreen.WorkingArea.Size
+        hiloCentrar.Abort()
 
     End Sub
 
     Private Sub CargarNombrePrograma()
 
         Me.nombreEstePrograma = Me.Text
+        hiloNombrePrograma.Abort()
 
     End Sub
 
@@ -813,6 +913,7 @@ Public Class Principal
         tp.SetToolTip(Me.btnGuardar, "Guardar.")
         tp.SetToolTip(Me.btnEliminar, "Eliminar.")
         tp.SetToolTip(Me.btnGenerarDocumentos, "Generar Documentos.")
+        tp.SetToolTip(Me.btnEnviarCorreos, "Enviar Correos.")
         tp.SetToolTip(Me.btnMostrarOcultar, "Mostrar / Ocultar.")
 
     End Sub
@@ -871,24 +972,20 @@ Public Class Principal
 
     End Sub
 
-    Private Sub CargarTitulosDirectorio()
-
-        Me.Text = "Programa:  " & Me.nombreEstePrograma & "              Directorio:  " & EYELogicaEmbarques.Directorios.nombre & "              Usuario:  " & EYELogicaEmbarques.Usuarios.nombre
-
-    End Sub
-
-    Private Sub CargarEncabezados()
+    Private Sub CargarEncabezadosTitulos()
 
         lblEncabezadoPrograma.Text = "Programa: " & Me.Text
         lblEncabezadoEmpresa.Text = "Directorio: " & EYELogicaEmbarques.Directorios.nombre
         lblEncabezadoUsuario.Text = "Usuario: " & EYELogicaEmbarques.Usuarios.nombre
-        btnMostrarOcultar.BackgroundImage = Global.Embarques.My.Resources.hand_left_32
+        btnMostrarOcultar.BackgroundImage = Global.EYEEmbarques.My.Resources.hand_left_32
         'For Each c As Control In pnlPie.Controls ' TODO. Borrar esto, es una prueba.
         '    If (c.GetType Is GetType(Button)) Then
         '        Thread.Sleep(40)
         '        c.BackColor = ObtenerColorAleatorio()
         '    End If
         'Next
+        Me.Text = "Programa:  " & Me.nombreEstePrograma & "              Directorio:  " & EYELogicaEmbarques.Directorios.nombre & "              Usuario:  " & EYELogicaEmbarques.Usuarios.nombre
+        hiloEncabezadosTitulos.Abort()
 
     End Sub
 
@@ -1074,26 +1171,30 @@ Public Class Principal
         spEmbarques.ActiveSheet.DataSource = Nothing
         spEmbarques.ActiveSheet.Rows.Count = 1
         spEmbarques.ActiveSheet.SetActiveCell(0, 0)
-        LimpiarSpread(spEmbarques)
-        HabilitarControles()
+        LimpiarSpread(spEmbarques) 
 
     End Sub
-
-    Private Sub HabilitarControles()
-
-        'txtCantidad.Enabled = True
-
-    End Sub
-
+     
     Private Sub LimpiarSpread(ByVal spread As FarPoint.Win.Spread.FpSpread)
 
         spread.ActiveSheet.ClearRange(0, 0, spread.ActiveSheet.Rows.Count, spread.ActiveSheet.Columns.Count, True)
 
     End Sub
 
+    Public Sub IniciarHilosCarga()
+
+        CheckForIllegalCrossThreadCalls = False
+        hiloNombrePrograma.Start()
+        hiloCentrar.Start() 
+        hiloEncabezadosTitulos.Start()
+        hiloFecha.Start()
+
+    End Sub
+
     Private Sub CargarFechaHora()
 
         txtHora.Text = Now.Hour.ToString().PadLeft(2, "0") & ":" & Now.Minute.ToString().PadLeft(2, "0")
+        hiloFecha.Abort()
 
     End Sub
 
@@ -1193,9 +1294,8 @@ Public Class Principal
         spCatalogos.ActiveSheet.Rows(-1).Height = Principal.alturaFilasMedianasSpread
         spEmbarques.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded
         spEmbarques.VerticalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded
-        'spEntradas.EditModePermanent = True
         spEmbarques.EditModeReplace = True
-        Application.DoEvents()
+        'Application.DoEvents() 
 
     End Sub
 
@@ -1325,11 +1425,11 @@ Public Class Principal
                     Dim listaTarimas As List(Of EYEEntidadesEmbarques.Tarimas)
                     listaTarimas = tarimas.ObtenerParaCargar()
                     If (listaTarimas.Count = 1) Then
-                        spEmbarques.ActiveSheet.Cells(filaActiva, spEmbarques.ActiveSheet.Columns("nombreProducto").Index).Value = listaTarimas(0).ENombreProducto
-                        spEmbarques.ActiveSheet.Cells(filaActiva, spEmbarques.ActiveSheet.Columns("nombreVariedad").Index).Value = listaTarimas(0).ENombreVariedad
-                        spEmbarques.ActiveSheet.Cells(filaActiva, spEmbarques.ActiveSheet.Columns("nombreEnvase").Index).Value = listaTarimas(0).ENombreEnvase
-                        spEmbarques.ActiveSheet.Cells(filaActiva, spEmbarques.ActiveSheet.Columns("nombreTamano").Index).Value = listaTarimas(0).ENombreTamano
-                        spEmbarques.ActiveSheet.Cells(filaActiva, spEmbarques.ActiveSheet.Columns("nombreEtiqueta").Index).Value = listaTarimas(0).ENombreEtiqueta
+                        spEmbarques.ActiveSheet.Cells(filaActiva, spEmbarques.ActiveSheet.Columns("nombreProducto").Index).Value = listaTarimas(0).EAbreviaturaProducto
+                        spEmbarques.ActiveSheet.Cells(filaActiva, spEmbarques.ActiveSheet.Columns("nombreVariedad").Index).Value = listaTarimas(0).EAbreviaturaVariedad
+                        spEmbarques.ActiveSheet.Cells(filaActiva, spEmbarques.ActiveSheet.Columns("nombreEnvase").Index).Value = listaTarimas(0).EAbreviaturaEnvase
+                        spEmbarques.ActiveSheet.Cells(filaActiva, spEmbarques.ActiveSheet.Columns("nombreTamano").Index).Value = listaTarimas(0).EAbreviaturaTamano
+                        spEmbarques.ActiveSheet.Cells(filaActiva, spEmbarques.ActiveSheet.Columns("nombreEtiqueta").Index).Value = listaTarimas(0).EAbreviaturaEtiqueta
                         spEmbarques.ActiveSheet.Cells(filaActiva, spEmbarques.ActiveSheet.Columns("cantidadCajas").Index).Value = listaTarimas(0).ECantidadCajas
                         If (listaTarimas(0).ERegistros > 2) Then
                             spEmbarques.ActiveSheet.Rows(filaActiva).Height = Principal.alturaFilasMedianasSpread * 2
@@ -1417,12 +1517,15 @@ Public Class Principal
                 cantidadFilas = filaSpread + 1
                 FormatearSpreadEmbarques()
                 btnGenerarDocumentos.Enabled = True
+                btnEnviarCorreos.Enabled = True
             Else
                 LimpiarPantalla()
                 btnGenerarDocumentos.Enabled = False
+                btnEnviarCorreos.Enabled = False
             End If
         Else
             btnGenerarDocumentos.Enabled = False
+            btnEnviarCorreos.Enabled = False
         End If
         AsignarFoco(dtpFecha)
         Me.Cursor = Cursors.Default
@@ -1477,7 +1580,7 @@ Public Class Principal
         spEmbarques.ActiveSheet.ColumnHeader.Cells(0, spEmbarques.ActiveSheet.Columns("cantidadCajas").Index).Value = "Cantidad Cajas".ToUpper()
         spEmbarques.ActiveSheet.Columns(spEmbarques.ActiveSheet.Columns("nombreProducto").Index, spEmbarques.ActiveSheet.Columns.Count - 1).Locked = True
         spEmbarques.ActiveSheet.Columns("esExistente").Visible = False
-        Application.DoEvents()
+        'Application.DoEvents() 
 
     End Sub
 
@@ -1753,12 +1856,17 @@ Public Class Principal
 
 #End Region
 
-    Private Sub btnManifiesto_Click(sender As Object, e As EventArgs) Handles btnManifiesto.Click
+    Private Sub btnEnviarCorreos_Click(sender As Object, e As EventArgs) Handles btnEnviarCorreos.Click
 
-        Documentos.opcionSeleccionada = Documentos.OpcionDocumento.manifiesto
-        Documentos.Show()
-        Me.Enabled = False
+        Correos.Show()
+        pnlContenido.Enabled = False
 
     End Sub
 
+    Private Sub btnEnviarCorreos_MouseEnter(sender As Object, e As EventArgs) Handles btnEnviarCorreos.MouseEnter
+
+        AsignarTooltips("Enviar Correos.")
+
+    End Sub
+     
 End Class

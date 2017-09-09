@@ -22,19 +22,31 @@ Partial Class Documentos
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim EnhancedScrollBarRenderer1 As FarPoint.Win.Spread.EnhancedScrollBarRenderer = New FarPoint.Win.Spread.EnhancedScrollBarRenderer()
+        Dim EnhancedScrollBarRenderer2 As FarPoint.Win.Spread.EnhancedScrollBarRenderer = New FarPoint.Win.Spread.EnhancedScrollBarRenderer()
         Dim EnhancedScrollBarRenderer3 As FarPoint.Win.Spread.EnhancedScrollBarRenderer = New FarPoint.Win.Spread.EnhancedScrollBarRenderer()
         Dim EnhancedScrollBarRenderer4 As FarPoint.Win.Spread.EnhancedScrollBarRenderer = New FarPoint.Win.Spread.EnhancedScrollBarRenderer()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Documentos))
         Me.pnlContenido = New System.Windows.Forms.Panel()
         Me.pnlCuerpo = New System.Windows.Forms.Panel()
+        Me.spParaClonar = New FarPoint.Win.Spread.FpSpread()
+        Me.spParaClonar_Sheet1 = New FarPoint.Win.Spread.SheetView()
         Me.spDocumentos = New FarPoint.Win.Spread.FpSpread()
         Me.spDocumentos_Sheet1 = New FarPoint.Win.Spread.SheetView()
         Me.pnlPie = New System.Windows.Forms.Panel()
+        Me.btnExportarPdf = New System.Windows.Forms.Button()
+        Me.lblLeyendaParcial = New System.Windows.Forms.Label()
+        Me.btnExportarExcel = New System.Windows.Forms.Button()
+        Me.btnImprimir = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.btnAyuda = New System.Windows.Forms.Button()
         Me.lblDescripcionTooltip = New System.Windows.Forms.Label()
         Me.btnSalir = New System.Windows.Forms.Button()
+        Me.impresor = New System.Windows.Forms.PrintDialog()
         Me.pnlContenido.SuspendLayout()
         Me.pnlCuerpo.SuspendLayout()
+        CType(Me.spParaClonar, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.spParaClonar_Sheet1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.spDocumentos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.spDocumentos_Sheet1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlPie.SuspendLayout()
@@ -46,7 +58,7 @@ Partial Class Documentos
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnlContenido.BackColor = System.Drawing.Color.DarkSlateGray
-        Me.pnlContenido.BackgroundImage = Global.Embarques.My.Resources.Resources.Logo3
+        Me.pnlContenido.BackgroundImage = Global.EYEEmbarques.My.Resources.Resources.Logo3
         Me.pnlContenido.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.pnlContenido.Controls.Add(Me.pnlCuerpo)
         Me.pnlContenido.Controls.Add(Me.pnlPie)
@@ -63,11 +75,74 @@ Partial Class Documentos
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnlCuerpo.AutoScroll = True
         Me.pnlCuerpo.BackColor = System.Drawing.Color.Transparent
+        Me.pnlCuerpo.Controls.Add(Me.spParaClonar)
         Me.pnlCuerpo.Controls.Add(Me.spDocumentos)
         Me.pnlCuerpo.Location = New System.Drawing.Point(0, 0)
         Me.pnlCuerpo.Name = "pnlCuerpo"
         Me.pnlCuerpo.Size = New System.Drawing.Size(1034, 567)
         Me.pnlCuerpo.TabIndex = 9
+        '
+        'spParaClonar
+        '
+        Me.spParaClonar.AccessibleDescription = ""
+        Me.spParaClonar.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.spParaClonar.HorizontalScrollBar.Buttons = New FarPoint.Win.Spread.FpScrollBarButtonCollection("BackwardLineButton,ThumbTrack,ForwardLineButton")
+        Me.spParaClonar.HorizontalScrollBar.Name = ""
+        EnhancedScrollBarRenderer1.ArrowColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer1.ArrowHoveredColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer1.ArrowSelectedColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer1.ButtonBackgroundColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer1.ButtonBorderColor = System.Drawing.Color.SlateGray
+        EnhancedScrollBarRenderer1.ButtonHoveredBackgroundColor = System.Drawing.Color.SlateGray
+        EnhancedScrollBarRenderer1.ButtonHoveredBorderColor = System.Drawing.Color.DarkGray
+        EnhancedScrollBarRenderer1.ButtonSelectedBackgroundColor = System.Drawing.Color.DarkGray
+        EnhancedScrollBarRenderer1.ButtonSelectedBorderColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer1.TrackBarBackgroundColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer1.TrackBarSelectedBackgroundColor = System.Drawing.Color.SlateGray
+        Me.spParaClonar.HorizontalScrollBar.Renderer = EnhancedScrollBarRenderer1
+        Me.spParaClonar.HorizontalScrollBar.TabIndex = 2
+        Me.spParaClonar.Location = New System.Drawing.Point(443, 236)
+        Me.spParaClonar.Name = "spParaClonar"
+        Me.spParaClonar.Sheets.AddRange(New FarPoint.Win.Spread.SheetView() {Me.spParaClonar_Sheet1})
+        Me.spParaClonar.Size = New System.Drawing.Size(148, 94)
+        Me.spParaClonar.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Seashell
+        Me.spParaClonar.TabIndex = 34
+        Me.spParaClonar.VerticalScrollBar.Buttons = New FarPoint.Win.Spread.FpScrollBarButtonCollection("BackwardLineButton,ThumbTrack,ForwardLineButton")
+        Me.spParaClonar.VerticalScrollBar.Name = ""
+        EnhancedScrollBarRenderer2.ArrowColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer2.ArrowHoveredColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer2.ArrowSelectedColor = System.Drawing.Color.DarkSlateGray
+        EnhancedScrollBarRenderer2.ButtonBackgroundColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer2.ButtonBorderColor = System.Drawing.Color.SlateGray
+        EnhancedScrollBarRenderer2.ButtonHoveredBackgroundColor = System.Drawing.Color.SlateGray
+        EnhancedScrollBarRenderer2.ButtonHoveredBorderColor = System.Drawing.Color.DarkGray
+        EnhancedScrollBarRenderer2.ButtonSelectedBackgroundColor = System.Drawing.Color.DarkGray
+        EnhancedScrollBarRenderer2.ButtonSelectedBorderColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer2.TrackBarBackgroundColor = System.Drawing.Color.CadetBlue
+        EnhancedScrollBarRenderer2.TrackBarSelectedBackgroundColor = System.Drawing.Color.SlateGray
+        Me.spParaClonar.VerticalScrollBar.Renderer = EnhancedScrollBarRenderer2
+        Me.spParaClonar.VerticalScrollBar.TabIndex = 3
+        Me.spParaClonar.Visible = False
+        '
+        'spParaClonar_Sheet1
+        '
+        Me.spParaClonar_Sheet1.Reset()
+        spParaClonar_Sheet1.SheetName = "Sheet1"
+        'Formulas and custom names must be loaded with R1C1 reference style
+        Me.spParaClonar_Sheet1.ReferenceStyle = FarPoint.Win.Spread.Model.ReferenceStyle.R1C1
+        Me.spParaClonar_Sheet1.ColumnFooter.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red
+        Me.spParaClonar_Sheet1.ColumnFooter.DefaultStyle.Parent = "ColumnHeaderSeashell"
+        Me.spParaClonar_Sheet1.ColumnFooterSheetCornerStyle.NoteIndicatorColor = System.Drawing.Color.Red
+        Me.spParaClonar_Sheet1.ColumnFooterSheetCornerStyle.Parent = "CornerSeashell"
+        Me.spParaClonar_Sheet1.ColumnHeader.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red
+        Me.spParaClonar_Sheet1.ColumnHeader.DefaultStyle.Parent = "ColumnHeaderSeashell"
+        Me.spParaClonar_Sheet1.RowHeader.DefaultStyle.NoteIndicatorColor = System.Drawing.Color.Red
+        Me.spParaClonar_Sheet1.RowHeader.DefaultStyle.Parent = "RowHeaderSeashell"
+        Me.spParaClonar_Sheet1.SheetCornerStyle.NoteIndicatorColor = System.Drawing.Color.Red
+        Me.spParaClonar_Sheet1.SheetCornerStyle.Parent = "CornerSeashell"
+        Me.spParaClonar_Sheet1.ReferenceStyle = FarPoint.Win.Spread.Model.ReferenceStyle.A1
         '
         'spDocumentos
         '
@@ -135,8 +210,13 @@ Partial Class Documentos
         '
         Me.pnlPie.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlPie.BackColor = System.Drawing.Color.Black
+        Me.pnlPie.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.pnlPie.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlPie.Controls.Add(Me.btnExportarPdf)
+        Me.pnlPie.Controls.Add(Me.lblLeyendaParcial)
+        Me.pnlPie.Controls.Add(Me.btnExportarExcel)
+        Me.pnlPie.Controls.Add(Me.btnImprimir)
+        Me.pnlPie.Controls.Add(Me.Label1)
         Me.pnlPie.Controls.Add(Me.btnAyuda)
         Me.pnlPie.Controls.Add(Me.lblDescripcionTooltip)
         Me.pnlPie.Controls.Add(Me.btnSalir)
@@ -146,11 +226,84 @@ Partial Class Documentos
         Me.pnlPie.Size = New System.Drawing.Size(1034, 60)
         Me.pnlPie.TabIndex = 8
         '
+        'btnExportarPdf
+        '
+        Me.btnExportarPdf.BackColor = System.Drawing.Color.White
+        Me.btnExportarPdf.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnExportarPdf.Enabled = False
+        Me.btnExportarPdf.FlatAppearance.BorderColor = System.Drawing.Color.Black
+        Me.btnExportarPdf.FlatAppearance.BorderSize = 3
+        Me.btnExportarPdf.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
+        Me.btnExportarPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnExportarPdf.Image = CType(resources.GetObject("btnExportarPdf.Image"), System.Drawing.Image)
+        Me.btnExportarPdf.Location = New System.Drawing.Point(192, 0)
+        Me.btnExportarPdf.Name = "btnExportarPdf"
+        Me.btnExportarPdf.Size = New System.Drawing.Size(60, 60)
+        Me.btnExportarPdf.TabIndex = 58
+        Me.btnExportarPdf.UseVisualStyleBackColor = False
+        '
+        'lblLeyendaParcial
+        '
+        Me.lblLeyendaParcial.AutoSize = True
+        Me.lblLeyendaParcial.BackColor = System.Drawing.Color.White
+        Me.lblLeyendaParcial.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.lblLeyendaParcial.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.lblLeyendaParcial.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLeyendaParcial.ForeColor = System.Drawing.Color.White
+        Me.lblLeyendaParcial.Location = New System.Drawing.Point(217, 15)
+        Me.lblLeyendaParcial.Name = "lblLeyendaParcial"
+        Me.lblLeyendaParcial.Size = New System.Drawing.Size(0, 20)
+        Me.lblLeyendaParcial.TabIndex = 57
+        '
+        'btnExportarExcel
+        '
+        Me.btnExportarExcel.BackColor = System.Drawing.Color.White
+        Me.btnExportarExcel.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnExportarExcel.Enabled = False
+        Me.btnExportarExcel.FlatAppearance.BorderColor = System.Drawing.Color.Black
+        Me.btnExportarExcel.FlatAppearance.BorderSize = 3
+        Me.btnExportarExcel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
+        Me.btnExportarExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnExportarExcel.Image = CType(resources.GetObject("btnExportarExcel.Image"), System.Drawing.Image)
+        Me.btnExportarExcel.Location = New System.Drawing.Point(128, 0)
+        Me.btnExportarExcel.Name = "btnExportarExcel"
+        Me.btnExportarExcel.Size = New System.Drawing.Size(60, 60)
+        Me.btnExportarExcel.TabIndex = 55
+        Me.btnExportarExcel.UseVisualStyleBackColor = False
+        '
+        'btnImprimir
+        '
+        Me.btnImprimir.BackColor = System.Drawing.Color.White
+        Me.btnImprimir.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnImprimir.Enabled = False
+        Me.btnImprimir.FlatAppearance.BorderColor = System.Drawing.Color.Black
+        Me.btnImprimir.FlatAppearance.BorderSize = 3
+        Me.btnImprimir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
+        Me.btnImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnImprimir.Image = CType(resources.GetObject("btnImprimir.Image"), System.Drawing.Image)
+        Me.btnImprimir.Location = New System.Drawing.Point(64, 0)
+        Me.btnImprimir.Name = "btnImprimir"
+        Me.btnImprimir.Size = New System.Drawing.Size(60, 60)
+        Me.btnImprimir.TabIndex = 56
+        Me.btnImprimir.UseVisualStyleBackColor = False
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.White
+        Me.Label1.Location = New System.Drawing.Point(254, 15)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(0, 31)
+        Me.Label1.TabIndex = 54
+        '
         'btnAyuda
         '
         Me.btnAyuda.BackColor = System.Drawing.Color.White
         Me.btnAyuda.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btnAyuda.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnAyuda.Enabled = False
         Me.btnAyuda.FlatAppearance.BorderColor = System.Drawing.Color.Black
         Me.btnAyuda.FlatAppearance.BorderSize = 3
         Me.btnAyuda.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
@@ -163,7 +316,6 @@ Partial Class Documentos
         Me.btnAyuda.Size = New System.Drawing.Size(60, 60)
         Me.btnAyuda.TabIndex = 5
         Me.btnAyuda.UseVisualStyleBackColor = False
-        Me.btnAyuda.Visible = False
         '
         'lblDescripcionTooltip
         '
@@ -194,6 +346,10 @@ Partial Class Documentos
         Me.btnSalir.TabIndex = 2
         Me.btnSalir.UseVisualStyleBackColor = False
         '
+        'impresor
+        '
+        Me.impresor.UseEXDialog = True
+        '
         'Documentos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -208,6 +364,8 @@ Partial Class Documentos
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pnlContenido.ResumeLayout(False)
         Me.pnlCuerpo.ResumeLayout(False)
+        CType(Me.spParaClonar, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.spParaClonar_Sheet1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.spDocumentos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.spDocumentos_Sheet1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlPie.ResumeLayout(False)
@@ -223,4 +381,12 @@ Partial Class Documentos
     Private WithEvents btnAyuda As System.Windows.Forms.Button
     Friend WithEvents lblDescripcionTooltip As System.Windows.Forms.Label
     Private WithEvents btnSalir As System.Windows.Forms.Button
+    Friend WithEvents btnExportarPdf As System.Windows.Forms.Button
+    Friend WithEvents lblLeyendaParcial As System.Windows.Forms.Label
+    Friend WithEvents btnExportarExcel As System.Windows.Forms.Button
+    Friend WithEvents btnImprimir As System.Windows.Forms.Button
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents spParaClonar As FarPoint.Win.Spread.FpSpread
+    Friend WithEvents spParaClonar_Sheet1 As FarPoint.Win.Spread.SheetView
+    Friend WithEvents impresor As System.Windows.Forms.PrintDialog
 End Class

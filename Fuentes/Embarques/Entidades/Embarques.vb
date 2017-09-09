@@ -387,13 +387,13 @@ Public Class Embarques
             If (Me.EId > 0) Then
                 condicion &= " AND T.IdEmbarque=@id"
             End If
-            comando.CommandText = "SELECT T.Id, P.Nombre AS NombreProducto, V.Nombre AS NombreVariedad, E.Nombre AS NombreEnvase, TA.Nombre AS NombreTamano, ET.Nombre AS NombreEtiqueta, T.CantidadCajas, 'TRUE' AS EsExistente, T.OrdenEmbarque" & _
+            comando.CommandText = "SELECT T.Id, P.Abreviatura AS AbreviaturaProducto, V.Abreviatura AS AbreviaturaVariedad, E.Abreviatura AS AbreviaturaEnvase, T2.Abreviatura AS AbreviaturaTamano, E2.Abreviatura AS AbreviaturaEtiqueta, T.CantidadCajas, 'TRUE' AS EsExistente, T.OrdenEmbarque, P.Nombre AS NombreProducto, V.Nombre AS NombreVariedad, E.Nombre AS NombreEnvase, T2.Nombre AS NombreTamano, E2.Nombre AS NombreEtiqueta" & _
             " FROM Tarimas AS T " & _
             " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON T.IdProducto = P.Id " & _
             " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON T.IdProducto = V.IdProducto AND T.IdVariedad = V.Id " & _
             " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Envases AS E ON T.IdEnvase = E.Id " & _
-            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Tamanos AS TA ON T.IdProducto = TA.IdProducto AND T.IdTamano = TA.Id " & _
-            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Etiquetas AS ET ON T.IdEtiqueta = ET.Id " & _
+            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Tamanos AS T2 ON T.IdProducto = T2.IdProducto AND T.IdTamano = T2.Id " & _
+            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Etiquetas AS E2 ON T.IdEtiqueta = E2.Id " & _
             " WHERE 0=0 " & condicion & " ORDER BY T.OrdenEmbarque ASC"
             comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
             comando.Parameters.AddWithValue("@id", Me.EId)
@@ -422,7 +422,12 @@ Public Class Embarques
                     datos.Rows(indiceAnterior).Item("NombreVariedad") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("NombreVariedad").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("NombreEnvase") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("NombreEnvase").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("NombreTamano") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("NombreTamano").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
-                    datos.Rows(indiceAnterior).Item("NombreEtiqueta") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("NombreEtiqueta").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
+                    datos.Rows(indiceAnterior).Item("NombreEtiqueta") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("NombreEtiqueta").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") " 
+                    datos.Rows(indiceAnterior).Item("AbreviaturaProducto") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("AbreviaturaProducto").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
+                    datos.Rows(indiceAnterior).Item("AbreviaturaVariedad") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("AbreviaturaVariedad").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
+                    datos.Rows(indiceAnterior).Item("AbreviaturaEnvase") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("AbreviaturaEnvase").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
+                    datos.Rows(indiceAnterior).Item("AbreviaturaTamano") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("AbreviaturaTamano").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
+                    datos.Rows(indiceAnterior).Item("AbreviaturaEtiqueta") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("AbreviaturaEtiqueta").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") " 
                     datos.Rows(indiceAnterior).Item("CantidadCajas") += datos.Rows(indice).Item("CantidadCajas").ToString()
                     If (indice > 0) Then
                         datos.Rows(indice).Delete()
@@ -434,7 +439,12 @@ Public Class Embarques
                     datos.Rows(indiceAnterior).Item("NombreVariedad") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("NombreEnvase") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("NombreTamano") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
-                    datos.Rows(indiceAnterior).Item("NombreEtiqueta") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
+                    datos.Rows(indiceAnterior).Item("NombreEtiqueta") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") " 
+                    datos.Rows(indiceAnterior).Item("AbreviaturaProducto") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
+                    datos.Rows(indiceAnterior).Item("AbreviaturaVariedad") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
+                    datos.Rows(indiceAnterior).Item("AbreviaturaEnvase") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
+                    datos.Rows(indiceAnterior).Item("AbreviaturaTamano") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
+                    datos.Rows(indiceAnterior).Item("AbreviaturaEtiqueta") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                 End If
                 contador += 1
                 indice += 1
@@ -534,14 +544,14 @@ Public Class Embarques
 
     End Function
      
-    Public Function ObtenerListadoReporteManifiesto() As DataTable
+    Public Function ObtenerListadoReporteManifiestoRemisionDistribucionResponsivaSellos() As DataTable
 
         Try
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
             Dim bdCatalogos As String = EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque
-            comando.CommandText = String.Format("SELECT E.Id, E.Factura, E.Fecha, E.Hora, E.Temperatura, E.IdEmbarcador, E2.Nombre AS NombreEmbarcador, E2.Domicilio AS DomicilioEmbarcador, E2.Municipio AS MunicipioEmbarcador, E2.Estado AS EstadoEmbarcador, E2.Rfc AS RfcEmbarcador, E2.Ggn AS GgnEmbarcador, E2.Fda AS FdaEmbarcador, E.IdCliente, C.Nombre AS NombreCliente, C.Municipio AS MunicipioCliente, C.Estado AS EstadoCliente, E.IdLineaTransporte, LT.Nombre AS NombreLineaTransporte, E.IdTrailer, T.PlacasMex AS PlacasMexTrailer, T.PlacasUsa AS PlacasUsaTrailer, T.Serie AS SerieTrailer, T.NumeroEconomico AS NumeroEconomicoTrailer, E.IdCajaTrailer, CT.PlacasMex AS PlacasMexCaja, CT.PlacasUsa AS PlacasUsaCaja, CT.NumeroEconomico AS NumeroEconomicoCaja, E.IdChofer, C2.Nombre AS NombreChofer, E.IdAduanaMex, E.IdAduanaUsa, E.IdDocumentador, E.Temperatura, E.Termografo, E.PrecioFlete, E.HoraPrecos, E.Sello1, E.Sello2, E.Sello3, E.Sello4, E.Sello5, E.Sello6, E.Sello7, E.Sello8, E.Factura, E.GuiaCaades " & _
+            comando.CommandText = String.Format("SELECT E.Id, E.Factura, E.Fecha, E.Hora, E.Temperatura, E.IdEmbarcador, E2.Nombre AS NombreEmbarcador, E2.Domicilio AS DomicilioEmbarcador, E2.Municipio AS MunicipioEmbarcador, E2.Estado AS EstadoEmbarcador, E2.Rfc AS RfcEmbarcador, E2.Ggn AS GgnEmbarcador, E2.Fda AS FdaEmbarcador, E.IdCliente, C.Nombre AS NombreCliente, C.Domicilio AS DomicilioCliente, C.Municipio AS MunicipioCliente, C.Estado AS EstadoCliente, C.Rfc AS RfcCliente, E.IdLineaTransporte, LT.Nombre AS NombreLineaTransporte, E.IdTrailer, T.PlacasMex AS PlacasMexTrailer, T.PlacasUsa AS PlacasUsaTrailer, T.Serie AS SerieTrailer, T.NumeroEconomico AS NumeroEconomicoTrailer, T.Marca AS MarcaTrailer, T.Modelo AS ModeloTrailer, T.Scac AS ScacTrailer, T.Color AS ColorTrailer, E.IdCajaTrailer, CT.Serie AS SerieCaja, CT.PlacasMex AS PlacasMexCaja, CT.PlacasUsa AS PlacasUsaCaja, CT.NumeroEconomico AS NumeroEconomicoCaja, CT.Marca AS MarcaCaja, E.IdChofer, C2.Nombre AS NombreChofer, C2.Licencia AS LicenciaChofer, C2.Visa AS VisaChofer, E.IdAduanaMex, AM.Nombre AS AduanaMex, E.IdAduanaUsa, AU.Nombre AS AduanaUsa, E.IdDocumentador, E.Temperatura, E.Termografo, E.PrecioFlete, E.HoraPrecos, E.Sello1, E.Sello2, E.Sello3, E.Sello4, E.Sello5, E.Sello6, E.Sello7, E.Sello8, E.Factura, E.GuiaCaades " & _
             " FROM Embarques AS E " & _
             " LEFT JOIN {0}Productores AS E2 ON E.IdEmbarcador = E2.Id " & _
             " LEFT JOIN {0}Clientes AS C ON E.IdCliente = C.Id " & _
@@ -549,6 +559,8 @@ Public Class Embarques
             " LEFT JOIN {0}Trailers AS T ON E.IdLineaTransporte = T.IdLineaTransporte AND E.IdTrailer = T.Id " & _
             " LEFT JOIN {0}CajasTrailers AS CT ON E.IdCajaTrailer = CT.Id " & _
             " LEFT JOIN {0}Choferes AS C2 ON E.IdChofer= C2.Id " & _
+            " LEFT JOIN {0}AduanasMex AS AM ON E.IdAduanaMex= AM.Id " & _
+            " LEFT JOIN {0}AduanasUsa AS AU ON E.IdAduanaUsa= AU.Id " & _
             " WHERE E.IdTipo=@idTipo AND E.Id=@id", bdCatalogos)
             comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
             comando.Parameters.AddWithValue("@id", Me.EId)
@@ -566,7 +578,7 @@ Public Class Embarques
 
     End Function
 
-    Public Function ObtenerListadoReporteManifiesto2(ByVal esProducto As Boolean, ByVal esEnvase As Boolean, ByVal esEtiqueta As Boolean, ByVal esTamano As Boolean, ByVal idProducto As Integer, ByVal idEnvase As Integer, ByVal idEtiqueta As Integer, ByVal idTamano As Integer) As DataTable
+    Public Function ObtenerListadoReporteManifiestoDesgloseEscalonado(ByVal esProducto As Boolean, ByVal esEnvase As Boolean, ByVal esEtiqueta As Boolean, ByVal esTamano As Boolean, ByVal idProducto As Integer, ByVal idEnvase As Integer, ByVal idEtiqueta As Integer, ByVal idTamano As Integer) As DataTable
 
         Try
             Dim datos As New DataTable
@@ -588,7 +600,7 @@ Public Class Embarques
             If (esTamano) Then
                 condicionSelect &= " T.IdTamano, TA.Nombre AS NombreTamano, TA.Abreviatura AS AbreviaturaTamano "
                 condicionGroup &= " T.IdTamano, TA.Nombre, TA.Abreviatura "
-            End If 
+            End If
             If (idProducto > 0) Then
                 condicionWhere &= " AND T.IdProducto = @idProducto "
             ElseIf (idEnvase > 0) Then
@@ -605,7 +617,7 @@ Public Class Embarques
                     " LEFT JOIN {0}Envases AS E ON T.IdEnvase = E.Id " & _
                     " LEFT JOIN {0}Tamanos AS TA ON T.IdProducto = TA.IdProducto AND T.IdTamano = TA.Id " & _
                     " LEFT JOIN {0}Etiquetas AS ET ON T.IdEtiqueta = ET.Id " & _
-                    " WHERE T.IdTipoEmbarque=idTipoEmbarque AND T.IdEmbarque=@idEmbarque {2}" & _
+                    " WHERE T.IdTipoEmbarque=@idTipoEmbarque AND T.IdEmbarque=@idEmbarque {2}" & _
                     " GROUP BY {3}", bdCatalogos, condicionSelect, condicionWhere, condicionGroup)
             comando.Parameters.AddWithValue("@idTipoEmbarque", Me.EIdTipo)
             comando.Parameters.AddWithValue("@idEmbarque", Me.EId)
@@ -613,6 +625,38 @@ Public Class Embarques
             comando.Parameters.AddWithValue("@idEnvase", idEnvase)
             comando.Parameters.AddWithValue("@idEtiqueta", idEtiqueta)
             comando.Parameters.AddWithValue("@idTamano", idTamano)
+            BaseDatos.conexionEmpaque.Open()
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            BaseDatos.conexionEmpaque.Close()
+            Return datos
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionEmpaque.Close()
+        End Try
+
+    End Function
+
+    Public Function ObtenerListadoReporteRemisionDistribucionResponsiva() As DataTable
+
+        Try
+            Dim datos As New DataTable
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionEmpaque
+            Dim bdCatalogos As String = EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque
+            comando.CommandText = String.Format("SELECT P.Nombre AS NombreProducto, P.Abreviatura AS AbreviaturaProducto, V.Nombre AS NombreVariedad, V.Abreviatura AS AbreviaturaVariedad, E.Nombre AS NombreEnvase, E.Abreviatura AS AbreviaturaEnvase, T2.Nombre AS NombreTamano, T2.Abreviatura AS AbreviaturaTamano, E2.Nombre AS NombreEtiqueta, E2.Abreviatura AS AbreviaturaEtiqueta, 1 AS PrecioUnitarioCajas, SUM(ISNULL(T.CantidadCajas, 0)) AS CantidadCajas, SUM(ISNULL(T.PesoTotalCajas, 0)) AS PesoTotalCajas " & _
+                    " FROM Tarimas AS T " & _
+                    " LEFT JOIN {0}Productos AS P ON T.IdProducto = P.Id " & _
+                    " LEFT JOIN {0}Variedades AS V ON T.IdProducto = V.IdProducto AND T.IdVariedad = V.Id " & _
+                    " LEFT JOIN {0}Envases AS E ON T.IdEnvase = E.Id " & _
+                    " LEFT JOIN {0}Tamanos AS T2 ON T.IdProducto = T2.IdProducto AND T.IdTamano = T2.Id " & _
+                    " LEFT JOIN {0}Etiquetas AS E2 ON T.IdEtiqueta = E2.Id " & _
+                    " WHERE T.IdTipoEmbarque=@idTipoEmbarque AND T.IdEmbarque=@idEmbarque " & _
+                    " GROUP BY P.Nombre, P.Abreviatura, V.Nombre, V.Abreviatura, E.Nombre, E.Abreviatura, T2.Nombre, T2.Abreviatura, E2.Nombre, E2.Abreviatura", bdCatalogos)
+            comando.Parameters.AddWithValue("@idTipoEmbarque", Me.EIdTipo)
+            comando.Parameters.AddWithValue("@idEmbarque", Me.EId)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader
             lectorDatos = comando.ExecuteReader()

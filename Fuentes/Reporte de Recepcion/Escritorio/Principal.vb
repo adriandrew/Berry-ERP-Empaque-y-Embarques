@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports FarPoint.Win.Spread
 Imports System.Reflection
+Imports System.Threading
 
 Public Class Principal
 
@@ -31,14 +32,46 @@ Public Class Principal
     Public opcionSeleccionada As Integer = 0
     Public estaMostrado As Boolean = False
     Public ejecutarProgramaPrincipal As New ProcessStartInfo()
-    Public rutaTemporal As String = CurDir() & "\ArchivosTemporales"
+    Public rutaTemporal As String = Application.StartupPath & "\ArchivosTemporales"
     Public estaCerrando As Boolean = False
     Public prefijoBaseDatosEmpaque As String = "EYE" & "_"
     Public colorFiltros As Color
+    ' Hilos para carga rapida. 
+    Public hiloCentrar As New Thread(AddressOf Centrar)
+    Public hiloNombrePrograma As New Thread(AddressOf CargarNombrePrograma)
+    Public hiloEncabezadosTitulos As New Thread(AddressOf CargarEncabezadosTitulos)
+    Public hiloTiposDatos As New Thread(AddressOf CargarTiposDeDatos)
+    Public hiloColor As New Thread(AddressOf CargarValorColor)
     ' Variable de desarrollo.
     Public esDesarrollo As Boolean = False
 
 #Region "Eventos"
+
+    Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Me.Cursor = Cursors.WaitCursor
+        MostrarCargando(True) 
+        ConfigurarConexiones()
+        IniciarHilosCarga()
+        AsignarTooltips()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub Principal_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+
+        Me.Cursor = Cursors.WaitCursor 
+        CargarComboProductores()
+        CargarComboLotes()
+        CargarComboChoferes()
+        CargarComboProductos()
+        CargarComboVariedades()
+        Me.estaMostrado = True
+        AsignarFoco(dtpFecha)
+        MostrarCargando(False)
+        Me.Cursor = Cursors.Default
+
+    End Sub
 
     Private Sub Principal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
 
@@ -53,36 +86,10 @@ Public Class Principal
 
     Private Sub Principal_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
+        Me.Cursor = Cursors.WaitCursor
         Me.estaCerrando = True
+        MostrarCargando(True)
         Desvanecer()
-
-    End Sub
-
-    Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        Centrar()
-        CargarNombrePrograma()
-        AsignarTooltips()
-        ConfigurarConexiones()
-        CargarTiposDeDatos()
-
-    End Sub
-
-    Private Sub Principal_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-
-        Me.Cursor = Cursors.AppStarting
-        Me.Enabled = False
-        CargarEncabezados()
-        CargarTitulosDirectorio()
-        CargarValorColor()
-        CargarComboProductores()
-        CargarComboLotes()
-        CargarComboChoferes()
-        CargarComboProductos()
-        CargarComboVariedades()
-        Me.estaMostrado = True
-        Me.Enabled = True
-        AsignarFoco(dtpFecha)
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -326,6 +333,69 @@ Public Class Principal
 
 #Region "Básicos"
 
+    Private Sub MostrarCargando(ByVal mostrar As Boolean)
+
+        Dim pnlCargando As New Panel
+        Dim lblCargando As New Label
+        Dim crear As Boolean = False
+        If (Me.Controls.Find("pnlCargando", True).Count = 0) Then ' Si no existe, se crea. 
+            crear = True
+        Else ' Si existe, se obtiene.
+            pnlCargando = Me.Controls.Find("pnlCargando", False)(0)
+            crear = False
+        End If
+        If (crear And mostrar) Then ' Si se tiene que crear y mostrar.
+            ' Imagen de fondo.
+            Try
+                pnlCargando.BackgroundImage = Image.FromFile(String.Format("{0}\{1}\{2}", IIf(Me.esDesarrollo, "W:", Application.StartupPath), "Imagenes", "cargando.png"))
+            Catch
+                pnlCargando.BackgroundImage = Image.FromFile(String.Format("{0}\{1}\{2}", IIf(Me.esDesarrollo, "W:", Application.StartupPath), "Imagenes", "logoBerry.png"))
+            End Try
+            pnlCargando.BackgroundImageLayout = ImageLayout.Center
+            pnlCargando.BackColor = Color.DarkSlateGray
+            pnlCargando.Width = Me.Width
+            pnlCargando.Height = Me.Height
+            pnlCargando.Location = New Point(Me.Location)
+            pnlCargando.Name = "pnlCargando"
+            pnlCargando.Visible = True
+            Me.Controls.Add(pnlCargando)
+            ' Etiqueta de cargando.
+            lblCargando.Text = "¡cargando!"
+            lblCargando.BackColor = pnlCargando.BackColor
+            lblCargando.ForeColor = Color.White
+            lblCargando.AutoSize = False
+            lblCargando.Width = Me.Width
+            lblCargando.Height = 75
+            lblCargando.TextAlign = ContentAlignment.TopCenter
+            lblCargando.Font = New Font(Principal.tipoLetraSpread, 40, FontStyle.Regular)
+            lblCargando.Location = New Point(lblCargando.Location.X, (Me.Height / 2) + 140)
+            pnlCargando.Controls.Add(lblCargando)
+            pnlCargando.BringToFront()
+            pnlCargando.Focus()
+        ElseIf (Not crear) Then ' Si ya existe, se checa si se muestra o no.
+            If (mostrar) Then ' Se muestra.
+                pnlCargando.Visible = True
+                pnlCargando.BringToFront()
+            Else ' No se muestra.
+                pnlCargando.Visible = False
+                pnlCargando.SendToBack()
+            End If
+        End If
+        Application.DoEvents()
+
+    End Sub
+
+    Public Sub IniciarHilosCarga()
+
+        CheckForIllegalCrossThreadCalls = False
+        hiloNombrePrograma.Start()
+        hiloCentrar.Start()
+        hiloEncabezadosTitulos.Start()
+        hiloTiposDatos.Start()
+        hiloColor.Start()
+
+    End Sub
+
     Private Sub AsignarFoco(ByVal c As Control)
 
         c.Focus()
@@ -372,12 +442,14 @@ Public Class Principal
         Me.Opacity = 0.98
         Me.Location = Screen.PrimaryScreen.WorkingArea.Location
         Me.Size = Screen.PrimaryScreen.WorkingArea.Size
+        hiloCentrar.Abort()
 
     End Sub
 
     Private Sub CargarNombrePrograma()
 
         Me.nombreEstePrograma = Me.Text
+        hiloNombrePrograma.Abort()
 
     End Sub
 
@@ -427,7 +499,8 @@ Public Class Principal
         tipoDoble.ShowSeparator = True
         tipoEntero.DecimalPlaces = 0
         tipoEntero.Separator = ","
-        tipoEntero.ShowSeparator = True 
+        tipoEntero.ShowSeparator = True
+        hiloTiposDatos.Abort()
 
     End Sub
 
@@ -485,17 +558,19 @@ Public Class Principal
 
     End Sub
 
-    Private Sub CargarEncabezados()
+    Private Sub CargarEncabezadosTitulos()
 
         lblEncabezadoPrograma.Text = "Programa: " + Me.Text
         lblEncabezadoEmpresa.Text = "Directorio: " + EYELogicaReporteRecepcion.Directorios.nombre
         lblEncabezadoUsuario.Text = "Usuario: " + EYELogicaReporteRecepcion.Usuarios.nombre
+        hiloEncabezadosTitulos.Abort()
 
     End Sub
 
     Private Sub CargarValorColor()
 
         Me.colorFiltros = pnlFiltros.BackColor
+        hiloColor.Abort()
 
     End Sub
 
@@ -587,7 +662,7 @@ Public Class Principal
         encabezado2 = encabezado2.ToUpper
         encabezado3 = "/l/fz""" & fuente7 & """" & lista(0).ELocalidad & "/c/fb1/fz""" & fuente8 & """" & spReporte.ActiveSheet.SheetName & "/r/fz""" & fuente7 & """" & "Hora: " & Now.ToShortTimeString
         encabezado3 = encabezado3.ToUpper
-        If esPdf Then
+        If (esPdf) Then
             Dim bandera As Boolean = True
             Dim obtenerRandom As System.Random = New System.Random()
             Try
@@ -611,7 +686,7 @@ Public Class Principal
         For indice = 0 To spReporte.Sheets.Count - 1
             spReporte.Sheets(indice).PrintInfo = informacionImpresion
         Next
-        If Not esPdf Then
+        If (Not esPdf) Then
             If impresor.ShowDialog = Windows.Forms.DialogResult.OK Then
                 spReporte.PrintSheet(-1)
             End If
@@ -771,7 +846,7 @@ Public Class Principal
     Private Sub EliminarArchivosTemporales()
 
         Try
-            If Directory.Exists(rutaTemporal) Then
+            If (Directory.Exists(rutaTemporal)) Then
                 Directory.Delete(rutaTemporal, True)
                 Directory.CreateDirectory(rutaTemporal)
             End If
@@ -966,7 +1041,7 @@ Public Class Principal
         spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("idVariedad").Index, 1, 2)
         spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("idVariedad").Index).Value = "Variedad".ToUpper
         spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("idVariedad").Index).Value = "No.".ToUpper
-        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("nombreVariedad").Index).Value = "Nombre".ToUpper 
+        spReporte.ActiveSheet.ColumnHeader.Cells(1, spReporte.ActiveSheet.Columns("nombreVariedad").Index).Value = "Nombre".ToUpper
         spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("cantidadCajas").Index, 2, 1)
         spReporte.ActiveSheet.ColumnHeader.Cells(0, spReporte.ActiveSheet.Columns("cantidadCajas").Index).Value = "Cantidad Cajas".ToUpper
         spReporte.ActiveSheet.AddColumnHeaderSpanCell(0, spReporte.ActiveSheet.Columns("pesoCajas").Index, 2, 1)

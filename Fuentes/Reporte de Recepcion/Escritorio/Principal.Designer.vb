@@ -86,7 +86,7 @@ Partial Class Principal
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnlContenido.BackColor = System.Drawing.Color.DarkSlateGray
-        Me.pnlContenido.BackgroundImage = Global.ReporteRecepcion.My.Resources.Resources.Logo3
+        Me.pnlContenido.BackgroundImage = Global.EYEReporteRecepcion.My.Resources.Resources.Logo3
         Me.pnlContenido.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.pnlContenido.Controls.Add(Me.pnlCuerpo)
         Me.pnlContenido.Controls.Add(Me.pnlPie)
@@ -489,7 +489,7 @@ Partial Class Principal
         '
         Me.pnlPie.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlPie.BackColor = System.Drawing.Color.FromArgb(CType(CType(15, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(15, Byte), Integer))
+        Me.pnlPie.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.pnlPie.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlPie.Controls.Add(Me.btnAyuda)
         Me.pnlPie.Controls.Add(Me.btnExportarPdf)
@@ -531,7 +531,7 @@ Partial Class Principal
         Me.btnExportarPdf.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
         Me.btnExportarPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExportarPdf.Image = CType(resources.GetObject("btnExportarPdf.Image"), System.Drawing.Image)
-        Me.btnExportarPdf.Location = New System.Drawing.Point(179, 0)
+        Me.btnExportarPdf.Location = New System.Drawing.Point(182, 0)
         Me.btnExportarPdf.Name = "btnExportarPdf"
         Me.btnExportarPdf.Size = New System.Drawing.Size(60, 60)
         Me.btnExportarPdf.TabIndex = 53
@@ -560,7 +560,7 @@ Partial Class Principal
         Me.btnExportarExcel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
         Me.btnExportarExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExportarExcel.Image = CType(resources.GetObject("btnExportarExcel.Image"), System.Drawing.Image)
-        Me.btnExportarExcel.Location = New System.Drawing.Point(120, 0)
+        Me.btnExportarExcel.Location = New System.Drawing.Point(123, 0)
         Me.btnExportarExcel.Name = "btnExportarExcel"
         Me.btnExportarExcel.Size = New System.Drawing.Size(60, 60)
         Me.btnExportarExcel.TabIndex = 50
@@ -576,7 +576,7 @@ Partial Class Principal
         Me.btnImprimir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
         Me.btnImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnImprimir.Image = CType(resources.GetObject("btnImprimir.Image"), System.Drawing.Image)
-        Me.btnImprimir.Location = New System.Drawing.Point(61, 0)
+        Me.btnImprimir.Location = New System.Drawing.Point(64, 0)
         Me.btnImprimir.Name = "btnImprimir"
         Me.btnImprimir.Size = New System.Drawing.Size(60, 60)
         Me.btnImprimir.TabIndex = 51
@@ -615,7 +615,7 @@ Partial Class Principal
         '
         Me.pnlEncabezado.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlEncabezado.BackColor = System.Drawing.Color.FromArgb(CType(CType(15, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(15, Byte), Integer))
+        Me.pnlEncabezado.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.pnlEncabezado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlEncabezado.Controls.Add(Me.lblEncabezadoArea)
         Me.pnlEncabezado.Controls.Add(Me.lblEncabezadoUsuario)

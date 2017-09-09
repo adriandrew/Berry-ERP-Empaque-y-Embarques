@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0838C334-6727-4837-93EB-09282233D30E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>ReporteRecepcion.My.MyApplication</StartupObject>
-    <RootNamespace>ReporteRecepcion</RootNamespace>
-    <AssemblyName>EYE06</AssemblyName>
+    <StartupObject>EYEReporteRecepcion.My.MyApplication</StartupObject>
+    <RootNamespace>EYEReporteRecepcion</RootNamespace>
+    <AssemblyName>EYE07</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>EYE06.xml</DocumentationFile>
+    <DocumentationFile>EYE07.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>EYE06.xml</DocumentationFile>
+    <DocumentationFile>EYE07.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -55,7 +55,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>EYE06.xml</DocumentationFile>
+    <DocumentationFile>EYE07.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -64,7 +64,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>EYE06.xml</DocumentationFile>
+    <DocumentationFile>EYE07.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -72,7 +72,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Logo3.ico</ApplicationIcon>
+    <ApplicationIcon>Logos\Logo3.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FarPoint.CalcEngine, Version=5.0.3518.2008, Culture=neutral, PublicKeyToken=327c3516b1b18457" />
@@ -173,9 +173,9 @@
     <Content Include="Iconos Usados\save-48.png" />
     <Content Include="Iconos Usados\user-48.png" />
     <Content Include="Iconos Usados\XLS-48.png" />
-    <Content Include="Logo.ico" />
-    <Content Include="Logo2.ico" />
-    <Content Include="Logo3.ico" />
+    <Content Include="Logos\Logo.ico" />
+    <Content Include="Logos\Logo2.ico" />
+    <Content Include="Logos\Logo3.ico" />
     <None Include="Resources\Logo3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

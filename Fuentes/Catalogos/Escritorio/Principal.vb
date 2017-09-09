@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.ComponentModel
+Imports System.Threading
 
 Public Class Principal
 
@@ -21,6 +22,7 @@ Public Class Principal
     Public aduanasMex As New EYEEntidadesCatalogos.AduanasMex()
     Public aduanasUsa As New EYEEntidadesCatalogos.AduanasUsa()
     Public documentadores As New EYEEntidadesCatalogos.Documentadores()
+    Public correos As New EYEEntidadesCatalogos.Correos()
     ' Variables de tipos de datos de spread.
     Public tipoTexto As New FarPoint.Win.Spread.CellType.TextCellType()
     Public tipoTextoContrasena As New FarPoint.Win.Spread.CellType.TextCellType()
@@ -48,6 +50,10 @@ Public Class Principal
     Public estaCerrando As Boolean = False
     Public ejecutarProgramaPrincipal As New ProcessStartInfo()
     Public prefijoBaseDatosEmpaque As String = "EYE" & "_"
+    ' Hilos para carga rapida. 
+    Public hiloCentrar As New Thread(AddressOf Centrar)
+    Public hiloNombrePrograma As New Thread(AddressOf CargarNombrePrograma) 
+    Public hiloEncabezadosTitulos As New Thread(AddressOf CargarEncabezadosTitulos) 
     ' Variable de desarrollo.
     Public esDesarrollo As Boolean = False
 
@@ -56,10 +62,11 @@ Public Class Principal
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.Cursor = Cursors.WaitCursor
-        Centrar()
-        CargarNombrePrograma()
-        AsignarTooltips()
+        MostrarCargando(True)
         ConfigurarConexiones()
+        IniciarHilosCarga()
+        AsignarTooltips()
+        CargarMedidas()
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -69,11 +76,9 @@ Public Class Principal
         Me.Cursor = Cursors.WaitCursor
         'If (Not ValidarAccesoTotal()) Then
         '    Salir()
-        'End If
-        CargarEncabezados()
-        CargarTitulosDirectorio()
-        CargarMedidas()
+        'End If 
         FormatearSpread()
+        MostrarCargando(False)
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -92,6 +97,7 @@ Public Class Principal
 
         Me.Cursor = Cursors.WaitCursor
         Me.estaCerrando = True
+        MostrarCargando(True)
         Desvanecer()
         Me.Cursor = Cursors.Default
 
@@ -138,6 +144,8 @@ Public Class Principal
             GuardarEditarAduanasUsa()
         ElseIf (Me.opcionSeleccionada = OpcionMenu.documentadores) Then
             GuardarEditarDocumentadores()
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.correos) Then
+            GuardarEditarCorreos()
         End If
         Me.Cursor = Cursors.Default
 
@@ -178,6 +186,8 @@ Public Class Principal
             EliminarAduanasUsa(True)
         ElseIf (Me.opcionSeleccionada = OpcionMenu.documentadores) Then
             EliminarDocumentadores(True)
+        ElseIf (Me.opcionSeleccionada = OpcionMenu.correos) Then
+            EliminarCorreos(True)
         End If
         Me.Cursor = Cursors.Default
 
@@ -383,6 +393,67 @@ Public Class Principal
 
 #Region "Básicos"
 
+    Private Sub MostrarCargando(ByVal mostrar As Boolean)
+
+        Dim pnlCargando As New Panel
+        Dim lblCargando As New Label
+        Dim crear As Boolean = False
+        If (Me.Controls.Find("pnlCargando", True).Count = 0) Then ' Si no existe, se crea. 
+            crear = True
+        Else ' Si existe, se obtiene.
+            pnlCargando = Me.Controls.Find("pnlCargando", False)(0)
+            crear = False
+        End If
+        If (crear And mostrar) Then ' Si se tiene que crear y mostrar.
+            ' Imagen de fondo.
+            Try 
+                pnlCargando.BackgroundImage = Image.FromFile(String.Format("{0}\{1}\{2}", IIf(Me.esDesarrollo, "W:", Application.StartupPath), "Imagenes", "cargando.png"))
+            Catch
+                pnlCargando.BackgroundImage = Image.FromFile(String.Format("{0}\{1}\{2}", IIf(Me.esDesarrollo, "W:", Application.StartupPath), "Imagenes", "logoBerry.png"))
+            End Try
+            pnlCargando.BackgroundImageLayout = ImageLayout.Center
+            pnlCargando.BackColor = Color.DarkSlateGray
+            pnlCargando.Width = Me.Width
+            pnlCargando.Height = Me.Height
+            pnlCargando.Location = New Point(Me.Location)
+            pnlCargando.Name = "pnlCargando"
+            pnlCargando.Visible = True
+            Me.Controls.Add(pnlCargando)
+            ' Etiqueta de cargando.
+            lblCargando.Text = "¡cargando!"
+            lblCargando.BackColor = pnlCargando.BackColor
+            lblCargando.ForeColor = Color.White
+            lblCargando.AutoSize = False
+            lblCargando.Width = Me.Width
+            lblCargando.Height = 75
+            lblCargando.TextAlign = ContentAlignment.TopCenter
+            lblCargando.Font = New Font(Principal.tipoLetraSpread, 40, FontStyle.Regular)
+            lblCargando.Location = New Point(lblCargando.Location.X, (Me.Height / 2) + 140)
+            pnlCargando.Controls.Add(lblCargando)
+            pnlCargando.BringToFront()
+            pnlCargando.Focus()
+        ElseIf (Not crear) Then ' Si ya existe, se checa si se muestra o no.
+            If (mostrar) Then ' Se muestra.
+                pnlCargando.Visible = True
+                pnlCargando.BringToFront()
+            Else ' No se muestra.
+                pnlCargando.Visible = False
+                pnlCargando.SendToBack()
+            End If
+        End If
+        Application.DoEvents()
+
+    End Sub
+
+    Public Sub IniciarHilosCarga()
+
+        CheckForIllegalCrossThreadCalls = False
+        hiloNombrePrograma.Start()
+        hiloCentrar.Start() 
+        hiloEncabezadosTitulos.Start() 
+
+    End Sub
+
     Private Sub Salir()
 
         Application.Exit()
@@ -454,12 +525,14 @@ Public Class Principal
         Me.Opacity = 0.98
         Me.Location = Screen.PrimaryScreen.WorkingArea.Location
         Me.Size = Screen.PrimaryScreen.WorkingArea.Size
+        hiloCentrar.Abort()
 
     End Sub
 
     Private Sub CargarNombrePrograma()
 
         Me.nombreEstePrograma = Me.Text
+        hiloNombrePrograma.Abort()
 
     End Sub
 
@@ -529,18 +602,14 @@ Public Class Principal
         End If
 
     End Sub
-
-    Private Sub CargarTitulosDirectorio()
-
-        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaCatalogos.Directorios.nombre + "              Usuario:  " + EYELogicaCatalogos.Usuarios.nombre
-
-    End Sub
-
-    Private Sub CargarEncabezados()
+     
+    Private Sub CargarEncabezadosTitulos()
 
         lblEncabezadoPrograma.Text = "Programa: " + Me.Text
         lblEncabezadoEmpresa.Text = "Directorio: " + EYELogicaCatalogos.Directorios.nombre
         lblEncabezadoUsuario.Text = "Usuario: " + EYELogicaCatalogos.Usuarios.nombre
+        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaCatalogos.Directorios.nombre + "              Usuario:  " + EYELogicaCatalogos.Usuarios.nombre
+        hiloEncabezadosTitulos.Abort()
 
     End Sub
 
@@ -2486,6 +2555,95 @@ Public Class Principal
 
     End Sub
 
+
+
+    Private Sub SeleccionoCorreos()
+
+        Me.Cursor = Cursors.WaitCursor
+        Me.opcionSeleccionada = OpcionMenu.correos
+        OcultarSpreads()
+        LimpiarSpread(spVarios)
+        CargarCorreos()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub CargarCorreos()
+
+        AcomodarSpread()
+        correos.EId = 0
+        spVarios.ActiveSheet.DataSource = correos.ObtenerListadoReporte()
+        FormatearSpreadCorreos()
+
+    End Sub
+
+    Private Sub FormatearSpreadCorreos()
+
+        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
+        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
+        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
+        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
+        ControlarSpreadEnterASiguienteColumna(spVarios)
+        Dim numeracion As Integer = 0
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
+        spVarios.ActiveSheet.Columns(numeracion).Tag = "direccion" : numeracion += 1
+        spVarios.ActiveSheet.Columns("id").Width = 50
+        spVarios.ActiveSheet.Columns("nombre").Width = 400
+        spVarios.ActiveSheet.Columns("direccion").Width = 400
+        spVarios.ActiveSheet.Columns("id").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombre").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("direccion").CellType = tipoTexto
+        spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
+        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "C  o  n  t  a  c  t  o  s      d  e      C  o  r  r  e  o".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("id").Index).Value = "No. *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombre").Index).Value = "Nombre *".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("direccion").Index).Value = "Direccion *".ToUpper()
+        spVarios.ActiveSheet.Rows.Count += 1
+        Application.DoEvents()
+
+    End Sub
+
+    Private Sub GuardarEditarCorreos()
+
+        EliminarCorreos(False)
+        For fila As Integer = 0 To spVarios.ActiveSheet.Rows.Count - 1
+            Dim id As Integer = EYELogicaCatalogos.Funciones.ValidarNumeroACero(spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("id").Index).Text)
+            Dim nombre As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("nombre").Index).Text
+            Dim direccion As String = spVarios.ActiveSheet.Cells(fila, spVarios.ActiveSheet.Columns("direccion").Index).Text
+            If (id > 0 AndAlso Not String.IsNullOrEmpty(nombre) AndAlso Not String.IsNullOrEmpty(direccion)) Then
+                correos.EId = id
+                correos.ENombre = nombre
+                correos.EDireccion = direccion
+                correos.Guardar()
+            End If
+        Next
+        MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+        CargarCorreos()
+
+    End Sub
+
+    Private Sub EliminarCorreos(ByVal conMensaje As Boolean)
+
+        Dim respuestaSi As Boolean = False
+        If (conMensaje) Then
+            If (MessageBox.Show("Confirmas que deseas eliminar todo?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
+                respuestaSi = True
+            End If
+        End If
+        If ((respuestaSi) Or (Not conMensaje)) Then
+            correos.EId = 0
+            correos.Eliminar()
+        End If
+        If (conMensaje And respuestaSi) Then
+            MessageBox.Show("Eliminado finalizado.", "Finalizado.", MessageBoxButtons.OK)
+            CargarCorreos()
+        End If
+
+    End Sub
+
 #End Region
 
 #End Region
@@ -2512,6 +2670,7 @@ Public Class Principal
         aduanaMex = 16
         aduanaUsa = 17
         documentadores = 18
+        correos = 19
 
     End Enum
 
@@ -2572,4 +2731,13 @@ Public Class Principal
         End If
 
     End Sub
+
+    Private Sub rbtnContactosCorreo_CheckedChanged(sender As Object, e As EventArgs) Handles rbtnContactosCorreo.CheckedChanged
+
+        If (rbtnContactosCorreo.Checked) Then
+            SeleccionoCorreos()
+        End If
+
+    End Sub
+
 End Class

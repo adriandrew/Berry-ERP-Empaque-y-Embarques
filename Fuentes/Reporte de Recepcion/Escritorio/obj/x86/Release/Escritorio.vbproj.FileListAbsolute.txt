@@ -178,10 +178,10 @@ C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Reporte
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Reporte de Recepcion\Escritorio\obj\x86\Release\ALM04.xml
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Reporte de Recepcion\Escritorio\obj\x86\Release\ALM04.pdb
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Reporte de Recepcion\Escritorio\bin\x86\Release\EYE06.exe.config
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYE06.exe.config
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYE06.exe
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYE06.pdb
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYE06.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYE07.exe.config
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYE07.exe
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYE07.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYE07.xml
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYEEntidadesReporteRecepcion.dll
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYELogicaReporteRecepcion.dll
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYEEntidadesReporteRecepcion.pdb
@@ -189,10 +189,10 @@ C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modific
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYELogicaReporteRecepcion.pdb
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\bin\x86\Release\EYELogicaReporteRecepcion.xml
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\Escritorio.vbprojResolveAssemblyReference.cache
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\ReporteRecepcion.Resources.resources
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\ReporteRecepcion.Principal.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\EYEReporteRecepcion.Resources.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\EYEReporteRecepcion.Principal.resources
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\Escritorio.vbproj.GenerateResource.Cache
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\EYE06.exe.licenses
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\EYE06.exe
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\EYE06.xml
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\EYE06.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\EYE07.exe.licenses
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\EYE07.exe
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\EYE07.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Reporte de Recepcion\Escritorio\obj\x86\Release\EYE07.pdb

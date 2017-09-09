@@ -12,14 +12,19 @@ Public Class Tarimas
     Private ordenEmbarque As Integer
     Private idProducto As Integer
     Private nombreProducto As String
+    Private abreviaturaProducto As String
     Private idVariedad As Integer
     Private nombreVariedad As String
+    Private abreviaturaVariedad As String
     Private idEnvase As Integer
     Private nombreEnvase As String
+    Private abreviaturaEnvase As String
     Private idTamano As Integer
     Private nombreTamano As String
+    Private abreviaturaTamano As String
     Private idEtiqueta As Integer
     Private nombreEtiqueta As String
+    Private abreviaturaEtiqueta As String
     Private cantidadCajas As Integer
     Private registros As Integer
 
@@ -103,6 +108,14 @@ Public Class Tarimas
             nombreProducto = value
         End Set
     End Property
+    Public Property EAbreviaturaProducto() As String
+        Get
+            Return abreviaturaProducto
+        End Get
+        Set(value As String)
+            abreviaturaProducto = value
+        End Set
+    End Property
     Public Property EIdVariedad() As Integer
         Get
             Return idVariedad
@@ -117,6 +130,14 @@ Public Class Tarimas
         End Get
         Set(value As String)
             nombreVariedad = value
+        End Set
+    End Property
+    Public Property EAbreviaturaVariedad() As String
+        Get
+            Return abreviaturaVariedad
+        End Get
+        Set(value As String)
+            abreviaturaVariedad = value
         End Set
     End Property
     Public Property EIdEnvase() As Integer
@@ -135,6 +156,14 @@ Public Class Tarimas
             nombreEnvase = value
         End Set
     End Property
+    Public Property EAbreviaturaEnvase() As String
+        Get
+            Return abreviaturaEnvase
+        End Get
+        Set(value As String)
+            abreviaturaEnvase = value
+        End Set
+    End Property
     Public Property EIdTamano() As Integer
         Get
             Return idTamano
@@ -151,6 +180,14 @@ Public Class Tarimas
             nombreTamano = value
         End Set
     End Property
+    Public Property EAbreviaturaTamano() As String
+        Get
+            Return abreviaturaTamano
+        End Get
+        Set(value As String)
+            abreviaturaTamano = value
+        End Set
+    End Property
     Public Property EIdEtiqueta() As Integer
         Get
             Return idEtiqueta
@@ -165,6 +202,14 @@ Public Class Tarimas
         End Get
         Set(value As String)
             nombreEtiqueta = value
+        End Set
+    End Property
+    Public Property EAbreviaturaEtiqueta() As String
+        Get
+            Return abreviaturaEtiqueta
+        End Get
+        Set(value As String)
+            abreviaturaEtiqueta = value
         End Set
     End Property
     Public Property ECantidadCajas() As Integer
@@ -190,13 +235,13 @@ Public Class Tarimas
             Dim lista As New List(Of Tarimas)
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque 
-            comando.CommandText = "SELECT T.Id, T.IdProducto, P.Nombre AS NombreProducto, T.IdVariedad, V.Nombre AS NombreVariedad, T.IdEnvase, E.Nombre AS NombreEnvase, T.IdTamano, TA.Nombre AS NombreTamano, T.IdEtiqueta, ET.Nombre AS NombreEtiqueta, T.CantidadCajas " & _
+            comando.CommandText = "SELECT T.Id, T.IdProducto, P.Nombre AS NombreProducto, P.Abreviatura AS AbreviaturaProducto, T.IdVariedad, V.Nombre AS NombreVariedad, V.Abreviatura AS AbreviaturaVariedad, T.IdEnvase, E.Nombre AS NombreEnvase, E.Abreviatura AS AbreviaturaEnvase, T.IdTamano, T2.Nombre AS NombreTamano, T2.Abreviatura AS AbreviaturaTamano, T.IdEtiqueta, E2.Nombre AS NombreEtiqueta, E2.Abreviatura AS AbreviaturaEtiqueta, T.CantidadCajas " & _
             " FROM Tarimas AS T " & _
             " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON T.IdProducto = P.Id " & _
             " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON T.IdProducto = V.IdProducto AND T.IdVariedad = V.Id " & _
             " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Envases AS E ON T.IdEnvase = E.Id " & _
-            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Tamanos AS TA ON T.IdProducto = TA.IdProducto AND T.IdTamano = TA.Id " & _
-            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Etiquetas AS ET ON T.IdEtiqueta = ET.Id " & _
+            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Tamanos AS T2 ON T.IdProducto = T2.IdProducto AND T.IdTamano = T2.Id " & _
+            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Etiquetas AS E2 ON T.IdEtiqueta = E2.Id " & _
             " WHERE T.EstaEmbarcado = 'FALSE' AND T.EsSobrante = 'FALSE' AND T.Id=@id ORDER BY T.Orden ASC"
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
@@ -211,6 +256,11 @@ Public Class Tarimas
                 tabla.nombreEnvase &= IIf(contador > 0, "- ", String.Empty) & lectorDatos("NombreEnvase").ToString() & " (" & Convert.ToInt32(lectorDatos("CantidadCajas").ToString()) & ") "
                 tabla.nombreTamano &= IIf(contador > 0, "- ", String.Empty) & lectorDatos("NombreTamano").ToString() & " (" & Convert.ToInt32(lectorDatos("CantidadCajas").ToString()) & ") "
                 tabla.nombreEtiqueta &= IIf(contador > 0, "- ", String.Empty) & lectorDatos("NombreEtiqueta").ToString() & " (" & Convert.ToInt32(lectorDatos("CantidadCajas").ToString()) & ") "
+                tabla.abreviaturaProducto &= IIf(contador > 0, "- ", String.Empty) & lectorDatos("AbreviaturaProducto").ToString() & " (" & Convert.ToInt32(lectorDatos("CantidadCajas").ToString()) & ") "
+                tabla.abreviaturaVariedad &= IIf(contador > 0, "- ", String.Empty) & lectorDatos("AbreviaturaVariedad").ToString() & " (" & Convert.ToInt32(lectorDatos("CantidadCajas").ToString()) & ") "
+                tabla.abreviaturaEnvase &= IIf(contador > 0, "- ", String.Empty) & lectorDatos("AbreviaturaEnvase").ToString() & " (" & Convert.ToInt32(lectorDatos("CantidadCajas").ToString()) & ") "
+                tabla.abreviaturaTamano &= IIf(contador > 0, "- ", String.Empty) & lectorDatos("AbreviaturaTamano").ToString() & " (" & Convert.ToInt32(lectorDatos("CantidadCajas").ToString()) & ") "
+                tabla.abreviaturaEtiqueta &= IIf(contador > 0, "- ", String.Empty) & lectorDatos("AbreviaturaEtiqueta").ToString() & " (" & Convert.ToInt32(lectorDatos("CantidadCajas").ToString()) & ") "
                 tabla.cantidadCajas += Convert.ToInt32(lectorDatos("CantidadCajas").ToString())
                 tabla.registros = contador + 1
                 contador += 1

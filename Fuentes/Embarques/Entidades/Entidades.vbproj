@@ -89,7 +89,10 @@
     <Compile Include="BaseDatos.vb" />
     <Compile Include="CajasTrailers.vb" />
     <Compile Include="Choferes.vb" />
+    <Compile Include="ConfiguracionCorreo.vb" />
+    <Compile Include="Correos.vb" />
     <Compile Include="Documentadores.vb" />
+    <Compile Include="Empresas.vb" />
     <Compile Include="LineasTransportes.vb" />
     <Compile Include="Productores.vb" />
     <Compile Include="Embarques.vb" />
@@ -109,6 +112,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ProveedoresCorreo.vb" />
     <Compile Include="Tarimas.vb" />
     <Compile Include="Trailers.vb" />
     <Compile Include="Usuarios.vb" />

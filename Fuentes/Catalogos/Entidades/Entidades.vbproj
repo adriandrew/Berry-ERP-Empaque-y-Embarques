@@ -88,6 +88,7 @@
     <Compile Include="AduanasUsa.vb" />
     <Compile Include="CajasTrailers.vb" />
     <Compile Include="Choferes.vb" />
+    <Compile Include="Correos.vb" />
     <Compile Include="Documentadores.vb" />
     <Compile Include="LineasTransportes.vb" />
     <Compile Include="Lotes.vb" />

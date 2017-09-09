@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports FarPoint.Win.Spread
 Imports System.Reflection
+Imports System.Threading
 
 Public Class Principal
 
@@ -35,10 +36,42 @@ Public Class Principal
     Public estaCerrando As Boolean = False
     Public prefijoBaseDatosEmpaque As String = "EYE" & "_"
     Public colorFiltros As Color
+    ' Hilos para carga rapida. 
+    Public hiloCentrar As New Thread(AddressOf Centrar)
+    Public hiloNombrePrograma As New Thread(AddressOf CargarNombrePrograma)
+    Public hiloEncabezadosTitulos As New Thread(AddressOf CargarEncabezadosTitulos)
+    Public hiloTiposDatos As New Thread(AddressOf CargarTiposDeDatos)
+    Public hiloColor As New Thread(AddressOf CargarValorColor)
     ' Variable de desarrollo.
     Public esDesarrollo As Boolean = False
 
 #Region "Eventos"
+
+    Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Me.Cursor = Cursors.WaitCursor
+        MostrarCargando(True) 
+        ConfigurarConexiones()
+        IniciarHilosCarga()
+        AsignarTooltips()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub Principal_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+
+        Me.Cursor = Cursors.WaitCursor 
+        CargarComboProductores()
+        CargarComboLotes()
+        CargarComboChoferes()
+        CargarComboProductos()
+        CargarComboVariedades()
+        Me.estaMostrado = True
+        AsignarFoco(dtpFecha)
+        MostrarCargando(False)
+        Me.Cursor = Cursors.Default
+
+    End Sub
 
     Private Sub Principal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
 
@@ -53,36 +86,10 @@ Public Class Principal
 
     Private Sub Principal_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
+        Me.Cursor = Cursors.WaitCursor
         Me.estaCerrando = True
+        MostrarCargando(True)
         Desvanecer()
-
-    End Sub
-
-    Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        Centrar()
-        CargarNombrePrograma()
-        AsignarTooltips()
-        ConfigurarConexiones()
-        CargarTiposDeDatos()
-
-    End Sub
-
-    Private Sub Principal_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-
-        Me.Cursor = Cursors.AppStarting
-        Me.Enabled = False
-        CargarEncabezados()
-        CargarTitulosDirectorio()
-        CargarValorColor()
-        CargarComboProductores()
-        CargarComboLotes()
-        CargarComboChoferes()
-        CargarComboProductos()
-        CargarComboVariedades()
-        Me.estaMostrado = True
-        Me.Enabled = True
-        AsignarFoco(dtpFecha)
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -372,6 +379,69 @@ Public Class Principal
 
 #Region "Básicos"
 
+    Private Sub MostrarCargando(ByVal mostrar As Boolean)
+
+        Dim pnlCargando As New Panel
+        Dim lblCargando As New Label
+        Dim crear As Boolean = False
+        If (Me.Controls.Find("pnlCargando", True).Count = 0) Then ' Si no existe, se crea. 
+            crear = True
+        Else ' Si existe, se obtiene.
+            pnlCargando = Me.Controls.Find("pnlCargando", False)(0)
+            crear = False
+        End If
+        If (crear And mostrar) Then ' Si se tiene que crear y mostrar.
+            ' Imagen de fondo.
+            Try
+                pnlCargando.BackgroundImage = Image.FromFile(String.Format("{0}\{1}\{2}", IIf(Me.esDesarrollo, "W:", Application.StartupPath), "Imagenes", "cargando.png"))
+            Catch
+                pnlCargando.BackgroundImage = Image.FromFile(String.Format("{0}\{1}\{2}", IIf(Me.esDesarrollo, "W:", Application.StartupPath), "Imagenes", "logoBerry.png"))
+            End Try
+            pnlCargando.BackgroundImageLayout = ImageLayout.Center
+            pnlCargando.BackColor = Color.DarkSlateGray
+            pnlCargando.Width = Me.Width
+            pnlCargando.Height = Me.Height
+            pnlCargando.Location = New Point(Me.Location)
+            pnlCargando.Name = "pnlCargando"
+            pnlCargando.Visible = True
+            Me.Controls.Add(pnlCargando)
+            ' Etiqueta de cargando.
+            lblCargando.Text = "¡cargando!"
+            lblCargando.BackColor = pnlCargando.BackColor
+            lblCargando.ForeColor = Color.White
+            lblCargando.AutoSize = False
+            lblCargando.Width = Me.Width
+            lblCargando.Height = 75
+            lblCargando.TextAlign = ContentAlignment.TopCenter
+            lblCargando.Font = New Font(Principal.tipoLetraSpread, 40, FontStyle.Regular)
+            lblCargando.Location = New Point(lblCargando.Location.X, (Me.Height / 2) + 140)
+            pnlCargando.Controls.Add(lblCargando)
+            pnlCargando.BringToFront()
+            pnlCargando.Focus()
+        ElseIf (Not crear) Then ' Si ya existe, se checa si se muestra o no.
+            If (mostrar) Then ' Se muestra.
+                pnlCargando.Visible = True
+                pnlCargando.BringToFront()
+            Else ' No se muestra.
+                pnlCargando.Visible = False
+                pnlCargando.SendToBack()
+            End If
+        End If
+        Application.DoEvents()
+
+    End Sub
+
+    Public Sub IniciarHilosCarga()
+
+        CheckForIllegalCrossThreadCalls = False
+        hiloNombrePrograma.Start()
+        hiloCentrar.Start()
+        hiloEncabezadosTitulos.Start()
+        hiloTiposDatos.Start()
+        hiloColor.Start()
+
+    End Sub
+
     Private Sub AsignarFoco(ByVal c As Control)
 
         c.Focus()
@@ -418,12 +488,14 @@ Public Class Principal
         Me.Opacity = 0.98
         Me.Location = Screen.PrimaryScreen.WorkingArea.Location
         Me.Size = Screen.PrimaryScreen.WorkingArea.Size
+        hiloCentrar.Abort()
 
     End Sub
 
     Private Sub CargarNombrePrograma()
 
         Me.nombreEstePrograma = Me.Text
+        hiloNombrePrograma.Abort()
 
     End Sub
 
@@ -474,6 +546,7 @@ Public Class Principal
         tipoEntero.DecimalPlaces = 0
         tipoEntero.Separator = ","
         tipoEntero.ShowSeparator = True
+        hiloTiposDatos.Abort()
 
     End Sub
 
@@ -525,23 +598,20 @@ Public Class Principal
 
     End Sub
 
-    Private Sub CargarTitulosDirectorio()
-
-        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaReporteVaciado.Directorios.nombre + "              Usuario:  " + EYELogicaReporteVaciado.Usuarios.nombre
-
-    End Sub
-
-    Private Sub CargarEncabezados()
+    Private Sub CargarEncabezadosTitulos()
 
         lblEncabezadoPrograma.Text = "Programa: " + Me.Text
         lblEncabezadoEmpresa.Text = "Directorio: " + EYELogicaReporteVaciado.Directorios.nombre
         lblEncabezadoUsuario.Text = "Usuario: " + EYELogicaReporteVaciado.Usuarios.nombre
+        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaReporteVaciado.Directorios.nombre + "              Usuario:  " + EYELogicaReporteVaciado.Usuarios.nombre
+        hiloEncabezadosTitulos.Abort()
 
     End Sub
 
     Private Sub CargarValorColor()
 
         Me.colorFiltros = pnlFiltros.BackColor
+        hiloColor.Abort()
 
     End Sub
 
@@ -1041,7 +1111,7 @@ Public Class Principal
         spReporte.ActiveSheet.Columns(numeracion).Tag = "nombreProducto" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "idVariedad" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "nombreVariedad" : numeracion += 1
-        spReporte.ActiveSheet.Columns(numeracion).Tag = "fechaVaciado" : numeracion += 1 
+        spReporte.ActiveSheet.Columns(numeracion).Tag = "fechaVaciado" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "cantidadCajasRecepcion" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "cantidadCajasVaciado" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "cantidadCajasSaldo" : numeracion += 1
@@ -1058,7 +1128,7 @@ Public Class Principal
         spReporte.ActiveSheet.Columns("nombreProducto").Width = 150
         spReporte.ActiveSheet.Columns("idVariedad").Width = 50
         spReporte.ActiveSheet.Columns("nombreVariedad").Width = 150
-        spReporte.ActiveSheet.Columns("fechaVaciado").Width = 100 
+        spReporte.ActiveSheet.Columns("fechaVaciado").Width = 100
         spReporte.ActiveSheet.Columns("cantidadCajasRecepcion").Width = 120
         spReporte.ActiveSheet.Columns("cantidadCajasVaciado").Width = 120
         spReporte.ActiveSheet.Columns("cantidadCajasSaldo").Width = 100

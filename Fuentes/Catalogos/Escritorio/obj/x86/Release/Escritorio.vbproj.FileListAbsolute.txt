@@ -110,10 +110,10 @@ C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Catalog
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Catalogos\Escritorio\obj\x86\Release\EYE01.exe
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Catalogos\Escritorio\obj\x86\Release\EYE01.xml
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes\Catalogos\Escritorio\obj\x86\Release\EYE01.pdb
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYE01.exe.config
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYE01.exe
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYE01.pdb
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYE01.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYE02.exe.config
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYE02.exe
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYE02.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYE02.xml
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYEEntidadesCatalogos.dll
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYELogicaCatalogos.dll
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYEEntidadesCatalogos.pdb
@@ -121,10 +121,10 @@ C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modific
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYELogicaCatalogos.pdb
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\bin\x86\Release\EYELogicaCatalogos.xml
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\Escritorio.vbprojResolveAssemblyReference.cache
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\Catalogos.Resources.resources
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\Catalogos.Principal.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\EYECatalogosSinAlmacen.Resources.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\EYECatalogosSinAlmacen.Principal.resources
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\Escritorio.vbproj.GenerateResource.Cache
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\EYE01.exe.licenses
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\EYE01.exe
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\EYE01.xml
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\EYE01.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\EYE02.exe.licenses
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\EYE02.exe
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\EYE02.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Escritorio\obj\x86\Release\EYE02.pdb

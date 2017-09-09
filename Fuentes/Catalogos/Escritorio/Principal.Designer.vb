@@ -46,6 +46,7 @@ Partial Class Principal
         Me.btnEliminar = New System.Windows.Forms.Button()
         Me.btnGuardar = New System.Windows.Forms.Button()
         Me.pnlMenu = New System.Windows.Forms.Panel()
+        Me.rbtnContactosCorreo = New System.Windows.Forms.RadioButton()
         Me.rbtnAduanasUsa = New System.Windows.Forms.RadioButton()
         Me.rbtnAduanasMex = New System.Windows.Forms.RadioButton()
         Me.rbtnCajasTrailers = New System.Windows.Forms.RadioButton()
@@ -93,7 +94,7 @@ Partial Class Principal
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnlContenido.BackColor = System.Drawing.Color.DarkSlateGray
-        Me.pnlContenido.BackgroundImage = Global.Catalogos.My.Resources.Resources.Logo3
+        Me.pnlContenido.BackgroundImage = Global.EYECatalogosSinAlmacen.My.Resources.Resources.Logo3
         Me.pnlContenido.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.pnlContenido.Controls.Add(Me.pnlCuerpo)
         Me.pnlContenido.Controls.Add(Me.pnlPie)
@@ -111,8 +112,6 @@ Partial Class Principal
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnlCuerpo.AutoScroll = True
         Me.pnlCuerpo.BackColor = System.Drawing.Color.Transparent
-        Me.pnlCuerpo.Controls.Add(Me.btnEliminar)
-        Me.pnlCuerpo.Controls.Add(Me.btnGuardar)
         Me.pnlCuerpo.Controls.Add(Me.pnlMenu)
         Me.pnlCuerpo.Controls.Add(Me.spCatalogos)
         Me.pnlCuerpo.Controls.Add(Me.spVarios)
@@ -133,7 +132,7 @@ Partial Class Principal
         Me.btnEliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnEliminar.ForeColor = System.Drawing.Color.Black
         Me.btnEliminar.Image = CType(resources.GetObject("btnEliminar.Image"), System.Drawing.Image)
-        Me.btnEliminar.Location = New System.Drawing.Point(902, 428)
+        Me.btnEliminar.Location = New System.Drawing.Point(847, 0)
         Me.btnEliminar.Margin = New System.Windows.Forms.Padding(0)
         Me.btnEliminar.Name = "btnEliminar"
         Me.btnEliminar.Size = New System.Drawing.Size(60, 60)
@@ -152,7 +151,7 @@ Partial Class Principal
         Me.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnGuardar.ForeColor = System.Drawing.Color.Black
         Me.btnGuardar.Image = CType(resources.GetObject("btnGuardar.Image"), System.Drawing.Image)
-        Me.btnGuardar.Location = New System.Drawing.Point(963, 428)
+        Me.btnGuardar.Location = New System.Drawing.Point(908, 0)
         Me.btnGuardar.Margin = New System.Windows.Forms.Padding(0)
         Me.btnGuardar.Name = "btnGuardar"
         Me.btnGuardar.Size = New System.Drawing.Size(60, 60)
@@ -165,6 +164,7 @@ Partial Class Principal
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnlMenu.AutoScroll = True
         Me.pnlMenu.BackColor = System.Drawing.Color.MintCream
+        Me.pnlMenu.Controls.Add(Me.rbtnContactosCorreo)
         Me.pnlMenu.Controls.Add(Me.rbtnAduanasUsa)
         Me.pnlMenu.Controls.Add(Me.rbtnAduanasMex)
         Me.pnlMenu.Controls.Add(Me.rbtnCajasTrailers)
@@ -185,6 +185,28 @@ Partial Class Principal
         Me.pnlMenu.Name = "pnlMenu"
         Me.pnlMenu.Size = New System.Drawing.Size(1028, 40)
         Me.pnlMenu.TabIndex = 24
+        '
+        'rbtnContactosCorreo
+        '
+        Me.rbtnContactosCorreo.Appearance = System.Windows.Forms.Appearance.Button
+        Me.rbtnContactosCorreo.AutoSize = True
+        Me.rbtnContactosCorreo.BackColor = System.Drawing.Color.Transparent
+        Me.rbtnContactosCorreo.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.rbtnContactosCorreo.FlatAppearance.BorderColor = System.Drawing.Color.Silver
+        Me.rbtnContactosCorreo.FlatAppearance.BorderSize = 2
+        Me.rbtnContactosCorreo.FlatAppearance.CheckedBackColor = System.Drawing.Color.MediumAquamarine
+        Me.rbtnContactosCorreo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Turquoise
+        Me.rbtnContactosCorreo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.rbtnContactosCorreo.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rbtnContactosCorreo.ForeColor = System.Drawing.Color.Black
+        Me.rbtnContactosCorreo.Location = New System.Drawing.Point(2148, 4)
+        Me.rbtnContactosCorreo.Name = "rbtnContactosCorreo"
+        Me.rbtnContactosCorreo.Size = New System.Drawing.Size(203, 32)
+        Me.rbtnContactosCorreo.TabIndex = 19
+        Me.rbtnContactosCorreo.TabStop = True
+        Me.rbtnContactosCorreo.Text = "CONTACTOS CORREO"
+        Me.rbtnContactosCorreo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.rbtnContactosCorreo.UseVisualStyleBackColor = False
         '
         'rbtnAduanasUsa
         '
@@ -738,9 +760,11 @@ Partial Class Principal
         '
         Me.pnlPie.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlPie.BackColor = System.Drawing.Color.Black
+        Me.pnlPie.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.pnlPie.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlPie.Controls.Add(Me.btnEliminar)
         Me.pnlPie.Controls.Add(Me.btnAyuda)
+        Me.pnlPie.Controls.Add(Me.btnGuardar)
         Me.pnlPie.Controls.Add(Me.lblDescripcionTooltip)
         Me.pnlPie.Controls.Add(Me.btnSalir)
         Me.pnlPie.ForeColor = System.Drawing.Color.White
@@ -800,7 +824,7 @@ Partial Class Principal
         '
         Me.pnlEncabezado.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlEncabezado.BackColor = System.Drawing.Color.Black
+        Me.pnlEncabezado.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.pnlEncabezado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlEncabezado.Controls.Add(Me.lblEncabezadoArea)
         Me.pnlEncabezado.Controls.Add(Me.lblEncabezadoUsuario)
@@ -925,4 +949,5 @@ Partial Class Principal
     Private WithEvents rbtnCajasTrailers As System.Windows.Forms.RadioButton
     Private WithEvents rbtnAduanasMex As System.Windows.Forms.RadioButton
     Private WithEvents rbtnAduanasUsa As System.Windows.Forms.RadioButton
+    Private WithEvents rbtnContactosCorreo As System.Windows.Forms.RadioButton
 End Class

@@ -28,9 +28,9 @@ Public Class Lotes
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaReporteRecepcion.Programas.prefijoBaseDatosEmpaque & "Lotes " & _
-            " UNION SELECT -1 AS Id, 'Todos' AS Nombre FROM " & EYELogicaReporteRecepcion.Programas.prefijoBaseDatosEmpaque & "Lotes " & _
-            " ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT Id, Nombre FROM {0}Lotes " & _
+            " UNION SELECT -1 AS Id, 'Todos' AS Nombre FROM {0}Lotes " & _
+            " ORDER BY Id ASC", EYELogicaReporteRecepcion.Programas.prefijoBaseDatosEmpaque)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader
             lectorDatos = comando.ExecuteReader()

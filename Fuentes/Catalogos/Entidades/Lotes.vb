@@ -45,7 +45,7 @@ Public Class Lotes
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Lotes (Id, Nombre, Hectareas, PesoCaja) VALUES (@id, @nombre, @hectareas, @pesoCaja)"
+            comando.CommandText = String.Format("INSERT INTO {0}Lotes (Id, Nombre, Hectareas, PesoCaja) VALUES (@id, @nombre, @hectareas, @pesoCaja)", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque)
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@nombre", Me.ENombre)
             comando.Parameters.AddWithValue("@hectareas", Me.EHectareas)
@@ -70,8 +70,8 @@ Public Class Lotes
             If (Me.EId > 0) Then
                 condicion &= " WHERE Id=@id"
             End If
-            comando.CommandText = "DELETE FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Lotes " & condicion
-            comando.Parameters.AddWithValue("@id", Me.id)
+            comando.CommandText = String.Format("DELETE FROM {0}Lotes {1}", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque, condicion)
+            comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             comando.ExecuteNonQuery()
             BaseDatos.conexionCatalogo.Close()
@@ -89,7 +89,7 @@ Public Class Lotes
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre, Hectareas, PesoCaja FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Lotes ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT Id, Nombre, Hectareas, PesoCaja FROM {0}Lotes ORDER BY Id ASC", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader
             dataReader = comando.ExecuteReader()

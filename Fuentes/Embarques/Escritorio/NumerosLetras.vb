@@ -129,7 +129,7 @@
             ' Defino variables
             Dim retornar As String
 
-            ' Inviero la cadena
+        ' Invierto la cadena
             For posision As Short = cadena.Length To 1 Step -1
                 retornar = retornar & cadena.Substring(posision - 1, 1)
             Next

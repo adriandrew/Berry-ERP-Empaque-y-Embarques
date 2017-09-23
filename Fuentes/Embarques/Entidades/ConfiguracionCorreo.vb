@@ -52,27 +52,20 @@ Public Class ConfiguracionCorreo
         End Set
     End Property
 
-    Public Function ObtenerListado() As List(Of ConfiguracionCorreo)
+    Public Function ObtenerListado() As DataTable
 
-        Dim lista As New List(Of ConfiguracionCorreo)()
         Try
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "SELECT * FROM ConfiguracionCorreo"
+            comando.CommandText = String.Format("SELECT * FROM ConfiguracionCorreo")
             BaseDatos.conexionEmpaque.Open()
-            Dim dataReader As SqlDataReader = comando.ExecuteReader()
-            Dim tabla As New ConfiguracionCorreo
-            While dataReader.Read()
-                tabla = New ConfiguracionCorreo()
-                tabla.direccion = dataReader("Direccion").ToString()
-                tabla.contrasena = dataReader("Contrasena").ToString()
-                tabla.asunto = dataReader("Asunto").ToString()
-                tabla.mensaje = dataReader("Mensaje").ToString()
-                tabla.idProveedor = Convert.ToInt32(dataReader("IdProveedor").ToString())
-                lista.Add(tabla)
-            End While
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            lectorDatos.Close()
             BaseDatos.conexionEmpaque.Close()
-            Return lista
+            Return datos
         Catch ex As Exception
             Throw ex
         Finally
@@ -86,7 +79,7 @@ Public Class ConfiguracionCorreo
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "INSERT INTO ConfiguracionCorreo (Direccion, Contrasena, Asunto, Mensaje, IdProveedor) VALUES (@direccion, @contrasena, @asunto, @mensaje, @idProveedor)"
+            comando.CommandText = String.Format("INSERT INTO ConfiguracionCorreo (Direccion, Contrasena, Asunto, Mensaje, IdProveedor) VALUES (@direccion, @contrasena, @asunto, @mensaje, @idProveedor)")
             comando.Parameters.AddWithValue("@direccion", Me.EDireccion)
             comando.Parameters.AddWithValue("@contrasena", Me.EContrasena)
             comando.Parameters.AddWithValue("@asunto", Me.EAsunto)
@@ -108,7 +101,7 @@ Public Class ConfiguracionCorreo
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "UPDATE ConfiguracionCorreo SET Direccion=@direccion, Contrasena=@contrasena, Asunto=@asunto, Mensaje=@mensaje, IdProveedor=@idProveedor"
+            comando.CommandText = String.Format("UPDATE ConfiguracionCorreo SET Direccion=@direccion, Contrasena=@contrasena, Asunto=@asunto, Mensaje=@mensaje, IdProveedor=@idProveedor")
             comando.Parameters.AddWithValue("@direccion", Me.EDireccion)
             comando.Parameters.AddWithValue("@contrasena", Me.EContrasena)
             comando.Parameters.AddWithValue("@asunto", Me.EAsunto)
@@ -130,7 +123,7 @@ Public Class ConfiguracionCorreo
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "DELETE FROM ConfiguracionCorreo"
+            comando.CommandText = String.Format("DELETE FROM ConfiguracionCorreo")
             BaseDatos.conexionEmpaque.Open()
             comando.ExecuteNonQuery()
             BaseDatos.conexionEmpaque.Close()

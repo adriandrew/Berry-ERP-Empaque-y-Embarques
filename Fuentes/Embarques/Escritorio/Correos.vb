@@ -131,18 +131,18 @@ Public Class Correos
         spCorreos.ActiveSheet.ColumnHeader.Cells(0, spCorreos.ActiveSheet.Columns("nombre").Index).Value = "Nombre".ToUpper()
         spCorreos.ActiveSheet.ColumnHeader.Cells(0, spCorreos.ActiveSheet.Columns("direccion").Index).Value = "Correo".ToUpper()
         spCorreos.ActiveSheet.ColumnHeader.Cells(0, spCorreos.ActiveSheet.Columns("seleccionar").Index).Value = "Seleccionar".ToUpper()
-        Application.DoEvents()
+        spCorreos.Refresh()
 
     End Sub
 
     Private Sub CargarComboProveedores()
 
-        Dim lista As New List(Of EYEEntidadesEmbarques.ProveedoresCorreo)
+        Dim datos As New DataTable
         proveedores.EId = 0
-        lista = proveedores.ObtenerListado()
-        cbProveedores.DataSource = lista
-        cbProveedores.ValueMember = "EId"
-        cbProveedores.DisplayMember = "EDominio"
+        datos = proveedores.ObtenerListado()
+        cbProveedores.DataSource = datos
+        cbProveedores.ValueMember = "Id"
+        cbProveedores.DisplayMember = "Dominio"
 
     End Sub
 
@@ -155,14 +155,14 @@ Public Class Correos
 
     Private Sub CargarConfiguracion()
 
-        Dim lista As New List(Of EYEEntidadesEmbarques.ConfiguracionCorreo)
-        lista = configuracion.ObtenerListado()
-        If (lista.Count > 0) Then
-            txtDireccion.Text = lista(0).EDireccion
-            txtContrasena.Text = lista(0).EContrasena
-            txtAsunto.Text = lista(0).EAsunto
-            txtMensaje.Text = lista(0).EMensaje
-            cbProveedores.SelectedValue = lista(0).EIdProveedor
+        Dim datos As New DataTable
+        datos = configuracion.ObtenerListado()
+        If (datos.Rows.Count > 0) Then
+            txtDireccion.Text = datos.Rows(0).Item("Direccion")
+            txtContrasena.Text = datos.Rows(0).Item("Contrasena")
+            txtAsunto.Text = datos.Rows(0).Item("Asunto")
+            txtMensaje.Text = datos.Rows(0).Item("Mensaje")
+            cbProveedores.SelectedValue = datos.Rows(0).Item("IdProveedor")
             Me.tieneDatos = True
         Else
             Me.tieneDatos = False
@@ -209,11 +209,11 @@ Public Class Correos
         Dim mensajePlano As String = String.Empty
         Dim mensajeHtml As String = String.Empty
         Dim idProveedor As Integer = EYELogicaEmbarques.Funciones.ValidarNumeroACero(cbProveedores.SelectedValue)
-        Dim listaProveedores As New List(Of EYEEntidadesEmbarques.ProveedoresCorreo)
+        Dim datosProveedores As New DataTable
         proveedores.EId = idProveedor
-        listaProveedores = proveedores.ObtenerListado()
-        Dim servidorProveedor As String = listaProveedores(0).EServidor '"smtp.gmail.com"
-        Dim puerto As Integer = listaProveedores(0).EPuerto '587 
+        datosProveedores = proveedores.ObtenerListado()
+        Dim servidorProveedor As String = datosProveedores.Rows(0).Item("Servidor") '"smtp.gmail.com"
+        Dim puerto As Integer = datosProveedores.Rows(0).Item("Puerto") '587 
         correo.From = New MailAddress(emisor)
         correo.Priority = MailPriority.High
         For fila As Integer = 0 To spCorreos.ActiveSheet.Rows.Count - 1

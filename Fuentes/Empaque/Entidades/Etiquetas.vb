@@ -31,14 +31,14 @@ Public Class Etiquetas
         End Set
     End Property
 
-    Public Function ObtenerListadoReporte() As DataTable
+    Public Function ObtenerListadoReporteCatalogo() As DataTable
 
         Try
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Etiquetas " & _
-            " ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT Id, Nombre FROM {0}Etiquetas " & _
+            " ORDER BY Id ASC", EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader
             lectorDatos = comando.ExecuteReader()
@@ -53,30 +53,24 @@ Public Class Etiquetas
 
     End Function
 
-    Public Function ObtenerListado() As List(Of Etiquetas)
+    Public Function ObtenerListado() As DataTable
 
         Try
-            Dim lista As New List(Of Etiquetas)
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
             Dim condicion As String = String.Empty
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre, Abreviatura FROM " & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Etiquetas WHERE 0=0 " & condicion
+            comando.CommandText = String.Format("SELECT Id, Nombre, Abreviatura FROM {0}Etiquetas WHERE 0=0 {1}", EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
-            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim tabla As Etiquetas
-            While lectorDatos.Read()
-                tabla = New Etiquetas()
-                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                tabla.nombre = lectorDatos("Nombre").ToString()
-                tabla.abreviatura = lectorDatos("Abreviatura").ToString()
-                lista.Add(tabla)
-            End While
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
             BaseDatos.conexionCatalogo.Close()
-            Return lista
+            Return datos
         Catch ex As Exception
             Throw ex
         Finally

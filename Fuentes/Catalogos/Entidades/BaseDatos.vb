@@ -4,10 +4,10 @@ Public Module BaseDatos
 
     Private cadenaConexionConfiguracion As String
     Private cadenaConexionCatalogo As String
-    Private cadenaConexionAlmacen As String
+    Private cadenaConexionEmpaque As String
     Public conexionConfiguracion As New SqlConnection()
     Public conexionCatalogo As New SqlConnection()
-    Public conexionAgenda As New SqlConnection()
+    Public conexionEmpaque As New SqlConnection()
 
     Public Property ECadenaConexionConfiguracion() As String
         Get
@@ -25,12 +25,12 @@ Public Module BaseDatos
             BaseDatos.cadenaConexionCatalogo = value
         End Set
     End Property
-    Public Property ECadenaConexionAlmacen() As String
+    Public Property ECadenaConexionEmpaque() As String
         Get
-            Return BaseDatos.cadenaConexionAlmacen
+            Return BaseDatos.cadenaConexionEmpaque
         End Get
         Set(value As String)
-            BaseDatos.cadenaConexionAlmacen = value
+            BaseDatos.cadenaConexionEmpaque = value
         End Set
     End Property
 
@@ -48,10 +48,10 @@ Public Module BaseDatos
 
     End Sub
 
-    Public Sub AbrirConexionAlmacen()
+    Public Sub AbrirConexionEmpaque()
 
-        BaseDatos.ECadenaConexionAlmacen = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", EYELogicaCatalogos.Directorios.instanciaSql, BaseDatos.ECadenaConexionAlmacen, EYELogicaCatalogos.Directorios.usuarioSql, EYELogicaCatalogos.Directorios.contrasenaSql)
-        conexionAgenda.ConnectionString = BaseDatos.ECadenaConexionAlmacen
+        BaseDatos.ECadenaConexionEmpaque = String.Format("Data Source={0};Initial Catalog={1};User Id={2};Password={3}", EYELogicaCatalogos.Directorios.instanciaSql, BaseDatos.ECadenaConexionEmpaque, EYELogicaCatalogos.Directorios.usuarioSql, EYELogicaCatalogos.Directorios.contrasenaSql)
+        conexionEmpaque.ConnectionString = BaseDatos.ECadenaConexionEmpaque
 
     End Sub
 

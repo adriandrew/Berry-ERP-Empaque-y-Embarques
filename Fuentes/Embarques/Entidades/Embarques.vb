@@ -279,7 +279,7 @@ Public Class Embarques
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "INSERT INTO Embarques (Id, IdTipo, IdProductor, IdEmbarcador, IdCliente, IdLineaTransporte, IdTrailer, IdCajaTrailer, IdChofer, idAduanaMex, idAduanaUsa, IdDocumentador, Fecha, Hora, Temperatura, Termografo, PrecioFlete, HoraPrecos, Observaciones, Sello1, Sello2, Sello3, Sello4, Sello5, Sello6, Sello7, Sello8, Factura, GuiaCaades, Banderin) VALUES (@id, @idTipo, @idProductor, @idEmbarcador, @idCliente, @idLineaTransporte, @idTrailer, @idCajaTrailer, @idChofer, @idAduanaMex, @idAduanaUsa, @idDocumentador, @fecha, @hora, @temperatura, @termografo, @precioFlete, @horaPrecos, @observaciones, @sello1, @sello2, @sello3, @sello4, @sello5, @sello6, @sello7, @sello8, @factura, @guiaCaades, @banderin)"
+            comando.CommandText = String.Format("INSERT INTO Embarques (Id, IdTipo, IdProductor, IdEmbarcador, IdCliente, IdLineaTransporte, IdTrailer, IdCajaTrailer, IdChofer, idAduanaMex, idAduanaUsa, IdDocumentador, Fecha, Hora, Temperatura, Termografo, PrecioFlete, HoraPrecos, Observaciones, Sello1, Sello2, Sello3, Sello4, Sello5, Sello6, Sello7, Sello8, Factura, GuiaCaades, Banderin) VALUES (@id, @idTipo, @idProductor, @idEmbarcador, @idCliente, @idLineaTransporte, @idTrailer, @idCajaTrailer, @idChofer, @idAduanaMex, @idAduanaUsa, @idDocumentador, @fecha, @hora, @temperatura, @termografo, @precioFlete, @horaPrecos, @observaciones, @sello1, @sello2, @sello3, @sello4, @sello5, @sello6, @sello7, @sello8, @factura, @guiaCaades, @banderin)")
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
             comando.Parameters.AddWithValue("@idProductor", Me.EIdProductor)
@@ -333,7 +333,7 @@ Public Class Embarques
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "DELETE FROM Embarques WHERE 0=0 " & condicion
+            comando.CommandText = String.Format("DELETE FROM Embarques WHERE 0=0 {0}", condicion)
             comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
@@ -356,7 +356,7 @@ Public Class Embarques
             If (Me.EIdTipo > 0) Then
                 condicion &= " AND IdTipo=@idTipo"
             End If
-            comando.CommandText = "SELECT MAX(CAST (Id AS Int)) AS IdMaximo FROM Embarques WHERE 0=0 " & condicion
+            comando.CommandText = String.Format("SELECT MAX(CAST (Id AS Int)) AS IdMaximo FROM Embarques WHERE 0=0 {0}", condicion)
             comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
@@ -387,14 +387,14 @@ Public Class Embarques
             If (Me.EId > 0) Then
                 condicion &= " AND T.IdEmbarque=@id"
             End If
-            comando.CommandText = "SELECT T.Id, P.Abreviatura AS AbreviaturaProducto, V.Abreviatura AS AbreviaturaVariedad, E.Abreviatura AS AbreviaturaEnvase, T2.Abreviatura AS AbreviaturaTamano, E2.Abreviatura AS AbreviaturaEtiqueta, T.CantidadCajas, 'TRUE' AS EsExistente, T.OrdenEmbarque, P.Nombre AS NombreProducto, V.Nombre AS NombreVariedad, E.Nombre AS NombreEnvase, T2.Nombre AS NombreTamano, E2.Nombre AS NombreEtiqueta" & _
+            comando.CommandText = String.Format("SELECT T.Id, P.Abreviatura AS AbreviaturaProducto, V.Abreviatura AS AbreviaturaVariedad, E.Abreviatura AS AbreviaturaEnvase, T2.Abreviatura AS AbreviaturaTamano, E2.Abreviatura AS AbreviaturaEtiqueta, T.CantidadCajas, 'TRUE' AS EsExistente, T.OrdenEmbarque, P.Nombre AS NombreProducto, V.Nombre AS NombreVariedad, E.Nombre AS NombreEnvase, T2.Nombre AS NombreTamano, E2.Nombre AS NombreEtiqueta" & _
             " FROM Tarimas AS T " & _
-            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON T.IdProducto = P.Id " & _
-            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON T.IdProducto = V.IdProducto AND T.IdVariedad = V.Id " & _
-            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Envases AS E ON T.IdEnvase = E.Id " & _
-            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Tamanos AS T2 ON T.IdProducto = T2.IdProducto AND T.IdTamano = T2.Id " & _
-            " LEFT JOIN " & EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Etiquetas AS E2 ON T.IdEtiqueta = E2.Id " & _
-            " WHERE 0=0 " & condicion & " ORDER BY T.OrdenEmbarque ASC"
+            " LEFT JOIN {0}Productos AS P ON T.IdProducto = P.Id " & _
+            " LEFT JOIN {0}Variedades AS V ON T.IdProducto = V.IdProducto AND T.IdVariedad = V.Id " & _
+            " LEFT JOIN {0}Envases AS E ON T.IdEnvase = E.Id " & _
+            " LEFT JOIN {0}Tamanos AS T2 ON T.IdProducto = T2.IdProducto AND T.IdTamano = T2.Id " & _
+            " LEFT JOIN {0}Etiquetas AS E2 ON T.IdEtiqueta = E2.Id " & _
+            " WHERE 0=0 {1} ORDER BY T.OrdenEmbarque ASC", EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
@@ -459,10 +459,10 @@ Public Class Embarques
 
     End Function
 
-    Public Function ObtenerListado() As List(Of Embarques)
+    Public Function ObtenerListado() As DataTable
 
         Try
-            Dim lista As New List(Of Embarques)
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
             Dim condicion As String = String.Empty
@@ -472,45 +472,16 @@ Public Class Embarques
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Fecha, Hora, IdProductor, IdEmbarcador, IdCliente, IdLineaTransporte, IdTrailer, IdCajaTrailer, IdChofer, IdAduanaMex, IdAduanaUsa, IdDocumentador, Temperatura, Termografo, PrecioFlete, HoraPrecos, Sello1, Sello2, Sello3, Sello4, Sello5, Sello6, Sello7, Sello8, Factura, GuiaCaades FROM Embarques WHERE 0=0 " & condicion & " ORDER BY sello4 ASC"
+            comando.CommandText = String.Format("SELECT Id, Fecha, Hora, IdProductor, IdEmbarcador, IdCliente, IdLineaTransporte, IdTrailer, IdCajaTrailer, IdChofer, IdAduanaMex, IdAduanaUsa, IdDocumentador, Temperatura, Termografo, PrecioFlete, HoraPrecos, Sello1, Sello2, Sello3, Sello4, Sello5, Sello6, Sello7, Sello8, Factura, GuiaCaades FROM Embarques WHERE 0=0 {0} ORDER BY sello4 ASC", condicion)
             comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
-            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim tabla As Embarques
-            While lectorDatos.Read()
-                tabla = New Embarques()
-                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                tabla.fecha = Convert.ToDateTime(lectorDatos("Fecha").ToString())
-                tabla.hora = lectorDatos("Hora").ToString()
-                tabla.idProductor = Convert.ToInt32(lectorDatos("IdProductor").ToString())
-                tabla.idEmbarcador = Convert.ToInt32(lectorDatos("IdEmbarcador").ToString())
-                tabla.idCliente = Convert.ToInt32(lectorDatos("IdCliente").ToString())
-                tabla.idLineaTransporte = Convert.ToInt32(lectorDatos("IdLineaTransporte").ToString())
-                tabla.idTrailer = Convert.ToInt32(lectorDatos("IdTrailer").ToString())
-                tabla.idCajaTrailer = Convert.ToInt32(lectorDatos("IdCajaTrailer").ToString())
-                tabla.idChofer = Convert.ToInt32(lectorDatos("IdChofer").ToString())
-                tabla.idAduanaMex = Convert.ToInt32(lectorDatos("IdAduanaMex").ToString())
-                tabla.idAduanaUsa = Convert.ToInt32(lectorDatos("IdAduanaUsa").ToString())
-                tabla.idDocumentador = Convert.ToInt32(lectorDatos("IdDocumentador").ToString())
-                tabla.temperatura = Convert.ToDouble(lectorDatos("Temperatura").ToString())
-                tabla.termografo = lectorDatos("Termografo").ToString()
-                tabla.precioFlete = Convert.ToDouble(lectorDatos("PrecioFlete").ToString())
-                tabla.horaPrecos = lectorDatos("HoraPrecos").ToString()
-                tabla.sello1 = lectorDatos("Sello1").ToString()
-                tabla.sello2 = lectorDatos("Sello2").ToString()
-                tabla.sello3 = lectorDatos("Sello3").ToString()
-                tabla.sello4 = lectorDatos("Sello4").ToString()
-                tabla.sello5 = lectorDatos("Sello5").ToString()
-                tabla.sello6 = lectorDatos("Sello6").ToString()
-                tabla.sello7 = lectorDatos("Sello7").ToString()
-                tabla.sello8 = lectorDatos("Sello8").ToString()
-                tabla.factura = lectorDatos("Factura").ToString()
-                tabla.guiaCaades = lectorDatos("GuiaCaades").ToString()
-                lista.Add(tabla)
-            End While
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            lectorDatos.Close()
             BaseDatos.conexionEmpaque.Close()
-            Return lista
+            Return datos
         Catch ex As Exception
             Throw ex
         Finally
@@ -524,7 +495,7 @@ Public Class Embarques
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "SELECT MIN(fecha) AS FechaMinima FROM Embarques"
+            comando.CommandText = String.Format("SELECT MIN(fecha) AS FechaMinima FROM Embarques")
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
             Dim valor As Date
@@ -646,7 +617,7 @@ Public Class Embarques
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
             Dim bdCatalogos As String = EYELogicaEmbarques.Programas.bdCatalogo & ".dbo." & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque
-            comando.CommandText = String.Format("SELECT P.Nombre AS NombreProducto, P.Abreviatura AS AbreviaturaProducto, V.Nombre AS NombreVariedad, V.Abreviatura AS AbreviaturaVariedad, E.Nombre AS NombreEnvase, E.Abreviatura AS AbreviaturaEnvase, T2.Nombre AS NombreTamano, T2.Abreviatura AS AbreviaturaTamano, E2.Nombre AS NombreEtiqueta, E2.Abreviatura AS AbreviaturaEtiqueta, 1 AS PrecioUnitarioCajas, SUM(ISNULL(T.CantidadCajas, 0)) AS CantidadCajas, SUM(ISNULL(T.PesoTotalCajas, 0)) AS PesoTotalCajas " & _
+            comando.CommandText = String.Format("SELECT T.IdProducto, P.Nombre AS NombreProducto, P.Abreviatura AS AbreviaturaProducto, V.Nombre AS NombreVariedad, V.Abreviatura AS AbreviaturaVariedad, T.IdEnvase, E.Nombre AS NombreEnvase, E.Abreviatura AS AbreviaturaEnvase, T.IdTamano, T2.Nombre AS NombreTamano, T2.Abreviatura AS AbreviaturaTamano, T.IdEtiqueta, E2.Nombre AS NombreEtiqueta, E2.Abreviatura AS AbreviaturaEtiqueta, SUM(ISNULL(T.CantidadCajas, 0)) AS CantidadCajas, SUM(ISNULL(T.PesoTotalCajas, 0)) AS PesoTotalCajas " & _
                     " FROM Tarimas AS T " & _
                     " LEFT JOIN {0}Productos AS P ON T.IdProducto = P.Id " & _
                     " LEFT JOIN {0}Variedades AS V ON T.IdProducto = V.IdProducto AND T.IdVariedad = V.Id " & _
@@ -654,7 +625,7 @@ Public Class Embarques
                     " LEFT JOIN {0}Tamanos AS T2 ON T.IdProducto = T2.IdProducto AND T.IdTamano = T2.Id " & _
                     " LEFT JOIN {0}Etiquetas AS E2 ON T.IdEtiqueta = E2.Id " & _
                     " WHERE T.IdTipoEmbarque=@idTipoEmbarque AND T.IdEmbarque=@idEmbarque " & _
-                    " GROUP BY P.Nombre, P.Abreviatura, V.Nombre, V.Abreviatura, E.Nombre, E.Abreviatura, T2.Nombre, T2.Abreviatura, E2.Nombre, E2.Abreviatura", bdCatalogos)
+                    " GROUP BY P.Nombre, P.Abreviatura, V.Nombre, V.Abreviatura, E.Nombre, E.Abreviatura, T2.Nombre, T2.Abreviatura, E2.Nombre, E2.Abreviatura, T.IdProducto, T.IdEnvase, T.IdTamano, T.IdEtiqueta", bdCatalogos)
             comando.Parameters.AddWithValue("@idTipoEmbarque", Me.EIdTipo)
             comando.Parameters.AddWithValue("@idEmbarque", Me.EId)
             BaseDatos.conexionEmpaque.Open()

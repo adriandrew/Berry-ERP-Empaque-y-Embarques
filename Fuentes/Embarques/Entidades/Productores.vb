@@ -91,12 +91,10 @@ Public Class Productores
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Productores " & _
-            " UNION SELECT -1 AS Id, NULL AS Nombre FROM " & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Productores " & _
-            " ORDER BY Id ASC"
-            'If (BaseDatos.conexionCatalogo.State = ConnectionState.Closed) Then 
-            BaseDatos.conexionCatalogo.Open()
-            'End If
+            comando.CommandText = String.Format("SELECT Id, Nombre, (CAST(Id AS Varchar)+' - '+Nombre) AS IdNombre FROM {0}Productores " & _
+            " UNION SELECT -1 AS Id, NULL AS Nombre, NULL AS IdNombre FROM {0}Productores " & _
+            " ORDER BY Id ASC", EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque)
+            BaseDatos.conexionCatalogo.Open() 
             Dim lectorDatos As SqlDataReader
             lectorDatos = comando.ExecuteReader()
             datos.Load(lectorDatos)
@@ -111,36 +109,20 @@ Public Class Productores
 
     End Function
 
-    Public Function ObtenerListado() As List(Of Productores)
+    Public Function ObtenerListadoReporteCatalogo() As DataTable
 
         Try
-            Dim lista As New List(Of Productores)
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            Dim condicion As String = String.Empty
-            If (Me.EId > 0) Then
-                condicion &= " AND Id=@id"
-            End If
-            comando.CommandText = "SELECT Id, Nombre, Domicilio, Municipio, Estado, Fda, Gs1, Ggn, ClaveAgricola FROM " & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Productores WHERE 0=0 " & condicion
-            comando.Parameters.AddWithValue("@id", Me.EId)
+            comando.CommandText = String.Format("SELECT Id, Nombre FROM {0}Productores ORDER BY Id ASC", EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque)
             BaseDatos.conexionCatalogo.Open()
-            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim tabla As Productores
-            While lectorDatos.Read()
-                tabla = New Productores()
-                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                tabla.nombre = lectorDatos("Nombre").ToString()
-                tabla.domicilio = lectorDatos("Domicilio").ToString()
-                tabla.municipio = lectorDatos("Municipio").ToString()
-                tabla.estado = lectorDatos("Estado").ToString()
-                tabla.fda = lectorDatos("Fda").ToString()
-                tabla.gs1 = lectorDatos("Gs1").ToString()
-                tabla.ggn = lectorDatos("Ggn").ToString()
-                tabla.claveAgricola = lectorDatos("ClaveAgricola").ToString()
-                lista.Add(tabla)
-            End While
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            lectorDatos.Close()
             BaseDatos.conexionCatalogo.Close()
-            Return lista
+            Return datos
         Catch ex As Exception
             Throw ex
         Finally

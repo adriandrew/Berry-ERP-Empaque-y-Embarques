@@ -11,6 +11,7 @@ Public Class Documentos
     Public rutaTemporal As String = Application.StartupPath & "\ArchivosTemporales"
     Public rutaAdjuntar As String = String.Empty
     Public empresas As New EYEEntidadesEmbarques.Empresas()
+    Public configuracionPrecios As New EYEEntidadesEmbarques.ConfiguracionPrecios()
 
 #Region "Eventos"
 
@@ -485,8 +486,24 @@ Public Class Documentos
                 spDocumentos.ActiveSheet.Cells(filaSpread, columnaPesoLibras).Text = pesoLibras.ToString
                 Dim pesoUnitarioLibras As Double = Math.Round(pesoLibras / cantidadCajas, 2)
                 spDocumentos.ActiveSheet.Cells(filaSpread, columnaPesoUnitario).Text = pesoUnitarioLibras
-                Dim precioUnitario As Double = EYELogicaEmbarques.Funciones.ValidarNumeroACero(datos.Rows(filaDatos).Item("PrecioUnitarioCajas").ToString) ' TODO. Hay que tomarlo de la configuracion de precios.
+                ' Se toma
+                Dim idProducto As Integer = EYELogicaEmbarques.Funciones.ValidarNumeroACero(datos.Rows(filaDatos).Item("IdProducto").ToString)
+                Dim idEnvase As Integer = EYELogicaEmbarques.Funciones.ValidarNumeroACero(datos.Rows(filaDatos).Item("IdEnvase").ToString)
+                Dim idTamano As Integer = EYELogicaEmbarques.Funciones.ValidarNumeroACero(datos.Rows(filaDatos).Item("IdTamano").ToString)
+                Dim idEtiqueta As Integer = EYELogicaEmbarques.Funciones.ValidarNumeroACero(datos.Rows(filaDatos).Item("IdEtiqueta").ToString)
+                configuracionPrecios.EIdProducto = idProducto
+                configuracionPrecios.EIdEnvase = idEnvase
+                configuracionPrecios.EIdTamano = idTamano
+                configuracionPrecios.EIdEtiqueta = idEtiqueta
+                Dim datosPrecios As DataTable = configuracionPrecios.ObtenerListadoReporte() 
+                Dim precioUnitario As Double = 1
+                If (datosPrecios.Rows.Count = 1) Then
+                    precioUnitario = EYELogicaEmbarques.Funciones.ValidarNumeroAUno(datosPrecios.Rows(0).Item("Precio").ToString)
+                Else
+                    spDocumentos.ActiveSheet.Cells(filaSpread, columnaDescripcion, filaSpread, columnaImporte).BackColor = Color.FromArgb(255, 192, 192)
+                End If
                 spDocumentos.ActiveSheet.Cells(filaSpread, columnaPrecioUnitario).Text = precioUnitario
+
                 totalImporte += precioUnitario * cantidadCajas
                 spDocumentos.ActiveSheet.Cells(filaSpread, columnaImporte).Text = Math.Round(precioUnitario * cantidadCajas)
                 spDocumentos.ActiveSheet.Cells(filaSpread, columnaImporte).CellType = Principal.tipoDoble

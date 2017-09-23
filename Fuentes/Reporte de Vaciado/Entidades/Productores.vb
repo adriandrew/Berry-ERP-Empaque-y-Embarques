@@ -28,9 +28,9 @@ Public Class Productores
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Productores " & _
-            " UNION SELECT -1 AS Id, 'Todos' AS Nombre FROM " & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Productores " & _
-            " ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT Id, Nombre FROM {0}Productores " & _
+            " UNION SELECT -1 AS Id, 'Todos' AS Nombre FROM {0}Productores " & _
+            " ORDER BY Id ASC", EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader
             lectorDatos = comando.ExecuteReader()

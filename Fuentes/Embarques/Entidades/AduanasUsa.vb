@@ -55,9 +55,30 @@ Public Class AduanasUsa
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "AduanasUsa " & _
-            " UNION SELECT -1 AS Id, NULL AS Nombre FROM " & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "AduanasUsa " & _
-            " ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT Id, Nombre, (CAST(Id AS Varchar)+' - '+Nombre) AS IdNombre FROM {0}AduanasUsa " & _
+            " UNION SELECT -1 AS Id, NULL AS Nombre, NULL AS IdNombre FROM {0}AduanasUsa " & _
+            " ORDER BY Id ASC", EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque)
+            BaseDatos.conexionCatalogo.Open()
+            Dim dataReader As SqlDataReader
+            dataReader = comando.ExecuteReader()
+            datos.Load(dataReader)
+            BaseDatos.conexionCatalogo.Close()
+            Return datos
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionCatalogo.Close()
+        End Try
+
+    End Function
+
+    Public Function ObtenerListadoReporteCatalogo() As DataTable
+
+        Try
+            Dim datos As New DataTable
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionCatalogo
+            comando.CommandText = String.Format("SELECT Id, Nombre FROM {0}AduanasUsa ORDER BY Id ASC", EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader
             dataReader = comando.ExecuteReader()

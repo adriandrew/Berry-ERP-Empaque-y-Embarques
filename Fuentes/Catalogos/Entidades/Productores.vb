@@ -99,7 +99,7 @@ Public Class Productores
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productores (Id, Nombre, Domicilio, Municipio, Estado, Rfc, Fda, Gs1, Ggn, ClaveAgricola) VALUES (@id, @nombre, @domicilio, @municipio, @estado, @rfc, @fda, @gs1, @ggn, @claveAgricola)"
+            comando.CommandText = String.Format("INSERT INTO {0}Productores (Id, Nombre, Domicilio, Municipio, Estado, Rfc, Fda, Gs1, Ggn, ClaveAgricola) VALUES (@id, @nombre, @domicilio, @municipio, @estado, @rfc, @fda, @gs1, @ggn, @claveAgricola)", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque)
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@nombre", Me.ENombre)
             comando.Parameters.AddWithValue("@domicilio", Me.EDomicilio)
@@ -130,8 +130,8 @@ Public Class Productores
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "DELETE FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productores WHERE 0=0 " & condicion
-            comando.Parameters.AddWithValue("@id", Me.id)
+            comando.CommandText = String.Format("DELETE FROM {0}Productores WHERE 0=0 {1}", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque, condicion)
+            comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             comando.ExecuteNonQuery()
             BaseDatos.conexionCatalogo.Close()
@@ -150,10 +150,10 @@ Public Class Productores
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
             Dim condicion As String = String.Empty
-            If Me.EId > 0 Then
+            If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre, Domicilio, Municipio, Estado, Rfc, Fda, Gs1, Ggn, ClaveAgricola FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productores WHERE 0=0 " & condicion & " ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT Id, Nombre, Domicilio, Municipio, Estado, Rfc, Fda, Gs1, Ggn, ClaveAgricola FROM {0}Productores WHERE 0=0 {1} ORDER BY Id ASC", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader

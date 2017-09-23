@@ -189,6 +189,8 @@
     <None Include="Imagenes\bienvenida.png" />
     <None Include="Imagenes\cargando.gif" />
     <None Include="Imagenes\cargando2.gif" />
+    <None Include="Iconos Usados\menu_2-32.png" />
+    <None Include="Iconos Usados\menu-32.png" />
     <Content Include="Logos\Logo.ico" />
     <Content Include="Logos\Logo2.ico" />
     <Content Include="Logos\Logo3.ico" />

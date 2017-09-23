@@ -113,10 +113,33 @@ Public Class Trailers
             If (Me.EIdLineaTransporte > 0) Then
                 condicion &= " AND IdLineaTransporte=@idLineaTransporte"
             End If
-            comando.CommandText = "SELECT -1 AS Id, NULL AS Nombre FROM " & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Trailers " & _
-            " UNION SELECT Id, Marca+' - '+Serie AS Nombre FROM " & EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque & "Trailers " & _
-            " WHERE 0=0 " & condicion & " ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT -1 AS Id, NULL AS Nombre, NULL AS IdNombre FROM {0}Trailers " & _
+            " UNION SELECT Id, Marca+' - '+Serie AS Nombre, (CAST(Id AS Varchar)+' - '+Marca+' - '+Serie) AS IdNombre FROM {0}Trailers " & _
+            " WHERE 0=0 " & condicion & " ORDER BY Id ASC", EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque)
             comando.Parameters.AddWithValue("@idLineaTransporte", Me.EIdLineaTransporte) 
+            BaseDatos.conexionCatalogo.Open()
+            Dim dataReader As SqlDataReader
+            dataReader = comando.ExecuteReader()
+            datos.Load(dataReader)
+            BaseDatos.conexionCatalogo.Close()
+            Return datos
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionCatalogo.Close()
+        End Try
+
+    End Function
+
+    Public Function ObtenerListadoReporteCatalogo() As DataTable
+
+        Try
+            Dim datos As New DataTable
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionCatalogo 
+            comando.CommandText = String.Format("SELECT Id, Marca+' - '+Serie AS Nombre FROM {0}Trailers " & _
+            " WHERE IdLineaTransporte=@idLineaTransporte ORDER BY Id ASC", EYELogicaEmbarques.Programas.prefijoBaseDatosEmpaque)
+            comando.Parameters.AddWithValue("@idLineaTransporte", Me.EIdLineaTransporte)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader
             dataReader = comando.ExecuteReader()

@@ -71,7 +71,7 @@ Public Class Empresas
                 If (Me.EId > 0) Then
                     condicion &= "WHERE Id = @id"
                 End If
-                consulta = "SELECT * FROM Empresas " & condicion
+                consulta = String.Format("SELECT * FROM Empresas {0}", condicion)
             End If
             comando.CommandText = consulta
             comando.Parameters.AddWithValue("@id", Me.EId)

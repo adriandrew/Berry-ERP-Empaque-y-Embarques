@@ -28,9 +28,9 @@ Public Class Productores
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Productores " & _
-            " UNION SELECT -1 AS Id, NULL AS Nombre FROM " & EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque & "Productores " & _
-            " ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT Id, Nombre, (CAST(Id AS Varchar)+' - '+Nombre) AS IdNombre FROM {0}Productores " & _
+            " UNION SELECT -1 AS Id, NULL AS Nombre, NULL AS IdNombre FROM {0}Productores " & _
+            " ORDER BY Id ASC", EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader
             lectorDatos = comando.ExecuteReader()
@@ -44,5 +44,26 @@ Public Class Productores
         End Try
 
     End Function
-     
+
+    Public Function ObtenerListadoReporteCatalogo() As DataTable
+
+        Try
+            Dim datos As New DataTable
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionCatalogo
+            comando.CommandText = String.Format("SELECT Id, Nombre FROM {0}Productores ORDER BY Id ASC", EYELogicaRecepcion.Programas.prefijoBaseDatosEmpaque)
+            BaseDatos.conexionCatalogo.Open()
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            BaseDatos.conexionCatalogo.Close()
+            Return datos
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionCatalogo.Close()
+        End Try
+
+    End Function
+
 End Class

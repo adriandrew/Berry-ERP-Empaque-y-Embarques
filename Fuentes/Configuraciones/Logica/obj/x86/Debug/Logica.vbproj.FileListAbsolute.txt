@@ -1,0 +1,16 @@
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Logica\bin\x86\Debug\EYELogicaCatalogos.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Logica\bin\x86\Debug\EYELogicaCatalogos.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Logica\bin\x86\Debug\EYELogicaCatalogos.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Logica\obj\x86\Debug\EYELogicaCatalogos.Resources.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Logica\obj\x86\Debug\Logica.vbproj.GenerateResource.Cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Logica\obj\x86\Debug\EYELogicaCatalogos.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Logica\obj\x86\Debug\EYELogicaCatalogos.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Catalogos\Logica\obj\x86\Debug\EYELogicaCatalogos.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Configuraciones\Logica\bin\x86\Debug\EYELogicaConfiguraciones.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Configuraciones\Logica\bin\x86\Debug\EYELogicaConfiguraciones.pdb
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Configuraciones\Logica\bin\x86\Debug\EYELogicaConfiguraciones.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Configuraciones\Logica\obj\x86\Debug\EYELogicaConfiguraciones.Resources.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Configuraciones\Logica\obj\x86\Debug\Logica.vbproj.GenerateResource.Cache
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Configuraciones\Logica\obj\x86\Debug\EYELogicaConfiguraciones.dll
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Configuraciones\Logica\obj\x86\Debug\EYELogicaConfiguraciones.xml
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Configuraciones\Logica\obj\x86\Debug\EYELogicaConfiguraciones.pdb

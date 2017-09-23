@@ -31,7 +31,7 @@ Public Class Tamanos
         End Set
     End Property
 
-    Public Function ObtenerListadoReporte() As DataTable
+    Public Function ObtenerListadoReporteCatalogo() As DataTable
 
         Try
             Dim datos As New DataTable
@@ -44,9 +44,9 @@ Public Class Tamanos
             If (Me.EId > 0) Then
                 condicion &= " AND T.Id=@id"
             End If
-            comando.CommandText = "SELECT T.IdProducto, P.Nombre, T.Id, T.Nombre FROM " & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Tamanos AS T " & _
-            " LEFT JOIN " & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON T.IdProducto = P.Id " & _
-            " WHERE 0=0 " & condicion
+            comando.CommandText = String.Format("SELECT T.IdProducto, P.Nombre, T.Id, T.Nombre FROM {0}Tamanos AS T " & _
+            " LEFT JOIN {0}Productos AS P ON T.IdProducto = P.Id " & _
+            " WHERE 0=0 {1}", EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
@@ -63,34 +63,28 @@ Public Class Tamanos
 
     End Function
 
-    Public Function ObtenerListado() As List(Of Tamanos)
+    Public Function ObtenerListado() As DataTable
 
         Try
-            Dim lista As New List(Of Tamanos)
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
             Dim condicion As String = String.Empty
-            If Me.EIdProducto > 0 Then
+            If (Me.EIdProducto > 0) Then
                 condicion &= " AND IdProducto=@idProducto"
             End If
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT IdProducto, Id, Nombre FROM " & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Tamanos WHERE 0=0 " & condicion
+            comando.CommandText = String.Format("SELECT IdProducto, Id, Nombre FROM {0}Tamanos WHERE 0=0 {1}", EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
-            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim tabla As Tamanos
-            While lectorDatos.Read()
-                tabla = New Tamanos()
-                tabla.idProducto = Convert.ToInt32(lectorDatos("IdProducto").ToString())
-                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                tabla.nombre = lectorDatos("Nombre").ToString()
-                lista.Add(tabla)
-            End While
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
             BaseDatos.conexionCatalogo.Close()
-            Return lista
+            Return datos
         Catch ex As Exception
             Throw ex
         Finally

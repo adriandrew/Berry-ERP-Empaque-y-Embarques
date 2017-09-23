@@ -90,6 +90,7 @@
     <Compile Include="CajasTrailers.vb" />
     <Compile Include="Choferes.vb" />
     <Compile Include="ConfiguracionCorreo.vb" />
+    <Compile Include="ConfiguracionPrecios.vb" />
     <Compile Include="Correos.vb" />
     <Compile Include="Documentadores.vb" />
     <Compile Include="Empresas.vb" />

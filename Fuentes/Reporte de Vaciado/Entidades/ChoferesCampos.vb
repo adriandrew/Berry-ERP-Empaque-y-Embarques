@@ -32,8 +32,8 @@ Public Class ChoferesCampos
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT -1 AS Id, 'Todos' AS Nombre FROM " & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "ChoferesCampos " & _
-            " UNION SELECT Id, Nombre FROM " & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "ChoferesCampos WHERE 0=0 " & condicion
+            comando.CommandText = String.Format("SELECT -1 AS Id, 'Todos' AS Nombre FROM {0}ChoferesCampos " & _
+            " UNION SELECT Id, Nombre FROM {0}ChoferesCampos WHERE 0=0 {1}", EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader

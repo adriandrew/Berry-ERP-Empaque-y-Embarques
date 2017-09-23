@@ -108,7 +108,7 @@ Public Class Recepcion
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "INSERT INTO Recepcion (Id, Fecha, Hora, IdProductor, IdLote, IdChofer, IdProducto, IdVariedad, CantidadCajas, PesoCajas, Orden) VALUES (@id, @fecha, @hora, @idProductor, @idLote, @idChofer, @idProducto, @idVariedad, @cantidadCajas, @pesoCajas, @orden)"
+            comando.CommandText = String.Format("INSERT INTO Recepcion (Id, Fecha, Hora, IdProductor, IdLote, IdChofer, IdProducto, IdVariedad, CantidadCajas, PesoCajas, Orden) VALUES (@id, @fecha, @hora, @idProductor, @idLote, @idChofer, @idProducto, @idVariedad, @cantidadCajas, @pesoCajas, @orden)")
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@fecha", Me.EFecha)
             comando.Parameters.AddWithValue("@hora", Me.EHora)
@@ -140,8 +140,8 @@ Public Class Recepcion
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "DELETE FROM Recepcion WHERE 0=0 " & condicion
-            comando.Parameters.AddWithValue("@id", Me.id)
+            comando.CommandText = String.Format("DELETE FROM Recepcion WHERE 0=0 {0}", condicion)
+            comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
             comando.ExecuteNonQuery()
             BaseDatos.conexionEmpaque.Close()
@@ -158,8 +158,8 @@ Public Class Recepcion
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            Dim condicion As String = String.Empty 
-            comando.CommandText = "SELECT MAX(CAST (Id AS Int)) AS IdMaximo FROM Recepcion"
+            Dim condicion As String = String.Empty
+            comando.CommandText = String.Format("SELECT MAX(CAST (Id AS Int)) AS IdMaximo FROM Recepcion")
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
             Dim valor As Integer = 0
@@ -186,7 +186,7 @@ Public Class Recepcion
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT CantidadCajas, PesoCajas FROM Recepcion WHERE 0=0 " & condicion & " ORDER BY Orden ASC"
+            comando.CommandText = String.Format("SELECT CantidadCajas, PesoCajas FROM Recepcion WHERE 0=0 {0} ORDER BY Orden ASC", condicion)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader
@@ -202,38 +202,24 @@ Public Class Recepcion
 
     End Function
 
-    Public Function ObtenerListado() As List(Of Recepcion)
+    Public Function ObtenerListado() As DataTable
 
         Try
-            Dim lista As New List(Of Recepcion)
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
             Dim condicion As String = String.Empty
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Fecha, Hora, IdProductor, IdLote, IdChofer, IdProducto, IdVariedad, CantidadCajas, PesoCajas, Orden FROM Recepcion WHERE 0=0 " & condicion & " ORDER BY Orden ASC"
+            comando.CommandText = String.Format("SELECT Id, Fecha, Hora, IdProductor, IdLote, IdChofer, IdProducto, IdVariedad, CantidadCajas, PesoCajas, Orden FROM Recepcion WHERE 0=0 {0} ORDER BY Orden ASC", condicion)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
-            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim tabla As Recepcion
-            While lectorDatos.Read()
-                tabla = New Recepcion()
-                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                tabla.fecha = Convert.ToDateTime(lectorDatos("Fecha").ToString())
-                tabla.hora = lectorDatos("Hora").ToString()
-                tabla.idProductor = Convert.ToInt32(lectorDatos("IdProductor").ToString())
-                tabla.idLote = Convert.ToInt32(lectorDatos("IdLote").ToString())
-                tabla.idChofer = Convert.ToInt32(lectorDatos("IdChofer").ToString())
-                tabla.idProducto = Convert.ToInt32(lectorDatos("IdProducto").ToString())
-                tabla.idVariedad = Convert.ToInt32(lectorDatos("IdVariedad").ToString())
-                tabla.cantidadCajas = Convert.ToInt32(lectorDatos("CantidadCajas").ToString())
-                tabla.pesoCajas = Convert.ToDouble(lectorDatos("PesoCajas").ToString())
-                tabla.orden = Convert.ToInt32(lectorDatos("Orden").ToString())
-                lista.Add(tabla)
-            End While
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
             BaseDatos.conexionEmpaque.Close()
-            Return lista
+            Return datos
         Catch ex As Exception
             Throw ex
         Finally

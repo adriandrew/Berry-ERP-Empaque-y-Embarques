@@ -54,7 +54,7 @@ Public Class AduanasUsa
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "AduanasUsa (Id, Nombre, Domicilio, Municipio, Estado) VALUES (@id, @nombre, @domicilio, @municipio, @estado)"
+            comando.CommandText = String.Format("INSERT INTO {0}AduanasUsa (Id, Nombre, Domicilio, Municipio, Estado) VALUES (@id, @nombre, @domicilio, @municipio, @estado)", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque)
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@nombre", Me.ENombre)
             comando.Parameters.AddWithValue("@domicilio", Me.EDomicilio)
@@ -80,8 +80,8 @@ Public Class AduanasUsa
             If (Me.EId > 0) Then
                 condicion &= " WHERE Id=@id"
             End If
-            comando.CommandText = "DELETE FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "AduanasUsa " & condicion
-            comando.Parameters.AddWithValue("@id", Me.id)
+            comando.CommandText = String.Format("DELETE FROM {0}AduanasUsa {1}", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque, condicion)
+            comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             comando.ExecuteNonQuery()
             BaseDatos.conexionCatalogo.Close()
@@ -99,7 +99,7 @@ Public Class AduanasUsa
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre, Domicilio, Municipio, Estado FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "AduanasUsa ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT Id, Nombre, Domicilio, Municipio, Estado FROM {0}AduanasUsa ORDER BY Id ASC", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader
             dataReader = comando.ExecuteReader()

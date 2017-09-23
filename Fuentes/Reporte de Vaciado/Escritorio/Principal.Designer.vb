@@ -137,7 +137,6 @@ Partial Class Principal
         'rbtnVaciado
         '
         Me.rbtnVaciado.Appearance = System.Windows.Forms.Appearance.Button
-        Me.rbtnVaciado.AutoSize = True
         Me.rbtnVaciado.BackColor = System.Drawing.Color.White
         Me.rbtnVaciado.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnVaciado.FlatAppearance.BorderSize = 2
@@ -146,18 +145,18 @@ Partial Class Principal
         Me.rbtnVaciado.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.rbtnVaciado.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbtnVaciado.ForeColor = System.Drawing.Color.Black
-        Me.rbtnVaciado.Location = New System.Drawing.Point(7, 3)
+        Me.rbtnVaciado.Location = New System.Drawing.Point(10, 3)
         Me.rbtnVaciado.Name = "rbtnVaciado"
-        Me.rbtnVaciado.Size = New System.Drawing.Size(93, 32)
+        Me.rbtnVaciado.Size = New System.Drawing.Size(165, 32)
         Me.rbtnVaciado.TabIndex = 3
         Me.rbtnVaciado.TabStop = True
         Me.rbtnVaciado.Text = "VACIADO"
+        Me.rbtnVaciado.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.rbtnVaciado.UseVisualStyleBackColor = False
         '
         'rbtnSaldos
         '
         Me.rbtnSaldos.Appearance = System.Windows.Forms.Appearance.Button
-        Me.rbtnSaldos.AutoSize = True
         Me.rbtnSaldos.BackColor = System.Drawing.Color.White
         Me.rbtnSaldos.FlatAppearance.BorderColor = System.Drawing.Color.Silver
         Me.rbtnSaldos.FlatAppearance.BorderSize = 2
@@ -166,12 +165,13 @@ Partial Class Principal
         Me.rbtnSaldos.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.rbtnSaldos.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rbtnSaldos.ForeColor = System.Drawing.Color.Black
-        Me.rbtnSaldos.Location = New System.Drawing.Point(105, 3)
+        Me.rbtnSaldos.Location = New System.Drawing.Point(178, 3)
         Me.rbtnSaldos.Name = "rbtnSaldos"
-        Me.rbtnSaldos.Size = New System.Drawing.Size(88, 32)
+        Me.rbtnSaldos.Size = New System.Drawing.Size(165, 32)
         Me.rbtnSaldos.TabIndex = 2
         Me.rbtnSaldos.TabStop = True
         Me.rbtnSaldos.Text = "SALDOS"
+        Me.rbtnSaldos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.rbtnSaldos.UseVisualStyleBackColor = False
         '
         'spParaClonar
@@ -800,7 +800,6 @@ Partial Class Principal
         Me.pnlContenido.ResumeLayout(False)
         Me.pnlCuerpo.ResumeLayout(False)
         Me.pnlMenu.ResumeLayout(False)
-        Me.pnlMenu.PerformLayout()
         CType(Me.spParaClonar, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.spParaClonar_Sheet1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlFiltros.ResumeLayout(False)

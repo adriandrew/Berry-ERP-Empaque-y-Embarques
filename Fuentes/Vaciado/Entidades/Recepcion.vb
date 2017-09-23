@@ -104,14 +104,14 @@ Public Class Recepcion
             If (Me.EId > 0) Then
                 condicion &= " AND R.Id=@id"
             End If
-            comando.CommandText = "SELECT SUM(R.PesoCajas)/SUM(R.CantidadCajas) AS PesoCajaUnitaria, R.IdProductor, PR.Nombre AS NombreProductor, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V.Nombre AS NombreVariedad " & _
+            comando.CommandText = String.Format("SELECT SUM(R.PesoCajas)/SUM(R.CantidadCajas) AS PesoCajaUnitaria, R.IdProductor, PR.Nombre AS NombreProductor, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V.Nombre AS NombreVariedad " & _
             " FROM Recepcion AS R " & _
-            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Productores AS PR ON R.IdProductor = PR.Id " & _
-            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
-            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON R.IdProducto = P.Id " & _
-            " LEFT JOIN " & EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto" & _
-            " WHERE 0=0 " & condicion & _
-            " GROUP BY R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre"
+            " LEFT JOIN {0}Productores AS PR ON R.IdProductor = PR.Id " & _
+            " LEFT JOIN {0}Lotes AS L ON R.IdLote = L.Id " & _
+            " LEFT JOIN {0}Productos AS P ON R.IdProducto = P.Id " & _
+            " LEFT JOIN {0}Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto" & _
+            " WHERE 0=0 {1}" & _
+            " GROUP BY R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre", EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader
@@ -119,45 +119,6 @@ Public Class Recepcion
             datos.Load(lectorDatos)
             BaseDatos.conexionEmpaque.Close()
             Return datos
-        Catch ex As Exception
-            Throw ex
-        Finally
-            BaseDatos.conexionEmpaque.Close()
-        End Try
-
-    End Function
-
-    Public Function ObtenerListado() As List(Of Recepcion)
-
-        Try
-            Dim lista As New List(Of Recepcion)
-            Dim comando As New SqlCommand()
-            comando.Connection = BaseDatos.conexionEmpaque
-            Dim condicion As String = String.Empty
-            If (Me.EId > 0) Then
-                condicion &= " AND Id=@id"
-            End If
-            comando.CommandText = "SELECT Id, Fecha, Hora, IdLote, IdChofer, IdProducto, IdVariedad, CantidadCajas, PesoCajas, Orden FROM Recepcion WHERE 0=0 " & condicion & " ORDER BY Orden ASC"
-            comando.Parameters.AddWithValue("@id", Me.EId)
-            BaseDatos.conexionEmpaque.Open()
-            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim tabla As Recepcion
-            While lectorDatos.Read()
-                tabla = New Recepcion()
-                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                tabla.fecha = Convert.ToDateTime(lectorDatos("Fecha").ToString())
-                tabla.hora = lectorDatos("Hora").ToString()
-                tabla.idLote = Convert.ToInt32(lectorDatos("IdLote").ToString())
-                tabla.idChofer = Convert.ToInt32(lectorDatos("IdChofer").ToString())
-                tabla.idProducto = Convert.ToInt32(lectorDatos("IdProducto").ToString())
-                tabla.idVariedad = Convert.ToInt32(lectorDatos("IdVariedad").ToString())
-                tabla.cantidadCajas = Convert.ToInt32(lectorDatos("CantidadCajas").ToString())
-                tabla.pesoCajas = Convert.ToDouble(lectorDatos("PesoCajas").ToString())
-                tabla.orden = Convert.ToInt32(lectorDatos("Orden").ToString())
-                lista.Add(tabla)
-            End While
-            BaseDatos.conexionEmpaque.Close()
-            Return lista
         Catch ex As Exception
             Throw ex
         Finally

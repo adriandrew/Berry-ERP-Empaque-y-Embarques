@@ -36,7 +36,7 @@ Public Class Etiquetas
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Etiquetas (Id, Nombre, Abreviatura) VALUES (@id, @nombre, @abreviatura)"
+            comando.CommandText = String.Format("INSERT INTO {0}Etiquetas (Id, Nombre, Abreviatura) VALUES (@id, @nombre, @abreviatura)", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque)
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@nombre", Me.ENombre)
             comando.Parameters.AddWithValue("@abreviatura", Me.EAbreviatura)
@@ -60,8 +60,8 @@ Public Class Etiquetas
             If (Me.EId > 0) Then
                 condicion &= " WHERE Id=@id"
             End If
-            comando.CommandText = "DELETE FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Etiquetas " & condicion
-            comando.Parameters.AddWithValue("@id", Me.id)
+            comando.CommandText = String.Format("DELETE FROM {0}Etiquetas {1}", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque, condicion)
+            comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             comando.ExecuteNonQuery()
             BaseDatos.conexionCatalogo.Close()
@@ -73,31 +73,24 @@ Public Class Etiquetas
 
     End Sub
 
-    Public Function ObtenerListado() As List(Of Etiquetas)
+    Public Function ObtenerListado() As DataTable
 
         Try
-            Dim lista As New List(Of Etiquetas)
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
             Dim condicion As String = String.Empty
             If (Me.EId > 0) Then
                 condicion &= " WHERE Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre, Abreviatura FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Etiquetas " & condicion & " ORDER BY Id ASC"
-            comando.Parameters.AddWithValue("@id", Me.id)
+            comando.CommandText = String.Format("SELECT Id, Nombre, Abreviatura FROM {0}Etiquetas {1} ORDER BY Id ASC", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque, condicion)
+            comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim dataReader As SqlDataReader
             dataReader = comando.ExecuteReader()
-            Dim tabla As Etiquetas
-            While dataReader.Read()
-                tabla = New Etiquetas()
-                tabla.id = Convert.ToInt32(dataReader("Id").ToString())
-                tabla.nombre = dataReader("Nombre").ToString()
-                tabla.abreviatura = dataReader("Abreviatura").ToString()
-                lista.Add(tabla)
-            End While
+            datos.Load(dataReader)
             BaseDatos.conexionCatalogo.Close()
-            Return lista
+            Return datos
         Catch ex As Exception
             Throw ex
         Finally

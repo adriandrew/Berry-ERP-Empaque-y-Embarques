@@ -69,8 +69,8 @@ Public Class Recepcion
 
     Public Function ObtenerListadoReporte(ByVal aplicaFecha As Boolean) As DataTable
 
-        Dim datos As New DataTable
         Try
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
             Dim condicion As String = String.Empty
@@ -93,15 +93,15 @@ Public Class Recepcion
             If (aplicaFecha) Then
                 condicionFechaRango &= " AND Fecha BETWEEN @fecha AND @fecha2 " 
             End If
-            comando.CommandText = "SELECT R.Id, R.Fecha, CONVERT(VARCHAR(5), R.Hora, 108), R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, SUM(ISNULL(R.CantidadCajas, 0)), SUM(ISNULL(R.PesoCajas, 0)) " & _
+            comando.CommandText = String.Format("SELECT R.Id, R.Fecha, CONVERT(VARCHAR(5), R.Hora, 108), R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, SUM(ISNULL(R.CantidadCajas, 0)), SUM(ISNULL(R.PesoCajas, 0)) " & _
             " FROM Recepcion AS R " & _
-            " LEFT JOIN " & EYELogicaReporteRecepcion.Programas.bdCatalogo & ".dbo." & EYELogicaReporteRecepcion.Programas.prefijoBaseDatosEmpaque & "Productores AS PR ON R.IdProductor = PR.Id " & _
-            " LEFT JOIN " & EYELogicaReporteRecepcion.Programas.bdCatalogo & ".dbo." & EYELogicaReporteRecepcion.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
-            " LEFT JOIN " & EYELogicaReporteRecepcion.Programas.bdCatalogo & ".dbo." & EYELogicaReporteRecepcion.Programas.prefijoBaseDatosEmpaque & "ChoferesCampos AS CC ON R.IdChofer = CC.Id " & _
-            " LEFT JOIN " & EYELogicaReporteRecepcion.Programas.bdCatalogo & ".dbo." & EYELogicaReporteRecepcion.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON R.IdProducto = P.Id " & _
-            " LEFT JOIN " & EYELogicaReporteRecepcion.Programas.bdCatalogo & ".dbo." & EYELogicaReporteRecepcion.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto " & _
-            " WHERE 0=0 " & condicion & condicionFechaRango & _
-            " GROUP BY R.Id, R.Fecha, R.Hora, R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre"
+            " LEFT JOIN {0}Productores AS PR ON R.IdProductor = PR.Id " & _
+            " LEFT JOIN {0}Lotes AS L ON R.IdLote = L.Id " & _
+            " LEFT JOIN {0}ChoferesCampos AS CC ON R.IdChofer = CC.Id " & _
+            " LEFT JOIN {0}Productos AS P ON R.IdProducto = P.Id " & _
+            " LEFT JOIN {0}Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto " & _
+            " WHERE 0=0 {1}" & _
+            " GROUP BY R.Id, R.Fecha, R.Hora, R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre", EYELogicaReporteRecepcion.Programas.bdCatalogo & ".dbo." & EYELogicaReporteRecepcion.Programas.prefijoBaseDatosEmpaque, condicion & condicionFechaRango)
             comando.Parameters.AddWithValue("@idProductor", Me.EIdProductor)
             comando.Parameters.AddWithValue("@idLote", Me.EIdLote)
             comando.Parameters.AddWithValue("@idChofer", Me.EIdChofer)

@@ -115,10 +115,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BarCode.vb" />
-    <Compile Include="ConfigurarImpresion.Designer.vb">
-      <DependentUpon>ConfigurarImpresion.vb</DependentUpon>
+    <Compile Include="Impresion.Designer.vb">
+      <DependentUpon>Impresion.vb</DependentUpon>
     </Compile>
-    <Compile Include="ConfigurarImpresion.vb">
+    <Compile Include="Impresion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -144,8 +144,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ConfigurarImpresion.resx">
-      <DependentUpon>ConfigurarImpresion.vb</DependentUpon>
+    <EmbeddedResource Include="Impresion.resx">
+      <DependentUpon>Impresion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">

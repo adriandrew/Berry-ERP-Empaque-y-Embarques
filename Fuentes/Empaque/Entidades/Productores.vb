@@ -91,9 +91,9 @@ Public Class Productores
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Productores " & _
-            " UNION SELECT -1 AS Id, NULL AS Nombre FROM " & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Productores " & _
-            " ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT Id, Nombre, (CAST(Id AS Varchar)+' - '+Nombre) AS IdNombre FROM {0}Productores " & _
+            " UNION SELECT -1 AS Id, NULL AS Nombre, NULL AS IdNombre FROM {0}Productores " & _
+            " ORDER BY Id ASC", EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader
             lectorDatos = comando.ExecuteReader()
@@ -108,36 +108,45 @@ Public Class Productores
 
     End Function
 
-    Public Function ObtenerListado() As List(Of Productores)
+    Public Function ObtenerListadoReporteCatalogo() As DataTable
 
         Try
-            Dim lista As New List(Of Productores)
+            Dim datos As New DataTable
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionCatalogo
+            comando.CommandText = String.Format("SELECT Id, Nombre FROM {0}Productores ORDER BY Id ASC", EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque)
+            BaseDatos.conexionCatalogo.Open()
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            BaseDatos.conexionCatalogo.Close()
+            Return datos
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionCatalogo.Close()
+        End Try
+
+    End Function
+
+    Public Function ObtenerListado() As DataTable
+
+        Try
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
             Dim condicion As String = String.Empty
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre, Domicilio, Municipio, Estado, Fda, Gs1, Ggn, ClaveAgricola FROM " & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Productores WHERE 0=0 " & condicion
+            comando.CommandText = String.Format("SELECT Id, Nombre, Domicilio, Municipio, Estado, Fda, Gs1, Ggn, ClaveAgricola FROM {0}Productores WHERE 0=0 {1}", EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
-            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim tabla As Productores
-            While lectorDatos.Read()
-                tabla = New Productores()
-                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                tabla.nombre = lectorDatos("Nombre").ToString()
-                tabla.domicilio = lectorDatos("Domicilio").ToString()
-                tabla.municipio = lectorDatos("Municipio").ToString()
-                tabla.estado = lectorDatos("Estado").ToString()
-                tabla.fda = lectorDatos("Fda").ToString()
-                tabla.gs1 = lectorDatos("Gs1").ToString()
-                tabla.ggn = lectorDatos("Ggn").ToString()
-                tabla.claveAgricola = lectorDatos("ClaveAgricola").ToString()
-                lista.Add(tabla)
-            End While
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
             BaseDatos.conexionCatalogo.Close()
-            Return lista
+            Return datos
         Catch ex As Exception
             Throw ex
         Finally

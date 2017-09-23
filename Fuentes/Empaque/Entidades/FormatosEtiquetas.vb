@@ -53,13 +53,13 @@ Public Class FormatosEtiquetas
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id "
             End If
-            comando.CommandText = "UPDATE FormatosEtiquetas SET Predeterminado='FALSE' WHERE 0=0 " & condicionTipo
+            comando.CommandText = String.Format("UPDATE FormatosEtiquetas SET Predeterminado='FALSE' WHERE 0=0 {0}", condicionTipo)
             comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
             comando.ExecuteNonQuery()
             BaseDatos.conexionEmpaque.Close()
-            comando.CommandText = "UPDATE FormatosEtiquetas SET Predeterminado='TRUE' WHERE 0=0 " & condicion
+            comando.CommandText = String.Format("UPDATE FormatosEtiquetas SET Predeterminado='TRUE' WHERE 0=0 {0}", condicion)
             BaseDatos.conexionEmpaque.Open()
             comando.ExecuteNonQuery()
             BaseDatos.conexionEmpaque.Close()
@@ -84,7 +84,7 @@ Public Class FormatosEtiquetas
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre FROM FormatosEtiquetas WHERE 0=0 " & condicion & " ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT Id, Nombre FROM FormatosEtiquetas WHERE 0=0 {0} ORDER BY Id ASC", condicion)
             comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
@@ -101,10 +101,10 @@ Public Class FormatosEtiquetas
 
     End Function
 
-    Public Function ObtenerListado() As List(Of FormatosEtiquetas)
+    Public Function ObtenerListado() As DataTable
 
         Try
-            Dim lista As New List(Of FormatosEtiquetas)
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
             Dim condicion As String = String.Empty
@@ -114,22 +114,15 @@ Public Class FormatosEtiquetas
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT IdTipo, Id, Nombre, Predeterminado FROM FormatosEtiquetas WHERE 0=0 " & condicion
+            comando.CommandText = String.Format("SELECT IdTipo, Id, Nombre, Predeterminado FROM FormatosEtiquetas WHERE 0=0 {0}", condicion)
             comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
-            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim tabla As FormatosEtiquetas
-            While lectorDatos.Read()
-                tabla = New FormatosEtiquetas()
-                tabla.idTipo = Convert.ToInt32(lectorDatos("IdTipo").ToString())
-                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                tabla.nombre = lectorDatos("Nombre").ToString()
-                tabla.predeterminado = Convert.ToBoolean(lectorDatos("Predeterminado").ToString())
-                lista.Add(tabla)
-            End While
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
             BaseDatos.conexionEmpaque.Close()
-            Return lista
+            Return datos
         Catch ex As Exception
             Throw ex
         Finally

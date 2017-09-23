@@ -108,7 +108,7 @@ Public Class Trailers
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Trailers (IdLineaTransporte, Id, Marca, Modelo, Serie, NumeroEconomico, PlacasMex, PlacasUsa, Scac, Fda, Color) VALUES (@idLineaTransporte, @id, @marca, @modelo, @serie, @numeroEconomico, @placasMex, @placasUsa, @scac, @fda, @color)"
+            comando.CommandText = String.Format("INSERT INTO {0}Trailers (IdLineaTransporte, Id, Marca, Modelo, Serie, NumeroEconomico, PlacasMex, PlacasUsa, Scac, Fda, Color) VALUES (@idLineaTransporte, @id, @marca, @modelo, @serie, @numeroEconomico, @placasMex, @placasUsa, @scac, @fda, @color)", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque)
             comando.Parameters.AddWithValue("@idLineaTransporte", Me.EIdLineaTransporte)
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@marca", Me.EMarca)
@@ -143,9 +143,9 @@ Public Class Trailers
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "DELETE FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Trailers WHERE 0=0 " & condicion
+            comando.CommandText = String.Format("DELETE FROM {0}Trailers WHERE 0=0 {1}", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@idLineaTransporte", Me.EIdLineaTransporte)
-            comando.Parameters.AddWithValue("@id", Me.id)
+            comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             comando.ExecuteNonQuery()
             BaseDatos.conexionCatalogo.Close()
@@ -170,7 +170,7 @@ Public Class Trailers
             If (Me.EId > 0) Then
                 condicion &= " AND T.Id=@id"
             End If
-            comando.CommandText = "SELECT T.IdLineaTransporte, LT.Nombre, T.Id, T.Marca, T.Modelo, T.Serie, T.NumeroEconomico, T.PlacasMex, T.PlacasUsa, T.Scac, T.Fda, T.Color FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Trailers AS T LEFT JOIN " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "LineasTransportes AS LT ON T.IdLineaTransporte = LT.Id WHERE 0=0 " & condicion & " ORDER BY T.IdLineaTransporte, T.Id ASC"
+            comando.CommandText = String.Format("SELECT T.IdLineaTransporte, LT.Nombre, T.Id, T.Marca, T.Modelo, T.Serie, T.NumeroEconomico, T.PlacasMex, T.PlacasUsa, T.Scac, T.Fda, T.Color FROM {0}Trailers AS T LEFT JOIN {0}LineasTransportes AS LT ON T.IdLineaTransporte = LT.Id WHERE 0=0 {1} ORDER BY T.IdLineaTransporte, T.Id ASC", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@idLineaTransporte", Me.EIdLineaTransporte)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()

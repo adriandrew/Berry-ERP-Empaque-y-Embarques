@@ -86,10 +86,11 @@
   <ItemGroup>
     <Compile Include="BaseDatos.vb" />
     <Compile Include="Cajas.vb" />
+    <Compile Include="ConfiguracionCajasPesoTarimas.vb" />
     <Compile Include="Envases.vb" />
     <Compile Include="Etiquetas.vb" />
     <Compile Include="FormatosEtiquetas.vb" />
-    <Compile Include="Impresoras.vb" />
+    <Compile Include="ConfiguracionImpresoras.vb" />
     <Compile Include="Productores.vb" />
     <Compile Include="Empaque.vb" />
     <Compile Include="Lotes.vb" />

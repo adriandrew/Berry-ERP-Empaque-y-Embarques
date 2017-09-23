@@ -49,10 +49,10 @@ Public Class ProveedoresCorreo
         End Set
     End Property
 
-    Public Function ObtenerListado() As List(Of ProveedoresCorreo)
+    Public Function ObtenerListado() As DataTable
 
         Try
-            Dim lista As New List(Of ProveedoresCorreo)
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
             Dim condicion As String = String.Empty
@@ -62,20 +62,12 @@ Public Class ProveedoresCorreo
             comando.CommandText = String.Format("SELECT * FROM ProveedoresCorreo WHERE 0=0 {0}", condicion)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
-            Dim dataReader As SqlDataReader
-            dataReader = comando.ExecuteReader()
-            Dim tabla As New ProveedoresCorreo
-            While (dataReader.Read())
-                tabla = New ProveedoresCorreo()
-                tabla.id = Convert.ToInt32(dataReader("Id").ToString())
-                tabla.nombre = dataReader("Nombre").ToString()
-                tabla.servidor = dataReader("Servidor").ToString()
-                tabla.dominio = dataReader("Dominio").ToString()
-                tabla.puerto = dataReader("Puerto").ToString()
-                lista.Add(tabla)
-            End While
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            lectorDatos.Close()
             BaseDatos.conexionEmpaque.Close()
-            Return lista
+            Return datos
         Catch ex As Exception
             Throw ex
         Finally

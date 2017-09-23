@@ -40,13 +40,13 @@ Public Class Lotes
         End Set
     End Property
 
-    Public Function ObtenerListadoReporte() As DataTable
+    Public Function ObtenerListadoReporteCatalogo() As DataTable
 
         Try
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "SELECT Id, Nombre FROM " & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Lotes ORDER BY Id ASC"
+            comando.CommandText = String.Format("SELECT Id, Nombre FROM {0}Lotes ORDER BY Id ASC", EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader
             lectorDatos = comando.ExecuteReader()
@@ -61,31 +61,24 @@ Public Class Lotes
 
     End Function
 
-    Public Function ObtenerListado() As List(Of Lotes)
+    Public Function ObtenerListado() As DataTable
 
         Try
-            Dim lista As New List(Of Lotes)
+            Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
             Dim condicion As String = String.Empty
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = "SELECT Id, Nombre, Hectareas, PesoCaja FROM " & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque & "Lotes WHERE 0=0 " & condicion
+            comando.CommandText = String.Format("SELECT Id, Nombre, Hectareas, PesoCaja FROM {0}Lotes WHERE 0=0 {1}", EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
-            Dim lectorDatos As SqlDataReader = comando.ExecuteReader()
-            Dim tabla As Lotes
-            While lectorDatos.Read()
-                tabla = New Lotes()
-                tabla.id = Convert.ToInt32(lectorDatos("Id").ToString())
-                tabla.nombre = lectorDatos("Nombre").ToString()
-                tabla.hectareas = Convert.ToDouble(lectorDatos("Hectareas").ToString())
-                tabla.pesoCaja = Convert.ToDouble(lectorDatos("PesoCaja").ToString())
-                lista.Add(tabla)
-            End While
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
             BaseDatos.conexionCatalogo.Close()
-            Return lista
+            Return datos
         Catch ex As Exception
             Throw ex
         Finally

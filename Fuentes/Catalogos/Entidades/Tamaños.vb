@@ -45,7 +45,7 @@ Public Class Tamaños
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            comando.CommandText = "INSERT INTO " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Tamanos (IdProducto, Id, Nombre, Abreviatura) VALUES (@idProducto, @id, @nombre, @abreviatura)"
+            comando.CommandText = String.Format("INSERT INTO {0}Tamanos (IdProducto, Id, Nombre, Abreviatura) VALUES (@idProducto, @id, @nombre, @abreviatura)", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque)
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@nombre", Me.ENombre)
@@ -72,10 +72,10 @@ Public Class Tamaños
             End If
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
-            End If 
-            comando.CommandText = "DELETE FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Tamanos WHERE 0=0 " & condicion
+            End If
+            comando.CommandText = String.Format("DELETE FROM {0}Tamanos WHERE 0=0 {1}", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)
-            comando.Parameters.AddWithValue("@id", Me.id)
+            comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             comando.ExecuteNonQuery()
             BaseDatos.conexionCatalogo.Close()
@@ -100,9 +100,9 @@ Public Class Tamaños
             If (Me.EId > 0) Then
                 condicion &= " AND T.Id=@id"
             End If
-            comando.CommandText = "SELECT T.IdProducto, P.Nombre, T.Id, T.Nombre, T.Abreviatura FROM " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Tamanos AS T LEFT JOIN " & EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON T.IdProducto = P.Id WHERE 0=0 " & condicion & " ORDER BY T.IdProducto, T.Id ASC"
+            comando.CommandText = String.Format("SELECT T.IdProducto, P.Nombre, T.Id, T.Nombre, T.Abreviatura FROM {0}Tamanos AS T LEFT JOIN {0}Productos AS P ON T.IdProducto = P.Id WHERE 0=0 {1} ORDER BY T.IdProducto, T.Id ASC", EYELogicaCatalogos.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@idProducto", Me.EIdProducto)
-            comando.Parameters.AddWithValue("@id", Me.id)
+            comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionCatalogo.Open()
             Dim lectorDatos As SqlDataReader
             lectorDatos = comando.ExecuteReader()

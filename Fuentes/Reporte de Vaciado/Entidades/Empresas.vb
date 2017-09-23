@@ -58,10 +58,10 @@ Public Class Empresas
         End Set
     End Property
 
-    Public Function Obtener(ByVal primerElemento As Boolean) As List(Of Empresas)
+    Public Function ObtenerListado(ByVal primerElemento As Boolean) As List(Of Empresas)
 
-        Dim lista As New List(Of Empresas)
         Try
+            Dim lista As New List(Of Empresas)
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
             Dim consulta As String = String.Empty : Dim condicion As String = String.Empty
@@ -71,7 +71,7 @@ Public Class Empresas
                 If (Me.EId > 0) Then
                     condicion &= "WHERE Id = @id"
                 End If
-                consulta = "SELECT * FROM Empresas " & condicion
+                consulta = String.Format("SELECT * FROM Empresas {0}", condicion)
             End If
             comando.CommandText = consulta
             comando.Parameters.AddWithValue("@id", Me.EId)

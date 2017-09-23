@@ -79,8 +79,8 @@ Public Class Vaciado
             If (aplicaFecha) Then
                 condicionFechaRango &= " AND Fecha BETWEEN @fecha AND @fecha2 "
             End If
-            comando.CommandText = "SELECT IdBanda FROM Vaciado " & _
-            " WHERE 0=0 " & condicionFechaRango & " GROUP BY IdBanda ORDER BY IdBanda ASC "
+            comando.CommandText = String.Format("SELECT IdBanda FROM Vaciado " & _
+            " WHERE 0=0 {0} GROUP BY IdBanda ORDER BY IdBanda ASC ", condicionFechaRango)
             comando.Parameters.AddWithValue("@fecha", EYELogicaReporteVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
             comando.Parameters.AddWithValue("@fecha2", EYELogicaReporteVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha2))
             BaseDatos.conexionEmpaque.Open()
@@ -114,7 +114,7 @@ Public Class Vaciado
             If (aplicaFecha) Then
                 condicionFechaRango &= " AND Fecha BETWEEN @fecha AND @fecha2 "
             End If
-            comando.CommandText = "SELECT VT.Hora " & primeraSumaBandas & " FROM (SELECT V.Hora " & segundaSumaBandas & " FROM (SELECT IdBanda, ISNULL(SUM(CantidadCajas), 0) AS Cajas, CONVERT(VARCHAR(5), Hora, 108) AS Hora FROM Vaciado WHERE 0=0 " & condicionFechaRango & " GROUP BY IdBanda, CONVERT(VARCHAR(5), Hora, 108) ) AS V GROUP BY V.Hora, V.IdBanda) AS VT GROUP BY VT.Hora"
+            comando.CommandText = String.Format("SELECT VT.Hora {0} FROM (SELECT V.Hora {1} FROM (SELECT IdBanda, ISNULL(SUM(CantidadCajas), 0) AS Cajas, CONVERT(VARCHAR(5), Hora, 108) AS Hora FROM Vaciado WHERE 0=0 {2} GROUP BY IdBanda, CONVERT(VARCHAR(5), Hora, 108) ) AS V GROUP BY V.Hora, V.IdBanda) AS VT GROUP BY VT.Hora", primeraSumaBandas, segundaSumaBandas, condicionFechaRango)
             comando.Parameters.AddWithValue("@fecha", EYELogicaReporteVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
             comando.Parameters.AddWithValue("@fecha2", EYELogicaReporteVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha2))
             BaseDatos.conexionEmpaque.Open()
@@ -162,16 +162,16 @@ Public Class Vaciado
             ElseIf (opcionMovimiento = 3) Then ' Sin movimientos.
                 condicion &= " AND ISNULL(VAC.CantidadCajas, 0) = 0 "
             End If
-            comando.CommandText = "SELECT R.Id, R.Fecha, CONVERT(VARCHAR(5), R.Hora, 108), R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, MAX(VAC.Fecha), ISNULL(SUM(R.CantidadCajas), 0) AS CajasRecepcion, VAC.CantidadCajas AS CajasVaciado, ISNULL(SUM(R.CantidadCajas), 0)-ISNULL(VAC.CantidadCajas, 0) AS Saldo" & _
+            comando.CommandText = String.Format("SELECT R.Id, R.Fecha, CONVERT(VARCHAR(5), R.Hora, 108), R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, MAX(VAC.Fecha), ISNULL(SUM(R.CantidadCajas), 0) AS CajasRecepcion, VAC.CantidadCajas AS CajasVaciado, ISNULL(SUM(R.CantidadCajas), 0)-ISNULL(VAC.CantidadCajas, 0) AS Saldo" & _
             " FROM Recepcion AS R " & _
             " LEFT JOIN (SELECT IdRecepcion, MAX(Fecha) AS Fecha, ISNULL(SUM(CantidadCajas), 0) AS CantidadCajas FROM Vaciado GROUP BY IdRecepcion) AS VAC ON R.Id = VAC.IdRecepcion " & _
-            " LEFT JOIN " & EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Productores AS PR ON R.IdProductor = PR.Id " & _
-            " LEFT JOIN " & EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Lotes AS L ON R.IdLote = L.Id " & _
-            " LEFT JOIN " & EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "ChoferesCampos AS CC ON R.IdChofer = CC.Id " & _
-            " LEFT JOIN " & EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Productos AS P ON R.IdProducto = P.Id " & _
-            " LEFT JOIN " & EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque & "Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto " & _
-            " WHERE 0=0 " & condicion & condicionFechaRango & _
-            " GROUP BY R.Id, R.Fecha, R.Hora, R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, VAC.CantidadCajas"
+            " LEFT JOIN {0}Productores AS PR ON R.IdProductor = PR.Id " & _
+            " LEFT JOIN {0}Lotes AS L ON R.IdLote = L.Id " & _
+            " LEFT JOIN {0}ChoferesCampos AS CC ON R.IdChofer = CC.Id " & _
+            " LEFT JOIN {0}Productos AS P ON R.IdProducto = P.Id " & _
+            " LEFT JOIN {0}Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto " & _
+            " WHERE 0=0 {1} " & _
+            " GROUP BY R.Id, R.Fecha, R.Hora, R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdChofer, CC.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, VAC.CantidadCajas", EYELogicaReporteVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaReporteVaciado.Programas.prefijoBaseDatosEmpaque, condicion & condicionFechaRango)
             comando.Parameters.AddWithValue("@idProductor", Me.EIdProductor)
             comando.Parameters.AddWithValue("@idLote", Me.EIdLote)
             comando.Parameters.AddWithValue("@idChofer", Me.EIdChofer)

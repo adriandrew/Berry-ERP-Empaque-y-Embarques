@@ -63,7 +63,7 @@ Public Class Cajas
         Try
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = "INSERT INTO Cajas (IdTarima, Id, DiaJuliano, ClaveAgricola, Orden, OrdenTarima) VALUES (@idTarima, @id, @diaJuliano, @claveAgricola, @orden, @ordenTarima)"
+            comando.CommandText = String.Format("INSERT INTO Cajas (IdTarima, Id, DiaJuliano, ClaveAgricola, Orden, OrdenTarima) VALUES (@idTarima, @id, @diaJuliano, @claveAgricola, @orden, @ordenTarima)")
             comando.Parameters.AddWithValue("@idTarima", Me.EIdTarima)
             comando.Parameters.AddWithValue("@id", Me.EId)
             comando.Parameters.AddWithValue("@diaJuliano", Me.EDiaJuliano)
@@ -96,7 +96,7 @@ Public Class Cajas
             If (Not String.IsNullOrEmpty(Me.EDiaJuliano)) Then
                 condicion &= " AND DiaJuliano LIKE @diaJuliano "
             End If
-            comando.CommandText = "SELECT MAX(CAST (Id AS Int)) AS IdMaximo FROM Cajas WHERE 0=0" & condicion
+            comando.CommandText = String.Format("SELECT MAX(CAST (Id AS Int)) AS IdMaximo FROM Cajas WHERE 0=0 {0}", condicion)
             comando.Parameters.AddWithValue("@idTarima", Me.EIdTarima)
             comando.Parameters.AddWithValue("@claveAgricola", Me.EClaveAgricola)
             comando.Parameters.AddWithValue("@diaJuliano", Me.EDiaJuliano)
@@ -123,12 +123,12 @@ Public Class Cajas
             comando.Connection = BaseDatos.conexionEmpaque
             Dim condicion As String = String.Empty
             If (Me.EIdTarima > 0) Then
-                comando.CommandText = "DELETE FROM Cajas WHERE IdTarima=@idTarima"
+                comando.CommandText = String.Format("DELETE FROM Cajas WHERE IdTarima=@idTarima")
+                comando.Parameters.AddWithValue("@idTarima", Me.EIdTarima)
+                BaseDatos.conexionEmpaque.Open()
+                comando.ExecuteNonQuery()
+                BaseDatos.conexionEmpaque.Close()
             End If
-            comando.Parameters.AddWithValue("@idTarima", Me.EIdTarima)
-            BaseDatos.conexionEmpaque.Open()
-            comando.ExecuteNonQuery()
-            BaseDatos.conexionEmpaque.Close()
         Catch ex As Exception
             Throw ex
         Finally

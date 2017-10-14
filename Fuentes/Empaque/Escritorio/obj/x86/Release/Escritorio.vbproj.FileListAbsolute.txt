@@ -180,7 +180,7 @@ C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modific
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Empaque\Escritorio\bin\x86\Release\EYELogicaEmpaque.pdb
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Empaque\Escritorio\bin\x86\Release\EYELogicaEmpaque.xml
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Empaque\Escritorio\obj\x86\Release\Escritorio.vbprojResolveAssemblyReference.cache
-C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Empaque\Escritorio\obj\x86\Release\EYEEmpaque.Impresion.resources
+C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Empaque\Escritorio\obj\x86\Release\EYEEmpaque.Impresoras.resources
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Empaque\Escritorio\obj\x86\Release\EYEEmpaque.Resources.resources
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Empaque\Escritorio\obj\x86\Release\EYEEmpaque.Principal.resources
 C:\Users\Berry 1\Desktop\Proyectos Berry\ERP Empaque y Embarques\Fuentes Modificados\Empaque\Escritorio\obj\x86\Release\Escritorio.vbproj.GenerateResource.Cache

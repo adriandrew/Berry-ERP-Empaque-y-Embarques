@@ -211,7 +211,7 @@ Partial Class Principal
         Me.Label6.BackColor = System.Drawing.Color.Transparent
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.White
-        Me.Label6.Location = New System.Drawing.Point(280, 12)
+        Me.Label6.Location = New System.Drawing.Point(252, 12)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(53, 13)
         Me.Label6.TabIndex = 23
@@ -229,7 +229,7 @@ Partial Class Principal
         Me.chkFecha.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chkFecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkFecha.ForeColor = System.Drawing.Color.White
-        Me.chkFecha.Location = New System.Drawing.Point(283, 27)
+        Me.chkFecha.Location = New System.Drawing.Point(255, 27)
         Me.chkFecha.Name = "chkFecha"
         Me.chkFecha.Size = New System.Drawing.Size(45, 25)
         Me.chkFecha.TabIndex = 20
@@ -240,27 +240,26 @@ Partial Class Principal
         'dtpFechaFinal
         '
         Me.dtpFechaFinal.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.dtpFechaFinal.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpFechaFinal.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtpFechaFinal.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpFechaFinal.Location = New System.Drawing.Point(149, 27)
+        Me.dtpFechaFinal.Location = New System.Drawing.Point(146, 28)
         Me.dtpFechaFinal.Name = "dtpFechaFinal"
-        Me.dtpFechaFinal.Size = New System.Drawing.Size(130, 26)
+        Me.dtpFechaFinal.Size = New System.Drawing.Size(102, 22)
         Me.dtpFechaFinal.TabIndex = 17
         '
         'dtpFecha
         '
         Me.dtpFecha.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.dtpFecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpFecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpFecha.Location = New System.Drawing.Point(16, 27)
+        Me.dtpFecha.Location = New System.Drawing.Point(39, 28)
         Me.dtpFecha.Name = "dtpFecha"
-        Me.dtpFecha.Size = New System.Drawing.Size(130, 26)
+        Me.dtpFecha.Size = New System.Drawing.Size(102, 22)
         Me.dtpFecha.TabIndex = 0
         '
         'gbNiveles
         '
         Me.gbNiveles.BackColor = System.Drawing.Color.Transparent
-        Me.gbNiveles.Controls.Add(Me.Label3)
         Me.gbNiveles.Controls.Add(Me.cbProductor)
         Me.gbNiveles.Controls.Add(Me.Label1)
         Me.gbNiveles.Controls.Add(Me.cbVariedad)
@@ -270,6 +269,7 @@ Partial Class Principal
         Me.gbNiveles.Controls.Add(Me.cbProducto)
         Me.gbNiveles.Controls.Add(Me.Label10)
         Me.gbNiveles.Controls.Add(Me.cbLote)
+        Me.gbNiveles.Controls.Add(Me.Label3)
         Me.gbNiveles.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbNiveles.ForeColor = System.Drawing.Color.White
         Me.gbNiveles.Location = New System.Drawing.Point(4, 75)
@@ -283,11 +283,11 @@ Partial Class Principal
         '
         Me.Label3.AutoSize = True
         Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.White
-        Me.Label3.Location = New System.Drawing.Point(4, 29)
+        Me.Label3.Location = New System.Drawing.Point(1, 30)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(120, 18)
+        Me.Label3.Size = New System.Drawing.Size(97, 15)
         Me.Label3.TabIndex = 19
         Me.Label3.Text = "PRODUCTOR:"
         '
@@ -297,22 +297,22 @@ Partial Class Principal
         Me.cbProductor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cbProductor.BackColor = System.Drawing.Color.White
         Me.cbProductor.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cbProductor.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbProductor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbProductor.FormattingEnabled = True
-        Me.cbProductor.Location = New System.Drawing.Point(124, 26)
+        Me.cbProductor.Location = New System.Drawing.Point(97, 26)
         Me.cbProductor.Name = "cbProductor"
-        Me.cbProductor.Size = New System.Drawing.Size(215, 28)
+        Me.cbProductor.Size = New System.Drawing.Size(244, 24)
         Me.cbProductor.TabIndex = 18
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(4, 145)
+        Me.Label1.Location = New System.Drawing.Point(1, 145)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(94, 18)
+        Me.Label1.Size = New System.Drawing.Size(78, 15)
         Me.Label1.TabIndex = 17
         Me.Label1.Text = "VARIEDAD:"
         '
@@ -323,22 +323,22 @@ Partial Class Principal
         Me.cbVariedad.BackColor = System.Drawing.Color.White
         Me.cbVariedad.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cbVariedad.Enabled = False
-        Me.cbVariedad.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbVariedad.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbVariedad.FormattingEnabled = True
-        Me.cbVariedad.Location = New System.Drawing.Point(124, 142)
+        Me.cbVariedad.Location = New System.Drawing.Point(97, 142)
         Me.cbVariedad.Name = "cbVariedad"
-        Me.cbVariedad.Size = New System.Drawing.Size(215, 28)
+        Me.cbVariedad.Size = New System.Drawing.Size(244, 24)
         Me.cbVariedad.TabIndex = 16
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(4, 87)
+        Me.Label2.Location = New System.Drawing.Point(1, 88)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(83, 18)
+        Me.Label2.Size = New System.Drawing.Size(67, 15)
         Me.Label2.TabIndex = 15
         Me.Label2.Text = "CHOFER:"
         '
@@ -348,22 +348,22 @@ Partial Class Principal
         Me.cbChofer.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cbChofer.BackColor = System.Drawing.Color.White
         Me.cbChofer.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cbChofer.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbChofer.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbChofer.FormattingEnabled = True
-        Me.cbChofer.Location = New System.Drawing.Point(124, 84)
+        Me.cbChofer.Location = New System.Drawing.Point(97, 84)
         Me.cbChofer.Name = "cbChofer"
-        Me.cbChofer.Size = New System.Drawing.Size(215, 28)
+        Me.cbChofer.Size = New System.Drawing.Size(244, 24)
         Me.cbChofer.TabIndex = 14
         '
         'Label11
         '
         Me.Label11.AutoSize = True
         Me.Label11.BackColor = System.Drawing.Color.Transparent
-        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.ForeColor = System.Drawing.Color.White
-        Me.Label11.Location = New System.Drawing.Point(5, 116)
+        Me.Label11.Location = New System.Drawing.Point(2, 117)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(108, 18)
+        Me.Label11.Size = New System.Drawing.Size(87, 15)
         Me.Label11.TabIndex = 13
         Me.Label11.Text = "PRODUCTO:"
         '
@@ -373,22 +373,22 @@ Partial Class Principal
         Me.cbProducto.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cbProducto.BackColor = System.Drawing.Color.White
         Me.cbProducto.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cbProducto.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbProducto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbProducto.FormattingEnabled = True
-        Me.cbProducto.Location = New System.Drawing.Point(124, 113)
+        Me.cbProducto.Location = New System.Drawing.Point(97, 113)
         Me.cbProducto.Name = "cbProducto"
-        Me.cbProducto.Size = New System.Drawing.Size(215, 28)
+        Me.cbProducto.Size = New System.Drawing.Size(244, 24)
         Me.cbProducto.TabIndex = 12
         '
         'Label10
         '
         Me.Label10.AutoSize = True
         Me.Label10.BackColor = System.Drawing.Color.Transparent
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.White
-        Me.Label10.Location = New System.Drawing.Point(4, 58)
+        Me.Label10.Location = New System.Drawing.Point(2, 59)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(56, 18)
+        Me.Label10.Size = New System.Drawing.Size(46, 15)
         Me.Label10.TabIndex = 11
         Me.Label10.Text = "LOTE:"
         '
@@ -398,11 +398,11 @@ Partial Class Principal
         Me.cbLote.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cbLote.BackColor = System.Drawing.Color.White
         Me.cbLote.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cbLote.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbLote.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbLote.FormattingEnabled = True
-        Me.cbLote.Location = New System.Drawing.Point(124, 55)
+        Me.cbLote.Location = New System.Drawing.Point(97, 55)
         Me.cbLote.Name = "cbLote"
-        Me.cbLote.Size = New System.Drawing.Size(215, 28)
+        Me.cbLote.Size = New System.Drawing.Size(244, 24)
         Me.cbLote.TabIndex = 10
         '
         'btnGenerar
@@ -413,11 +413,11 @@ Partial Class Principal
         Me.btnGenerar.FlatAppearance.BorderSize = 3
         Me.btnGenerar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
         Me.btnGenerar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnGenerar.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGenerar.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnGenerar.ForeColor = System.Drawing.Color.Black
-        Me.btnGenerar.Location = New System.Drawing.Point(200, 263)
+        Me.btnGenerar.Location = New System.Drawing.Point(229, 263)
         Me.btnGenerar.Name = "btnGenerar"
-        Me.btnGenerar.Size = New System.Drawing.Size(146, 55)
+        Me.btnGenerar.Size = New System.Drawing.Size(120, 40)
         Me.btnGenerar.TabIndex = 10
         Me.btnGenerar.Text = "GENERAR"
         Me.btnGenerar.UseVisualStyleBackColor = False
@@ -531,7 +531,7 @@ Partial Class Principal
         Me.btnExportarPdf.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
         Me.btnExportarPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExportarPdf.Image = CType(resources.GetObject("btnExportarPdf.Image"), System.Drawing.Image)
-        Me.btnExportarPdf.Location = New System.Drawing.Point(182, 0)
+        Me.btnExportarPdf.Location = New System.Drawing.Point(179, 0)
         Me.btnExportarPdf.Name = "btnExportarPdf"
         Me.btnExportarPdf.Size = New System.Drawing.Size(60, 60)
         Me.btnExportarPdf.TabIndex = 53
@@ -545,7 +545,7 @@ Partial Class Principal
         Me.lblLeyendaParcial.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.lblLeyendaParcial.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblLeyendaParcial.ForeColor = System.Drawing.Color.White
-        Me.lblLeyendaParcial.Location = New System.Drawing.Point(217, 15)
+        Me.lblLeyendaParcial.Location = New System.Drawing.Point(214, 15)
         Me.lblLeyendaParcial.Name = "lblLeyendaParcial"
         Me.lblLeyendaParcial.Size = New System.Drawing.Size(0, 20)
         Me.lblLeyendaParcial.TabIndex = 52
@@ -560,7 +560,7 @@ Partial Class Principal
         Me.btnExportarExcel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
         Me.btnExportarExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExportarExcel.Image = CType(resources.GetObject("btnExportarExcel.Image"), System.Drawing.Image)
-        Me.btnExportarExcel.Location = New System.Drawing.Point(123, 0)
+        Me.btnExportarExcel.Location = New System.Drawing.Point(120, 0)
         Me.btnExportarExcel.Name = "btnExportarExcel"
         Me.btnExportarExcel.Size = New System.Drawing.Size(60, 60)
         Me.btnExportarExcel.TabIndex = 50
@@ -576,7 +576,7 @@ Partial Class Principal
         Me.btnImprimir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
         Me.btnImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnImprimir.Image = CType(resources.GetObject("btnImprimir.Image"), System.Drawing.Image)
-        Me.btnImprimir.Location = New System.Drawing.Point(64, 0)
+        Me.btnImprimir.Location = New System.Drawing.Point(61, 0)
         Me.btnImprimir.Name = "btnImprimir"
         Me.btnImprimir.Size = New System.Drawing.Size(60, 60)
         Me.btnImprimir.TabIndex = 51
@@ -588,7 +588,7 @@ Partial Class Principal
         Me.lblDescripcionTooltip.Cursor = System.Windows.Forms.Cursors.Hand
         Me.lblDescripcionTooltip.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblDescripcionTooltip.ForeColor = System.Drawing.Color.White
-        Me.lblDescripcionTooltip.Location = New System.Drawing.Point(254, 15)
+        Me.lblDescripcionTooltip.Location = New System.Drawing.Point(251, 15)
         Me.lblDescripcionTooltip.Name = "lblDescripcionTooltip"
         Me.lblDescripcionTooltip.Size = New System.Drawing.Size(0, 31)
         Me.lblDescripcionTooltip.TabIndex = 3

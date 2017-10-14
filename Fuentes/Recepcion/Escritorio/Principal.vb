@@ -28,7 +28,7 @@ Public Class Principal
     Public anchoTercio As Integer = 0 : Public altoTercio As Integer = 0 : Public altoCuarto As Integer = 0
     Public izquierda As Integer = 0 : Public arriba As Integer = 0
     ' Variables de formatos de spread.
-    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 11
+    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 9
     Public Shared alturaFilasEncabezadosGrandesSpread As Integer = 35 : Public Shared alturaFilasEncabezadosMedianosSpread As Integer = 28
     Public Shared alturaFilasEncabezadosChicosSpread As Integer = 22 : Public Shared alturaFilasSpread As Integer = 20
     Public Shared colorAreaGris = Color.White
@@ -488,19 +488,19 @@ Public Class Principal
 
     Private Sub MostrarOcultar()
 
-        Dim anchoMenor As Integer = pnlCapturaSuperior.Width / 5
+        Dim anchoMenor As Integer = btnMostrarOcultar.Width
         Dim espacio As Integer = 1
         If (Not Me.esIzquierda) Then
             pnlCapturaSuperior.Left = -pnlCapturaSuperior.Width + anchoMenor
             spRecepcion.Left = anchoMenor + espacio
-            spRecepcion.Width += anchoMenor * 4 - espacio
+            spRecepcion.Width = Me.anchoTotal - anchoMenor - espacio
             spTotales.Left = spRecepcion.Left
             spTotales.Width = spRecepcion.Width
             Me.esIzquierda = True
         Else
             pnlCapturaSuperior.Left = 0
             spRecepcion.Left = pnlCapturaSuperior.Width + espacio
-            spRecepcion.Width -= anchoMenor * 4 - espacio
+            spRecepcion.Width = Me.anchoTotal - pnlCapturaSuperior.Width - espacio
             spTotales.Left = spRecepcion.Left
             spTotales.Width = spRecepcion.Width
             Me.esIzquierda = False
@@ -772,7 +772,7 @@ Public Class Principal
                 spRecepcion.ActiveSheet.Cells(fila, columna).BackColor = Color.White
             Next
         Next
-        If (Not chkConservarDatos.Checked) Then
+        If (Not chkMantenerDatos.Checked) Then
             cbProductores.SelectedIndex = 0
             cbLotes.SelectedIndex = 0
             cbChoferesCampos.SelectedIndex = 0
@@ -1237,6 +1237,7 @@ Public Class Principal
         For fila As Integer = 0 To spRecepcion.ActiveSheet.Rows.Count - 1
             Dim cantidadCajas As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Text)
             Dim pesoCajas As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Text)
+            Dim orden As Integer = fila
             If (id > 0 AndAlso IsDate(fecha) AndAlso idProductor > 0 AndAlso idLote > 0 AndAlso idChofer > 0 AndAlso idProducto > 0 And idVariedad > 0 AndAlso cantidadCajas > 0 AndAlso pesoCajas > 0) Then
                 recepcion.EId = id
                 recepcion.EFecha = fecha
@@ -1248,7 +1249,7 @@ Public Class Principal
                 recepcion.EIdVariedad = idVariedad
                 recepcion.ECantidadCajas = cantidadCajas
                 recepcion.EPesoCajas = pesoCajas
-                recepcion.EOrden = fila
+                recepcion.EOrden = orden
                 recepcion.Guardar()
             End If
         Next

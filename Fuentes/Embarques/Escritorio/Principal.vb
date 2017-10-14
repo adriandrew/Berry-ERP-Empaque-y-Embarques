@@ -33,7 +33,7 @@ Public Class Principal
     Public anchoTercio As Integer = 0 : Public altoTercio As Integer = 0 : Public altoCuarto As Integer = 0
     Public izquierda As Integer = 0 : Public arriba As Integer = 0
     ' Variables de formatos de spread.
-    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 11 : Public Shared tamañoLetraSpreadDocumentos As Integer = 10
+    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 9 : Public Shared tamañoLetraSpreadDocumentos As Integer = 10
     Public Shared alturaFilasEncabezadosGrandesSpread As Integer = 35 : Public Shared alturaFilasEncabezadosMedianosSpread As Integer = 28
     Public Shared alturaFilasEncabezadosChicosSpread As Integer = 22 : Public Shared alturaFilasMedianasSpread As Integer = 20
     Public Shared colorAreaGris = Color.White
@@ -319,7 +319,9 @@ Public Class Principal
 
     Private Sub btnGenerarDocumentos_Click(sender As Object, e As EventArgs) Handles btnGenerarDocumentos.Click
 
+        Me.Cursor = Cursors.WaitCursor
         MostrarOcultarPanelDocumentos()
+        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -733,56 +735,70 @@ Public Class Principal
 
     Private Sub btnManifiesto_Click(sender As Object, e As EventArgs) Handles btnManifiesto.Click
 
+        Me.Cursor = Cursors.WaitCursor
         Documentos.opcionSeleccionada = Documentos.OpcionDocumento.manifiesto
         Documentos.Show()
         pnlContenido.Enabled = False
+        Me.Cursor = Cursors.Default
 
     End Sub
 
     Private Sub btnRemision_Click(sender As Object, e As EventArgs) Handles btnRemision.Click
 
+        Me.Cursor = Cursors.WaitCursor
         Documentos.opcionSeleccionada = Documentos.OpcionDocumento.remision
         Documentos.Show()
         pnlContenido.Enabled = False
+        Me.Cursor = Cursors.Default
 
     End Sub
 
     Private Sub btnDistribucionCarga_Click(sender As Object, e As EventArgs) Handles btnDistribucionCarga.Click
 
+        Me.Cursor = Cursors.WaitCursor
         Documentos.opcionSeleccionada = Documentos.OpcionDocumento.distribucion
         Documentos.Show()
         pnlContenido.Enabled = False
+        Me.Cursor = Cursors.Default
 
     End Sub
 
     Private Sub btnCartaResponsiva_Click(sender As Object, e As EventArgs) Handles btnCartaResponsiva.Click
 
+        Me.Cursor = Cursors.WaitCursor
         Documentos.opcionSeleccionada = Documentos.OpcionDocumento.responsiva
         Documentos.Show()
         pnlContenido.Enabled = False
+        Me.Cursor = Cursors.Default
 
     End Sub
 
     Private Sub btnBitacoraSellos_Click(sender As Object, e As EventArgs) Handles btnBitacoraSellos.Click
 
+        Me.Cursor = Cursors.WaitCursor
         Documentos.opcionSeleccionada = Documentos.OpcionDocumento.sellos
         Documentos.Show()
         pnlContenido.Enabled = False
+        Me.Cursor = Cursors.Default
 
     End Sub
 
     Private Sub btnPrecos_Click(sender As Object, e As EventArgs) Handles btnPrecos.Click
 
+        Me.Cursor = Cursors.WaitCursor
         Documentos.opcionSeleccionada = Documentos.OpcionDocumento.precos
         Documentos.Show()
         pnlContenido.Enabled = False
+        Me.Cursor = Cursors.Default
 
     End Sub
 
     Private Sub btnEnviarCorreos_Click(sender As Object, e As EventArgs) Handles btnEnviarCorreos.Click
 
+        Me.Cursor = Cursors.WaitCursor
         Correos.Show()
         pnlContenido.Enabled = False
+        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -882,19 +898,19 @@ Public Class Principal
 
     Private Sub MostrarOcultar()
 
-        Dim anchoMenor As Integer = pnlCapturaSuperior.Width / 5
+        Dim anchoMenor As Integer = btnMostrarOcultar.Width + 17 ' 17 es el ancho de la barra lateral.
         Dim espacio As Integer = 1
         If (Not Me.esIzquierda) Then
             pnlCapturaSuperior.Left = -pnlCapturaSuperior.Width + anchoMenor
             spEmbarques.Left = anchoMenor + espacio
-            spEmbarques.Width += anchoMenor * 4 - espacio
+            spEmbarques.Width = Me.anchoTotal - anchoMenor - espacio
             'btnMostrarOcultar.BackgroundImage = Nothing
             'btnMostrarOcultar.BackgroundImage = Global.EYEEmbarques.My.Resources.hand_right_32
             Me.esIzquierda = True
         Else
             pnlCapturaSuperior.Left = 0
             spEmbarques.Left = pnlCapturaSuperior.Width + espacio
-            spEmbarques.Width -= anchoMenor * 4 - espacio
+            spEmbarques.Width = Me.anchoTotal - pnlCapturaSuperior.Width - espacio
             'btnMostrarOcultar.BackgroundImage = Nothing
             'btnMostrarOcultar.BackgroundImage = Global.EYEEmbarques.My.Resources.hand_left_32
             Me.esIzquierda = False
@@ -1224,7 +1240,7 @@ Public Class Principal
                 spEmbarques.ActiveSheet.Cells(fila, columna).BackColor = Color.White
             Next
         Next
-        If (Not chkConservarDatos.Checked) Then
+        If (Not chkMantenerDatos.Checked) Then
             dtpFecha.Value = Today
             txtHora.Text = Now.Hour.ToString().PadLeft(2, "0") & ":" & Now.Minute.ToString().PadLeft(2, "0")
             cbEmbarcadores.SelectedIndex = 0
@@ -1795,13 +1811,13 @@ Public Class Principal
         spEmbarques.ActiveSheet.Columns(numeracion).Tag = "cantidadCajas" : numeracion += 1
         spEmbarques.ActiveSheet.Columns(numeracion).Tag = "esExistente" : numeracion += 1
         spEmbarques.ActiveSheet.Columns.Count = numeracion
-        spEmbarques.ActiveSheet.Columns("idTarima").Width = 85
+        spEmbarques.ActiveSheet.Columns("idTarima").Width = 70
         spEmbarques.ActiveSheet.Columns("nombreProducto").Width = 250
         spEmbarques.ActiveSheet.Columns("nombreVariedad").Width = 250
         spEmbarques.ActiveSheet.Columns("nombreEnvase").Width = 250
         spEmbarques.ActiveSheet.Columns("nombreTamano").Width = 250
         spEmbarques.ActiveSheet.Columns("nombreEtiqueta").Width = 250
-        spEmbarques.ActiveSheet.Columns("cantidadCajas").Width = 100
+        spEmbarques.ActiveSheet.Columns("cantidadCajas").Width = 85
         spEmbarques.ActiveSheet.Columns("idTarima").CellType = tipoEntero
         spEmbarques.ActiveSheet.Columns("nombreProducto").CellType = tipoTexto
         spEmbarques.ActiveSheet.Columns("nombreVariedad").CellType = tipoTexto

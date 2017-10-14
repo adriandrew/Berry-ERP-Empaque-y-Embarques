@@ -33,7 +33,7 @@ Public Class Principal
     Public anchoTercio As Integer = 0 : Public altoTercio As Integer = 0 : Public altoCuarto As Integer = 0
     Public izquierda As Integer = 0 : Public arriba As Integer = 0
     ' Variables de formatos de spread.
-    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 11
+    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 9
     Public Shared alturaFilasEncabezadosGrandesSpread As Integer = 35 : Public Shared alturaFilasEncabezadosMedianosSpread As Integer = 28
     Public Shared alturaFilasEncabezadosChicosSpread As Integer = 22 : Public Shared alturaFilasSpread As Integer = 20
     Public Shared colorAreaGris = Color.White 
@@ -154,7 +154,9 @@ Public Class Principal
 
         ValidarGuardado()
         If (Me.esGuardadoValido) Then
+            Me.Cursor = Cursors.WaitCursor
             GuardarEditarTarimas()
+            Me.Cursor = Cursors.Default
         End If
 
     End Sub
@@ -342,15 +344,15 @@ Public Class Principal
 
     Private Sub btnConfigurarImpresion_Click(sender As Object, e As EventArgs) Handles btnConfigurarImpresion.Click
 
-        Impresion.Show()
-        Impresion.BringToFront()
+        Impresoras.Show()
+        Impresoras.BringToFront()
         Me.Enabled = False
 
     End Sub
 
     Private Sub btnConfigurarImpresion_MouseEnter(sender As Object, e As EventArgs) Handles btnConfigurarImpresion.MouseEnter
 
-        AsignarTooltips("Configurar Impresión.")
+        AsignarTooltips("Configurar Impresoras.")
 
     End Sub
 
@@ -496,19 +498,19 @@ Public Class Principal
 
     Private Sub MostrarOcultar()
 
-        Dim anchoMenor As Integer = pnlCapturaSuperior.Width / 5
+        Dim anchoMenor As Integer = btnMostrarOcultar.Width
         Dim espacio As Integer = 1
         If (Not Me.esIzquierda) Then
             pnlCapturaSuperior.Left = -pnlCapturaSuperior.Width + anchoMenor
             spEmpaque.Left = anchoMenor + espacio
-            spEmpaque.Width += anchoMenor * 4 - espacio
+            spEmpaque.Width = Me.anchoTotal - anchoMenor - espacio
             spTotales.Left = spEmpaque.Left
             spTotales.Width = spEmpaque.Width
             Me.esIzquierda = True
         Else
             pnlCapturaSuperior.Left = 0
             spEmpaque.Left = pnlCapturaSuperior.Width + espacio
-            spEmpaque.Width -= anchoMenor * 4 - espacio
+            spEmpaque.Width = Me.anchoTotal - pnlCapturaSuperior.Width - espacio
             spTotales.Left = spEmpaque.Left
             spTotales.Width = spEmpaque.Width
             Me.esIzquierda = False
@@ -620,7 +622,7 @@ Public Class Principal
         tp.SetToolTip(Me.btnSalir, "Salir.")
         tp.SetToolTip(Me.btnGuardar, "Guardar.")
         tp.SetToolTip(Me.btnEliminar, "Eliminar.")
-        tp.SetToolTip(Me.btnConfigurarImpresion, "Configurar Impresión.")
+        tp.SetToolTip(Me.btnConfigurarImpresion, "Configurar Impresoras.")
         tp.SetToolTip(Me.btnMostrarOcultar, "Mostrar u Ocultar.")
 
     End Sub
@@ -781,7 +783,7 @@ Public Class Principal
                 spEmpaque.ActiveSheet.Cells(fila, columna).BackColor = Color.White
             Next
         Next
-        If (Not chkConservarDatos.Checked) Then
+        If (Not chkMantenerDatos.Checked) Then
             cbProductores.SelectedIndex = 0
             dtpFecha.Value = Today
             txtHora.Text = Now.Hour.ToString().PadLeft(2, "0") & ":" & Now.Minute.ToString().PadLeft(2, "0")
@@ -1379,9 +1381,9 @@ Public Class Principal
         spEmpaque.ActiveSheet.Columns("nombreTamano").Width = 150
         spEmpaque.ActiveSheet.Columns("idEtiqueta").Width = 50
         spEmpaque.ActiveSheet.Columns("nombreEtiqueta").Width = 150
-        spEmpaque.ActiveSheet.Columns("cantidadCajas").Width = 110
-        spEmpaque.ActiveSheet.Columns("pesoUnitarioCajas").Width = 100
-        spEmpaque.ActiveSheet.Columns("pesoTotalCajas").Width = 100
+        spEmpaque.ActiveSheet.Columns("cantidadCajas").Width = 90
+        spEmpaque.ActiveSheet.Columns("pesoUnitarioCajas").Width = 90
+        spEmpaque.ActiveSheet.Columns("pesoTotalCajas").Width = 75
         spEmpaque.ActiveSheet.Columns("idLote").CellType = tipoEntero
         spEmpaque.ActiveSheet.Columns("nombreLote").CellType = tipoTexto
         spEmpaque.ActiveSheet.Columns("idProducto").CellType = tipoEntero
@@ -1557,8 +1559,7 @@ Public Class Principal
 
     Private Sub GuardarEditarTarimas()
 
-        Me.Cursor = Cursors.WaitCursor
-        Dim hilo As New Thread(AddressOf MandarImprimir)
+        Dim hiloImpresion As New Thread(AddressOf MandarImprimir)
         For cantidad As Integer = 1 To txtCantidad.Text ' Cantidad de tarimas a generar.
             EliminarTarimas(False)
             ' Parte superior. 
@@ -1598,6 +1599,7 @@ Public Class Principal
                 Dim cantidadCajas As Integer = EYELogicaEmpaque.Funciones.ValidarNumeroACero(spEmpaque.ActiveSheet.Cells(fila, spEmpaque.ActiveSheet.Columns("cantidadCajas").Index).Text)
                 Dim pesoUnitarioCajas As Integer = EYELogicaEmpaque.Funciones.ValidarNumeroACero(spEmpaque.ActiveSheet.Cells(fila, spEmpaque.ActiveSheet.Columns("pesoUnitarioCajas").Index).Text)
                 Dim pesoCajas As Integer = EYELogicaEmpaque.Funciones.ValidarNumeroACero(spEmpaque.ActiveSheet.Cells(fila, spEmpaque.ActiveSheet.Columns("pesoTotalCajas").Index).Text)
+                Dim orden As Integer = fila
                 If (id > 0 AndAlso IsDate(fecha) And Not String.IsNullOrEmpty(txtHora.Text) AndAlso idProductor > 0 AndAlso idLote > 0 AndAlso idProducto > 0 AndAlso idVariedad > 0 AndAlso idEnvase > 0 AndAlso idTamano > 0 AndAlso idEtiqueta > 0 AndAlso cantidadCajas > 0 AndAlso pesoUnitarioCajas > 0 AndAlso pesoCajas > 0) Then
                     empaque.EId = id
                     empaque.EIdProductor = idProductor
@@ -1619,7 +1621,7 @@ Public Class Principal
                     empaque.EEsPropio = esPropio
                     empaque.EEsSobrante = esSobrante
                     empaque.EEsTrazable = esTrazable
-                    empaque.EOrden = fila
+                    empaque.EOrden = orden
                     empaque.EEstaEmbarcado = estaEmbarcado
                     empaque.EIdEmbarque = idEmbarque
                     empaque.EIdTipoEmbarque = idTipoEmbarque
@@ -1641,16 +1643,15 @@ Public Class Principal
             txtId.Text += 1 ' Se suma uno, para generar la siguiente tarima.
         Next
         If (Not chkSobrante.Checked) Then
-            hilo.Start()
+            hiloImpresion.Start()
         End If
         MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
         LimpiarPantalla()
         CargarIdConsecutivo()
         AsignarFoco(txtId)
         If (Not Me.estaImprimiendo) Then
-            hilo.Abort()
+            hiloImpresion.Abort()
         End If
-        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -1707,7 +1708,7 @@ Public Class Principal
         cbFormatoEtiquetaTarima.ValueMember = "Id"
         listaFormatosEtiquetas = formatosEtiquetas.ObtenerListado()
         For indice = 0 To listaFormatosEtiquetas.Rows.Count - 1
-            If (listaFormatosEtiquetas.Rows(indice).Item("Predeterminado")) Then 
+            If (listaFormatosEtiquetas.Rows(indice).Item("Predeterminado")) Then
                 cbFormatoEtiquetaTarima.SelectedValue = listaFormatosEtiquetas.Rows(indice).Item("Id")
             End If
         Next
@@ -1731,15 +1732,14 @@ Public Class Principal
 
         Me.opcionEtiquetaTarimaSeleccionada = cbFormatoEtiquetaTarima.SelectedValue
         Me.opcionEtiquetaCajaSeleccionada = cbFormatoEtiquetaCaja.SelectedValue
-        Impresion.CargarImpresoras(True)
+        Impresoras.CargarImpresoras(True)
 
     End Sub
 
     Private Sub PrepararImpresion(ByVal id As Integer)
 
-        ' Aquí se obtienen datos de la tarima. 
         empaque.EId = id
-        If (Me.opcionTipoSeleccionada = OpcionTipoEtiqueta.Tarima) Then
+        If (Me.opcionTipoSeleccionada = OpcionTipoEtiqueta.tarima) Then ' Aquí se obtienen datos de la tarima. 
             Me.datosTarimasParaImprimir = empaque.ObtenerListadoReporteImpresionTarimas()
             ' Si es una tarima normal o mixta, se hace el proceso para unir cantidades y dejar un solo registro.
             If (Me.datosTarimasParaImprimir.Rows.Count > 1) Then
@@ -1760,7 +1760,7 @@ Public Class Principal
             Next
             ' Se agrega al listado.
             Me.listaTarimasParaImprimir.Add(Me.datosTarimasParaImprimir.Rows(0))
-        ElseIf (Me.opcionTipoSeleccionada = OpcionTipoEtiqueta.Caja) Then
+        ElseIf (Me.opcionTipoSeleccionada = OpcionTipoEtiqueta.caja) Then
             Me.datosCajasParaImprimir = empaque.ObtenerListadoReporteImpresionCajas()
             For fila As Integer = 0 To Me.datosCajasParaImprimir.Rows.Count - 1
                 ' Se agrega al listado.
@@ -1776,8 +1776,8 @@ Public Class Principal
         ' Impresión de etiquetas de tarima. 
         ' Si hay datos para imprimir.
         If (Me.listaTarimasParaImprimir.Count > 0) Then
-            pdTarima.PrinterSettings.PrinterName = Impresion.nombreImpresoraTarima
-            If (Impresion.habilitarImpresoraTarima) Then
+            pdTarima.PrinterSettings.PrinterName = Impresoras.nombreImpresoraTarima
+            If (Impresoras.habilitarImpresoraTarima) Then
                 Try
                     pdTarima.Print()
                 Catch ex As Exception
@@ -1789,12 +1789,11 @@ Public Class Principal
         Me.contadorTarimasParaImprimir = 0
         Me.listaTarimasParaImprimir.Clear()
         Me.datosTarimasParaImprimir.Clear()
-
         ' Impresion de etiquetas de caja. 
         ' Si hay datos para imprimir.
         If (Me.listaCajasParaImprimir.Count > 0) Then
-            pdCaja.PrinterSettings.PrinterName = Impresion.nombreImpresoraCaja
-            If (Impresion.habilitarImpresoraCaja) Then
+            pdCaja.PrinterSettings.PrinterName = Impresoras.nombreImpresoraCaja
+            If (Impresoras.habilitarImpresoraCaja) Then
                 Try
                     pdCaja.Print()
                 Catch ex As Exception
@@ -1806,7 +1805,6 @@ Public Class Principal
         Me.contadorCajasParaImprimir = 0
         Me.listaCajasParaImprimir.Clear()
         Me.datosCajasParaImprimir.Clear()
-
         Me.estaImprimiendo = False
 
     End Sub
@@ -1827,19 +1825,19 @@ Public Class Principal
         Dim fuenteDescripcion6 As New Font(Principal.tipoLetraSpread, 6, FontStyle.Bold)
         Dim fuenteDescripcion8 As New Font(Principal.tipoLetraSpread, 8, FontStyle.Bold)
         Dim imagen As System.Drawing.Image = Nothing
-        Dim margenIzquierdoTarima As Integer = Impresion.margenIzquierdoTarima : Dim margenSuperiorTarima As Integer = Impresion.margenSuperiorTarima
+        Dim margenIzquierdoTarima As Integer = Impresoras.margenIzquierdoTarima : Dim margenSuperiorTarima As Integer = Impresoras.margenSuperiorTarima
         Dim formato As New StringFormat()
         formato.Alignment = StringAlignment.Center
         ' Se obtienen los datos generales.
         Dim numeracion As Integer = 0
         Dim altura As Integer = 0
-        Dim id As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(contadorTarimasParaImprimir).Item("Id").ToString)
-        Dim nombreProducto As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(contadorTarimasParaImprimir).Item("NombreProducto").ToString())
-        Dim nombreVariedad As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(contadorTarimasParaImprimir).Item("NombreVariedad").ToString())
-        Dim nombreEnvase As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(contadorTarimasParaImprimir).Item("NombreEnvase").ToString())
-        Dim nombreTamano As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(contadorTarimasParaImprimir).Item("NombreTamano").ToString())
-        Dim nombreEtiqueta As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(contadorTarimasParaImprimir).Item("NombreEtiqueta").ToString())
-        Dim cantidadCajas As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(contadorTarimasParaImprimir).Item("CantidadCajas").ToString)
+        Dim id As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(Me.contadorTarimasParaImprimir).Item("Id").ToString)
+        Dim nombreProducto As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(Me.contadorTarimasParaImprimir).Item("NombreProducto").ToString())
+        Dim nombreVariedad As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(Me.contadorTarimasParaImprimir).Item("NombreVariedad").ToString())
+        Dim nombreEnvase As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(Me.contadorTarimasParaImprimir).Item("NombreEnvase").ToString())
+        Dim nombreTamano As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(Me.contadorTarimasParaImprimir).Item("NombreTamano").ToString())
+        Dim nombreEtiqueta As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(Me.contadorTarimasParaImprimir).Item("NombreEtiqueta").ToString())
+        Dim cantidadCajas As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaTarimasParaImprimir.Item(Me.contadorTarimasParaImprimir).Item("CantidadCajas").ToString)
         Dim nombreEmbarcador As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaCajasParaImprimir.Item(contadorCajasParaImprimir).Item("NombreEmbarcador").ToString)
         ' Formato de etiqueta chica despegable.
         e.Graphics.DrawImage(GenerarBarras(id), margenIzquierdoTarima + 10, margenSuperiorTarima + altura, 140, 28) ' Codigo de barras con id de tarima.
@@ -1872,16 +1870,16 @@ Public Class Principal
         e.Graphics.DrawString("TOTAL PACKS: " & cantidadCajas, fuenteDescripcion8, Brushes.Black, margenIzquierdoTarima + 0, margenSuperiorTarima + altura) ' Cantidad de cajas.
         ' Se agrega el logo.
         If (Not String.IsNullOrEmpty(nombreEmbarcador)) Then
-            Dim ruta As String = Application.StartupPath & "\logoCliente.jpg"
+            Dim ruta As String = Application.StartupPath & "\Imagenes\logoCliente.jpg"
             If (System.IO.File.Exists(ruta)) Then
                 imagen = System.Drawing.Image.FromFile(ruta)
             Else
                 imagen = Nothing
             End If
         Else
-            Dim ruta As String = Application.StartupPath & "\logoBerry.png"
+            Dim ruta As String = Application.StartupPath & "\Imagenes\logoBerry.png"
             If (Me.esDesarrollo) Then
-                ruta = "W:\logoBerry.png"
+                ruta = "W:\Imagenes\logoBerry.png"
             End If
             If (System.IO.File.Exists(ruta)) Then
                 imagen = System.Drawing.Image.FromFile(ruta)
@@ -1893,9 +1891,9 @@ Public Class Principal
             e.Graphics.DrawImage(imagen, margenIzquierdoTarima + 220, margenSuperiorTarima + 270, 80, 80)
         End If
         ' Se aumenta el contador de tarimas.
-        contadorTarimasParaImprimir += 1
+        Me.contadorTarimasParaImprimir += 1
         ' Se verifica si tiene mas impresiones pendientes de acuerdo a las tarimas.
-        If (contadorTarimasParaImprimir < Me.listaTarimasParaImprimir.Count) Then
+        If (Me.contadorTarimasParaImprimir < Me.listaTarimasParaImprimir.Count) Then
             e.HasMorePages = True
         Else
             e.HasMorePages = False
@@ -1931,7 +1929,7 @@ Public Class Principal
         formatoCentrado.LineAlignment = StringAlignment.Center
         Dim gtin As String = String.Empty
         Dim lotBatch As String = String.Empty
-        Dim margenIzquierdoCaja As Integer = Impresion.margenIzquierdoCaja : Dim margenSuperiorCaja As Integer = Impresion.margenSuperiorCaja
+        Dim margenIzquierdoCaja As Integer = Impresoras.margenIzquierdoCaja : Dim margenSuperiorCaja As Integer = Impresoras.margenSuperiorCaja
         ' Se obtienen los datos generales.
         Dim nombreEmbarcador As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaCajasParaImprimir.Item(contadorCajasParaImprimir).Item("NombreEmbarcador").ToString)
         Dim domicilioEmbarcador As String = EYELogicaEmpaque.Funciones.ValidarLetra(Me.listaCajasParaImprimir.Item(contadorCajasParaImprimir).Item("DomicilioEmbarcador").ToString)

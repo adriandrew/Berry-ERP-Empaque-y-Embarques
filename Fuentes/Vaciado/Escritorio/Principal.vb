@@ -24,7 +24,7 @@ Public Class Principal
     Public anchoTercio As Integer = 0 : Public altoTercio As Integer = 0 : Public altoCuarto As Integer = 0
     Public izquierda As Integer = 0 : Public arriba As Integer = 0
     ' Variables de formatos de spread.
-    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 11
+    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 9
     Public Shared alturaFilasEncabezadosGrandesSpread As Integer = 35 : Public Shared alturaFilasEncabezadosMedianosSpread As Integer = 28
     Public Shared alturaFilasEncabezadosChicosSpread As Integer = 22 : Public Shared alturaFilasSpread As Integer = 20
     Public Shared colorAreaGris = Color.White 
@@ -704,6 +704,7 @@ Public Class Principal
             For fila = 0 To spVaciado.ActiveSheet.Rows.Count - 1
                 total += EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, columna).Text)
             Next
+            spTotales.ActiveSheet.Cells(0, columna).CellType = tipoDoble
             spTotales.ActiveSheet.Cells(0, columna).Text = total
             total = 0
         Next
@@ -754,7 +755,7 @@ Public Class Principal
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "pesoCajas" : numeracion += 1
         spVaciado.ActiveSheet.Columns(numeracion).Tag = "saldoCajas" : numeracion += 1
         spVaciado.ActiveSheet.Columns.Count = numeracion
-        spVaciado.ActiveSheet.Columns("idRecepcion").Width = 120
+        spVaciado.ActiveSheet.Columns("idRecepcion").Width = 90
         spVaciado.ActiveSheet.Columns("idProductor").Width = 50
         spVaciado.ActiveSheet.Columns("nombreProductor").Width = 150
         spVaciado.ActiveSheet.Columns("idLote").Width = 50
@@ -763,10 +764,10 @@ Public Class Principal
         spVaciado.ActiveSheet.Columns("nombreProducto").Width = 150
         spVaciado.ActiveSheet.Columns("idVariedad").Width = 50
         spVaciado.ActiveSheet.Columns("nombreVariedad").Width = 150
-        spVaciado.ActiveSheet.Columns("idBanda").Width = 120
-        spVaciado.ActiveSheet.Columns("cantidadCajas").Width = 130
-        spVaciado.ActiveSheet.Columns("pesoCajas").Width = 100
-        spVaciado.ActiveSheet.Columns("saldoCajas").Width = 100
+        spVaciado.ActiveSheet.Columns("idBanda").Width = 70
+        spVaciado.ActiveSheet.Columns("cantidadCajas").Width = 80
+        spVaciado.ActiveSheet.Columns("pesoCajas").Width = 70
+        spVaciado.ActiveSheet.Columns("saldoCajas").Width = 70
         spVaciado.ActiveSheet.Columns("idRecepcion").CellType = tipoEntero
         spVaciado.ActiveSheet.Columns("idProductor").CellType = tipoEntero
         spVaciado.ActiveSheet.Columns("nombreProductor").CellType = tipoTexto
@@ -908,6 +909,7 @@ Public Class Principal
             Dim idBanda As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("idBanda").Index).Text)
             Dim cantidadCajas As Integer = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("cantidadCajas").Index).Text)
             Dim pesoCajas As Double = EYELogicaVaciado.Funciones.ValidarNumeroACero(spVaciado.ActiveSheet.Cells(fila, spVaciado.ActiveSheet.Columns("pesoCajas").Index).Text)
+            Dim orden As Integer = fila
             If (IsDate(fecha) AndAlso idBanda > 0 AndAlso cantidadCajas > 0 AndAlso pesoCajas > 0) Then
                 vaciado.EIdRecepcion = idRecepcion
                 vaciado.EFecha = fecha
@@ -915,7 +917,7 @@ Public Class Principal
                 vaciado.EIdBanda = idBanda
                 vaciado.ECantidadCajas = cantidadCajas
                 vaciado.EPesoCajas = pesoCajas
-                vaciado.EOrden = fila
+                vaciado.EOrden = orden
                 vaciado.Guardar()
             End If
         Next

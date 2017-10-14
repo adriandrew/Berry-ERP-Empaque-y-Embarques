@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing.Printing.PrinterSettings
 
-Public Class Impresion
+Public Class Impresoras
 
     ' Variables de objetos de entidades.
     Public configuracionImpresoras As New EYEEntidadesEmpaque.ConfiguracionImpresoras()
@@ -51,7 +51,9 @@ Public Class Impresion
 
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
 
+        Me.Cursor = Cursors.WaitCursor
         GuardarEditarImpresoras()
+        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -99,7 +101,6 @@ Public Class Impresion
 
     Private Sub GuardarEditarImpresoras()
 
-        Me.Cursor = Cursors.WaitCursor
         configuracionImpresoras.EIdTipo = Me.tipoImpresora
         configuracionImpresoras.EId = 0
         configuracionImpresoras.Eliminar()
@@ -138,7 +139,6 @@ Public Class Impresion
         End If
         MessageBox.Show("Guardado finalizado.", "Finalizado.", MessageBoxButtons.OK)
         CargarImpresoras(False)
-        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -150,10 +150,10 @@ Public Class Impresion
         Dim datosImpresoraTarima As New DataTable
         datosImpresoraTarima = configuracionImpresoras.ObtenerListado()
         If (datosImpresoraTarima.Rows.Count > 0) Then
-            Impresion.nombreImpresoraTarima = datosImpresoraTarima.Rows(0).Item("Nombre")
-            Impresion.habilitarImpresoraTarima = datosImpresoraTarima.Rows(0).Item("Habilitar")
-            Impresion.margenIzquierdoTarima = datosImpresoraTarima.Rows(0).Item("MargenIzquierdo")
-            Impresion.margenSuperiorTarima = datosImpresoraTarima.Rows(0).Item("MargenSuperior")
+            Impresoras.nombreImpresoraTarima = datosImpresoraTarima.Rows(0).Item("Nombre")
+            Impresoras.habilitarImpresoraTarima = datosImpresoraTarima.Rows(0).Item("Habilitar")
+            Impresoras.margenIzquierdoTarima = datosImpresoraTarima.Rows(0).Item("MargenIzquierdo")
+            Impresoras.margenSuperiorTarima = datosImpresoraTarima.Rows(0).Item("MargenSuperior")
         End If
         If (Not soloVariables) Then
             If (datosImpresoraTarima.Rows.Count > 0) Then
@@ -177,10 +177,10 @@ Public Class Impresion
         Dim datosImpresoraCaja As New DataTable
         datosImpresoraCaja = configuracionImpresoras.ObtenerListado()
         If (datosImpresoraCaja.Rows.Count > 0) Then
-            Impresion.nombreImpresoraCaja = datosImpresoraCaja.Rows(0).Item("Nombre")
-            Impresion.habilitarImpresoraCaja = datosImpresoraCaja.Rows(0).Item("Habilitar")
-            Impresion.margenIzquierdoCaja = datosImpresoraCaja.Rows(0).Item("MargenIzquierdo")
-            Impresion.margenSuperiorCaja = datosImpresoraCaja.Rows(0).Item("MargenSuperior")
+            Impresoras.nombreImpresoraCaja = datosImpresoraCaja.Rows(0).Item("Nombre")
+            Impresoras.habilitarImpresoraCaja = datosImpresoraCaja.Rows(0).Item("Habilitar")
+            Impresoras.margenIzquierdoCaja = datosImpresoraCaja.Rows(0).Item("MargenIzquierdo")
+            Impresoras.margenSuperiorCaja = datosImpresoraCaja.Rows(0).Item("MargenSuperior")
         End If
         If (Not soloVariables) Then
             If (datosImpresoraCaja.Rows.Count > 0) Then

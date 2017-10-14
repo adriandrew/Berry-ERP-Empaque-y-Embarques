@@ -827,10 +827,10 @@ Public Class Documentos
 
         Me.Cursor = Cursors.WaitCursor
         ' Se carga la información de la empresa.
-        Dim lista As New List(Of EYEEntidadesEmbarques.Empresas)
+        Dim datos As New DataTable
         empresas.EId = 0 ' Se busca la primer empresa.
-        lista = empresas.Obtener(True)
-        If (lista.Count = 0) Then
+        datos = empresas.ObtenerListado(True)
+        If (datos.Rows.Count = 0) Then
             MsgBox("No existen datos de la empresa para encabezados de impresión. Se cancelará la impresión.", MsgBoxStyle.Information, "Faltan datos.")
             Exit Sub
         End If
@@ -866,12 +866,12 @@ Public Class Documentos
         Dim encabezado1 As String = String.Empty
         Dim encabezado2 As String = String.Empty
         Dim encabezado3 As String = String.Empty
-        encabezado1 = "/l/fz""" & fuente7 & """" & "Rfc " & lista(0).ERfc & "/c/fz""" & fuente7 & """" & lista(0).ENombre
+        encabezado1 = "/l/fz""" & fuente7 & """" & "Rfc " & datos.Rows(0).Item("Rfc") & "/c/fz""" & fuente7 & """" & datos.Rows(0).Item("Nombre")
         encabezado1 &= "/r/fz""" & fuente7 & """" & "Página /p de /pc"
         encabezado1 = encabezado1.ToUpper
-        encabezado2 = "/l/fz""" & fuente7 & """" & lista(0).EDomicilio & "/c/fb1/fz""" & fuente8 & """" & lista(0).EDescripcion & "/r/fz""" & fuente7 & """" & "Fecha: " & Today.ToShortDateString
+        encabezado2 = "/l/fz""" & fuente7 & """" & datos.Rows(0).Item("Domicilio") & "/c/fb1/fz""" & fuente8 & """" & datos.Rows(0).Item("Descripcion") & "/r/fz""" & fuente7 & """" & "Fecha: " & Today.ToShortDateString
         encabezado2 = encabezado2.ToUpper
-        encabezado3 = "/l/fz""" & fuente7 & """" & lista(0).ELocalidad & "/c/fb1/fz""" & fuente8 & """" & spDocumentos.ActiveSheet.SheetName & "/r/fz""" & fuente7 & """" & "Hora: " & Now.ToShortTimeString
+        encabezado3 = "/l/fz""" & fuente7 & """" & datos.Rows(0).Item("Municipio") & ", " & datos.Rows(0).Item("Estado") & ", " & datos.Rows(0).Item("Pais") & "/c/fb1/fz""" & fuente8 & """" & spDocumentos.ActiveSheet.SheetName & "/r/fz""" & fuente7 & """" & "Hora: " & Now.ToShortTimeString
         encabezado3 = encabezado3.ToUpper
         If (esPdf) Then
             Dim bandera As Boolean = True
@@ -951,7 +951,7 @@ Public Class Documentos
         Dim bandera As Boolean = True
         Dim nombreExcel As String = "\Temporal.xls"
         Dim obtenerRandom As System.Random = New System.Random()
-        FormatearExcel()
+        FormatearSpreadExcel()
         Application.DoEvents()
         Try
             If (Not Directory.Exists(Me.rutaTemporal)) Then
@@ -1000,13 +1000,13 @@ Public Class Documentos
 
     End Function
 
-    Private Sub FormatearExcel()
+    Private Sub FormatearSpreadExcel()
 
         ' Se carga la información de la empresa.
-        Dim lista As New List(Of EYEEntidadesEmbarques.Empresas)
+        Dim datos As New DataTable
         empresas.EId = 0 ' Se busca la primer empresa.
-        lista = empresas.Obtener(True)
-        If (lista.Count = 0) Then
+        datos = empresas.ObtenerListado(True)
+        If (datos.Rows.Count = 0) Then
             MsgBox("No existen datos de la empresa para encabezados de impresión. Se cancelará la impresión.", MsgBoxStyle.Information, "Faltan datos.")
             Exit Sub
         End If
@@ -1021,12 +1021,12 @@ Public Class Documentos
         Dim encabezado3I As String = String.Empty
         Dim encabezado3C As String = String.Empty
         Dim encabezado3D As String = String.Empty
-        encabezado1I = "RFC " & lista(0).ERfc : encabezado1I = encabezado1I.ToUpper
-        encabezado1C = lista(0).ENombre : encabezado1C = encabezado1C.ToUpper
-        encabezado2I = lista(0).EDomicilio : encabezado2I = encabezado2I.ToUpper
-        encabezado2C = lista(0).EDescripcion : encabezado2C = encabezado2C.ToUpper
+        encabezado1I = datos.Rows(0).Item("Rfc") : encabezado1I = encabezado1I.ToUpper
+        encabezado1C = datos.Rows(0).Item("Nombre") : encabezado1C = encabezado1C.ToUpper
+        encabezado2I = datos.Rows(0).Item("Domicilio") : encabezado2I = encabezado2I.ToUpper
+        encabezado2C = datos.Rows(0).Item("Descripcion") : encabezado2C = encabezado2C.ToUpper
         encabezado2D = "Fecha: " & Today.ToShortDateString : encabezado2D = encabezado2D.ToUpper
-        encabezado3I = lista(0).ELocalidad : encabezado3I = encabezado3I.ToUpper
+        encabezado3I = datos.Rows(0).Item("Municipio") & ", " & datos.Rows(0).Item("Estado") & ", " & datos.Rows(0).Item("Pais") : encabezado3I = encabezado3I.ToUpper
         encabezado3C = spDocumentos.ActiveSheet.SheetName : encabezado3C = encabezado3C.ToUpper
         encabezado3D = "Hora: " & Now.ToShortTimeString : encabezado3D = encabezado3D.ToUpper
         For indice = 0 To spParaClonar.Sheets.Count - 1

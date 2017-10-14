@@ -23,7 +23,7 @@ Public Class Principal
     Public tipoFecha As New FarPoint.Win.Spread.CellType.DateTimeCellType()
     Public tipoBooleano As New FarPoint.Win.Spread.CellType.CheckBoxCellType()
     ' Variables de formatos de spread.
-    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 11
+    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 9
     Public Shared alturaFilasEncabezadosGrandesSpread As Integer = 35 : Public Shared alturaFilasEncabezadosMedianosSpread As Integer = 28
     Public Shared alturaFilasEncabezadosChicosSpread As Integer = 22 : Public Shared alturaFilasSpread As Integer = 20
     Public Shared colorAreaGris = Color.White
@@ -32,7 +32,7 @@ Public Class Principal
     Public opcionSeleccionadaTipoReporte As Integer = -1 : Public opcionSeleccionadaTipoMovimiento As Integer = -1
     Public estaMostrado As Boolean = False
     Public ejecutarProgramaPrincipal As New ProcessStartInfo()
-    Public rutaTemporal As String = CurDir() & "\ArchivosTemporales"
+    Public rutaTemporal As String = Application.StartupPath & "\ArchivosTemporales"
     Public estaCerrando As Boolean = False
     Public prefijoBaseDatosEmpaque As String = "EYE" & "_"
     Public colorFiltros As Color
@@ -122,6 +122,11 @@ Public Class Principal
 
         If (Me.opcionSeleccionadaTipoReporte = OpcionTipoReporte.vaciado Or Me.opcionSeleccionadaTipoReporte = OpcionTipoReporte.saldos) Then
             GenerarReporte()
+        Else
+            pnlMenu.BackColor = Color.LightGray
+            pnlMenu.Refresh()
+            Thread.Sleep(250)
+            pnlMenu.BackColor = pnlFiltros.BackColor
         End If
 
     End Sub
@@ -668,10 +673,10 @@ Public Class Principal
 
         Me.Cursor = Cursors.WaitCursor
         ' Se carga la información de la empresa.
-        Dim lista As New List(Of EYEEntidadesReporteVaciado.Empresas)
+        Dim datos As New DataTable
         empresas.EId = 0 ' Se busca la primer empresa.
-        lista = empresas.ObtenerListado(True)
-        If (lista.Count = 0) Then
+        datos = empresas.ObtenerListado(True)
+        If (datos.Rows.Count = 0) Then
             MsgBox("No existen datos de la empresa para encabezados de impresión. Se cancelará la impresión.", MsgBoxStyle.Information, "Faltan datos.")
             Exit Sub
         End If
@@ -697,12 +702,12 @@ Public Class Principal
         Dim encabezado1 As String = String.Empty
         Dim encabezado2 As String = String.Empty
         Dim encabezado3 As String = String.Empty
-        encabezado1 = "/l/fz""" & fuente7 & """" & "Rfc " & lista(0).ERfc & "/c/fz""" & fuente7 & """" & lista(0).ENombre
+        encabezado1 = "/l/fz""" & fuente7 & """" & datos.Rows(0).Item("Rfc") & "/c/fz""" & fuente7 & """" & datos.Rows(0).Item("Nombre")
         encabezado1 &= "/r/fz""" & fuente7 & """" & "Página /p de /pc"
         encabezado1 = encabezado1.ToUpper
-        encabezado2 = "/l/fz""" & fuente7 & """" & lista(0).EDomicilio & "/c/fb1/fz""" & fuente8 & """" & lista(0).EDescripcion & "/r/fz""" & fuente7 & """" & "Fecha: " & Today.ToShortDateString
+        encabezado2 = "/l/fz""" & fuente7 & """" & datos.Rows(0).Item("Domicilio") & "/c/fb1/fz""" & fuente8 & """" & datos.Rows(0).Item("Descripcion") & "/r/fz""" & fuente7 & """" & "Fecha: " & Today.ToShortDateString
         encabezado2 = encabezado2.ToUpper
-        encabezado3 = "/l/fz""" & fuente7 & """" & lista(0).ELocalidad & "/c/fb1/fz""" & fuente8 & """" & spReporte.ActiveSheet.SheetName & "/r/fz""" & fuente7 & """" & "Hora: " & Now.ToShortTimeString
+        encabezado3 = "/l/fz""" & fuente7 & """" & datos.Rows(0).Item("Municipio") & ", " & datos.Rows(0).Item("Estado") & ", " & datos.Rows(0).Item("Pais") & "/c/fb1/fz""" & fuente8 & """" & spReporte.ActiveSheet.SheetName & "/r/fz""" & fuente7 & """" & "Hora: " & Now.ToShortTimeString
         encabezado3 = encabezado3.ToUpper
         If esPdf Then
             Dim bandera As Boolean = True
@@ -754,7 +759,7 @@ Public Class Principal
         Dim bandera As Boolean = True
         Dim nombreExcel As String = "\Temporal.xls"
         Dim obtenerRandom As System.Random = New System.Random()
-        FormatearExcel()
+        FormatearSpreadExcel()
         Application.DoEvents()
         Try
             If (Not Directory.Exists(rutaTemporal)) Then
@@ -803,13 +808,13 @@ Public Class Principal
 
     End Function
 
-    Private Sub FormatearExcel()
+    Private Sub FormatearSpreadExcel()
 
         ' Se carga la información de la empresa.
-        Dim lista As New List(Of EYEEntidadesReporteVaciado.Empresas)
+        Dim datos As New DataTable
         empresas.EId = 0 ' Se busca la primer empresa.
-        lista = empresas.ObtenerListado(True)
-        If (lista.Count = 0) Then
+        datos = empresas.ObtenerListado(True)
+        If (datos.Rows.Count = 0) Then
             MsgBox("No existen datos de la empresa para encabezados de impresión. Se cancelará la impresión.", MsgBoxStyle.Information, "Faltan datos.")
             Exit Sub
         End If
@@ -824,12 +829,12 @@ Public Class Principal
         Dim encabezado3I As String = String.Empty
         Dim encabezado3C As String = String.Empty
         Dim encabezado3D As String = String.Empty
-        encabezado1I = "RFC " & lista(0).ERfc : encabezado1I = encabezado1I.ToUpper
-        encabezado1C = lista(0).ENombre : encabezado1C = encabezado1C.ToUpper
-        encabezado2I = lista(0).EDomicilio : encabezado2I = encabezado2I.ToUpper
-        encabezado2C = lista(0).EDescripcion : encabezado2C = encabezado2C.ToUpper
+        encabezado1I = datos.Rows(0).Item("Rfc") : encabezado1I = encabezado1I.ToUpper
+        encabezado1C = datos.Rows(0).Item("Nombre") : encabezado1C = encabezado1C.ToUpper
+        encabezado2I = datos.Rows(0).Item("Domicilio") : encabezado2I = encabezado2I.ToUpper
+        encabezado2C = datos.Rows(0).Item("Descripcion") : encabezado2C = encabezado2C.ToUpper
         encabezado2D = "Fecha: " & Today.ToShortDateString : encabezado2D = encabezado2D.ToUpper
-        encabezado3I = lista(0).ELocalidad : encabezado3I = encabezado3I.ToUpper
+        encabezado3I = datos.Rows(0).Item("Municipio") & ", " & datos.Rows(0).Item("Estado") & ", " & datos.Rows(0).Item("Pais") : encabezado3I = encabezado3I.ToUpper
         encabezado3C = spReporte.ActiveSheet.SheetName : encabezado3C = encabezado3C.ToUpper
         encabezado3D = "Hora: " & Now.ToShortTimeString : encabezado3D = encabezado3D.ToUpper
         For indice = 0 To spParaClonar.Sheets.Count - 1
@@ -1117,9 +1122,9 @@ Public Class Principal
         spReporte.ActiveSheet.Columns(numeracion).Tag = "cantidadCajasRecepcion" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "cantidadCajasVaciado" : numeracion += 1
         spReporte.ActiveSheet.Columns(numeracion).Tag = "cantidadCajasSaldo" : numeracion += 1
-        spReporte.ActiveSheet.Columns("id").Width = 120
-        spReporte.ActiveSheet.Columns("fecha").Width = 110
-        spReporte.ActiveSheet.Columns("hora").Width = 110
+        spReporte.ActiveSheet.Columns("id").Width = 100
+        spReporte.ActiveSheet.Columns("fecha").Width = 100
+        spReporte.ActiveSheet.Columns("hora").Width = 100
         spReporte.ActiveSheet.Columns("idProductor").Width = 50
         spReporte.ActiveSheet.Columns("nombreProductor").Width = 170
         spReporte.ActiveSheet.Columns("idLote").Width = 50
@@ -1130,10 +1135,10 @@ Public Class Principal
         spReporte.ActiveSheet.Columns("nombreProducto").Width = 150
         spReporte.ActiveSheet.Columns("idVariedad").Width = 50
         spReporte.ActiveSheet.Columns("nombreVariedad").Width = 150
-        spReporte.ActiveSheet.Columns("fechaVaciado").Width = 100
-        spReporte.ActiveSheet.Columns("cantidadCajasRecepcion").Width = 120
-        spReporte.ActiveSheet.Columns("cantidadCajasVaciado").Width = 120
-        spReporte.ActiveSheet.Columns("cantidadCajasSaldo").Width = 100
+        spReporte.ActiveSheet.Columns("fechaVaciado").Width = 80
+        spReporte.ActiveSheet.Columns("cantidadCajasRecepcion").Width = 90
+        spReporte.ActiveSheet.Columns("cantidadCajasVaciado").Width = 90
+        spReporte.ActiveSheet.Columns("cantidadCajasSaldo").Width = 80
         Dim anchoFiltros As Integer = 0 '15
         For columna = 0 To spReporte.ActiveSheet.Columns.Count - 1
             spReporte.ActiveSheet.Columns(columna).Width += anchoFiltros

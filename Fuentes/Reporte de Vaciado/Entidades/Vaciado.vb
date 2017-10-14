@@ -89,8 +89,8 @@ Public Class Vaciado
             datos.Load(dataReader)
             BaseDatos.conexionEmpaque.Close()
             For fila As Integer = 0 To datos.Rows.Count - 1
-                condicionSumaSegunda &= ", CASE WHEN (V.IdBanda = " & datos.Rows(fila).Item("IdBanda") & ") THEN SUM(V.Cajas) END AS Banda_" & datos.Rows(fila).Item("IdBanda") & ""
-                condicionSumaPrimera &= ", SUM(VT.Banda_" & datos.Rows(fila).Item("IdBanda") & ") AS Banda_" & datos.Rows(fila).Item("IdBanda") & ""
+                condicionSumaSegunda &= String.Format(", CASE WHEN (V.IdBanda = {0}) THEN SUM(V.Cajas) END AS Banda_{0}", datos.Rows(fila).Item("IdBanda"))
+                condicionSumaPrimera &= String.Format(", SUM(VT.Banda_{0}) AS Banda_{0}", datos.Rows(fila).Item("IdBanda"))
             Next
             Return condicionSumaSegunda & "|" & condicionSumaPrimera
         Catch ex As Exception

@@ -152,9 +152,9 @@
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Principal.resx">
       <DependentUpon>Principal.vb</DependentUpon>
@@ -184,13 +184,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Iconos Usados\hand_left-32.png" />
-    <None Include="Iconos Usados\hand_right-32.png" />
-    <None Include="Imagenes\bienvenida.png" />
-    <None Include="Imagenes\cargando.gif" />
-    <None Include="Imagenes\cargando2.gif" />
-    <None Include="Iconos Usados\menu_2-32.png" />
-    <None Include="Iconos Usados\menu-32.png" />
+    <None Include="Logos\Producido_por.png" />
+    <None Include="Iconos\hand_left-32.png" />
+    <None Include="Iconos\hand_right-32.png" />
+    <None Include="Iconos\menu_2-32.png" />
+    <None Include="Iconos\menu-32.png" />
     <Content Include="Logos\Logo.ico" />
     <Content Include="Logos\Logo2.ico" />
     <Content Include="Logos\Logo3.ico" />

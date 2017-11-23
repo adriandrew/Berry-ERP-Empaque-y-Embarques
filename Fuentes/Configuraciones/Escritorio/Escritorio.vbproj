@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>EYEConfiguraciones.My.MyApplication</StartupObject>
     <RootNamespace>EYEConfiguraciones</RootNamespace>
-    <AssemblyName>EYE01</AssemblyName>
+    <AssemblyName>EYE02</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>EYE01.xml</DocumentationFile>
+    <DocumentationFile>EYE02.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>EYE01.xml</DocumentationFile>
+    <DocumentationFile>EYE02.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -55,7 +55,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>EYE01.xml</DocumentationFile>
+    <DocumentationFile>EYE02.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -64,7 +64,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>EYE01.xml</DocumentationFile>
+    <DocumentationFile>EYE02.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -164,24 +164,25 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Iconos Usados\agreement-48.png" />
-    <Content Include="Iconos Usados\angle_right-48.png" />
-    <Content Include="Iconos Usados\arrows_long_right-32.png" />
-    <Content Include="Iconos Usados\delete-48.png" />
-    <Content Include="Iconos Usados\exit_sign-48.png" />
-    <Content Include="Iconos Usados\hand_left-32.png" />
-    <Content Include="Iconos Usados\hand_left-48.png" />
-    <Content Include="Iconos Usados\hand_right-32.png" />
-    <Content Include="Iconos Usados\hand_right-48.png" />
-    <Content Include="Iconos Usados\PDF_2-48.png" />
-    <Content Include="Iconos Usados\print-48.png" />
-    <Content Include="Iconos Usados\printer_maintenance-48.png" />
-    <Content Include="Iconos Usados\save-48.png" />
-    <Content Include="Iconos Usados\user-48.png" />
-    <Content Include="Iconos Usados\XLS-48.png" />
+    <Content Include="Iconos\agreement-48.png" />
+    <Content Include="Iconos\angle_right-48.png" />
+    <Content Include="Iconos\arrows_long_right-32.png" />
+    <Content Include="Iconos\delete-48.png" />
+    <Content Include="Iconos\exit_sign-48.png" />
+    <Content Include="Iconos\hand_left-32.png" />
+    <Content Include="Iconos\hand_left-48.png" />
+    <Content Include="Iconos\hand_right-32.png" />
+    <Content Include="Iconos\hand_right-48.png" />
+    <Content Include="Iconos\PDF_2-48.png" />
+    <Content Include="Iconos\print-48.png" />
+    <Content Include="Iconos\printer_maintenance-48.png" />
+    <Content Include="Iconos\save-48.png" />
+    <Content Include="Iconos\user-48.png" />
+    <Content Include="Iconos\XLS-48.png" />
     <Content Include="Logos\Logo.ico" />
     <Content Include="Logos\Logo2.ico" />
     <Content Include="Logos\Logo3.ico" />
+    <None Include="Logos\Producido_por.png" />
     <None Include="Logos\Logo3.png" />
     <Content Include="Logos\Logo4.ico" />
   </ItemGroup>

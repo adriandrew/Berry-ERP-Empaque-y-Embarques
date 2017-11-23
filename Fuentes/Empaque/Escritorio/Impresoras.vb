@@ -33,6 +33,7 @@ Public Class Impresoras
         Me.Cursor = Cursors.WaitCursor
         CargarTitulosDirectorio()
         CargarImpresoras(False)
+        CargarEstilos()
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -60,6 +61,13 @@ Public Class Impresoras
 #End Region
 
 #Region "Métodos"
+
+    Private Sub CargarEstilos()
+
+        pnlConfiguracion.BackColor = Principal.colorSpreadAreaGris
+        pnlPie.BackColor = Principal.colorSpreadAreaGris
+
+    End Sub
 
     Private Sub Centrar()
 

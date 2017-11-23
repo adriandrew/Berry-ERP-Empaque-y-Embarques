@@ -48,10 +48,8 @@ Partial Class Correos
         Me.chkRecordar = New System.Windows.Forms.CheckBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.pnlPie = New System.Windows.Forms.Panel()
-        Me.lblLeyendaParcial = New System.Windows.Forms.Label()
         Me.btnEnviar = New System.Windows.Forms.Button()
         Me.btnAdjuntar = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.btnAyuda = New System.Windows.Forms.Button()
         Me.lblDescripcionTooltip = New System.Windows.Forms.Label()
         Me.btnSalir = New System.Windows.Forms.Button()
@@ -78,7 +76,7 @@ Partial Class Correos
         Me.pnlContenido.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.pnlContenido.Location = New System.Drawing.Point(0, 0)
         Me.pnlContenido.Name = "pnlContenido"
-        Me.pnlContenido.Size = New System.Drawing.Size(1034, 630)
+        Me.pnlContenido.Size = New System.Drawing.Size(1039, 660)
         Me.pnlContenido.TabIndex = 3
         '
         'pnlCuerpo
@@ -92,7 +90,7 @@ Partial Class Correos
         Me.pnlCuerpo.Controls.Add(Me.pnlCapturaSuperior)
         Me.pnlCuerpo.Location = New System.Drawing.Point(0, 0)
         Me.pnlCuerpo.Name = "pnlCuerpo"
-        Me.pnlCuerpo.Size = New System.Drawing.Size(1034, 567)
+        Me.pnlCuerpo.Size = New System.Drawing.Size(1039, 597)
         Me.pnlCuerpo.TabIndex = 9
         '
         'spCorreos
@@ -117,10 +115,10 @@ Partial Class Correos
         EnhancedScrollBarRenderer1.TrackBarSelectedBackgroundColor = System.Drawing.Color.SlateGray
         Me.spCorreos.HorizontalScrollBar.Renderer = EnhancedScrollBarRenderer1
         Me.spCorreos.HorizontalScrollBar.TabIndex = 0
-        Me.spCorreos.Location = New System.Drawing.Point(472, 0)
+        Me.spCorreos.Location = New System.Drawing.Point(470, 0)
         Me.spCorreos.Name = "spCorreos"
         Me.spCorreos.Sheets.AddRange(New FarPoint.Win.Spread.SheetView() {Me.spCorreos_Sheet1})
-        Me.spCorreos.Size = New System.Drawing.Size(562, 567)
+        Me.spCorreos.Size = New System.Drawing.Size(569, 597)
         Me.spCorreos.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Seashell
         Me.spCorreos.TabIndex = 0
         Me.spCorreos.VerticalScrollBar.Buttons = New FarPoint.Win.Spread.FpScrollBarButtonCollection("BackwardLineButton,ThumbTrack,ForwardLineButton")
@@ -181,18 +179,18 @@ Partial Class Correos
         Me.pnlCapturaSuperior.Controls.Add(Me.Label3)
         Me.pnlCapturaSuperior.Location = New System.Drawing.Point(0, 0)
         Me.pnlCapturaSuperior.Name = "pnlCapturaSuperior"
-        Me.pnlCapturaSuperior.Size = New System.Drawing.Size(470, 567)
+        Me.pnlCapturaSuperior.Size = New System.Drawing.Size(470, 597)
         Me.pnlCapturaSuperior.TabIndex = 24
         '
         'chkPrecos
         '
         Me.chkPrecos.AutoSize = True
         Me.chkPrecos.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.chkPrecos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkPrecos.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkPrecos.ForeColor = System.Drawing.Color.Black
-        Me.chkPrecos.Location = New System.Drawing.Point(115, 460)
+        Me.chkPrecos.Location = New System.Drawing.Point(106, 460)
         Me.chkPrecos.Name = "chkPrecos"
-        Me.chkPrecos.Size = New System.Drawing.Size(146, 20)
+        Me.chkPrecos.Size = New System.Drawing.Size(123, 17)
         Me.chkPrecos.TabIndex = 107
         Me.chkPrecos.Text = "FORMA PRECOS"
         Me.chkPrecos.UseVisualStyleBackColor = True
@@ -201,11 +199,11 @@ Partial Class Correos
         '
         Me.chkSellos.AutoSize = True
         Me.chkSellos.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.chkSellos.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkSellos.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkSellos.ForeColor = System.Drawing.Color.Black
-        Me.chkSellos.Location = New System.Drawing.Point(115, 426)
+        Me.chkSellos.Location = New System.Drawing.Point(106, 426)
         Me.chkSellos.Name = "chkSellos"
-        Me.chkSellos.Size = New System.Drawing.Size(189, 20)
+        Me.chkSellos.Size = New System.Drawing.Size(160, 17)
         Me.chkSellos.TabIndex = 106
         Me.chkSellos.Text = "BITÁCORA DE SELLOS"
         Me.chkSellos.UseVisualStyleBackColor = True
@@ -214,11 +212,11 @@ Partial Class Correos
         '
         Me.chkResponsiva.AutoSize = True
         Me.chkResponsiva.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.chkResponsiva.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkResponsiva.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkResponsiva.ForeColor = System.Drawing.Color.Black
-        Me.chkResponsiva.Location = New System.Drawing.Point(115, 392)
+        Me.chkResponsiva.Location = New System.Drawing.Point(106, 392)
         Me.chkResponsiva.Name = "chkResponsiva"
-        Me.chkResponsiva.Size = New System.Drawing.Size(179, 20)
+        Me.chkResponsiva.Size = New System.Drawing.Size(150, 17)
         Me.chkResponsiva.TabIndex = 105
         Me.chkResponsiva.Text = "CARTA RESPONSIVA"
         Me.chkResponsiva.UseVisualStyleBackColor = True
@@ -227,11 +225,11 @@ Partial Class Correos
         '
         Me.chkDistribucion.AutoSize = True
         Me.chkDistribucion.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.chkDistribucion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkDistribucion.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkDistribucion.ForeColor = System.Drawing.Color.Black
-        Me.chkDistribucion.Location = New System.Drawing.Point(115, 358)
+        Me.chkDistribucion.Location = New System.Drawing.Point(106, 358)
         Me.chkDistribucion.Name = "chkDistribucion"
-        Me.chkDistribucion.Size = New System.Drawing.Size(215, 20)
+        Me.chkDistribucion.Size = New System.Drawing.Size(182, 17)
         Me.chkDistribucion.TabIndex = 104
         Me.chkDistribucion.Text = "DISTRIBUCIÓN DE CARGA"
         Me.chkDistribucion.UseVisualStyleBackColor = True
@@ -240,11 +238,11 @@ Partial Class Correos
         '
         Me.chkRemision.AutoSize = True
         Me.chkRemision.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.chkRemision.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkRemision.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkRemision.ForeColor = System.Drawing.Color.Black
-        Me.chkRemision.Location = New System.Drawing.Point(115, 324)
+        Me.chkRemision.Location = New System.Drawing.Point(106, 324)
         Me.chkRemision.Name = "chkRemision"
-        Me.chkRemision.Size = New System.Drawing.Size(100, 20)
+        Me.chkRemision.Size = New System.Drawing.Size(87, 17)
         Me.chkRemision.TabIndex = 103
         Me.chkRemision.Text = "REMISIÓN"
         Me.chkRemision.UseVisualStyleBackColor = True
@@ -253,11 +251,11 @@ Partial Class Correos
         '
         Me.chkManifiesto.AutoSize = True
         Me.chkManifiesto.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.chkManifiesto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkManifiesto.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkManifiesto.ForeColor = System.Drawing.Color.Black
-        Me.chkManifiesto.Location = New System.Drawing.Point(115, 290)
+        Me.chkManifiesto.Location = New System.Drawing.Point(106, 290)
         Me.chkManifiesto.Name = "chkManifiesto"
-        Me.chkManifiesto.Size = New System.Drawing.Size(118, 20)
+        Me.chkManifiesto.Size = New System.Drawing.Size(101, 17)
         Me.chkManifiesto.TabIndex = 102
         Me.chkManifiesto.Text = "MANIFIESTO"
         Me.chkManifiesto.UseVisualStyleBackColor = True
@@ -266,81 +264,84 @@ Partial Class Correos
         '
         Me.cbProveedores.Cursor = System.Windows.Forms.Cursors.Hand
         Me.cbProveedores.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbProveedores.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbProveedores.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbProveedores.FormattingEnabled = True
-        Me.cbProveedores.Location = New System.Drawing.Point(291, 10)
+        Me.cbProveedores.Location = New System.Drawing.Point(303, 10)
         Me.cbProveedores.Name = "cbProveedores"
-        Me.cbProveedores.Size = New System.Drawing.Size(175, 24)
+        Me.cbProveedores.Size = New System.Drawing.Size(163, 21)
         Me.cbProveedores.TabIndex = 101
         '
         'txtAsunto
         '
         Me.txtAsunto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtAsunto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtAsunto.Location = New System.Drawing.Point(115, 67)
+        Me.txtAsunto.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtAsunto.Location = New System.Drawing.Point(106, 67)
         Me.txtAsunto.Multiline = True
         Me.txtAsunto.Name = "txtAsunto"
         Me.txtAsunto.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtAsunto.Size = New System.Drawing.Size(350, 50)
+        Me.txtAsunto.Size = New System.Drawing.Size(359, 50)
         Me.txtAsunto.TabIndex = 100
         '
         'txtContrasena
         '
         Me.txtContrasena.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtContrasena.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtContrasena.Location = New System.Drawing.Point(115, 39)
+        Me.txtContrasena.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtContrasena.Location = New System.Drawing.Point(106, 39)
         Me.txtContrasena.Name = "txtContrasena"
         Me.txtContrasena.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtContrasena.Size = New System.Drawing.Size(196, 22)
+        Me.txtContrasena.Size = New System.Drawing.Size(196, 20)
         Me.txtContrasena.TabIndex = 98
         '
         'txtDireccion
         '
         Me.txtDireccion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtDireccion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDireccion.Location = New System.Drawing.Point(115, 11)
+        Me.txtDireccion.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDireccion.Location = New System.Drawing.Point(106, 11)
         Me.txtDireccion.Name = "txtDireccion"
-        Me.txtDireccion.Size = New System.Drawing.Size(175, 22)
+        Me.txtDireccion.Size = New System.Drawing.Size(196, 20)
         Me.txtDireccion.TabIndex = 97
         '
         'txtMensaje
         '
         Me.txtMensaje.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtMensaje.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtMensaje.Location = New System.Drawing.Point(115, 123)
+        Me.txtMensaje.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtMensaje.Location = New System.Drawing.Point(106, 123)
         Me.txtMensaje.Multiline = True
         Me.txtMensaje.Name = "txtMensaje"
         Me.txtMensaje.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtMensaje.Size = New System.Drawing.Size(350, 152)
+        Me.txtMensaje.Size = New System.Drawing.Size(359, 152)
         Me.txtMensaje.TabIndex = 99
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(2, 127)
+        Me.Label4.BackColor = System.Drawing.Color.Transparent
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(0, 127)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(75, 15)
+        Me.Label4.Size = New System.Drawing.Size(68, 13)
         Me.Label4.TabIndex = 35
         Me.Label4.Text = "MENSAJE:"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(2, 71)
+        Me.Label2.BackColor = System.Drawing.Color.Transparent
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(0, 71)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(66, 15)
+        Me.Label2.Size = New System.Drawing.Size(62, 13)
         Me.Label2.TabIndex = 33
         Me.Label2.Text = "ASUNTO:"
         '
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(2, 43)
+        Me.Label8.BackColor = System.Drawing.Color.Transparent
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(0, 43)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(112, 15)
+        Me.Label8.Size = New System.Drawing.Size(104, 13)
         Me.Label8.TabIndex = 30
         Me.Label8.Text = "CONTRASEÑA: *"
         '
@@ -350,11 +351,11 @@ Partial Class Correos
         Me.chkRecordar.Checked = True
         Me.chkRecordar.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkRecordar.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.chkRecordar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkRecordar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkRecordar.ForeColor = System.Drawing.Color.Black
-        Me.chkRecordar.Location = New System.Drawing.Point(317, 40)
+        Me.chkRecordar.Location = New System.Drawing.Point(305, 40)
         Me.chkRecordar.Name = "chkRecordar"
-        Me.chkRecordar.Size = New System.Drawing.Size(92, 20)
+        Me.chkRecordar.Size = New System.Drawing.Size(78, 17)
         Me.chkRecordar.TabIndex = 18
         Me.chkRecordar.Text = "Recordar"
         Me.chkRecordar.UseVisualStyleBackColor = True
@@ -362,10 +363,11 @@ Partial Class Correos
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(4, 15)
+        Me.Label3.BackColor = System.Drawing.Color.Transparent
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(0, 15)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(79, 15)
+        Me.Label3.Size = New System.Drawing.Size(72, 13)
         Me.Label3.TabIndex = 5
         Me.Label3.Text = "CORREO: *"
         '
@@ -373,33 +375,18 @@ Partial Class Correos
         '
         Me.pnlPie.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlPie.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnlPie.BackColor = System.Drawing.Color.White
         Me.pnlPie.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlPie.Controls.Add(Me.lblLeyendaParcial)
         Me.pnlPie.Controls.Add(Me.btnEnviar)
         Me.pnlPie.Controls.Add(Me.btnAdjuntar)
-        Me.pnlPie.Controls.Add(Me.Label1)
         Me.pnlPie.Controls.Add(Me.btnAyuda)
         Me.pnlPie.Controls.Add(Me.lblDescripcionTooltip)
         Me.pnlPie.Controls.Add(Me.btnSalir)
         Me.pnlPie.ForeColor = System.Drawing.Color.White
-        Me.pnlPie.Location = New System.Drawing.Point(0, 570)
+        Me.pnlPie.Location = New System.Drawing.Point(0, 600)
         Me.pnlPie.Name = "pnlPie"
-        Me.pnlPie.Size = New System.Drawing.Size(1034, 60)
+        Me.pnlPie.Size = New System.Drawing.Size(1039, 60)
         Me.pnlPie.TabIndex = 8
-        '
-        'lblLeyendaParcial
-        '
-        Me.lblLeyendaParcial.AutoSize = True
-        Me.lblLeyendaParcial.BackColor = System.Drawing.Color.White
-        Me.lblLeyendaParcial.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.lblLeyendaParcial.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.lblLeyendaParcial.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblLeyendaParcial.ForeColor = System.Drawing.Color.White
-        Me.lblLeyendaParcial.Location = New System.Drawing.Point(217, 15)
-        Me.lblLeyendaParcial.Name = "lblLeyendaParcial"
-        Me.lblLeyendaParcial.Size = New System.Drawing.Size(0, 20)
-        Me.lblLeyendaParcial.TabIndex = 57
         '
         'btnEnviar
         '
@@ -410,7 +397,7 @@ Partial Class Correos
         Me.btnEnviar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.MediumAquamarine
         Me.btnEnviar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnEnviar.Image = CType(resources.GetObject("btnEnviar.Image"), System.Drawing.Image)
-        Me.btnEnviar.Location = New System.Drawing.Point(128, 0)
+        Me.btnEnviar.Location = New System.Drawing.Point(126, 0)
         Me.btnEnviar.Name = "btnEnviar"
         Me.btnEnviar.Size = New System.Drawing.Size(60, 60)
         Me.btnEnviar.TabIndex = 55
@@ -418,7 +405,7 @@ Partial Class Correos
         '
         'btnAdjuntar
         '
-        Me.btnAdjuntar.BackColor = System.Drawing.Color.White
+        Me.btnAdjuntar.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.btnAdjuntar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnAdjuntar.FlatAppearance.BorderColor = System.Drawing.Color.Black
         Me.btnAdjuntar.FlatAppearance.BorderSize = 3
@@ -431,20 +418,9 @@ Partial Class Correos
         Me.btnAdjuntar.TabIndex = 56
         Me.btnAdjuntar.UseVisualStyleBackColor = False
         '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(254, 15)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(0, 31)
-        Me.Label1.TabIndex = 54
-        '
         'btnAyuda
         '
-        Me.btnAyuda.BackColor = System.Drawing.Color.White
+        Me.btnAyuda.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btnAyuda.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btnAyuda.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnAyuda.Enabled = False
@@ -464,9 +440,10 @@ Partial Class Correos
         'lblDescripcionTooltip
         '
         Me.lblDescripcionTooltip.AutoSize = True
+        Me.lblDescripcionTooltip.BackColor = System.Drawing.Color.FromArgb(CType(CType(99, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(162, Byte), Integer))
         Me.lblDescripcionTooltip.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDescripcionTooltip.ForeColor = System.Drawing.Color.White
-        Me.lblDescripcionTooltip.Location = New System.Drawing.Point(158, 17)
+        Me.lblDescripcionTooltip.ForeColor = System.Drawing.Color.Black
+        Me.lblDescripcionTooltip.Location = New System.Drawing.Point(210, 13)
         Me.lblDescripcionTooltip.Name = "lblDescripcionTooltip"
         Me.lblDescripcionTooltip.Size = New System.Drawing.Size(0, 31)
         Me.lblDescripcionTooltip.TabIndex = 4
@@ -474,7 +451,7 @@ Partial Class Correos
         'btnSalir
         '
         Me.btnSalir.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSalir.BackColor = System.Drawing.Color.White
+        Me.btnSalir.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btnSalir.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.btnSalir.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.Black
@@ -483,7 +460,7 @@ Partial Class Correos
         Me.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnSalir.ForeColor = System.Drawing.Color.Black
         Me.btnSalir.Image = CType(resources.GetObject("btnSalir.Image"), System.Drawing.Image)
-        Me.btnSalir.Location = New System.Drawing.Point(972, 0)
+        Me.btnSalir.Location = New System.Drawing.Point(977, 0)
         Me.btnSalir.Margin = New System.Windows.Forms.Padding(0)
         Me.btnSalir.Name = "btnSalir"
         Me.btnSalir.Size = New System.Drawing.Size(60, 60)
@@ -505,7 +482,7 @@ Partial Class Correos
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1034, 631)
+        Me.ClientSize = New System.Drawing.Size(1039, 661)
         Me.Controls.Add(Me.pnlContenido)
         Me.ForeColor = System.Drawing.Color.Black
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -531,10 +508,8 @@ Partial Class Correos
     Private WithEvents btnAyuda As System.Windows.Forms.Button
     Friend WithEvents lblDescripcionTooltip As System.Windows.Forms.Label
     Private WithEvents btnSalir As System.Windows.Forms.Button
-    Friend WithEvents lblLeyendaParcial As System.Windows.Forms.Label
     Friend WithEvents btnEnviar As System.Windows.Forms.Button
     Friend WithEvents btnAdjuntar As System.Windows.Forms.Button
-    Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents impresor As System.Windows.Forms.PrintDialog
     Friend WithEvents pnlCapturaSuperior As System.Windows.Forms.Panel
     Friend WithEvents Label4 As System.Windows.Forms.Label

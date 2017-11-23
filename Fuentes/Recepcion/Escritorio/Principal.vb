@@ -28,11 +28,14 @@ Public Class Principal
     Public anchoTercio As Integer = 0 : Public altoTercio As Integer = 0 : Public altoCuarto As Integer = 0
     Public izquierda As Integer = 0 : Public arriba As Integer = 0
     ' Variables de formatos de spread.
-    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 9
+    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 8
     Public Shared alturaFilasEncabezadosGrandesSpread As Integer = 35 : Public Shared alturaFilasEncabezadosMedianosSpread As Integer = 28
     Public Shared alturaFilasEncabezadosChicosSpread As Integer = 22 : Public Shared alturaFilasSpread As Integer = 20
-    Public Shared colorAreaGris = Color.White
-    ' Variables de eventos de spread.
+    ' Variables de estilos.
+    Public Shared colorSpreadAreaGris As Color = Color.FromArgb(245, 245, 245) : Public Shared colorSpreadTotal As Color = Color.White
+    Public Shared colorCaptura As Color = Color.White : Public Shared colorCapturaBloqueada As Color = Color.FromArgb(235, 255, 255)
+    Public Shared colorAdvertencia As Color = Color.Orange
+    Public Shared colorTemaAzul As Color = Color.FromArgb(99, 160, 162)
     ' Variables generales.
     Public nombreEstePrograma As String = String.Empty
     Public estaMostrado As Boolean = False : Public estaCerrando As Boolean = False
@@ -42,7 +45,7 @@ Public Class Principal
     Public opcionCatalogoSeleccionada As Integer = 0
     Public esGuardadoValido As Boolean = True
     Public esIzquierda As Boolean = False
-    ' Hilos para carga rapida. 
+    ' Hilos para carga rapida.
     Public hiloCentrar As New Thread(AddressOf Centrar)
     Public hiloNombrePrograma As New Thread(AddressOf CargarNombrePrograma)
     Public hiloEncabezadosTitulos As New Thread(AddressOf CargarEncabezadosTitulos)
@@ -54,7 +57,7 @@ Public Class Principal
     Private Sub Principal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.Cursor = Cursors.WaitCursor
-        MostrarCargando(True) 
+        MostrarCargando(True)
         ConfigurarConexiones()
         IniciarHilosCarga()
         AsignarTooltips()
@@ -65,20 +68,20 @@ Public Class Principal
 
     Private Sub Principal_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
-        Me.Cursor = Cursors.WaitCursor 
+        Me.Cursor = Cursors.WaitCursor
         'If (Not ValidarAccesoTotal()) Then
         '    Salir()
-        'End If 
+        'End If
         FormatearSpread()
         FormatearSpreadRecepcion()
-        FormatearSpreadTotales()
         CargarProductores()
         CargarLotes()
         CargarChoferesCampo()
-        CargarProductos() 
+        CargarProductos()
         CargarIdConsecutivo()
         Me.estaMostrado = True
         AsignarFoco(txtId)
+        CargarEstilos()
         MostrarCargando(False)
         Me.Cursor = Cursors.Default
 
@@ -135,16 +138,20 @@ Public Class Principal
 
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
 
-        ValidarGuardado()
+        Me.Cursor = Cursors.WaitCursor
+        ValidarGuardadoRecepcion()
         If (Me.esGuardadoValido) Then
             GuardarEditarRecepcion()
         End If
+        Me.Cursor = Cursors.Default
 
     End Sub
 
     Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
 
+        Me.Cursor = Cursors.WaitCursor
         EliminarRecepcion(True)
+        Me.Cursor = Cursors.WaitCursor
 
     End Sub
 
@@ -166,7 +173,7 @@ Public Class Principal
 
     End Sub
 
-    Private Sub pnlEncabezado_MouseEnter(sender As Object, e As EventArgs) Handles pnlPie.MouseEnter, pnlEncabezado.MouseEnter, pnlCuerpo.MouseEnter
+    Private Sub pnlEncabezado_MouseEnter(sender As Object, e As EventArgs) Handles pnlEncabezado.MouseEnter, pnlCuerpo.MouseEnter
 
         AsignarTooltips(String.Empty)
 
@@ -182,7 +189,9 @@ Public Class Principal
 
     Private Sub btnAyuda_Click(sender As Object, e As EventArgs) Handles btnAyuda.Click
 
+        Me.Cursor = Cursors.WaitCursor
         MostrarAyuda()
+        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -414,11 +423,83 @@ Public Class Principal
 
     End Sub
 
+    Private Sub btnListados_Click(sender As Object, e As EventArgs) Handles btnListados.Click
+
+        Me.Cursor = Cursors.WaitCursor
+        CargarListados()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub btnListados_MouseEnter(sender As Object, e As EventArgs) Handles btnListados.MouseEnter
+
+        AsignarTooltips("Mostrar u Ocultar Listado.")
+
+    End Sub
+
+    Private Sub spListados_CellClick(sender As Object, e As FarPoint.Win.Spread.CellClickEventArgs) Handles spListados.CellClick
+
+        Dim fila As Integer = e.Row
+        CargarDatosDeListados(fila)
+
+    End Sub
+
+    Private Sub spListados_CellDoubleClick(sender As Object, e As FarPoint.Win.Spread.CellClickEventArgs) Handles spListados.CellDoubleClick
+
+        VolverFocoDeListados()
+
+    End Sub
+
+    Private Sub spListados_KeyDown(sender As Object, e As KeyEventArgs) Handles spListados.KeyDown
+
+        If (e.KeyCode = Keys.Escape) Then
+            VolverFocoDeListados()
+        End If
+
+    End Sub
+
+    Private Sub pbMarca_MouseEnter(sender As Object, e As EventArgs) Handles pbMarca.MouseEnter
+
+        AsignarTooltips("Producido por Berry.")
+
+    End Sub
+
+    Private Sub pnlCapturaSuperior_MouseEnter(sender As Object, e As EventArgs) Handles pnlCapturaSuperior.MouseEnter
+
+        AsignarTooltips("Capturar Datos Principales.")
+
+    End Sub
+
+    Private Sub spRecepcion_MouseEnter(sender As Object, e As EventArgs) Handles spRecepcion.MouseEnter
+
+        AsignarTooltips("Capturar Datos Detallados.")
+
+    End Sub
+
+    Private Sub pnlPie_MouseEnter(sender As Object, e As EventArgs) Handles pnlPie.MouseEnter
+
+        AsignarTooltips("Opciones.")
+
+    End Sub
+
 #End Region
 
 #Region "Métodos"
 
 #Region "Básicos"
+
+    Private Sub CargarEstilos()
+
+        pnlCapturaSuperior.BackColor = Principal.colorSpreadAreaGris
+        spRecepcion.ActiveSheet.GrayAreaBackColor = Principal.colorSpreadAreaGris
+        pnlPie.BackColor = Principal.colorSpreadAreaGris
+        'pnlCapturaSuperior.BackgroundImage = Image.FromFile("C:\Users\Berry 1\Desktop\nieve.jpg")
+        'pnlCapturaSuperior.BackgroundImageLayout = ImageLayout.Stretch
+        'spRecepcion.BackgroundImage = Image.FromFile("C:\Users\Berry 1\Desktop\nieve.jpg")
+        'spRecepcion.ActiveSheet.DefaultStyle.BackColor = Color.Transparent
+        'spRecepcion.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Classic
+
+    End Sub
 
     Private Sub BuscarCatalogos()
 
@@ -494,15 +575,11 @@ Public Class Principal
             pnlCapturaSuperior.Left = -pnlCapturaSuperior.Width + anchoMenor
             spRecepcion.Left = anchoMenor + espacio
             spRecepcion.Width = Me.anchoTotal - anchoMenor - espacio
-            spTotales.Left = spRecepcion.Left
-            spTotales.Width = spRecepcion.Width
             Me.esIzquierda = True
         Else
             pnlCapturaSuperior.Left = 0
             spRecepcion.Left = pnlCapturaSuperior.Width + espacio
             spRecepcion.Width = Me.anchoTotal - pnlCapturaSuperior.Width - espacio
-            spTotales.Left = spRecepcion.Left
-            spTotales.Width = spRecepcion.Width
             Me.esIzquierda = False
         End If
 
@@ -548,7 +625,7 @@ Public Class Principal
             txtAyuda.Width = pnlAyuda.Width - 10
             txtAyuda.Height = pnlAyuda.Height - 10
             txtAyuda.Location = New Point(5, 5)
-            txtAyuda.Text = "Sección de Ayuda: " & vbNewLine & vbNewLine & "* Teclas básicas: " & vbNewLine & "F5 sirve para mostrar catálogos. " & vbNewLine & "F6 sirve para eliminar un registro únicamente. " & vbNewLine & "Escape sirve para ocultar catálogos que se encuentren desplegados. " & vbNewLine & vbNewLine & "* Catálogos desplegados: " & vbNewLine & "Cuando se muestra algún catálogo, al seleccionar alguna opción de este, se va mostrando en tiempo real en la captura de donde se originó. Cuando se le da doble clic en alguna opción o a la tecla escape se oculta dicho catálogo. " & vbNewLine & vbNewLine & "* Datos obligatorios: " & vbNewLine & "Todos los que tengan el simbolo * son estrictamente obligatorios." & vbNewLine & vbNewLine & "* Captura:" & vbNewLine & "* Parte superior: " & vbNewLine & "En esta parte se capturarán todos los datos que son generales, tal cual como el número de la entrada, el almacén al que corresponde, etc." & vbNewLine & "* Parte inferior: " & vbNewLine & "En esta parte se capturarán todos los datos que pueden combinarse, por ejemplo los distintos artículos de ese número de entrada." & vbNewLine & vbNewLine & "* Existen los botones de guardar/editar y eliminar todo dependiendo lo que se necesite hacer. "
+            txtAyuda.Text = "Sección de Ayuda: " & vbNewLine & vbNewLine & "* Teclas básicas: " & vbNewLine & "F5 sirve para mostrar catálogos. " & vbNewLine & "F6 sirve para eliminar un registro únicamente. " & vbNewLine & "F7 sirve para mostrar listados." & vbNewLine & "Escape sirve para ocultar catálogos o listados que se encuentren desplegados. " & vbNewLine & vbNewLine & "* Catálogos o listados desplegados: " & vbNewLine & "Cuando se muestra algún catálogo o listado, al seleccionar alguna opción de este, se va mostrando en tiempo real en la captura de donde se originó. Cuando se le da doble clic en alguna opción o a la tecla escape se oculta dicho catálogo o listado. " & vbNewLine & vbNewLine & "* Datos obligatorios:" & vbNewLine & "Todos los que tengan el simbolo * son estrictamente obligatorios." & vbNewLine & vbNewLine & "* Captura:" & vbNewLine & "* Parte superior/izquierda: " & vbNewLine & "En esta parte se capturarán todos los datos que son generales, tal cual como el número de recepción, fecha, hora, productor, etc." & vbNewLine & "* Parte inferior/derecha: " & vbNewLine & "En esta parte se capturarán todas las cajas y otros datos extra que llevará." & vbNewLine & vbNewLine & "* Existen los botones de guardar/editar y eliminar todo dependiendo lo que se necesite hacer. "
             pnlAyuda.Controls.Add(txtAyuda)
         Else
             pnlCuerpo.Visible = True
@@ -613,6 +690,8 @@ Public Class Principal
         tp.SetToolTip(Me.btnGuardar, "Guardar.")
         tp.SetToolTip(Me.btnEliminar, "Eliminar.")
         tp.SetToolTip(Me.btnMostrarOcultar, "Mostrar u Ocultar.")
+        tp.SetToolTip(Me.btnListados, "Mostrar u Ocultar Listado.")
+        tp.SetToolTip(Me.pbMarca, "Producido por Berry.")
 
     End Sub
 
@@ -630,7 +709,6 @@ Public Class Principal
             EYELogicaRecepcion.Directorios.usuarioSql = "AdminBerry"
             EYELogicaRecepcion.Directorios.contrasenaSql = "@berry2017"
             pnlEncabezado.BackColor = Color.DarkRed
-            pnlPie.BackColor = Color.DarkRed
         Else
             EYELogicaRecepcion.Directorios.ObtenerParametros()
             EYELogicaRecepcion.Usuarios.ObtenerParametros()
@@ -660,7 +738,7 @@ Public Class Principal
         Dim lista As New List(Of EYEEntidadesRecepcion.Usuarios)
         usuarios.EId = EYELogicaRecepcion.Usuarios.id
         lista = usuarios.ObtenerListado()
-        If (lista.Count = 1) Then
+        If (lista.Count > 0) Then
             EYELogicaRecepcion.Usuarios.id = lista(0).EId
             EYELogicaRecepcion.Usuarios.nombre = lista(0).ENombre
             EYELogicaRecepcion.Usuarios.contrasena = lista(0).EContrasena
@@ -669,13 +747,13 @@ Public Class Principal
         End If
 
     End Sub
-     
+
     Private Sub CargarEncabezadosTitulos()
 
-        lblEncabezadoPrograma.Text = "Programa: " + Me.Text
-        lblEncabezadoEmpresa.Text = "Directorio: " + EYELogicaRecepcion.Directorios.nombre
-        lblEncabezadoUsuario.Text = "Usuario: " + EYELogicaRecepcion.Usuarios.nombre
-        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaRecepcion.Directorios.nombre + "              Usuario:  " + EYELogicaRecepcion.Usuarios.nombre
+        lblEncabezadoPrograma.Text = "Programa: " & Me.Text
+        lblEncabezadoEmpresa.Text = "Directorio: " & EYELogicaRecepcion.Directorios.nombre
+        lblEncabezadoUsuario.Text = "Usuario: " & EYELogicaRecepcion.Usuarios.nombre
+        Me.Text = "Programa:  " & Me.nombreEstePrograma & "              Directorio:  " & EYELogicaRecepcion.Directorios.nombre & "              Usuario:  " & EYELogicaRecepcion.Usuarios.nombre
         hiloEncabezadosTitulos.Abort()
 
     End Sub
@@ -765,11 +843,13 @@ Public Class Principal
     Private Sub LimpiarPantalla()
 
         For Each c As Control In pnlCapturaSuperior.Controls
-            c.BackColor = Color.White
+            If ((Not TypeOf c Is Button) AndAlso (Not TypeOf c Is Label)) Then
+                c.BackColor = Principal.colorCaptura
+            End If
         Next
         For fila = 0 To spRecepcion.ActiveSheet.Rows.Count - 1
             For columna = 0 To spRecepcion.ActiveSheet.Columns.Count - 1
-                spRecepcion.ActiveSheet.Cells(fila, columna).BackColor = Color.White
+                spRecepcion.ActiveSheet.Cells(fila, columna).BackColor = Principal.colorCaptura
             Next
         Next
         If (Not chkMantenerDatos.Checked) Then
@@ -784,7 +864,6 @@ Public Class Principal
         spRecepcion.ActiveSheet.Rows.Count = 1
         spRecepcion.ActiveSheet.SetActiveCell(0, 0)
         LimpiarSpread(spRecepcion)
-        LimpiarSpread(spTotales)
 
     End Sub
 
@@ -846,30 +925,28 @@ Public Class Principal
         ' Se cargan tipos de datos de spread.
         CargarTiposDeDatos()
         ' Se cargan las opciones generales. 
-        pnlCatalogos.Visible = False 
+        pnlCatalogos.Visible = False
         spRecepcion.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Seashell
-        spTotales.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Seashell
         spCatalogos.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Midnight
-        spRecepcion.ActiveSheet.GrayAreaBackColor = Principal.colorAreaGris
-        spTotales.ActiveSheet.GrayAreaBackColor = Principal.colorAreaGris
+        spListados.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Rose
+        spRecepcion.ActiveSheet.GrayAreaBackColor = Principal.colorSpreadAreaGris
+        spListados.ActiveSheet.GrayAreaBackColor = Color.FromArgb(255, 230, 230)
         spRecepcion.Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Regular)
-        spTotales.Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Regular)
         spCatalogos.Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Regular)
+        spListados.Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Regular)
         spRecepcion.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosGrandesSpread
-        spTotales.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosGrandesSpread
         spCatalogos.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosGrandesSpread
+        spListados.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosGrandesSpread
         spRecepcion.ActiveSheet.Rows(-1).Height = Principal.alturaFilasSpread
-        spTotales.ActiveSheet.Rows(-1).Height = Principal.alturaFilasSpread
         spCatalogos.ActiveSheet.Rows(-1).Height = Principal.alturaFilasSpread
+        spListados.ActiveSheet.Rows(-1).Height = Principal.alturaFilasSpread
         spRecepcion.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded
         spRecepcion.VerticalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded
-        spTotales.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded
-        spTotales.VerticalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.AsNeeded
         spCatalogos.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.Never
         spCatalogos.VerticalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.Always
-        'spEntradas.EditModePermanent = True
+        spListados.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.Never
+        spListados.VerticalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.Always
         spRecepcion.EditModeReplace = True
-        spTotales.Enabled = False
         Application.DoEvents()
 
     End Sub
@@ -890,7 +967,7 @@ Public Class Principal
                 pnlCapturaSuperior.Enabled = True
                 spRecepcion.Enabled = True
             End If
-            FormatearSpreadCatalogo(OpcionPosicion.centro)
+            FormatearSpreadCatalogos(OpcionPosicion.centro)
         ElseIf (Me.opcionCatalogoSeleccionada = OpcionCatalogo.lote) Then
             lotes.EId = 0
             Dim datos As New DataTable
@@ -903,7 +980,7 @@ Public Class Principal
                 pnlCapturaSuperior.Enabled = True
                 spRecepcion.Enabled = True
             End If
-            FormatearSpreadCatalogo(OpcionPosicion.centro)
+            FormatearSpreadCatalogos(OpcionPosicion.centro)
         ElseIf (Me.opcionCatalogoSeleccionada = OpcionCatalogo.chofer) Then
             choferesCampos.EId = 0
             Dim datos As New DataTable
@@ -916,7 +993,7 @@ Public Class Principal
                 pnlCapturaSuperior.Enabled = True
                 spRecepcion.Enabled = True
             End If
-            FormatearSpreadCatalogo(OpcionPosicion.centro)
+            FormatearSpreadCatalogos(OpcionPosicion.centro)
         ElseIf (Me.opcionCatalogoSeleccionada = OpcionCatalogo.producto) Then
             productos.EId = 0
             Dim datos As New DataTable
@@ -929,7 +1006,7 @@ Public Class Principal
                 pnlCapturaSuperior.Enabled = True
                 spRecepcion.Enabled = True
             End If
-            FormatearSpreadCatalogo(OpcionPosicion.centro)
+            FormatearSpreadCatalogos(OpcionPosicion.centro)
         ElseIf (Me.opcionCatalogoSeleccionada = OpcionCatalogo.variedad) Then
             Dim idProducto As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbProductos.SelectedValue)
             variedades.EIdProducto = idProducto
@@ -946,16 +1023,17 @@ Public Class Principal
                 pnlCapturaSuperior.Enabled = True
                 spRecepcion.Enabled = True
             End If
-            FormatearSpreadCatalogo(OpcionPosicion.centro)
+            FormatearSpreadCatalogos(OpcionPosicion.centro)
         End If
         AsignarFoco(txtBuscarCatalogo)
 
     End Sub
 
-    Private Sub FormatearSpreadCatalogo(ByVal posicion As Integer)
-         
+    Private Sub FormatearSpreadCatalogos(ByVal posicion As Integer)
+
         spCatalogos.Width = 500
-        spCatalogos.ActiveSheet.Columns.Count = 2 
+        spCatalogos.ActiveSheet.Columns.Count = 2
+        spCatalogos.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.SingleSelect
         If (posicion = OpcionPosicion.izquierda) Then ' Izquierda.
             pnlCatalogos.Location = New Point(Me.izquierda, Me.arriba)
         ElseIf (posicion = OpcionPosicion.centro) Then ' Centrar.
@@ -963,24 +1041,23 @@ Public Class Principal
         ElseIf (posicion = OpcionPosicion.derecha) Then ' Derecha.
             pnlCatalogos.Location = New Point(Me.anchoTotal - spCatalogos.Width, Me.arriba)
         End If
-        spCatalogos.ActiveSheet.ColumnHeader.Rows(0).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
-        spCatalogos.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosMedianosSpread
-        spCatalogos.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.SingleSelect
         Dim numeracion As Integer = 0
         spCatalogos.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
-        spCatalogos.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1 
-        spCatalogos.ActiveSheet.Columns("id").Width = 70
-        spCatalogos.ActiveSheet.Columns("nombre").Width = 370
+        spCatalogos.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
+        spCatalogos.ActiveSheet.ColumnHeader.Rows(0).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spCatalogos.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosMedianosSpread
         spCatalogos.ActiveSheet.ColumnHeader.Cells(0, spCatalogos.ActiveSheet.Columns("id").Index).Value = "No.".ToUpper
         spCatalogos.ActiveSheet.ColumnHeader.Cells(0, spCatalogos.ActiveSheet.Columns("nombre").Index).Value = "Nombre".ToUpper
+        spCatalogos.ActiveSheet.Columns("id").Width = 70
+        spCatalogos.ActiveSheet.Columns("nombre").Width = 370
+        spCatalogos.ActiveSheet.Columns(0, spCatalogos.ActiveSheet.Columns.Count - 1).AllowAutoFilter = True
+        spCatalogos.ActiveSheet.Columns(0, spCatalogos.ActiveSheet.Columns.Count - 1).AllowAutoSort = True
         pnlCatalogos.Height = Me.altoTotal
         pnlCatalogos.Width = spCatalogos.Width
         spCatalogos.Height = pnlCatalogos.Height - txtBuscarCatalogo.Height - 5
         spCatalogos.Width = pnlCatalogos.Width
-        spCatalogos.ActiveSheet.Columns(0, spCatalogos.ActiveSheet.Columns.Count - 1).AllowAutoFilter = True
-        spCatalogos.ActiveSheet.Columns(0, spCatalogos.ActiveSheet.Columns.Count - 1).AllowAutoSort = True
         pnlCatalogos.BringToFront()
-        pnlCatalogos.Visible = True 
+        pnlCatalogos.Visible = True
         spCatalogos.Refresh()
 
     End Sub
@@ -1025,12 +1102,8 @@ Public Class Principal
 
     Private Sub EliminarRegistroDeSpread(ByVal spread As FarPoint.Win.Spread.FpSpread)
 
-        If (spread.ActiveSheet.ActiveRowIndex > 0) Then
-            spread.ActiveSheet.Rows.Remove(spread.ActiveSheet.ActiveRowIndex, 1)
-        Else
-            spread.ActiveSheet.ClearRange(spread.ActiveSheet.ActiveRowIndex, 0, 1, spread.ActiveSheet.Columns.Count, False)
-            spread.ActiveSheet.SetActiveCell(spread.ActiveSheet.ActiveRowIndex, 0)
-        End If
+        spread.ActiveSheet.Rows.Remove(spread.ActiveSheet.ActiveRowIndex, 1)
+        spread.ActiveSheet.Rows.Count += 1
 
     End Sub
 
@@ -1078,11 +1151,9 @@ Public Class Principal
             For fila = 0 To spRecepcion.ActiveSheet.Rows.Count - 1
                 total += EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, columna).Text)
             Next
-            spTotales.ActiveSheet.Cells(0, columna).Text = total
+            spRecepcion.ActiveSheet.ColumnFooter.Cells(0, columna).Value = total
             total = 0
         Next
-        'spTotales.ActiveSheet.Cells(0, spTotales.ActiveSheet.Columns("total").Index).Text = "Total".ToUpper
-        spTotales.ActiveSheet.Cells(0, 0, 0, spTotales.ActiveSheet.Columns.Count - 1).BackColor = Color.Gainsboro
 
     End Sub
 
@@ -1099,7 +1170,7 @@ Public Class Principal
         recepcion.EId = EYELogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
         If (recepcion.EId > 0) Then
             Dim datos As New DataTable
-            datos = recepcion.ObtenerListado()
+            datos = recepcion.ObtenerListadoGeneral()
             If (datos.Rows.Count > 0) Then
                 dtpFecha.Value = datos.Rows(0).Item("Fecha")
                 txtHora.Text = Mid(datos.Rows(0).Item("Hora").ToString, 1, 5)
@@ -1108,7 +1179,7 @@ Public Class Principal
                 cbChoferesCampos.SelectedValue = datos.Rows(0).Item("IdChofer")
                 cbProductos.SelectedValue = datos.Rows(0).Item("IdProducto")
                 cbVariedades.SelectedValue = datos.Rows(0).Item("IdVariedad")
-                spRecepcion.ActiveSheet.DataSource = recepcion.ObtenerListadoReporte()
+                spRecepcion.ActiveSheet.DataSource = recepcion.ObtenerListadoDetallado()
                 cantidadFilas = spRecepcion.ActiveSheet.Rows.Count + 1
                 FormatearSpreadRecepcion()
             Else
@@ -1123,84 +1194,67 @@ Public Class Principal
 
     Private Sub FormatearSpreadRecepcion()
 
-        spRecepcion.ActiveSheet.ColumnHeader.Rows(0, spRecepcion.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
-        spRecepcion.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosGrandesSpread
-        spRecepcion.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
-        spRecepcion.ActiveSheet.Rows.Count = cantidadFilas
         ControlarSpreadEnterASiguienteColumna(spRecepcion)
+        spRecepcion.ActiveSheet.Rows.Count = Me.cantidadFilas
+        spRecepcion.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
         Dim numeracion As Integer = 0
         spRecepcion.ActiveSheet.Columns(numeracion).Tag = "cantidadCajas" : numeracion += 1
         spRecepcion.ActiveSheet.Columns(numeracion).Tag = "pesoCajas" : numeracion += 1
         spRecepcion.ActiveSheet.Columns.Count = numeracion
-        spRecepcion.ActiveSheet.Columns("cantidadCajas").Width = 220
-        spRecepcion.ActiveSheet.Columns("pesoCajas").Width = 220
-        spRecepcion.ActiveSheet.Columns("cantidadCajas").CellType = tipoEntero
-        spRecepcion.ActiveSheet.Columns("pesoCajas").CellType = tipoDoble
+        spRecepcion.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosGrandesSpread
+        spRecepcion.ActiveSheet.ColumnHeader.Rows(0, spRecepcion.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
         spRecepcion.ActiveSheet.ColumnHeader.Cells(0, spRecepcion.ActiveSheet.Columns("cantidadCajas").Index).Value = "Cantidad Cajas *".ToUpper()
         spRecepcion.ActiveSheet.ColumnHeader.Cells(0, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Value = "Peso Cajas *".ToUpper()
+        spRecepcion.ActiveSheet.Columns("cantidadCajas").Width = 200
+        spRecepcion.ActiveSheet.Columns("pesoCajas").Width = 200
+        spRecepcion.ActiveSheet.Columns("cantidadCajas").CellType = tipoEntero
+        spRecepcion.ActiveSheet.Columns("pesoCajas").CellType = tipoDoble
+        spRecepcion.ActiveSheet.ColumnFooter.Visible = True
+        spRecepcion.ActiveSheet.ColumnFooter.Columns("cantidadCajas").CellType = tipoDoble
+        spRecepcion.ActiveSheet.ColumnFooter.Columns("pesoCajas").CellType = tipoDoble
+        spRecepcion.ActiveSheet.ColumnFooter.Columns(0, spRecepcion.ActiveSheet.Columns.Count - 1).BackColor = Principal.colorSpreadTotal
+        spRecepcion.ActiveSheet.ColumnFooter.Columns(0, spRecepcion.ActiveSheet.Columns.Count - 1).HorizontalAlignment = FarPoint.Win.Spread.CellHorizontalAlignment.Right
         spRecepcion.Refresh()
 
     End Sub
 
-    Private Sub FormatearSpreadTotales()
+    Private Sub ValidarGuardadoRecepcion()
 
-        spTotales.ActiveSheet.Columns.Count = 2
-        Dim numeracion As Integer = 0
-        spTotales.ActiveSheet.Columns(numeracion).Tag = "cantidadCajas" : numeracion += 1
-        spTotales.ActiveSheet.Columns(numeracion).Tag = "pesoCajas" : numeracion += 1
-        'spTotales.ActiveSheet.Columns(numeracion).Tag = "total" : numeracion += 1
-        spTotales.ActiveSheet.Columns.Count = numeracion
-        spTotales.ActiveSheet.Columns("cantidadCajas").Width = 220
-        spTotales.ActiveSheet.Columns("pesoCajas").Width = 220
-        'spTotales.ActiveSheet.Columns("total").Width = 220
-        spTotales.ActiveSheet.Columns("cantidadCajas").CellType = tipoEntero
-        spTotales.ActiveSheet.Columns("pesoCajas").CellType = tipoDoble
-        'spTotales.ActiveSheet.Columns("total").CellType = tipoTexto
-        spTotales.ActiveSheet.ColumnHeader.Visible = False
-        spTotales.VerticalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.Never
-        spTotales.HorizontalScrollBarPolicy = FarPoint.Win.Spread.ScrollBarPolicy.Never
-        spTotales.Refresh()
-
-    End Sub
-
-    Private Sub ValidarGuardado()
-
-        Me.Cursor = Cursors.WaitCursor
         Me.esGuardadoValido = True
         ' Parte superior. 
         Dim id As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
         If (id <= 0) Then
-            txtId.BackColor = Color.Orange
+            txtId.BackColor = Principal.colorAdvertencia
             Me.esGuardadoValido = False
         End If
         Dim hora As String = txtHora.Text
         If (String.IsNullOrEmpty(hora) Or hora.Length <> 5) Then
-            txtHora.BackColor = Color.Orange
+            txtHora.BackColor = Principal.colorAdvertencia
             Me.esGuardadoValido = False
         End If
         Dim idProductor As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbProductores.SelectedValue)
         If (idProductor <= 0) Then
-            cbProductores.BackColor = Color.Orange
+            cbProductores.BackColor = Principal.colorAdvertencia
             Me.esGuardadoValido = False
         End If
         Dim idLote As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbLotes.SelectedValue)
         If (idLote <= 0) Then
-            cbLotes.BackColor = Color.Orange
+            cbLotes.BackColor = Principal.colorAdvertencia
             Me.esGuardadoValido = False
         End If
         Dim idChofer As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbChoferesCampos.SelectedValue)
         If (idChofer <= 0) Then
-            cbChoferesCampos.BackColor = Color.Orange
+            cbChoferesCampos.BackColor = Principal.colorAdvertencia
             Me.esGuardadoValido = False
         End If
         Dim idProducto As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbProductos.SelectedValue)
         If (idProducto <= 0) Then
-            cbProductos.BackColor = Color.Orange
+            cbProductos.BackColor = Principal.colorAdvertencia
             Me.esGuardadoValido = False
         End If
         Dim idVariedad As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(cbVariedades.SelectedValue)
         If (idVariedad <= 0) Then
-            cbVariedades.BackColor = Color.Orange
+            cbVariedades.BackColor = Principal.colorAdvertencia
             Me.esGuardadoValido = False
         End If
         ' Parte inferior.
@@ -1211,18 +1265,16 @@ Public Class Principal
                 Dim pesoCajas As String = spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Text
                 Dim pesoCajas2 As Double = EYELogicaRecepcion.Funciones.ValidarNumeroACero(spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).Text)
                 If (String.IsNullOrEmpty(pesoCajas) Or pesoCajas2 < 0) Then
-                    spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).BackColor = Color.Orange
+                    spRecepcion.ActiveSheet.Cells(fila, spRecepcion.ActiveSheet.Columns("pesoCajas").Index).BackColor = Principal.colorAdvertencia
                     Me.esGuardadoValido = False
                 End If
             End If
         Next
-        Me.Cursor = Cursors.Default
 
     End Sub
 
     Private Sub GuardarEditarRecepcion()
 
-        Me.Cursor = Cursors.WaitCursor
         EliminarRecepcion(False)
         ' Parte superior. 
         Dim id As Integer = EYELogicaRecepcion.Funciones.ValidarNumeroACero(txtId.Text)
@@ -1257,13 +1309,11 @@ Public Class Principal
         LimpiarPantalla()
         CargarIdConsecutivo()
         AsignarFoco(txtId)
-        Me.Cursor = Cursors.Default
 
     End Sub
 
     Private Sub EliminarRecepcion(ByVal conMensaje As Boolean)
 
-        Me.Cursor = Cursors.WaitCursor
         Dim respuestaSi As Boolean = False
         If (conMensaje) Then
             If (MessageBox.Show("Confirmas que deseas eliminar esta entrada de recepción?", "Confirmación.", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes) Then
@@ -1280,7 +1330,77 @@ Public Class Principal
             CargarIdConsecutivo()
             AsignarFoco(txtId)
         End If
-        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub FormatearSpreadListados(ByVal posicion As Integer)
+
+        spListados.Width = 360
+        spListados.ActiveSheet.Columns.Count = 3
+        spListados.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.SingleSelect
+        If (posicion = OpcionPosicion.izquierda) Then ' Izquierda.
+            spListados.Location = New Point(Me.izquierda, Me.arriba)
+        ElseIf (posicion = OpcionPosicion.centro) Then ' Centrar.
+            spListados.Location = New Point(Me.anchoMitad - (spListados.Width / 2), Me.arriba)
+        ElseIf (posicion = OpcionPosicion.derecha) Then ' Derecha.
+            spListados.Location = New Point(Me.anchoTotal - spListados.Width, Me.arriba)
+        End If
+        Dim numeracion As Integer = 0
+        spListados.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
+        spListados.ActiveSheet.Columns(numeracion).Tag = "fecha" : numeracion += 1
+        spListados.ActiveSheet.Columns(numeracion).Tag = "cantidadCajas" : numeracion += 1
+        spListados.ActiveSheet.ColumnHeader.Rows(0).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spListados.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosMedianosSpread
+        spListados.ActiveSheet.ColumnHeader.Cells(0, spListados.ActiveSheet.Columns("id").Index).Value = "No.".ToUpper
+        spListados.ActiveSheet.ColumnHeader.Cells(0, spListados.ActiveSheet.Columns("fecha").Index).Value = "Fecha".ToUpper
+        spListados.ActiveSheet.ColumnHeader.Cells(0, spListados.ActiveSheet.Columns("cantidadCajas").Index).Value = "Cantidad Cajas".ToUpper
+        spListados.ActiveSheet.Columns("id").Width = 70
+        spListados.ActiveSheet.Columns("fecha").Width = 100
+        spListados.ActiveSheet.Columns("cantidadCajas").Width = 120
+        spListados.ActiveSheet.Columns(0, spListados.ActiveSheet.Columns.Count - 1).AllowAutoFilter = True
+        spListados.ActiveSheet.Columns(0, spListados.ActiveSheet.Columns.Count - 1).AllowAutoSort = True
+        spListados.Height = spRecepcion.Height
+        spListados.BringToFront()
+        spListados.Visible = True
+        spListados.Refresh()
+
+    End Sub
+
+    Private Sub CargarListados()
+
+        If (spListados.Visible) Then
+            spListados.Visible = False
+            spRecepcion.Enabled = True
+        Else
+            spRecepcion.Enabled = False
+            recepcion.EId = 0
+            Dim datos As New DataTable
+            datos = recepcion.ObtenerListado()
+            If (datos.Rows.Count > 0) Then
+                spListados.ActiveSheet.DataSource = datos
+            Else
+                spListados.ActiveSheet.DataSource = Nothing
+                spListados.ActiveSheet.Rows.Count = 0
+                spRecepcion.Enabled = True
+            End If
+            FormatearSpreadListados(OpcionPosicion.centro)
+        End If
+
+    End Sub
+
+    Private Sub CargarDatosDeListados(ByVal filaCatalogos As Integer)
+
+        txtId.Text = spListados.ActiveSheet.Cells(filaCatalogos, spListados.ActiveSheet.Columns("id").Index).Text
+
+    End Sub
+
+    Private Sub VolverFocoDeListados()
+
+        pnlCapturaSuperior.Enabled = True
+        spRecepcion.Enabled = True
+        CargarRecepcion()
+        AsignarFoco(spRecepcion)
+        spListados.Visible = False
 
     End Sub
 

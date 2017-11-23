@@ -110,22 +110,22 @@ Public Class Vaciado
 
     End Sub
 
-    Public Function ObtenerListadoReporte() As DataTable
+    Public Function ObtenerListadoDetallado() As DataTable
 
         Try
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionEmpaque
-            comando.CommandText = String.Format("SELECT SUM(VAC.PesoCajas)/SUM(VAC.CantidadCajas) AS PesoCajaUnitaria, R.Id, R.IdProductor, PR.Nombre AS NombreProductor, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V.Nombre AS NombreVariedad, VAC.IdBanda, VAC.CantidadCajas, VAC.PesoCajas, 0 AS Saldo " & _
-            " FROM Vaciado AS VAC " & _
-            " LEFT JOIN Recepcion AS R ON VAC.IdRecepcion = R.Id" & _
+            comando.CommandText = String.Format("SELECT SUM(V.PesoCajas)/SUM(V.CantidadCajas) AS PesoCajaUnitaria, R.Id, R.IdProductor, PR.Nombre AS NombreProductor, R.IdLote, L.Nombre AS NombreLote, R.IdProducto, P.Nombre AS NombreProducto, R.IdVariedad, V2.Nombre AS NombreVariedad, V.IdBanda, V.CantidadCajas, V.PesoCajas, 0 AS Saldo " & _
+            " FROM Vaciado AS V " & _
+            " LEFT JOIN Recepcion AS R ON V.IdRecepcion = R.Id" & _
             " LEFT JOIN {0}Productores AS PR ON R.IdProductor = PR.Id " & _
             " LEFT JOIN {0}Lotes AS L ON R.IdLote = L.Id " & _
             " LEFT JOIN {0}Productos AS P ON R.IdProducto = P.Id " & _
-            " LEFT JOIN {0}Variedades AS V ON R.IdVariedad = V.Id AND R.IdProducto = V.IdProducto" & _
-            " WHERE VAC.Fecha=@fecha AND VAC.Hora=@hora " & _
-            " GROUP BY R.Id, R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V.Nombre, VAC.IdBanda, VAC.CantidadCajas, VAC.PesoCajas, VAC.Orden " & _
-            " ORDER BY VAC.Orden ASC", EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque)
+            " LEFT JOIN {0}Variedades AS V2 ON R.IdVariedad = V2.Id AND R.IdProducto = V2.IdProducto" & _
+            " WHERE V.Fecha=@fecha AND V.Hora=@hora " & _
+            " GROUP BY R.Id, R.IdProductor, PR.Nombre, R.IdLote, L.Nombre, R.IdProducto, P.Nombre, R.IdVariedad, V2.Nombre, V.IdBanda, V.CantidadCajas, V.PesoCajas, V.Orden " & _
+            " ORDER BY V.Orden ASC", EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque)
             comando.Parameters.AddWithValue("@fecha", EYELogicaVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))
             comando.Parameters.AddWithValue("@hora", Me.EHora)
             BaseDatos.conexionEmpaque.Open()
@@ -142,7 +142,31 @@ Public Class Vaciado
 
     End Function
 
-    Public Function ObtenerSaldosReporte(ByVal soloId As Boolean) As Integer
+    Public Function ObtenerListado() As DataTable
+
+        Try
+            Dim datos As New DataTable
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionEmpaque
+            comando.CommandText = String.Format("SELECT Fecha, Hora, ISNULL(SUM(CantidadCajas), 0) " & _
+            " FROM Vaciado " & _
+            " GROUP BY Fecha, Hora " & _
+            " ORDER BY Fecha, Hora ASC", EYELogicaVaciado.Programas.bdCatalogo & ".dbo." & EYELogicaVaciado.Programas.prefijoBaseDatosEmpaque) 
+            BaseDatos.conexionEmpaque.Open()
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            BaseDatos.conexionEmpaque.Close()
+            Return datos
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionEmpaque.Close()
+        End Try
+
+    End Function
+
+    Public Function ObtenerSaldos(ByVal soloId As Boolean) As Integer
 
         Try
             Dim datos As New DataTable
@@ -152,12 +176,12 @@ Public Class Vaciado
             If (Not soloId) Then
                 condicion &= " AND (Fecha<>@fecha OR Hora<>@hora) "
             End If
-            comando.CommandText = String.Format("SELECT ISNULL(SUM(CajasR),0) - ISNULL(SUM(CajasV), 0) AS DiferenciaCajas " & _
+            comando.CommandText = String.Format("SELECT ISNULL(SUM(CajasRecepcion),0) - ISNULL(SUM(CajasVaciado), 0) AS DiferenciaCajas " & _
             " FROM " & _
             " ( " & _
-            " SELECT ISNULL(SUM(CantidadCajas),0) AS CajasR, 0 AS CajasV FROM Recepcion WHERE Id=@id {0}" & _
+            " SELECT ISNULL(SUM(CantidadCajas),0) AS CajasRecepcion, 0 AS CajasVaciado FROM Recepcion WHERE Id=@id {0}" & _
             " UNION " & _
-            " SELECT 0 AS CajasR, ISNULL(SUM(CantidadCajas), 0) AS CajasV FROM Vaciado WHERE IdRecepcion=@id {0}" & _
+            " SELECT 0 AS CajasRecepcion, ISNULL(SUM(CantidadCajas), 0) AS CajasVaciado FROM Vaciado WHERE IdRecepcion=@id {0}" & _
             " ) AS T", condicion)
             comando.Parameters.AddWithValue("@id", Me.EIdRecepcion)
             comando.Parameters.AddWithValue("@fecha", EYELogicaVaciado.Funciones.ValidarFechaAEstandar(Me.EFecha))

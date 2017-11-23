@@ -315,7 +315,33 @@ Public Class Empaque
 
     End Function
 
-    Public Function ObtenerListadoReporte() As DataTable
+    Public Function ObtenerListadoGeneral() As DataTable
+
+        Try
+            Dim datos As New DataTable
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionEmpaque
+            Dim condicion As String = String.Empty
+            If (Me.EId > 0) Then
+                condicion &= " AND Id=@id"
+            End If
+            comando.CommandText = String.Format("SELECT Id, Fecha, Hora, IdProductor, EsPropio, EsSobrante, EstaEmbarcado FROM Tarimas WHERE 0=0 {0} ORDER BY Orden ASC", condicion)
+            comando.Parameters.AddWithValue("@id", Me.EId)
+            BaseDatos.conexionEmpaque.Open()
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            BaseDatos.conexionEmpaque.Close()
+            Return datos
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionEmpaque.Close()
+        End Try
+
+    End Function
+
+    Public Function ObtenerListadoDetallado() As DataTable
 
         Try
             Dim datos As New DataTable
@@ -325,14 +351,14 @@ Public Class Empaque
             If (Me.EId > 0) Then
                 condicion &= " AND T.Id=@id"
             End If
-            comando.CommandText = String.Format("SELECT T.IdLote, L.Nombre, T.IdProducto, P.Nombre, T.IdVariedad, V.Nombre, T.IdEnvase, E.Nombre, T.IdTamano, TA.Nombre, T.IdEtiqueta, ET.Nombre, T.CantidadCajas, T.PesoUnitarioCajas, T.PesoTotalCajas " & _
+            comando.CommandText = String.Format("SELECT T.IdLote, L.Nombre, T.IdProducto, P.Nombre, T.IdVariedad, V.Nombre, T.IdEnvase, E.Nombre, T.IdTamano, T2.Nombre, T.IdEtiqueta, E2.Nombre, T.CantidadCajas, T.PesoUnitarioCajas, T.PesoTotalCajas " & _
             " FROM Tarimas AS T " & _
             " LEFT JOIN {0}Lotes AS L ON T.IdLote = L.Id " & _
             " LEFT JOIN {0}Productos AS P ON T.IdProducto = P.Id " & _
             " LEFT JOIN {0}Variedades AS V ON T.IdProducto = V.IdProducto AND T.IdVariedad = V.Id " & _
             " LEFT JOIN {0}Envases AS E ON T.IdEnvase = E.Id " & _
-            " LEFT JOIN {0}Tamanos AS TA ON T.IdProducto = TA.IdProducto AND T.IdTamano = TA.Id " & _
-            " LEFT JOIN {0}Etiquetas AS ET ON T.IdEtiqueta = ET.Id " & _
+            " LEFT JOIN {0}Tamanos AS T2 ON T.IdProducto = T2.IdProducto AND T.IdTamano = T2.Id " & _
+            " LEFT JOIN {0}Etiquetas AS E2 ON T.IdEtiqueta = E2.Id " & _
             " WHERE 0=0 {1} ORDER BY T.Orden ASC", EYELogicaEmpaque.Programas.bdCatalogo & ".dbo." & EYELogicaEmpaque.Programas.prefijoBaseDatosEmpaque, condicion)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
@@ -349,7 +375,37 @@ Public Class Empaque
 
     End Function
 
-    Public Function ObtenerListadoReporteImpresionTarimas() As DataTable
+    Public Function ObtenerListado() As DataTable
+
+        Try
+            Dim datos As New DataTable
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionEmpaque
+            Dim condicion As String = String.Empty
+            If (Me.EId > 0) Then
+                condicion &= " AND Id=@id"
+            End If
+            comando.CommandText = String.Format("SELECT Id, Fecha, ISNULL(SUM(CantidadCajas), 0) AS CantidadCajas " & _
+            " FROM Tarimas " & _
+            " WHERE 0=0 {0} " & _
+            " GROUP BY Id, Fecha" & _
+            " ORDER BY Id ASC", condicion)
+            comando.Parameters.AddWithValue("@id", Me.EId)
+            BaseDatos.conexionEmpaque.Open()
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            BaseDatos.conexionEmpaque.Close()
+            Return datos
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionEmpaque.Close()
+        End Try
+
+    End Function
+
+    Public Function ObtenerListadoImpresionTarimas() As DataTable
 
         Try
             Dim datos As New DataTable
@@ -385,7 +441,7 @@ Public Class Empaque
 
     End Function
 
-    Public Function ObtenerListadoReporteImpresionCajas() As DataTable
+    Public Function ObtenerListadoImpresionCajas() As DataTable
 
         Try
             Dim datos As New DataTable
@@ -421,33 +477,7 @@ Public Class Empaque
         End Try
 
     End Function
-
-    Public Function ObtenerListado() As DataTable
-
-        Try
-            Dim datos As New DataTable
-            Dim comando As New SqlCommand()
-            comando.Connection = BaseDatos.conexionEmpaque
-            Dim condicion As String = String.Empty
-            If (Me.EId > 0) Then
-                condicion &= " AND Id=@id"
-            End If
-            comando.CommandText = String.Format("SELECT Id, Fecha, Hora, IdProductor, EsPropio, EsSobrante, EstaEmbarcado FROM Tarimas WHERE 0=0 {0} ORDER BY Orden ASC", condicion)
-            comando.Parameters.AddWithValue("@id", Me.EId)
-            BaseDatos.conexionEmpaque.Open()
-            Dim lectorDatos As SqlDataReader
-            lectorDatos = comando.ExecuteReader()
-            datos.Load(lectorDatos)
-            BaseDatos.conexionEmpaque.Close()
-            Return datos
-        Catch ex As Exception
-            Throw ex
-        Finally
-            BaseDatos.conexionEmpaque.Close()
-        End Try
-
-    End Function
-
+     
     Public Function ObtenerMinimaFecha() As Date
 
         Try

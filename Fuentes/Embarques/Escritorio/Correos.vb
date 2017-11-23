@@ -14,9 +14,9 @@ Public Class Correos
     Public tieneDatos As Boolean = False
     Public archivoAdjunto As Attachment
     Public correo As New MailMessage()
-    Public colorVerde As New Color
-    Public colorRojo As New Color
-    Public colorTransparente As New Color
+    Public colorVerde As Color = Color.FromArgb(192, 255, 192)
+    Public colorRojo As Color = Color.FromArgb(255, 192, 192)
+    Public colorTransparente As Color = Color.Transparent
 
 #Region "Eventos"
 
@@ -25,7 +25,7 @@ Public Class Correos
         Me.Cursor = Cursors.WaitCursor
         Centrar()
         CargarNombrePrograma()
-        CargarColores()
+        AsignarTooltips()
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -40,6 +40,7 @@ Public Class Correos
         CargarCorreos()
         FormatearSpreadCorreos()
         txtDireccion.Focus()
+        CargarEstilos()
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -58,9 +59,95 @@ Public Class Correos
 
     End Sub
 
+    Private Sub btnEnviar_Click(sender As Object, e As EventArgs) Handles btnEnviar.Click
+
+        Me.Cursor = Cursors.WaitCursor
+        EnviarCorreos()
+        GuardarConfiguracion()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub btnAdjuntar_Click(sender As Object, e As EventArgs) Handles btnAdjuntar.Click
+
+        Me.Cursor = Cursors.WaitCursor
+        Adjuntar()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub pnlCapturaSuperior_MouseEnter(sender As Object, e As EventArgs) Handles pnlCapturaSuperior.MouseEnter
+
+        AsignarTooltips("Capturar Datos Generales.")
+
+    End Sub
+
+    Private Sub spCorreos_MouseEnter(sender As Object, e As EventArgs) Handles spCorreos.MouseEnter
+
+        AsignarTooltips("Capturar Datos Detallados.")
+
+    End Sub
+
+    Private Sub pnlPie_MouseEnter(sender As Object, e As EventArgs) Handles pnlPie.MouseEnter
+
+        AsignarTooltips("Opciones.")
+
+    End Sub
+
+    Private Sub btnEnviar_MouseEnter(sender As Object, e As EventArgs) Handles btnEnviar.MouseEnter
+
+        AsignarTooltips("Enviar.")
+
+    End Sub
+
+    Private Sub btnAdjuntar_MouseEnter(sender As Object, e As EventArgs) Handles btnAdjuntar.MouseEnter
+
+        AsignarTooltips("Adjuntar Documentos.")
+
+    End Sub
+
+    Private Sub btnAyuda_MouseEnter(sender As Object, e As EventArgs) Handles btnAyuda.MouseEnter
+
+        AsignarTooltips("Ayuda.")
+
+    End Sub
+
+    Private Sub btnSalir_MouseEnter(sender As Object, e As EventArgs) Handles btnSalir.MouseEnter
+
+        AsignarTooltips("Salir.")
+
+    End Sub
+
 #End Region
 
 #Region "Métodos"
+
+    Private Sub CargarEstilos()
+
+        pnlCapturaSuperior.BackColor = Principal.colorSpreadAreaGris
+        spCorreos.ActiveSheet.GrayAreaBackColor = Principal.colorSpreadAreaGris
+        pnlPie.BackColor = Principal.colorSpreadAreaGris
+
+    End Sub
+
+    Private Sub AsignarTooltips()
+
+        Dim tp As New ToolTip()
+        tp.AutoPopDelay = 5000
+        tp.InitialDelay = 0
+        tp.ReshowDelay = 100
+        tp.ShowAlways = True 
+        tp.SetToolTip(Me.btnAyuda, "Ayuda.")
+        tp.SetToolTip(Me.btnSalir, "Salir.")
+        tp.SetToolTip(Me.btnEnviar, "Enviar.")
+
+    End Sub
+
+    Private Sub AsignarTooltips(ByVal texto As String)
+
+        lblDescripcionTooltip.Text = texto
+
+    End Sub
 
     Private Sub Salir()
 
@@ -91,14 +178,6 @@ Public Class Correos
 
     End Sub
 
-    Private Sub CargarColores()
-
-        Me.colorRojo = Color.OrangeRed
-        Me.colorVerde = Color.LightGreen
-        Me.colorTransparente = Color.Transparent
-
-    End Sub
-     
     Private Sub FormatearSpread()
 
         spCorreos.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Seashell
@@ -378,22 +457,5 @@ Public Class Correos
 #Region "Enumeraciones"
      
 #End Region
-
-    Private Sub btnEnviar_Click(sender As Object, e As EventArgs) Handles btnEnviar.Click
-
-        Me.Cursor = Cursors.WaitCursor
-        EnviarCorreos()
-        GuardarConfiguracion()
-        Me.Cursor = Cursors.Default
-
-    End Sub
-
-    Private Sub btnAdjuntar_Click(sender As Object, e As EventArgs) Handles btnAdjuntar.Click
-
-        Me.Cursor = Cursors.WaitCursor
-        Adjuntar()
-        Me.Cursor = Cursors.Default
-
-    End Sub
 
 End Class

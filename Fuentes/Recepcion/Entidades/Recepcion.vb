@@ -176,7 +176,33 @@ Public Class Recepcion
 
     End Function
 
-    Public Function ObtenerListadoReporte() As DataTable
+    Public Function ObtenerListadoGeneral() As DataTable
+
+        Try
+            Dim datos As New DataTable
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionEmpaque
+            Dim condicion As String = String.Empty
+            If (Me.EId > 0) Then
+                condicion &= " AND Id=@id"
+            End If
+            comando.CommandText = String.Format("SELECT Id, Fecha, Hora, IdProductor, IdLote, IdChofer, IdProducto, IdVariedad, CantidadCajas, PesoCajas, Orden FROM Recepcion WHERE 0=0 {0} ORDER BY Orden ASC", condicion)
+            comando.Parameters.AddWithValue("@id", Me.EId)
+            BaseDatos.conexionEmpaque.Open()
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            BaseDatos.conexionEmpaque.Close()
+            Return datos
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionEmpaque.Close()
+        End Try
+
+    End Function
+
+    Public Function ObtenerListadoDetallado() As DataTable
 
         Try
             Dim datos As New DataTable
@@ -212,7 +238,7 @@ Public Class Recepcion
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If
-            comando.CommandText = String.Format("SELECT Id, Fecha, Hora, IdProductor, IdLote, IdChofer, IdProducto, IdVariedad, CantidadCajas, PesoCajas, Orden FROM Recepcion WHERE 0=0 {0} ORDER BY Orden ASC", condicion)
+            comando.CommandText = String.Format("SELECT Id, Fecha, ISNULL(SUM(CantidadCajas), 0) AS CantidadCajas FROM Recepcion WHERE 0=0 {0} GROUP BY Id, Fecha ORDER BY Id ASC", condicion)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
             Dim lectorDatos As SqlDataReader

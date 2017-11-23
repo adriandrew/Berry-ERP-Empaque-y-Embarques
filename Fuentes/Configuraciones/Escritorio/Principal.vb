@@ -27,10 +27,14 @@ Public Class Principal
     Public anchoTercio As Integer = 0 : Public altoTercio As Integer = 0 : Public altoCuarto As Integer = 0
     Public izquierda As Integer = 0 : Public arriba As Integer = 0
     ' Variables de formatos de spread.
-    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 9
+    Public Shared tipoLetraSpread As String = "Microsoft Sans Serif" : Public Shared tamañoLetraSpread As Integer = 8
     Public Shared alturaFilasEncabezadosGrandesSpread As Integer = 35 : Public Shared alturaFilasEncabezadosMedianosSpread As Integer = 28
     Public Shared alturaFilasEncabezadosChicosSpread As Integer = 22 : Public Shared alturaFilasSpread As Integer = 20
-    Public Shared colorAreaGris = Color.White
+    ' Variables de estilos.
+    Public Shared colorSpreadAreaGris As Color = Color.FromArgb(245, 245, 245) : Public Shared colorSpreadTotal As Color = Color.White
+    Public Shared colorCaptura As Color = Color.White : Public Shared colorCapturaBloqueada As Color = Color.FromArgb(235, 255, 255)
+    Public Shared colorAdvertencia As Color = Color.Orange
+    Public Shared colorTemaAzul As Color = Color.FromArgb(99, 160, 162)
     ' Variables generales.
     Public nombreEstePrograma As String = String.Empty
     Public medidasUnaVez As Boolean = False
@@ -67,6 +71,7 @@ Public Class Principal
         '    Salir()
         'End If 
         FormatearSpread()
+        CargarEstilos()
         MostrarCargando(False)
         Me.Cursor = Cursors.Default
 
@@ -140,7 +145,7 @@ Public Class Principal
 
     End Sub
 
-    Private Sub pnlEncabezado_MouseEnter(sender As Object, e As EventArgs) Handles pnlPie.MouseEnter, pnlEncabezado.MouseEnter, pnlCuerpo.MouseEnter
+    Private Sub pnlEncabezado_MouseEnter(sender As Object, e As EventArgs) Handles pnlEncabezado.MouseEnter, pnlCuerpo.MouseEnter
 
         AsignarTooltips(String.Empty)
 
@@ -180,7 +185,9 @@ Public Class Principal
 
     Private Sub btnAyuda_Click(sender As Object, e As EventArgs) Handles btnAyuda.Click
 
+        Me.Cursor = Cursors.WaitCursor
         MostrarAyuda()
+        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -311,11 +318,37 @@ Public Class Principal
 
     End Sub
 
+    Private Sub spVarios_MouseEnter(sender As Object, e As EventArgs) Handles spVarios.MouseEnter
+
+        AsignarTooltips("Capturar Datos Detallados.")
+
+    End Sub
+
+    Private Sub pnlPie_MouseEnter(sender As Object, e As EventArgs) Handles pnlPie.MouseEnter
+
+        AsignarTooltips("Opciones.")
+
+    End Sub
+
+    Private Sub pbMarca_MouseEnter(sender As Object, e As EventArgs) Handles pbMarca.MouseEnter
+
+        AsignarTooltips("Producido por Berry.")
+
+    End Sub
+
 #End Region
 
 #Region "Métodos"
 
 #Region "Básicos"
+
+    Private Sub CargarEstilos()
+
+        pnlMenu.BackColor = Principal.colorSpreadAreaGris
+        spVarios.ActiveSheet.GrayAreaBackColor = Principal.colorSpreadAreaGris
+        pnlPie.BackColor = Principal.colorSpreadAreaGris
+
+    End Sub
 
     Private Sub BuscarCatalogos()
 
@@ -423,7 +456,7 @@ Public Class Principal
             txtAyuda.Width = pnlAyuda.Width - 10
             txtAyuda.Height = pnlAyuda.Height - 10
             txtAyuda.Location = New Point(5, 5)
-            txtAyuda.Text = "Sección de Ayuda: " & vbNewLine & vbNewLine & "* Teclas básicas: " & vbNewLine & "F5 sirve para mostrar catálogos. " & vbNewLine & "F6 sirve para eliminar un registro únicamente. " & vbNewLine & "Escape sirve para ocultar catálogos que se encuentren desplegados. " & vbNewLine & vbNewLine & "* Catálogos desplegados: " & vbNewLine & "Cuando se muestra algún catálogo, al seleccionar alguna opción de este, se va mostrando en tiempo real en la captura de donde se originó. Cuando se le da doble clic en alguna opción o a la tecla escape se oculta dicho catálogo. " & vbNewLine & vbNewLine & "* Datos obligatorios:" & vbNewLine & "Todos los que tengan el simbolo * son estrictamente obligatorios." & vbNewLine & vbNewLine & "* Captura:" & vbNewLine & "* Almacenes: " & vbNewLine & "En esta pestaña se capturarán los distintos almacenes que se manejan. " & vbNewLine & "* Familias: " & vbNewLine & "En esta parte se agrupan por un primer nivel dependiendo el almacén, ejemplo: insecticidas, agroquimicos, etc. " & vbNewLine & "* SubFamilias: " & vbNewLine & "En este apartado se capturarán todos los segundos niveles de acuerdo al almacén y familia correspondiente seleccionadas. " & vbNewLine & "* Artículos: " & vbNewLine & "En este lugar se agrupan los terceros niveles de acuerdo al almacén, familia y subfamilia correspondiente seleccionadas. " & vbNewLine & "* Existen distintas opciones que se tienen que configurar como proveedores, monedas, tipos de cambio, etc. en las cuales especifíca claramente todo lo que se necesita." & vbNewLine & vbNewLine & "* Para todas las opciones existen los botones de guardar/editar y eliminar todo dependiendo lo que se necesite hacer. "
+            txtAyuda.Text = "Sección de Ayuda: " & vbNewLine & vbNewLine & "* Teclas básicas: " & vbNewLine & "F5 sirve para mostrar catálogos. " & vbNewLine & "F6 sirve para eliminar un registro únicamente. " & vbNewLine & "F7 sirve para mostrar listados." & vbNewLine & "Escape sirve para ocultar catálogos o listados que se encuentren desplegados. " & vbNewLine & vbNewLine & "* Catálogos o listados desplegados: " & vbNewLine & "Cuando se muestra algún catálogo o listado, al seleccionar alguna opción de este, se va mostrando en tiempo real en la captura de donde se originó. Cuando se le da doble clic en alguna opción o a la tecla escape se oculta dicho catálogo o listado. " & vbNewLine & vbNewLine & "* Datos obligatorios:" & vbNewLine & "Todos los que tengan el simbolo * son estrictamente obligatorios." & vbNewLine & vbNewLine & "* Captura:" & vbNewLine & "* Parte superior: " & vbNewLine & "En esta parte se seleccionará la opción con la que se va a comenzar a trabajar. " & vbNewLine & "* Parte inferior: " & vbNewLine & "En esta parte se capturarán los datos de acuerdo a la opción seleccionada anteriormente. " & vbNewLine & vbNewLine & "* Para todas las opciones existen los botones de guardar/editar y eliminar todo dependiendo lo que se necesite hacer. "
             pnlAyuda.Controls.Add(txtAyuda)
         Else
             pnlCuerpo.Visible = True
@@ -488,6 +521,7 @@ Public Class Principal
         tp.SetToolTip(Me.btnGuardar, "Guardar.")
         tp.SetToolTip(Me.btnEliminar, "Eliminar.")
         tp.SetToolTip(Me.pnlMenu, "Menú.")
+        tp.SetToolTip(Me.pbMarca, "Producido por Berry.")
 
     End Sub
 
@@ -505,7 +539,6 @@ Public Class Principal
             EYELogicaConfiguraciones.Directorios.usuarioSql = "AdminBerry"
             EYELogicaConfiguraciones.Directorios.contrasenaSql = "@berry2017"
             pnlEncabezado.BackColor = Color.DarkRed
-            pnlPie.BackColor = Color.DarkRed
         Else
             EYELogicaConfiguraciones.Directorios.ObtenerParametros()
             EYELogicaConfiguraciones.Usuarios.ObtenerParametros()
@@ -547,10 +580,10 @@ Public Class Principal
 
     Private Sub CargarEncabezadosTitulos()
 
-        lblEncabezadoPrograma.Text = "Programa: " + Me.Text
-        lblEncabezadoEmpresa.Text = "Directorio: " + EYELogicaConfiguraciones.Directorios.nombre
-        lblEncabezadoUsuario.Text = "Usuario: " + EYELogicaConfiguraciones.Usuarios.nombre
-        Me.Text = "Programa:  " + Me.nombreEstePrograma + "              Directorio:  " + EYELogicaConfiguraciones.Directorios.nombre + "              Usuario:  " + EYELogicaConfiguraciones.Usuarios.nombre
+        lblEncabezadoPrograma.Text = "Programa: " & Me.Text
+        lblEncabezadoEmpresa.Text = "Directorio: " & EYELogicaConfiguraciones.Directorios.nombre
+        lblEncabezadoUsuario.Text = "Usuario: " & EYELogicaConfiguraciones.Usuarios.nombre
+        Me.Text = "Programa:  " & Me.nombreEstePrograma & "              Directorio:  " & EYELogicaConfiguraciones.Directorios.nombre & "              Usuario:  " & EYELogicaConfiguraciones.Usuarios.nombre
         hiloEncabezadosTitulos.Abort()
 
     End Sub
@@ -658,7 +691,7 @@ Public Class Principal
         pnlCatalogos.Visible = False
         spVarios.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Seashell
         spCatalogos.Skin = FarPoint.Win.Spread.DefaultSpreadSkins.Midnight
-        spVarios.ActiveSheet.GrayAreaBackColor = Principal.colorAreaGris
+        spVarios.ActiveSheet.GrayAreaBackColor = Principal.colorSpreadAreaGris
         spVarios.Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Regular)
         spCatalogos.Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Regular)
         spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosGrandesSpread
@@ -677,6 +710,7 @@ Public Class Principal
     Private Sub EliminarRegistroDeSpread(ByVal spread As FarPoint.Win.Spread.FpSpread)
 
         spread.ActiveSheet.Rows.Remove(spread.ActiveSheet.ActiveRowIndex, 1)
+        spread.ActiveSheet.Rows.Count += 1
 
     End Sub
 
@@ -791,7 +825,7 @@ Public Class Principal
 
         productos.EId = 0
         spCatalogos.ActiveSheet.DataSource = productos.ObtenerListadoReporteCatalogo()
-        FormatearSpreadCatalogo(OpcionPosicion.derecha) 
+        FormatearSpreadCatalogos(OpcionPosicion.derecha)
 
     End Sub
 
@@ -799,7 +833,7 @@ Public Class Principal
 
         envases.EId = 0
         spCatalogos.ActiveSheet.DataSource = envases.ObtenerListadoReporteCatalogo()
-        FormatearSpreadCatalogo(OpcionPosicion.derecha) 
+        FormatearSpreadCatalogos(OpcionPosicion.derecha)
 
     End Sub
 
@@ -823,7 +857,7 @@ Public Class Principal
             spCatalogos.ActiveSheet.Rows.Count = 0
             spVarios.Enabled = True
         End If
-        FormatearSpreadCatalogo(OpcionPosicion.izquierda)
+        FormatearSpreadCatalogos(OpcionPosicion.izquierda)
 
     End Sub
 
@@ -831,14 +865,16 @@ Public Class Principal
 
         etiquetas.EId = 0
         spCatalogos.ActiveSheet.DataSource = etiquetas.ObtenerListadoReporteCatalogo()
-        FormatearSpreadCatalogo(OpcionPosicion.izquierda) 
+        FormatearSpreadCatalogos(OpcionPosicion.izquierda)
 
     End Sub
 
-    Private Sub FormatearSpreadCatalogo(ByVal posicion As Integer)
+    Private Sub FormatearSpreadCatalogos(ByVal posicion As Integer)
 
+        spCatalogos.Visible = True
         spCatalogos.Width = 500
         spCatalogos.Height = Me.altoTotal
+        spCatalogos.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.SingleSelect
         If (posicion = OpcionPosicion.izquierda) Then ' Izquierda.
             pnlCatalogos.Location = New Point(Me.izquierda, Me.arriba)
         ElseIf (posicion = OpcionPosicion.centro) Then ' Centrar.
@@ -846,17 +882,15 @@ Public Class Principal
         ElseIf (posicion = OpcionPosicion.derecha) Then ' Derecha.
             pnlCatalogos.Location = New Point(Me.anchoTotal - spCatalogos.Width, Me.arriba)
         End If
-        spCatalogos.Visible = True
-        spCatalogos.ActiveSheet.ColumnHeader.Rows(0).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
-        spCatalogos.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosMedianosSpread
-        spCatalogos.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.SingleSelect
         Dim numeracion As Integer = 0
         spCatalogos.ActiveSheet.Columns(numeracion).Tag = "id" : numeracion += 1
         spCatalogos.ActiveSheet.Columns(numeracion).Tag = "nombre" : numeracion += 1
-        spCatalogos.ActiveSheet.Columns("id").Width = 70
-        spCatalogos.ActiveSheet.Columns("nombre").Width = 370
+        spCatalogos.ActiveSheet.ColumnHeader.Rows(0).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spCatalogos.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosMedianosSpread
         spCatalogos.ActiveSheet.ColumnHeader.Cells(0, spCatalogos.ActiveSheet.Columns("id").Index).Value = "No.".ToUpper
         spCatalogos.ActiveSheet.ColumnHeader.Cells(0, spCatalogos.ActiveSheet.Columns("nombre").Index).Value = "Nombre".ToUpper
+        spCatalogos.ActiveSheet.Columns("id").Width = 70
+        spCatalogos.ActiveSheet.Columns("nombre").Width = 370
         pnlCatalogos.Height = spCatalogos.Height
         pnlCatalogos.Width = spCatalogos.Width
         spCatalogos.Height = pnlCatalogos.Height - txtBuscarCatalogo.Height - 5
@@ -937,13 +971,9 @@ Public Class Principal
 
     Private Sub FormatearSpreadCajasPesoTarimas()
 
-        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
-        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
-        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
-        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
-        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
-        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
         ControlarSpreadEnterASiguienteColumna(spVarios)
+        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
+        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
         Dim numeracion As Integer = 0
         spVarios.ActiveSheet.Columns(numeracion).Tag = "idProducto" : numeracion += 1
         spVarios.ActiveSheet.Columns(numeracion).Tag = "nombreProducto" : numeracion += 1
@@ -951,22 +981,14 @@ Public Class Principal
         spVarios.ActiveSheet.Columns(numeracion).Tag = "nombreEnvase" : numeracion += 1
         spVarios.ActiveSheet.Columns(numeracion).Tag = "cantidadCajas" : numeracion += 1
         spVarios.ActiveSheet.Columns(numeracion).Tag = "pesoUnitarioCajas" : numeracion += 1
-        spVarios.ActiveSheet.Columns("idProducto").Width = 50
-        spVarios.ActiveSheet.Columns("nombreProducto").Width = 250
-        spVarios.ActiveSheet.Columns("idEnvase").Width = 50
-        spVarios.ActiveSheet.Columns("nombreEnvase").Width = 250
-        spVarios.ActiveSheet.Columns("cantidadCajas").Width = 120
-        spVarios.ActiveSheet.Columns("pesoUnitarioCajas").Width = 120
-        spVarios.ActiveSheet.Columns("idProducto").CellType = tipoEntero
-        spVarios.ActiveSheet.Columns("nombreProducto").CellType = tipoTexto
-        spVarios.ActiveSheet.Columns("idEnvase").CellType = tipoEntero
-        spVarios.ActiveSheet.Columns("nombreEnvase").CellType = tipoTexto
-        spVarios.ActiveSheet.Columns("cantidadCajas").CellType = tipoEntero
-        spVarios.ActiveSheet.Columns("pesoUnitarioCajas").CellType = tipoDoble
+        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
+        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
+        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
         spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
         Dim obligatorio As String = String.Empty
         obligatorio = " *"
-        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "Cajas y Peso Por Tarimas".ToUpper()
+        spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "C  a  j  a  s      y      P  e  s  o      P  o  r      T  a  r  i  m  a  s".ToUpper()
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("idProducto").Index).Value = "No.".ToUpper() & obligatorio
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombreProducto").Index).Value = "Nombre Producto".ToUpper() & obligatorio
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("idEnvase").Index).Value = "No.".ToUpper() & obligatorio
@@ -974,6 +996,18 @@ Public Class Principal
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("cantidadCajas").Index).Value = "Cantidad de Cajas".ToUpper() & obligatorio
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("pesoUnitarioCajas").Index).Value = "Peso por Caja Libras".ToUpper() & obligatorio
         spVarios.ActiveSheet.Rows.Count += 1
+        spVarios.ActiveSheet.Columns("idProducto").Width = 50
+        spVarios.ActiveSheet.Columns("nombreProducto").Width = 250
+        spVarios.ActiveSheet.Columns("idEnvase").Width = 50
+        spVarios.ActiveSheet.Columns("nombreEnvase").Width = 250
+        spVarios.ActiveSheet.Columns("cantidadCajas").Width = 110
+        spVarios.ActiveSheet.Columns("pesoUnitarioCajas").Width = 110
+        spVarios.ActiveSheet.Columns("idProducto").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombreProducto").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("idEnvase").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombreEnvase").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("cantidadCajas").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("pesoUnitarioCajas").CellType = tipoDoble
         spVarios.Focus()
         spVarios.Refresh()
 
@@ -1043,14 +1077,10 @@ Public Class Principal
 
     Private Sub FormatearSpreadPrecios()
 
-        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
-        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
-        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
-        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
-        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
-        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
-        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
         ControlarSpreadEnterASiguienteColumna(spVarios)
+        spVarios.ActiveSheet.OperationMode = FarPoint.Win.Spread.OperationMode.Normal
+        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
+        spVarios.ActiveSheet.Columns(0, spVarios.ActiveSheet.Columns.Count - 1).Locked = False
         Dim numeracion As Integer = 0
         spVarios.ActiveSheet.Columns(numeracion).Tag = "idProducto" : numeracion += 1
         spVarios.ActiveSheet.Columns(numeracion).Tag = "nombreProducto" : numeracion += 1
@@ -1061,24 +1091,10 @@ Public Class Principal
         spVarios.ActiveSheet.Columns(numeracion).Tag = "idEtiqueta" : numeracion += 1
         spVarios.ActiveSheet.Columns(numeracion).Tag = "nombreEtiqueta" : numeracion += 1
         spVarios.ActiveSheet.Columns(numeracion).Tag = "precio" : numeracion += 1
-        spVarios.ActiveSheet.Columns("idProducto").Width = 50
-        spVarios.ActiveSheet.Columns("nombreProducto").Width = 250
-        spVarios.ActiveSheet.Columns("idEnvase").Width = 50
-        spVarios.ActiveSheet.Columns("nombreEnvase").Width = 250
-        spVarios.ActiveSheet.Columns("idTamano").Width = 50
-        spVarios.ActiveSheet.Columns("nombreTamano").Width = 250
-        spVarios.ActiveSheet.Columns("idEtiqueta").Width = 50
-        spVarios.ActiveSheet.Columns("nombreEtiqueta").Width = 250
-        spVarios.ActiveSheet.Columns("precio").Width = 100
-        spVarios.ActiveSheet.Columns("idProducto").CellType = tipoEntero
-        spVarios.ActiveSheet.Columns("nombreProducto").CellType = tipoTexto
-        spVarios.ActiveSheet.Columns("idEnvase").CellType = tipoEntero
-        spVarios.ActiveSheet.Columns("nombreEnvase").CellType = tipoTexto
-        spVarios.ActiveSheet.Columns("idTamano").CellType = tipoEntero
-        spVarios.ActiveSheet.Columns("nombreTamano").CellType = tipoTexto
-        spVarios.ActiveSheet.Columns("idEtiqueta").CellType = tipoEntero
-        spVarios.ActiveSheet.Columns("nombreEtiqueta").CellType = tipoTexto
-        spVarios.ActiveSheet.Columns("precio").CellType = tipoDoble
+        spVarios.ActiveSheet.ColumnHeader.RowCount = 2
+        spVarios.ActiveSheet.ColumnHeader.Rows(0).Height = Principal.alturaFilasEncabezadosChicosSpread
+        spVarios.ActiveSheet.ColumnHeader.Rows(1).Height = Principal.alturaFilasEncabezadosGrandesSpread
+        spVarios.ActiveSheet.ColumnHeader.Rows(0, spVarios.ActiveSheet.ColumnHeader.Rows.Count - 1).Font = New Font(Principal.tipoLetraSpread, Principal.tamañoLetraSpread, FontStyle.Bold)
         spVarios.ActiveSheet.AddColumnHeaderSpanCell(0, 0, 1, spVarios.ActiveSheet.Columns.Count)
         spVarios.ActiveSheet.ColumnHeader.Cells(0, 0).Value = "P  r  e  c  i  o  s".ToUpper()
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("idProducto").Index).Value = "No. *".ToUpper()
@@ -1090,6 +1106,24 @@ Public Class Principal
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("idEtiqueta").Index).Value = "No. *".ToUpper()
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("nombreEtiqueta").Index).Value = "Nombre Etiqueta *".ToUpper()
         spVarios.ActiveSheet.ColumnHeader.Cells(1, spVarios.ActiveSheet.Columns("precio").Index).Value = "Precio *".ToUpper()
+        spVarios.ActiveSheet.Columns("idProducto").Width = 50
+        spVarios.ActiveSheet.Columns("nombreProducto").Width = 250
+        spVarios.ActiveSheet.Columns("idEnvase").Width = 50
+        spVarios.ActiveSheet.Columns("nombreEnvase").Width = 250
+        spVarios.ActiveSheet.Columns("idTamano").Width = 50
+        spVarios.ActiveSheet.Columns("nombreTamano").Width = 250
+        spVarios.ActiveSheet.Columns("idEtiqueta").Width = 50
+        spVarios.ActiveSheet.Columns("nombreEtiqueta").Width = 250
+        spVarios.ActiveSheet.Columns("precio").Width = 90
+        spVarios.ActiveSheet.Columns("idProducto").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombreProducto").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("idEnvase").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombreEnvase").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("idTamano").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombreTamano").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("idEtiqueta").CellType = tipoEntero
+        spVarios.ActiveSheet.Columns("nombreEtiqueta").CellType = tipoTexto
+        spVarios.ActiveSheet.Columns("precio").CellType = tipoDoble
         spVarios.ActiveSheet.Rows.Count += 1
         spVarios.Focus()
         spVarios.Refresh()

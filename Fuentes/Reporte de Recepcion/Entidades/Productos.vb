@@ -28,7 +28,7 @@ Public Class Productos
             Dim datos As New DataTable
             Dim comando As New SqlCommand()
             comando.Connection = BaseDatos.conexionCatalogo
-            Dim condicion As String = String.Empty 
+            Dim condicion As String = String.Empty
             If (Me.EId > 0) Then
                 condicion &= " AND Id=@id"
             End If

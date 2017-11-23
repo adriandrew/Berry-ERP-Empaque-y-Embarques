@@ -84,9 +84,9 @@ Partial Class Impresoras
         '
         'Label2
         '
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(5, 48)
+        Me.Label2.Location = New System.Drawing.Point(5, 44)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(381, 20)
         Me.Label2.TabIndex = 28
@@ -96,12 +96,12 @@ Partial Class Impresoras
         'txtMargenDerechoCajas
         '
         Me.txtMargenDerechoCajas.BackColor = System.Drawing.Color.White
-        Me.txtMargenDerechoCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtMargenDerechoCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtMargenDerechoCajas.ForeColor = System.Drawing.Color.Black
-        Me.txtMargenDerechoCajas.Location = New System.Drawing.Point(514, 69)
+        Me.txtMargenDerechoCajas.Location = New System.Drawing.Point(514, 65)
         Me.txtMargenDerechoCajas.MaxLength = 2
         Me.txtMargenDerechoCajas.Name = "txtMargenDerechoCajas"
-        Me.txtMargenDerechoCajas.Size = New System.Drawing.Size(30, 22)
+        Me.txtMargenDerechoCajas.Size = New System.Drawing.Size(30, 20)
         Me.txtMargenDerechoCajas.TabIndex = 35
         Me.txtMargenDerechoCajas.Text = "0"
         Me.txtMargenDerechoCajas.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -110,11 +110,11 @@ Partial Class Impresoras
         '
         Me.chkImprimirCajas.AutoSize = True
         Me.chkImprimirCajas.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.chkImprimirCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkImprimirCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkImprimirCajas.ForeColor = System.Drawing.Color.Black
-        Me.chkImprimirCajas.Location = New System.Drawing.Point(5, 103)
+        Me.chkImprimirCajas.Location = New System.Drawing.Point(5, 95)
         Me.chkImprimirCajas.Name = "chkImprimirCajas"
-        Me.chkImprimirCajas.Size = New System.Drawing.Size(105, 20)
+        Me.chkImprimirCajas.Size = New System.Drawing.Size(93, 17)
         Me.chkImprimirCajas.TabIndex = 30
         Me.chkImprimirCajas.Text = "IMPRIMIR *"
         Me.chkImprimirCajas.UseVisualStyleBackColor = True
@@ -125,22 +125,23 @@ Partial Class Impresoras
         Me.cbImpresorasCajas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cbImpresorasCajas.BackColor = System.Drawing.Color.White
         Me.cbImpresorasCajas.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cbImpresorasCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbImpresorasCajas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbImpresorasCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbImpresorasCajas.ForeColor = System.Drawing.Color.Black
         Me.cbImpresorasCajas.FormattingEnabled = True
-        Me.cbImpresorasCajas.Location = New System.Drawing.Point(5, 69)
+        Me.cbImpresorasCajas.Location = New System.Drawing.Point(5, 65)
         Me.cbImpresorasCajas.Name = "cbImpresorasCajas"
-        Me.cbImpresorasCajas.Size = New System.Drawing.Size(381, 24)
+        Me.cbImpresorasCajas.Size = New System.Drawing.Size(381, 21)
         Me.cbImpresorasCajas.TabIndex = 29
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Black
-        Me.Label3.Location = New System.Drawing.Point(487, 48)
+        Me.Label3.Location = New System.Drawing.Point(487, 44)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(88, 15)
+        Me.Label3.Size = New System.Drawing.Size(80, 13)
         Me.Label3.TabIndex = 34
         Me.Label3.Text = "SUPERIOR *"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -148,12 +149,12 @@ Partial Class Impresoras
         'txtMargenIzquierdoCajas
         '
         Me.txtMargenIzquierdoCajas.BackColor = System.Drawing.Color.White
-        Me.txtMargenIzquierdoCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtMargenIzquierdoCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtMargenIzquierdoCajas.ForeColor = System.Drawing.Color.Black
-        Me.txtMargenIzquierdoCajas.Location = New System.Drawing.Point(420, 69)
+        Me.txtMargenIzquierdoCajas.Location = New System.Drawing.Point(420, 65)
         Me.txtMargenIzquierdoCajas.MaxLength = 2
         Me.txtMargenIzquierdoCajas.Name = "txtMargenIzquierdoCajas"
-        Me.txtMargenIzquierdoCajas.Size = New System.Drawing.Size(30, 22)
+        Me.txtMargenIzquierdoCajas.Size = New System.Drawing.Size(30, 20)
         Me.txtMargenIzquierdoCajas.TabIndex = 33
         Me.txtMargenIzquierdoCajas.Text = "0"
         Me.txtMargenIzquierdoCajas.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -161,11 +162,11 @@ Partial Class Impresoras
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
-        Me.Label5.Location = New System.Drawing.Point(391, 48)
+        Me.Label5.Location = New System.Drawing.Point(391, 44)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(92, 15)
+        Me.Label5.Size = New System.Drawing.Size(85, 13)
         Me.Label5.TabIndex = 32
         Me.Label5.Text = "IZQUIERDO *"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -191,7 +192,7 @@ Partial Class Impresoras
         '
         'Label8
         '
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Black
         Me.Label8.Location = New System.Drawing.Point(5, 44)
         Me.Label8.Name = "Label8"
@@ -203,12 +204,12 @@ Partial Class Impresoras
         'txtMargenDerechoTarimas
         '
         Me.txtMargenDerechoTarimas.BackColor = System.Drawing.Color.White
-        Me.txtMargenDerechoTarimas.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtMargenDerechoTarimas.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtMargenDerechoTarimas.ForeColor = System.Drawing.Color.Black
         Me.txtMargenDerechoTarimas.Location = New System.Drawing.Point(514, 65)
         Me.txtMargenDerechoTarimas.MaxLength = 2
         Me.txtMargenDerechoTarimas.Name = "txtMargenDerechoTarimas"
-        Me.txtMargenDerechoTarimas.Size = New System.Drawing.Size(30, 22)
+        Me.txtMargenDerechoTarimas.Size = New System.Drawing.Size(30, 20)
         Me.txtMargenDerechoTarimas.TabIndex = 35
         Me.txtMargenDerechoTarimas.Text = "0"
         Me.txtMargenDerechoTarimas.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -219,22 +220,23 @@ Partial Class Impresoras
         Me.cbImpresorasTarimas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cbImpresorasTarimas.BackColor = System.Drawing.Color.White
         Me.cbImpresorasTarimas.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.cbImpresorasTarimas.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbImpresorasTarimas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbImpresorasTarimas.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbImpresorasTarimas.ForeColor = System.Drawing.Color.Black
         Me.cbImpresorasTarimas.FormattingEnabled = True
         Me.cbImpresorasTarimas.Location = New System.Drawing.Point(5, 65)
         Me.cbImpresorasTarimas.Name = "cbImpresorasTarimas"
-        Me.cbImpresorasTarimas.Size = New System.Drawing.Size(381, 24)
+        Me.cbImpresorasTarimas.Size = New System.Drawing.Size(381, 21)
         Me.cbImpresorasTarimas.TabIndex = 29
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
         Me.Label1.Location = New System.Drawing.Point(487, 44)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(88, 15)
+        Me.Label1.Size = New System.Drawing.Size(80, 13)
         Me.Label1.TabIndex = 34
         Me.Label1.Text = "SUPERIOR *"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -243,11 +245,11 @@ Partial Class Impresoras
         '
         Me.chkImprimirTarimas.AutoSize = True
         Me.chkImprimirTarimas.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.chkImprimirTarimas.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkImprimirTarimas.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkImprimirTarimas.ForeColor = System.Drawing.Color.Black
-        Me.chkImprimirTarimas.Location = New System.Drawing.Point(8, 95)
+        Me.chkImprimirTarimas.Location = New System.Drawing.Point(5, 95)
         Me.chkImprimirTarimas.Name = "chkImprimirTarimas"
-        Me.chkImprimirTarimas.Size = New System.Drawing.Size(105, 20)
+        Me.chkImprimirTarimas.Size = New System.Drawing.Size(93, 17)
         Me.chkImprimirTarimas.TabIndex = 31
         Me.chkImprimirTarimas.Text = "IMPRIMIR *"
         Me.chkImprimirTarimas.UseVisualStyleBackColor = True
@@ -255,12 +257,12 @@ Partial Class Impresoras
         'txtMargenIzquierdoTarimas
         '
         Me.txtMargenIzquierdoTarimas.BackColor = System.Drawing.Color.White
-        Me.txtMargenIzquierdoTarimas.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtMargenIzquierdoTarimas.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtMargenIzquierdoTarimas.ForeColor = System.Drawing.Color.Black
         Me.txtMargenIzquierdoTarimas.Location = New System.Drawing.Point(420, 65)
         Me.txtMargenIzquierdoTarimas.MaxLength = 2
         Me.txtMargenIzquierdoTarimas.Name = "txtMargenIzquierdoTarimas"
-        Me.txtMargenIzquierdoTarimas.Size = New System.Drawing.Size(30, 22)
+        Me.txtMargenIzquierdoTarimas.Size = New System.Drawing.Size(30, 20)
         Me.txtMargenIzquierdoTarimas.TabIndex = 33
         Me.txtMargenIzquierdoTarimas.Text = "0"
         Me.txtMargenIzquierdoTarimas.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -268,11 +270,11 @@ Partial Class Impresoras
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.Location = New System.Drawing.Point(391, 44)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(92, 15)
+        Me.Label4.Size = New System.Drawing.Size(85, 13)
         Me.Label4.TabIndex = 32
         Me.Label4.Text = "IZQUIERDO *"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -280,7 +282,7 @@ Partial Class Impresoras
         'btnGuardar
         '
         Me.btnGuardar.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnGuardar.BackColor = System.Drawing.Color.White
+        Me.btnGuardar.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.btnGuardar.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnGuardar.FlatAppearance.BorderColor = System.Drawing.Color.Black
         Me.btnGuardar.FlatAppearance.BorderSize = 3
@@ -299,13 +301,13 @@ Partial Class Impresoras
         '
         Me.pnlPie.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlPie.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnlPie.BackColor = System.Drawing.Color.White
         Me.pnlPie.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlPie.Controls.Add(Me.btnGuardar)
         Me.pnlPie.Controls.Add(Me.btnAyuda)
         Me.pnlPie.Controls.Add(Me.lblDescripcionTooltip)
         Me.pnlPie.Controls.Add(Me.btnSalir)
-        Me.pnlPie.ForeColor = System.Drawing.Color.White
+        Me.pnlPie.ForeColor = System.Drawing.Color.Black
         Me.pnlPie.Location = New System.Drawing.Point(0, 348)
         Me.pnlPie.Name = "pnlPie"
         Me.pnlPie.Size = New System.Drawing.Size(593, 60)
@@ -313,7 +315,7 @@ Partial Class Impresoras
         '
         'btnAyuda
         '
-        Me.btnAyuda.BackColor = System.Drawing.Color.White
+        Me.btnAyuda.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btnAyuda.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnAyuda.FlatAppearance.BorderColor = System.Drawing.Color.Black
         Me.btnAyuda.FlatAppearance.BorderSize = 3
@@ -332,9 +334,10 @@ Partial Class Impresoras
         'lblDescripcionTooltip
         '
         Me.lblDescripcionTooltip.AutoSize = True
+        Me.lblDescripcionTooltip.BackColor = System.Drawing.Color.FromArgb(CType(CType(99, Byte), Integer), CType(CType(160, Byte), Integer), CType(CType(162, Byte), Integer))
         Me.lblDescripcionTooltip.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDescripcionTooltip.ForeColor = System.Drawing.Color.White
-        Me.lblDescripcionTooltip.Location = New System.Drawing.Point(200, 17)
+        Me.lblDescripcionTooltip.ForeColor = System.Drawing.Color.Black
+        Me.lblDescripcionTooltip.Location = New System.Drawing.Point(80, 13)
         Me.lblDescripcionTooltip.Name = "lblDescripcionTooltip"
         Me.lblDescripcionTooltip.Size = New System.Drawing.Size(0, 31)
         Me.lblDescripcionTooltip.TabIndex = 4
@@ -342,7 +345,7 @@ Partial Class Impresoras
         'btnSalir
         '
         Me.btnSalir.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSalir.BackColor = System.Drawing.Color.White
+        Me.btnSalir.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.btnSalir.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.Black
         Me.btnSalir.FlatAppearance.BorderSize = 3

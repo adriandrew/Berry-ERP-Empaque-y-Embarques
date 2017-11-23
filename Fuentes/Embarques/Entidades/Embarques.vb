@@ -374,7 +374,38 @@ Public Class Embarques
 
     End Function
 
-    Public Function ObtenerListadoReporte() As DataTable
+    Public Function ObtenerListadoGeneral() As DataTable
+
+        Try
+            Dim datos As New DataTable
+            Dim comando As New SqlCommand()
+            comando.Connection = BaseDatos.conexionEmpaque
+            Dim condicion As String = String.Empty
+            If (Me.EIdTipo > 0) Then
+                condicion &= " AND IdTipo=@idTipo"
+            End If
+            If (Me.EId > 0) Then
+                condicion &= " AND Id=@id"
+            End If
+            comando.CommandText = String.Format("SELECT Id, Fecha, Hora, IdProductor, IdEmbarcador, IdCliente, IdLineaTransporte, IdTrailer, IdCajaTrailer, IdChofer, IdAduanaMex, IdAduanaUsa, IdDocumentador, Temperatura, Termografo, PrecioFlete, HoraPrecos, Sello1, Sello2, Sello3, Sello4, Sello5, Sello6, Sello7, Sello8, Factura, GuiaCaades FROM Embarques WHERE 0=0 {0} ORDER BY Id ASC", condicion)
+            comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
+            comando.Parameters.AddWithValue("@id", Me.EId)
+            BaseDatos.conexionEmpaque.Open()
+            Dim lectorDatos As SqlDataReader
+            lectorDatos = comando.ExecuteReader()
+            datos.Load(lectorDatos)
+            lectorDatos.Close()
+            BaseDatos.conexionEmpaque.Close()
+            Return datos
+        Catch ex As Exception
+            Throw ex
+        Finally
+            BaseDatos.conexionEmpaque.Close()
+        End Try
+
+    End Function
+
+    Public Function ObtenerListadoDetallado() As DataTable
 
         Try
             Dim datos As New DataTable
@@ -422,12 +453,12 @@ Public Class Embarques
                     datos.Rows(indiceAnterior).Item("NombreVariedad") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("NombreVariedad").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("NombreEnvase") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("NombreEnvase").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("NombreTamano") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("NombreTamano").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
-                    datos.Rows(indiceAnterior).Item("NombreEtiqueta") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("NombreEtiqueta").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") " 
+                    datos.Rows(indiceAnterior).Item("NombreEtiqueta") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("NombreEtiqueta").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("AbreviaturaProducto") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("AbreviaturaProducto").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("AbreviaturaVariedad") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("AbreviaturaVariedad").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("AbreviaturaEnvase") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("AbreviaturaEnvase").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("AbreviaturaTamano") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("AbreviaturaTamano").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
-                    datos.Rows(indiceAnterior).Item("AbreviaturaEtiqueta") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("AbreviaturaEtiqueta").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") " 
+                    datos.Rows(indiceAnterior).Item("AbreviaturaEtiqueta") &= IIf(contador > 0, "- ", String.Empty) & datos.Rows(indice).Item("AbreviaturaEtiqueta").ToString() & " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("CantidadCajas") += datos.Rows(indice).Item("CantidadCajas").ToString()
                     If (indice > 0) Then
                         datos.Rows(indice).Delete()
@@ -439,7 +470,7 @@ Public Class Embarques
                     datos.Rows(indiceAnterior).Item("NombreVariedad") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("NombreEnvase") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("NombreTamano") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
-                    datos.Rows(indiceAnterior).Item("NombreEtiqueta") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") " 
+                    datos.Rows(indiceAnterior).Item("NombreEtiqueta") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("AbreviaturaProducto") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("AbreviaturaVariedad") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
                     datos.Rows(indiceAnterior).Item("AbreviaturaEnvase") &= " (" & datos.Rows(indice).Item("CantidadCajas").ToString() & ") "
@@ -467,12 +498,17 @@ Public Class Embarques
             comando.Connection = BaseDatos.conexionEmpaque
             Dim condicion As String = String.Empty
             If (Me.EIdTipo > 0) Then
-                condicion &= " AND IdTipo=@idTipo"
+                condicion &= " AND E.IdTipo=@idTipo"
             End If
             If (Me.EId > 0) Then
-                condicion &= " AND Id=@id"
+                condicion &= " AND E.Id=@id"
             End If
-            comando.CommandText = String.Format("SELECT Id, Fecha, Hora, IdProductor, IdEmbarcador, IdCliente, IdLineaTransporte, IdTrailer, IdCajaTrailer, IdChofer, IdAduanaMex, IdAduanaUsa, IdDocumentador, Temperatura, Termografo, PrecioFlete, HoraPrecos, Sello1, Sello2, Sello3, Sello4, Sello5, Sello6, Sello7, Sello8, Factura, GuiaCaades FROM Embarques WHERE 0=0 {0} ORDER BY sello4 ASC", condicion)
+            comando.CommandText = String.Format("SELECT E.Id, E.Fecha, ISNULL(COUNT(T.Id), 0) " & _
+            " FROM Embarques AS E " & _
+            " LEFT JOIN (SELECT Id, IdEmbarque, IdTipoEmbarque FROM Tarimas GROUP BY Id, IdEmbarque, IdTipoEmbarque) AS T ON E.Id = T.IdEmbarque AND E.IdTipo = T.IdTipoEmbarque " & _
+            " WHERE 0=0 {0} " & _
+            " GROUP BY E.Id, E.Fecha " & _
+            " ORDER BY E.Id ASC", condicion)
             comando.Parameters.AddWithValue("@idTipo", Me.EIdTipo)
             comando.Parameters.AddWithValue("@id", Me.EId)
             BaseDatos.conexionEmpaque.Open()
@@ -549,7 +585,7 @@ Public Class Embarques
 
     End Function
 
-    Public Function ObtenerListadoReporteManifiestoDesgloseEscalonado(ByVal esProducto As Boolean, ByVal esEnvase As Boolean, ByVal esEtiqueta As Boolean, ByVal esTamano As Boolean, ByVal idProducto As Integer, ByVal idEnvase As Integer, ByVal idEtiqueta As Integer, ByVal idTamano As Integer) As DataTable
+    Public Function ObtenerListadoManifiestoDesgloseEscalonado(ByVal esProducto As Boolean, ByVal esEnvase As Boolean, ByVal esEtiqueta As Boolean, ByVal esTamano As Boolean, ByVal idProducto As Integer, ByVal idEnvase As Integer, ByVal idEtiqueta As Integer, ByVal idTamano As Integer) As DataTable
 
         Try
             Dim datos As New DataTable
@@ -610,7 +646,7 @@ Public Class Embarques
 
     End Function
 
-    Public Function ObtenerListadoReporteRemisionDistribucionResponsiva() As DataTable
+    Public Function ObtenerListadoRemisionDistribucionResponsiva() As DataTable
 
         Try
             Dim datos As New DataTable

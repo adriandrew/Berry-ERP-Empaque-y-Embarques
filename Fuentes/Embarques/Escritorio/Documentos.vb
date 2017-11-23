@@ -28,10 +28,11 @@ Public Class Documentos
     Private Sub Documentos_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
         Me.Cursor = Cursors.WaitCursor
-        Me.Enabled = False
+        'Me.Enabled = False
         CargarTitulosDirectorio()
         SeleccionarDocumento()
         Me.Enabled = True
+        CargarEstilos()
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -69,6 +70,12 @@ Public Class Documentos
 #End Region
 
 #Region "Métodos"
+
+    Private Sub CargarEstilos()
+
+        pnlPie.BackColor = Principal.colorSpreadAreaGris
+
+    End Sub
 
     Private Sub Salir()
 
@@ -115,6 +122,7 @@ Public Class Documentos
 
     Private Sub SeleccionarDocumento()
 
+        spDocumentos.Visible = False
         If (Me.opcionSeleccionada = OpcionDocumento.manifiesto) Then
             GenerarManifiesto()
         ElseIf (Me.opcionSeleccionada = OpcionDocumento.remision) Then
@@ -128,6 +136,7 @@ Public Class Documentos
         ElseIf (Me.opcionSeleccionada = OpcionDocumento.precos) Then
             GenerarPrecos()
         End If
+        spDocumentos.Visible = True
         HabilitarBotonesImpresion()
 
     End Sub
@@ -175,7 +184,7 @@ Public Class Documentos
         Dim idEmbarque As Integer = EYELogicaEmbarques.Funciones.ValidarNumeroACero(Principal.txtId.Text)
         Principal.tarimas.EIdEmbarque = idEmbarque
         Principal.tarimas.EIdTipoEmbarque = Principal.opcionTipoSeleccionada
-        datos = Principal.embarques.ObtenerListadoReporte()
+        datos = Principal.embarques.ObtenerListadoDetallado()
         ' Se carga el total de tarimas.
         If (Not esManifiesto) Then
             spDocumentos.ActiveSheet.Cells("totalTarimas").Text = datos.Rows.Count
@@ -350,7 +359,7 @@ Public Class Documentos
             ' Inicia productos.
             Dim datosProductos As DataTable
             Dim filaProducto As Integer = 0
-            datosProductos = Principal.embarques.ObtenerListadoReporteManifiestoDesgloseEscalonado(True, False, False, False, 0, 0, 0, 0)
+            datosProductos = Principal.embarques.ObtenerListadoManifiestoDesgloseEscalonado(True, False, False, False, 0, 0, 0, 0)
             While (filaProducto < datosProductos.Rows.Count)
                 Dim idProducto As Integer = datosProductos.Rows(filaProducto).Item("IdProducto").ToString
                 columnaSpread = 6
@@ -362,7 +371,7 @@ Public Class Documentos
                 ' Inicia envases.
                 Dim datosEnvases As DataTable
                 Dim filaEnvase As Integer = 0
-                datosEnvases = Principal.embarques.ObtenerListadoReporteManifiestoDesgloseEscalonado(False, True, False, False, idProducto, 0, 0, 0)
+                datosEnvases = Principal.embarques.ObtenerListadoManifiestoDesgloseEscalonado(False, True, False, False, idProducto, 0, 0, 0)
                 While (filaEnvase < datosEnvases.Rows.Count)
                     Dim idEnvase As Integer = datosEnvases.Rows(filaEnvase).Item("IdEnvase").ToString
                     columnaSpread = 7
@@ -375,7 +384,7 @@ Public Class Documentos
                     ' Inicia etiquetas.
                     Dim datosEtiquetas As DataTable
                     Dim filaEtiqueta As Integer = 0
-                    datosEtiquetas = Principal.embarques.ObtenerListadoReporteManifiestoDesgloseEscalonado(False, False, True, False, idProducto, idEnvase, 0, 0)
+                    datosEtiquetas = Principal.embarques.ObtenerListadoManifiestoDesgloseEscalonado(False, False, True, False, idProducto, idEnvase, 0, 0)
                     While (filaEtiqueta < datosEtiquetas.Rows.Count)
                         Dim idEtiqueta As Integer = datosEtiquetas.Rows(filaEtiqueta).Item("IdEtiqueta").ToString
                         columnaSpread = 9
@@ -388,7 +397,7 @@ Public Class Documentos
                         ' Inicia tamanos.
                         Dim datosTamanos As DataTable
                         Dim filaTamano As Integer = 0
-                        datosTamanos = Principal.embarques.ObtenerListadoReporteManifiestoDesgloseEscalonado(False, False, False, True, idProducto, idEnvase, idEtiqueta, 0)
+                        datosTamanos = Principal.embarques.ObtenerListadoManifiestoDesgloseEscalonado(False, False, False, True, idProducto, idEnvase, idEtiqueta, 0)
                         While (filaTamano < datosTamanos.Rows.Count)
                             columnaSpread = 11
                             spDocumentos.ActiveSheet.AddSpanCell(filaSpread, columnaSpread, 1, 2)
@@ -464,7 +473,7 @@ Public Class Documentos
             ' Inicia desglose de presentaciones en la parte abajo y en medio. 
             Dim filaSpread As Integer = 17 ' Fila de inicio de desglose. 
             Dim filaDatos As Integer = 0
-            datos = Principal.embarques.ObtenerListadoReporteRemisionDistribucionResponsiva()
+            datos = Principal.embarques.ObtenerListadoRemisionDistribucionResponsiva()
             Dim columnaDescripcion As Integer = 1
             Dim columnaCajas As Integer = 8
             Dim columnaPesoUnitario As Integer = 9
@@ -495,7 +504,7 @@ Public Class Documentos
                 configuracionPrecios.EIdEnvase = idEnvase
                 configuracionPrecios.EIdTamano = idTamano
                 configuracionPrecios.EIdEtiqueta = idEtiqueta
-                Dim datosPrecios As DataTable = configuracionPrecios.ObtenerListadoReporte() 
+                Dim datosPrecios As DataTable = configuracionPrecios.ObtenerListadoReporte()
                 Dim precioUnitario As Double = 1
                 If (datosPrecios.Rows.Count = 1) Then
                     precioUnitario = EYELogicaEmbarques.Funciones.ValidarNumeroAUno(datosPrecios.Rows(0).Item("Precio").ToString)
@@ -631,7 +640,7 @@ Public Class Documentos
             ' Inicia desglose de presentaciones en la parte abajo y derecha. 
             Dim filaSpread As Integer = 26 ' Fila de inicio de desglose. 
             Dim filaDatos As Integer = 0
-            datos = Principal.embarques.ObtenerListadoReporteRemisionDistribucionResponsiva()
+            datos = Principal.embarques.ObtenerListadoRemisionDistribucionResponsiva()
             Dim columnaDescripcion As Integer = 7
             Dim columnaCajas As Integer = 13
             Dim totalCajas As Double = 0
@@ -713,7 +722,7 @@ Public Class Documentos
             celda = spDocumentos.ActiveSheet.GetCellFromTag(Nothing, "descripcion")
             Dim filaSpread As Integer = celda.Row.Index ' Fila de inicio de desglose. 
             Dim filaDatos As Integer = 0
-            datos = Principal.embarques.ObtenerListadoReporteRemisionDistribucionResponsiva()
+            datos = Principal.embarques.ObtenerListadoRemisionDistribucionResponsiva()
             Dim columnaDescripcion As Integer = celda.Column.Index
             spDocumentos.ActiveSheet.RemoveRows(filaSpread, 1)
             While (filaDatos < datos.Rows.Count)
@@ -809,7 +818,7 @@ Public Class Documentos
             Dim datosProductos As DataTable ' Se consultan los distintos productos.
             Dim filaProducto As Integer = 0
             Dim productos As String = String.Empty
-            datosProductos = Principal.embarques.ObtenerListadoReporteManifiestoDesgloseEscalonado(True, False, False, False, 0, 0, 0, 0)
+            datosProductos = Principal.embarques.ObtenerListadoManifiestoDesgloseEscalonado(True, False, False, False, 0, 0, 0, 0)
             While (filaProducto < datosProductos.Rows.Count)
                 Dim nombreProducto As String = EYELogicaEmbarques.Funciones.ValidarLetra(datosProductos.Rows(filaProducto).Item("NombreProducto").ToString)
                 productos &= IIf(filaProducto < datosProductos.Rows.Count - 1, nombreProducto & ", ", nombreProducto)
